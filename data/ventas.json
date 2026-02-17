@@ -162,5 +162,114 @@
     "estado": "completada",
     "emailEnviado": true,
     "fechaCreacion": "2026-02-16T21:43:57.104Z"
+  },
+  {
+    "id": 1771342287136,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 14,
+        "nombre": "iphone 17 pro max",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "completada",
+    "emailEnviado": true,
+    "fechaCreacion": "2026-02-17T15:31:27.136Z"
+  },
+  {
+    "id": 1771342554617,
+    "cliente": {
+      "nombre": "rodrigo ",
+      "email": "r.alexlsieon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 15,
+        "nombre": "producto de prueba",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "completada",
+    "emailEnviado": true,
+    "fechaCreacion": "2026-02-17T15:35:54.617Z"
+  },
+  {
+    "id": 1771342703156,
+    "cliente": {
+      "nombre": "xx",
+      "email": "xx@gmail.com",
+      "telefono": "xx",
+      "direccion": "xx"
+    },
+    "items": [
+      {
+        "id": 15,
+        "nombre": "producto de prueba",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "completada",
+    "emailEnviado": true,
+    "fechaCreacion": "2026-02-17T15:38:23.156Z"
+  },
+  {
+    "id": 1771344835868,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 16,
+        "nombre": "iphone 17 pro max",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "pendiente",
+    "mpPreferenceId": "459565046-d78ea096-5a5c-48ca-b8ec-3e4438eac6be",
+    "mpInitPoint": "https://www.mercadopago.cl/checkout/v1/redirect?pref_id=459565046-d78ea096-5a5c-48ca-b8ec-3e4438eac6be",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-17T16:13:55.868Z"
+  },
+  {
+    "id": 1771344915112,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexsielon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 16,
+        "nombre": "iphone 17 pro max",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "pendiente",
+    "mpPreferenceId": "459565046-2606fa5b-22ce-487e-b04b-0320e564386d",
+    "mpInitPoint": "https://www.mercadopago.cl/checkout/v1/redirect?pref_id=459565046-2606fa5b-22ce-487e-b04b-0320e564386d",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-17T16:15:15.112Z"
   }
 ]

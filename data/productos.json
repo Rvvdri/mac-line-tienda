@@ -123,5 +123,16 @@
     "precio": 450000,
     "stock": 15,
     "emoji": "🎧"
+  },
+  {
+    "id": 14,
+    "nombre": "Iphone 17 pro max",
+    "categoria": "celulares",
+    "descripcion": "Producto de prueba",
+    "precio": 1000,
+    "precioOriginal": 2000,
+    "descuento": 50,
+    "stock": 10,
+    "emoji": "📦"
   }
 ]

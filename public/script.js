@@ -170,7 +170,7 @@ function eliminarDelCarrito(index) {
 function procederPago() {
     cerrarCarrito();
     const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    const totalConEnvio = total + 5000;
+    const totalConEnvio = total + 0;
     
     document.getElementById('subtotalPago').textContent = total.toLocaleString();
     document.getElementById('totalPago').textContent = totalConEnvio.toLocaleString();
