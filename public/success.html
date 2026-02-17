@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago Exitoso - Mac Line</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .success-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 102, 204, 0.15);
+            padding: 2rem;
+            text-align: center;
+            max-width: 500px;
+            border-top: 4px solid #00d450;
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            color: #00d450;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .reference {
+            background-color: #f0f4f8;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #0066cc;
+        }
+
+        .reference-label {
+            color: #0066cc;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .reference-value {
+            color: #1a1f2e;
+            font-weight: 700;
+            font-size: 1.1rem;
+            font-family: monospace;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(0, 102, 204, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: #e8ecf1;
+            color: #1a1f2e;
+            border: 2px solid #0066cc;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .info-box {
+            background-color: #e8f7f5;
+            border-left: 4px solid #00d450;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            text-align: left;
+            color: #066;
+        }
+
+        .info-box strong {
+            color: #00d450;
+        }
+
+        .footer-text {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e8ecf1;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .demo-badge {
+            display: inline-block;
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            border: 1px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">✓</div>
+        
+        <div id="demoBadge"></div>
+
+        <h1>¡Pago Completado!</h1>
+
+        <p>Tu compra ha sido procesada exitosamente.</p>
+        <p>Te enviaremos un correo de confirmación en breve.</p>
+
+        <div class="reference">
+            <div class="reference-label">Número de Referencia:</div>
+            <div class="reference-value" id="reference"></div>
+        </div>
+
+        <div class="info-box">
+            <p><strong>✓ Próximos pasos:</strong></p>
+            <p>1. Recibirás un correo de confirmación</p>
+            <p>2. Tu pedido será preparado</p>
+            <p>3. Te notificaremos cuando esté listo para envío</p>
+        </div>
+
+        <div class="actions">
+            <a href="index.html" class="btn btn-primary">Volver a la Tienda</a>
+            <a href="index.html" class="btn btn-secondary">Seguir Comprando</a>
+        </div>
+
+        <div class="footer-text">
+            <p>&copy; 2024 Mac Line - Tienda de Tecnología</p>
+            <p>Si tienes dudas, contacta con nosotros</p>
+        </div>
+    </div>
+
+    <script>
+        // Obtener el parámetro de referencia
+        const params = new URLSearchParams(window.location.search);
+        const reference = params.get('reference');
+        const isDemo = params.get('demo');
+
+        // Mostrar referencia
+        document.getElementById('reference').textContent = reference || 'MP-' + Date.now();
+
+        // Mostrar badge si es demo
+        if (isDemo) {
+            const badge = document.getElementById('demoBadge');
+            badge.innerHTML = '<div class="demo-badge">⚠️ Modo Demostración - Datos de prueba</div>';
+        }
+
+        // Limpiar carrito después de 2 segundos
+        setTimeout(() => {
+            localStorage.removeItem('carrito');
+        }, 2000);
+    </script>
+</body>
+</html>

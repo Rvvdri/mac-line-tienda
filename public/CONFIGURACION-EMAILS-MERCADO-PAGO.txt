@@ -1,0 +1,286 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║              ✉️  ENVÍO DE EMAILS + 💳 MERCADO PAGO - GUÍA RÁPIDA             ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+Te muestro EXACTAMENTE qué hacer para que funcione todo.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+⚡ INSTALACIÓN RÁPIDA (5 PASOS)
+─────────────────────────────────
+
+PASO 1: Actualizar package.json
+───────────────────────────────
+
+Descarga: package-CON-EMAILS.json
+
+Reemplaza en tu proyecto:
+  backend/package.json ← package-CON-EMAILS.json (renombrado)
+
+Luego instala:
+
+  cd backend
+  npm install
+
+
+PASO 2: Actualizar server.js
+────────────────────────────
+
+Descarga: server-CON-EMAILS.js
+
+Reemplaza en tu proyecto:
+  backend/server.js ← server-CON-EMAILS.js (renombrado)
+
+Este servidor tiene:
+  ✓ Mercado Pago integrado
+  ✓ Nodemailer para enviar emails
+  ✓ Guarda todas las ventas
+  ✓ Actualiza stock automáticamente
+
+
+PASO 3: Configurar GMAIL (para enviar emails)
+───────────────────────────────────────────────
+
+IMPORTANTE: No puedes usar tu contraseña normal de Gmail.
+Necesitas una "Contraseña de Aplicación".
+
+1. Ve a: https://myaccount.google.com/
+
+2. Haz clic en "Seguridad" (menú izquierdo)
+
+3. Busca "Contraseñas de aplicaciones"
+   (Si no aparece, tienes 2FA desactivado - actívalo primero)
+
+4. Selecciona:
+   ├─ Dispositivo: Windows / Mac / Otro
+   └─ Aplicación: Correo
+
+5. Google te da una contraseña de 16 caracteres
+
+6. COPIA ESA CONTRASEÑA (es importante)
+
+
+PASO 4: Configurar backend/.env
+────────────────────────────────
+
+Abre: backend/.env
+
+Reemplaza/agrega estas líneas:
+
+# MERCADO PAGO (obtén de tu cuenta)
+MP_PUBLIC_KEY=pk_test_xxxxxxxxxxxxxxxx
+MP_ACCESS_TOKEN=APP_USR-xxxxxxxxxxxxxxxxxxxxxxxx
+
+# GMAIL (para enviar emails)
+EMAIL_USER=tu@gmail.com
+EMAIL_PASSWORD=xxxx xxxx xxxx xxxx
+EMAIL_FROM=tu@gmail.com
+EMAIL_FROM_NAME=Mac Line
+
+EJEMPLO REAL:
+
+MP_PUBLIC_KEY=pk_test_a1b2c3d4e5f6g7h8
+MP_ACCESS_TOKEN=APP_USR-1234567890abcdefg
+EMAIL_USER=rodrigo@gmail.com
+EMAIL_PASSWORD=abcd efgh ijkl mnop
+EMAIL_FROM=rodrigo@gmail.com
+EMAIL_FROM_NAME=Mac Line
+
+
+PASO 5: Reiniciar y probar
+──────────────────────────
+
+cd backend
+npm start
+
+Deberías ver:
+
+✓ Servidor en puerto 3000
+✓ Emails: ✓ ACTIVO
+✓ Mercado Pago: ✓ ACTIVO (si tienes credenciales válidas)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🧪 PROBAR UNA COMPRA CON EMAIL
+────────────────────────────────
+
+1. Abre: http://localhost:3000/index.html
+
+2. Agrega productos
+
+3. Haz clic: "Proceder al Pago"
+
+4. Llena el formulario:
+   Nombre: Tu Nombre
+   Email: TU@GMAIL.COM (usa tu email real para recibir el email)
+   Teléfono: +56912345678
+   Dirección: Calle Principal 123
+
+5. Haz clic: "Pagar con Mercado Pago"
+
+6. En Mercado Pago, usa tarjeta de prueba:
+   Número: 4111 1111 1111 1111
+   Fecha: 12/25
+   CVV: 123
+
+7. Completa el pago
+
+8. ¡DEBERÍAS VER:!
+   ├─ Página de éxito (success.html)
+   └─ EMAIL en tu bandeja de entrada
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 QUÉ HACE CADA PARTE
+──────────────────────
+
+SERVER (backend/server.js):
+  ✓ Recibe los datos de la compra
+  ✓ Guarda la venta en la BD (JSON)
+  ✓ Actualiza el stock
+  ✓ ENVÍA EL EMAIL con Nodemailer
+  ✓ Retorna respuesta al cliente
+
+EMAIL:
+  ✓ Se envía cuando pago es exitoso
+  ✓ Contiene detalles de la compra
+  ✓ Tiene datos del pedido
+  ✓ Incluye número de referencia
+  ✓ Bonito HTML formateado
+
+MERCADO PAGO:
+  ✓ Procesa el pago
+  ✓ Valida la tarjeta
+  ✓ Cobra la comisión
+  ✓ Redirige a success.html
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔍 SI NO LLEGA EL EMAIL
+────────────────────────
+
+Problema 1: "No aparece en bandeja de entrada"
+Solución:
+  ✓ Revisa SPAM/CORREO NO DESEADO
+  ✓ Verifica que EMAIL_USER en .env sea correcto
+  ✓ Comprueba que EMAIL_PASSWORD sea la contraseña de APLICACIÓN (16 caracteres)
+
+Problema 2: "Servidor dice que Email no está configurado"
+Solución:
+  ✓ Abre terminal
+  ✓ Verifica que .env tenga EMAIL_USER y EMAIL_PASSWORD
+  ✓ Reinicia el servidor
+
+Problema 3: "Error: Invalid login"
+Solución:
+  ✓ Tu contraseña no es la de APLICACIÓN
+  ✓ Ve a https://myaccount.google.com/security
+  ✓ Obtén una nueva contraseña de aplicación
+  ✓ Actualiza .env
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 CHECKLIST DE CONFIGURACIÓN
+──────────────────────────────
+
+[ ] Instalé package-CON-EMAILS.json
+[ ] Ejecuté npm install
+[ ] Reemplacé server.js con server-CON-EMAILS.js
+[ ] Creé contraseña de aplicación en Gmail
+[ ] Actualicé backend/.env con:
+    [ ] MP_PUBLIC_KEY
+    [ ] MP_ACCESS_TOKEN
+    [ ] EMAIL_USER
+    [ ] EMAIL_PASSWORD
+[ ] Reinicié el servidor
+[ ] Hice una compra de prueba
+[ ] Recibí el email de confirmación
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+💌 CONTENIDO DEL EMAIL
+──────────────────────
+
+El email que recibe el cliente tiene:
+
+✓ Logo de Mac Line
+✓ Confirmación de pago
+✓ Tabla con productos comprados
+✓ Cantidad y precio de cada item
+✓ Total pagado
+✓ Próximos pasos
+✓ Número de referencia
+✓ Datos de contacto
+✓ Información profesional
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+⚙️ INFORMACIÓN TÉCNICA
+──────────────────────
+
+Nodemailer:
+  - Librería para enviar emails desde Node.js
+  - Funciona con Gmail, Outlook, Yahoo, etc.
+  - Requiere contraseña de aplicación en Gmail
+
+Gmail:
+  - Máximo 500 emails por día en cuenta gratuita
+  - Para más, necesitas cuenta Google Workspace
+
+Backend:
+  - Cuando llega un pago exitoso
+  - Automáticamente envía el email
+  - Sin intervención manual
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 DESPUÉS DE PROBAR EN SANDBOX
+─────────────────────────────────
+
+Cuando TODO funcione perfectamente:
+
+1. Crea tu cuenta en Mercado Pago
+   https://www.mercadopago.cl
+
+2. Completa verificación (documento + comprobante + banco)
+
+3. Obtén credenciales de PRODUCCIÓN
+   (sin "test_" en el Public Key)
+
+4. Reemplaza en backend/.env:
+   MP_PUBLIC_KEY=pk_live_xxxxxxxx
+   MP_ACCESS_TOKEN=APP_USR-xxxxxxxx
+
+5. Reinicia servidor
+
+6. ¡Ahora aceptas pagos reales! 💰
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✨ RESUMEN
+───────────
+
+✓ Email se envía automáticamente al completar pago
+✓ Email es bonito y profesional (HTML formateado)
+✓ Email contiene todos los detalles del pedido
+✓ Funciona con tu cuenta de Gmail
+✓ No cuesta dinero (planes gratuitos)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+¿LISTO? 
+
+1. Descarga los 2 archivos
+2. Sigue los 5 pasos
+3. ¡A vender! 🎉
+
+═══════════════════════════════════════════════════════════════════════════════

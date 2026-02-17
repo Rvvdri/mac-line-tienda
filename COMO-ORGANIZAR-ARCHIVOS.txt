@@ -1,0 +1,193 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                    🖥️ MAC LINE - CÓMO USAR ESTOS ARCHIVOS                    ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+Los archivos están separados y numerados. Aquí te muestro EXACTAMENTE cómo 
+organizarlos en tu computadora.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📦 PASO 1: CREAR LA ESTRUCTURA DE CARPETAS
+
+Crea esta estructura en tu computadora:
+
+mac-line/
+├── public/
+├── backend/
+└── data/
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📄 PASO 2: MOVER LOS ARCHIVOS DEL FRONTEND (public/)
+
+Descarga estos archivos y colócalos en la carpeta "public/":
+
+01_index.html           → public/index.html
+02_styles.css           → public/styles.css
+03_script.js            → public/script.js
+04_admin.html           → public/admin.html
+05_admin-styles.css     → public/admin-styles.css
+06_admin.js             → public/admin.js
+
+Resultado en tu carpeta:
+  public/
+    ├── index.html
+    ├── styles.css
+    ├── script.js
+    ├── admin.html
+    ├── admin-styles.css
+    └── admin.js
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🖥️  PASO 3: MOVER LOS ARCHIVOS DEL BACKEND (backend/)
+
+Descarga estos archivos y colócalos en la carpeta "backend/":
+
+07_package.json         → backend/package.json
+08_server.js            → backend/server.js
+09_.env                 → backend/.env  (nota: el nombre empieza con punto)
+
+Resultado en tu carpeta:
+  backend/
+    ├── package.json
+    ├── server.js
+    └── .env
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+💾 PASO 4: MOVER LOS ARCHIVOS DE DATOS (data/)
+
+Descarga estos archivos y colócalos en la carpeta "data/":
+
+10_productos.json       → data/productos.json
+11_ventas.json          → data/ventas.json
+
+Resultado en tu carpeta:
+  data/
+    ├── productos.json
+    └── ventas.json
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 PASO 5: ESTRUCTURA FINAL
+
+Tu carpeta "mac-line" debe quedar así:
+
+mac-line/
+├── public/
+│   ├── index.html
+│   ├── styles.css
+│   ├── script.js
+│   ├── admin.html
+│   ├── admin-styles.css
+│   └── admin.js
+├── backend/
+│   ├── package.json
+│   ├── server.js
+│   └── .env
+└── data/
+    ├── productos.json
+    └── ventas.json
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚀 PASO 6: INSTALAR Y EJECUTAR
+
+1. Abre terminal/cmd
+
+2. Ve a la carpeta del backend:
+   cd backend
+
+3. Instala las dependencias:
+   npm install
+
+4. Inicia el servidor:
+   npm start
+
+5. Abre tu navegador en:
+   - Tienda: http://localhost:3000/public/index.html
+   - Admin: http://localhost:3000/public/admin.html
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️  IMPORTANTE: EL ARCHIVO .env
+
+Cuando descargues "09_.env" DEBE renombrarse a ".env" (con punto al inicio)
+
+En Windows:
+  • Haz clic derecho en el archivo
+  • Selecciona "Renombrar"
+  • Escribe: .env
+  • Presiona Enter
+
+En Mac/Linux:
+  • Simplemente cópialó como .env en la carpeta backend/
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ VERIFICACIÓN FINAL
+
+Antes de ejecutar, verifica que tienes:
+
+[ ] Carpeta backend/ con 3 archivos
+    [ ] package.json
+    [ ] server.js
+    [ ] .env
+
+[ ] Carpeta public/ con 6 archivos
+    [ ] index.html
+    [ ] styles.css
+    [ ] script.js
+    [ ] admin.html
+    [ ] admin-styles.css
+    [ ] admin.js
+
+[ ] Carpeta data/ con 2 archivos
+    [ ] productos.json
+    [ ] ventas.json
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+❓ DUDAS COMUNES
+
+P: ¿El archivo se llama "09_.env" pero debe quedar ".env"?
+R: Sí, tienes que renombrar "09_.env" a ".env" (solo ".env")
+
+P: ¿Qué significa renombrar?
+R: Es cambiar el nombre del archivo
+
+P: ¿En qué orden debo descargar?
+R: No importa el orden, simplemente organizalos en las carpetas correctas
+
+P: ¿Necesito internet para ejecutar la tienda?
+R: No, todo funciona localmente en tu computadora
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 RESUMEN
+
+1. ✓ Crear 3 carpetas: public/, backend/, data/
+2. ✓ Descargar los 11 archivos
+3. ✓ Ponerlos en sus carpetas correspondientes
+4. ✓ Renombrar 09_.env a .env en la carpeta backend/
+5. ✓ Abrir terminal en backend/
+6. ✓ Escribir: npm install
+7. ✓ Escribir: npm start
+8. ✓ Abrir navegador en los URLs que aparecen
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✨ ¡Listo! Tu tienda estará funcionando en localhost:3000
+
+═══════════════════════════════════════════════════════════════════════════════

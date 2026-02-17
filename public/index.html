@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mac Line - Tienda Tecnología Premium</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>🖥️ MAC LINE</h1>
+                <p class="tagline">Tecnología Premium</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio" class="nav-item">Inicio</a></li>
+                <li><a href="#productos" class="nav-item">Productos</a></li>
+                <li><a href="javascript:abrirCarrito()" class="cart-link">
+                    🛒 Carrito <span class="cart-count">0</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2>Tecnología Premium al Alcance</h2>
+            <p>Descubre nuestros productos de última generación con los mejores precios</p>
+            <button class="btn btn-primary btn-lg" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">
+                Explorar Catálogo
+            </button>
+        </div>
+    </section>
+
+    <!-- BANNER PROMOCIÓN -->
+    <section class="promo-banner">
+        <div class="promo-content">
+            <span class="promo-emoji">📱</span>
+            <h3>¡PROMOCIÓN EXCLUSIVA!</h3>
+            <p>Celulares con descuentos de 25% a 40%</p>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section id="productos" class="productos-section">
+        <div class="container">
+            <h2 class="section-title">Nuestro Catálogo</h2>
+            
+            <!-- FILTROS -->
+            <div class="filtros">
+                <button class="filtro-btn active" onclick="filtrarProductos('todos')">Todos</button>
+                <button class="filtro-btn" onclick="filtrarProductos('celulares')">📱 Celulares</button>
+                <button class="filtro-btn" onclick="filtrarProductos('televisores')">📺 Televisores</button>
+                <button class="filtro-btn" onclick="filtrarProductos('computadores')">💻 Computadores</button>
+                <button class="filtro-btn" onclick="filtrarProductos('audifonos')">🎧 Audífonos</button>
+            </div>
+
+            <!-- GRID DE PRODUCTOS -->
+            <div class="productos-grid" id="productosGrid">
+                <div class="loading">Cargando productos...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL CARRITO -->
+    <div id="carritoModal" class="modal" style="display:none">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Mi Carrito de Compras</h2>
+                <button class="close-btn" onclick="cerrarCarrito()">&times;</button>
+            </div>
+            <div id="carritoItems" class="carrito-items">
+                <p class="empty-cart">Tu carrito está vacío</p>
+            </div>
+            <div class="carrito-total">
+                <h3>Total: $<span id="totalPrecio">0</span></h3>
+            </div>
+            <div class="carrito-acciones">
+                <button class="btn btn-secondary" onclick="cerrarCarrito()">Continuar Comprando</button>
+                <button class="btn btn-primary" onclick="procederPago()" id="btnPagar" disabled>Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PAGO -->
+    <div id="pagoModal" class="modal" style="display:none">
+        <div class="modal-content payment-modal">
+            <div class="modal-header">
+                <h2>Finalizar Compra</h2>
+                <button class="close-btn" onclick="cerrarPago()">&times;</button>
+            </div>
+            <form id="formPago" onsubmit="procesarPago(event)">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo *</label>
+                    <input type="text" id="nombre" required placeholder="Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono *</label>
+                    <input type="tel" id="telefono" required placeholder="+56912345678">
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección de Entrega *</label>
+                    <input type="text" id="direccion" required placeholder="Calle Principal 123, Santiago">
+                </div>
+                <div class="total-pago">
+                    <p>Subtotal: $<span id="subtotalPago">0</span></p>
+                    <p>Envío: $<span id="envioPago">5000</span></p>
+                    <h3>Total: $<span id="totalPago">0</span></h3>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Pagar con Mercado Pago</button>
+                <button type="button" class="btn btn-secondary btn-full" onclick="cerrarPago()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Mac Line - Tienda Oficial</p>
+            <p>📦 Envío a todo Chile | 💳 Mercado Pago | ✅ Garantía de Productos</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

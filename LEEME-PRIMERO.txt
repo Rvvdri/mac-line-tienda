@@ -1,0 +1,185 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║            🖥️ MAC LINE - LISTA COMPLETA DE ARCHIVOS DESCARGADOS              ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+Descargaste 13 archivos para tu tienda. Aquí está el resumen:
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 ARCHIVOS DEL FRONTEND (Tienda) - 6 archivos
+────────────────────────────────────────────────
+
+✓ 01_index.html
+  Descripción: Página principal de la tienda
+  Va en: public/index.html
+  Tamaño: ~10 KB
+  Contenido: HTML con estructura de la tienda, filtros, carrito, modales
+
+✓ 02_styles.css
+  Descripción: Estilos CSS de la tienda
+  Va en: public/styles.css
+  Tamaño: ~25 KB
+  Contenido: Estilos visuales, colores de tecnología, responsive
+
+✓ 03_script.js
+  Descripción: Lógica JavaScript de la tienda
+  Va en: public/script.js
+  Tamaño: ~12 KB
+  Contenido: Carga de productos, carrito, modales, API calls
+
+✓ 04_admin.html
+  Descripción: Panel de administración HTML
+  Va en: public/admin.html
+  Tamaño: ~15 KB
+  Contenido: Panel para gestionar productos, ventas, stock
+
+✓ 05_admin-styles.css
+  Descripción: Estilos CSS del panel admin
+  Va en: public/admin-styles.css
+  Tamaño: ~20 KB
+  Contenido: Estilos del dashboard administrativo
+
+✓ 06_admin.js
+  Descripción: Lógica JavaScript del admin
+  Va en: public/admin.js
+  Tamaño: ~15 KB
+  Contenido: Gestión de productos, edición, eliminación, reportes
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🖥️  ARCHIVOS DEL BACKEND (Servidor) - 3 archivos
+──────────────────────────────────────────────────
+
+✓ 07_package.json
+  Descripción: Dependencias del proyecto Node.js
+  Va en: backend/package.json
+  Tamaño: ~500 bytes
+  Contenido: Lista de librerías necesarias (express, cors, dotenv)
+
+✓ 08_server.js
+  Descripción: Servidor Express con la API
+  Va en: backend/server.js
+  Tamaño: ~20 KB
+  Contenido: API REST, rutas de productos, gestión de ventas
+
+✓ 09_.env
+  Descripción: Variables de configuración (RENOMBRAR A .env)
+  Va en: backend/.env
+  Tamaño: ~200 bytes
+  Contenido: Puerto (3000), token Mercado Pago (opcional)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+💾 ARCHIVOS DE BASE DE DATOS (JSON) - 2 archivos
+──────────────────────────────────────────────────
+
+✓ 10_productos.json
+  Descripción: Base de datos de 13 productos de ejemplo
+  Va en: data/productos.json
+  Tamaño: ~5 KB
+  Contenido: 13 productos con precios, stock, descuentos
+
+✓ 11_ventas.json
+  Descripción: Historial de ventas (vacío al inicio)
+  Va en: data/ventas.json
+  Tamaño: ~10 bytes
+  Contenido: Se llenará cuando se realicen compras []
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📚 ARCHIVOS DE DOCUMENTACIÓN - 2 archivos
+───────────────────────────────────────────
+
+✓ 12_README.md
+  Descripción: Documentación técnica completa
+  Tamaño: ~15 KB
+  Contenido: Guía de instalación, API endpoints, características
+
+✓ COMO-ORGANIZAR-ARCHIVOS.txt
+  Descripción: Instrucciones para organizar los archivos
+  Tamaño: ~8 KB
+  Contenido: Paso a paso de cómo poner cada archivo en su lugar
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📊 RESUMEN DE DESCARGAS
+
+Total de archivos: 13
+Tamaño total: ~145 KB
+
+Archivos frontend:   6
+Archivos backend:    3
+Archivos datos:      2
+Documentación:       2
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✅ CHECKLIST DE DESCARGA
+
+[ ] 01_index.html
+[ ] 02_styles.css
+[ ] 03_script.js
+[ ] 04_admin.html
+[ ] 05_admin-styles.css
+[ ] 06_admin.js
+[ ] 07_package.json
+[ ] 08_server.js
+[ ] 09_.env
+[ ] 10_productos.json
+[ ] 11_ventas.json
+[ ] 12_README.md
+[ ] COMO-ORGANIZAR-ARCHIVOS.txt
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎯 PRÓXIMOS PASOS
+
+1. Descarga TODOS los archivos (13 en total)
+
+2. Lee el archivo "COMO-ORGANIZAR-ARCHIVOS.txt" para saber dónde 
+   poner cada archivo
+
+3. Organiza los archivos en las carpetas correctas
+
+4. Abre terminal en la carpeta "backend"
+
+5. Ejecuta: npm install
+
+6. Ejecuta: npm start
+
+7. Abre navegador:
+   - Tienda: http://localhost:3000/public/index.html
+   - Admin: http://localhost:3000/public/admin.html
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📞 SOPORTE
+
+Si algo no funciona:
+
+1. Verifica que tienes TODOS los 13 archivos descargados
+2. Lee "COMO-ORGANIZAR-ARCHIVOS.txt" con atención
+3. Verifica que Node.js está instalado: node --version
+4. Verifica que npm está instalado: npm --version
+5. Lee el README.md para solución de problemas
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎉 ¡LISTA DE VERIFICACIÓN FINAL!
+
+[ ] Descargué TODOS los 13 archivos
+[ ] Leí "COMO-ORGANIZAR-ARCHIVOS.txt"
+[ ] Tengo Node.js instalado
+[ ] Tengo npm instalado
+[ ] Organisé los archivos en sus carpetas
+[ ] Renombré "09_.env" a ".env"
+[ ] Ejecuté "npm install" en la carpeta backend
+[ ] Ejecuté "npm start" en la carpeta backend
+[ ] Puedo acceder a la tienda en http://localhost:3000/public/index.html
+[ ] Puedo acceder al admin en http://localhost:3000/public/admin.html
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✨ ¡Felicidades! Tu tienda Mac Line está lista para funcionar 🚀
+
+═══════════════════════════════════════════════════════════════════════════════

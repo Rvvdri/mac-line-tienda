@@ -1,0 +1,166 @@
+[
+  {
+    "id": 1771257265975,
+    "cliente": {
+      "nombre": "x",
+      "email": "x@gmai.com",
+      "telefono": "x",
+      "direccion": "x"
+    },
+    "items": [
+      {
+        "id": 1,
+        "nombre": "iPhone 15 Pro",
+        "cantidad": 1,
+        "precio": 900000
+      }
+    ],
+    "total": 905000,
+    "estado": "completada",
+    "fechaCreacion": "2026-02-16T15:54:25.975Z"
+  },
+  {
+    "id": 1771267279547,
+    "cliente": {
+      "nombre": "x",
+      "email": "xx@xx",
+      "telefono": "xx",
+      "direccion": "xx"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 1,
+        "precio": 875000
+      }
+    ],
+    "total": 880000,
+    "estado": "completada_demo",
+    "fechaCreacion": "2026-02-16T18:41:19.547Z"
+  },
+  {
+    "id": 1771267436835,
+    "cliente": {
+      "nombre": "rodrigo leon",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "+56994254292",
+      "direccion": "Llanquihue 6290, la florida "
+    },
+    "items": [
+      {
+        "id": 1,
+        "nombre": "iPhone 15 Pro",
+        "cantidad": 1,
+        "precio": 900000
+      }
+    ],
+    "total": 905000,
+    "estado": "completada_demo",
+    "fechaCreacion": "2026-02-16T18:43:56.835Z"
+  },
+  {
+    "id": 1771267575873,
+    "cliente": {
+      "nombre": "xx",
+      "email": "xx@gmail.com",
+      "telefono": "xx",
+      "direccion": "xx"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 3,
+        "precio": 875000
+      }
+    ],
+    "total": 2630000,
+    "estado": "completada_demo",
+    "fechaCreacion": "2026-02-16T18:46:15.873Z"
+  },
+  {
+    "id": 1771275719465,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290, la florida"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 3,
+        "precio": 875000
+      }
+    ],
+    "total": 2630000,
+    "estado": "completada",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-16T21:01:59.468Z"
+  },
+  {
+    "id": 1771276626588,
+    "cliente": {
+      "nombre": "xx",
+      "email": "xx@gmail.com",
+      "telefono": "xxx",
+      "direccion": "xxx"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 1,
+        "precio": 875000
+      }
+    ],
+    "total": 880000,
+    "estado": "completada",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-16T21:17:06.589Z"
+  },
+  {
+    "id": 1771277639563,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 1,
+        "precio": 875000
+      }
+    ],
+    "total": 880000,
+    "estado": "completada",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-16T21:33:59.563Z"
+  },
+  {
+    "id": 1771278237104,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 3,
+        "nombre": "Xiaomi 14 Ultra",
+        "cantidad": 1,
+        "precio": 750000
+      }
+    ],
+    "total": 755000,
+    "estado": "completada",
+    "emailEnviado": true,
+    "fechaCreacion": "2026-02-16T21:43:57.104Z"
+  }
+]

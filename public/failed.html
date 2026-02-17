@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago Fallido - Mac Line</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .error-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            text-align: center;
+            max-width: 500px;
+            border-top: 4px solid #ff4444;
+        }
+
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: shake 0.6s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        h1 {
+            color: #ff4444;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .error-box {
+            background-color: #fff5f5;
+            border-left: 4px solid #ff4444;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            text-align: left;
+            color: #c33;
+        }
+
+        .error-box strong {
+            color: #ff4444;
+        }
+
+        .solutions {
+            background-color: #f0f4f8;
+            border-left: 4px solid #0066cc;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            text-align: left;
+            color: #1a1f2e;
+        }
+
+        .solutions strong {
+            color: #0066cc;
+        }
+
+        .solutions ol {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .solutions li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(0, 102, 204, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: #e8ecf1;
+            color: #1a1f2e;
+            border: 2px solid #0066cc;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .footer-text {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e8ecf1;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .contact-info {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">✗</div>
+
+        <h1>Pago No Completado</h1>
+
+        <p>Lo sentimos, no pudimos procesar tu pago en este momento.</p>
+        <p>Tu carrito sigue guardado y puedes intentar de nuevo.</p>
+
+        <div class="error-box">
+            <p><strong>Razones posibles:</strong></p>
+            <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                <li>Fondos insuficientes</li>
+                <li>Tarjeta rechazada</li>
+                <li>Datos incorrectos</li>
+                <li>Conexión interrumpida</li>
+            </ul>
+        </div>
+
+        <div class="solutions">
+            <p><strong>¿Qué puedes hacer?</strong></p>
+            <ol>
+                <li>Verifica tu información bancaria</li>
+                <li>Intenta con otro método de pago</li>
+                <li>Comprueba que tu tarjeta esté activa</li>
+                <li>Contacta a tu banco si persiste el problema</li>
+                <li>Intenta nuevamente en unos minutos</li>
+            </ol>
+        </div>
+
+        <div class="actions">
+            <a href="index.html" class="btn btn-primary">Volver al Carrito</a>
+            <a href="index.html" class="btn btn-secondary">Continuar Comprando</a>
+        </div>
+
+        <div class="contact-info">
+            <p><strong>¿Necesitas ayuda?</strong></p>
+            <p>Si el problema persiste, contacta con nuestro equipo de soporte.</p>
+            <p>Email: soporte@macline.cl</p>
+            <p>Teléfono: +56 2 XXXX XXXX</p>
+        </div>
+
+        <div class="footer-text">
+            <p>&copy; 2024 Mac Line - Tienda de Tecnología</p>
+        </div>
+    </div>
+
+    <script>
+        // El carrito sigue guardado en localStorage
+        // No hacemos nada aquí, el usuario puede volver y reintentar
+    </script>
+</body>
+</html>

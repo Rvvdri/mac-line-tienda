@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAC LINE - Panel de Administración</title>
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <nav class="admin-navbar">
+        <div class="navbar-content">
+            <h1>🖥️ MAC LINE - ADMINISTRACIÓN</h1>
+            <div class="nav-buttons">
+                <a href="index.html" class="btn-nav">← Volver a Tienda</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="menu">
+                <button class="menu-item active" onclick="mostrarSeccion('productos')">
+                    📦 Productos
+                </button>
+                <button class="menu-item" onclick="mostrarSeccion('agregar')">
+                    ➕ Agregar Producto
+                </button>
+                <button class="menu-item" onclick="mostrarSeccion('ventas')">
+                    💰 Ventas
+                </button>
+                <button class="menu-item" onclick="mostrarSeccion('stock')">
+                    📊 Reporte Stock
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <section id="productos-seccion" class="seccion activa">
+                <h2>Gestión de Productos</h2>
+                <div class="buscador">
+                    <input type="text" id="buscarProducto" placeholder="Buscar producto..." onkeyup="filtrarProductosAdmin()">
+                </div>
+                <div class="tabla-wrapper">
+                    <table class="tabla-productos" id="tablaProductos">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Descuento</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productosTableBody">
+                            <tr><td colspan="7" style="text-align: center; padding: 2rem; color: #666;">Cargando productos...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="agregar-seccion" class="seccion">
+                <h2>Agregar Nuevo Producto</h2>
+                <form id="formularioProducto" onsubmit="agregarProducto(event)" class="formulario-producto">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre">Nombre del Producto *</label>
+                            <input type="text" id="nombre" required placeholder="iPhone 15 Pro">
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoría *</label>
+                            <select id="categoria" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="celulares">📱 Celulares</option>
+                                <option value="televisores">📺 Televisores</option>
+                                <option value="computadores">💻 Computadores</option>
+                                <option value="audifonos">🎧 Audífonos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="descripcion">Descripción *</label>
+                            <textarea id="descripcion" required placeholder="Descripción del producto..." rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="precio">Precio (CLP) *</label>
+                            <input type="number" id="precio" required min="1000" step="1000" placeholder="1000000">
+                        </div>
+                        <div class="form-group">
+                            <label for="precioOriginal">Precio Original (opcional)</label>
+                            <input type="number" id="precioOriginal" min="1000" step="1000" placeholder="1500000">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="descuento">Descuento (%) - Solo números redondos (25, 30, 35, 40)</label>
+                            <input type="number" id="descuento" min="0" max="100" step="5" placeholder="30">
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stock *</label>
+                            <input type="number" id="stock" required min="0" placeholder="10">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emoji">Emoji (para representar el producto)</label>
+                        <input type="text" id="emoji" maxlength="2" placeholder="📱" value="📦">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                        <button type="reset" class="btn btn-secondary">Limpiar</button>
+                    </div>
+                </form>
+            </section>
+
+            <section id="ventas-seccion" class="seccion">
+                <h2>Historial de Ventas</h2>
+                <div class="tabla-wrapper">
+                    <table class="tabla-ventas" id="tablaVentas">
+                        <thead>
+                            <tr>
+                                <th>ID Venta</th>
+                                <th>Cliente</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Total</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ventasTableBody">
+                            <tr><td colspan="7" style="text-align: center; padding: 2rem; color: #666;">Cargando ventas...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="stock-seccion" class="seccion">
+                <h2>Reporte de Stock</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Productos</h3>
+                        <p class="stat-number" id="totalProductos">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Productos Agotados</h3>
+                        <p class="stat-number" id="productosAgotados">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Stock Bajo (&lt;5)</h3>
+                        <p class="stat-number" id="stockBajo">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Ventas</h3>
+                        <p class="stat-number" id="totalVentas">$0</p>
+                    </div>
+                </div>
+
+                <div class="tabla-wrapper">
+                    <table class="tabla-stock">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Stock Actual</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stockTableBody">
+                            <tr><td colspan="4" style="text-align: center; padding: 2rem; color: #666;">Cargando datos...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="editarModal" class="modal-admin" style="display: none;">
+        <div class="modal-admin-content">
+            <h2>Editar Producto</h2>
+            <form id="formularioEditar" onsubmit="guardarEdicion(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editNombre">Nombre</label>
+                        <input type="text" id="editNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategoria">Categoría</label>
+                        <select id="editCategoria" required>
+                            <option value="celulares">Celulares</option>
+                            <option value="televisores">Televisores</option>
+                            <option value="computadores">Computadores</option>
+                            <option value="audifonos">Audífonos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editPrecio">Precio</label>
+                        <input type="number" id="editPrecio" required min="1000" step="1000">
+                    </div>
+                    <div class="form-group">
+                        <label for="editStock">Stock</label>
+                        <input type="number" id="editStock" required min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editDescuento">Descuento (%)</label>
+                        <input type="number" id="editDescuento" min="0" max="100" step="5">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="detallesVentaModal" class="modal-admin" style="display: none;">
+        <div class="modal-admin-content">
+            <h2>Detalles de la Venta</h2>
+            <div id="detallesVentaContent"></div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="cerrarModalVenta()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
