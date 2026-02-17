@@ -39,7 +39,7 @@ function aplicarFiltros() {
     }
 
     grid.innerHTML = productosFiltrados.map(producto => `
-        <div class="producto-card">
+        <div class="producto-card" onclick="window.location.href='producto.html?id=${producto.id}'" style="cursor: pointer;">
             <div class="producto-imagen">
                 ${producto.emoji}
                 ${producto.descuento ? `<div class="producto-badge">-${producto.descuento}%</div>` : ''}
@@ -51,7 +51,6 @@ function aplicarFiltros() {
                 <div class="producto-precios">
                     ${producto.precioOriginal ? `<span class="precio-original">$${producto.precioOriginal.toLocaleString('es-CL')}</span>` : ''}
                     <span class="precio-actual">$${producto.precio.toLocaleString('es-CL')}</span>
-                    ${producto.descuento ? `<span class="descuento">-${producto.descuento}%</span>` : ''}
                 </div>
                 <div class="producto-stock">
                     ${producto.stock > 0 
@@ -59,11 +58,6 @@ function aplicarFiltros() {
                         : `<span class="stock-agotado">✗ Agotado</span>`
                     }
                 </div>
-                <button class="btn-agregar" 
-                    onclick="agregarAlCarrito(${producto.id})" 
-                    ${producto.stock === 0 ? 'disabled' : ''}>
-                    ${producto.stock === 0 ? 'Agotado' : 'Agregar al Carrito'}
-                </button>
             </div>
         </div>
     `).join('');
