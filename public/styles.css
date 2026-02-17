@@ -32,17 +32,65 @@ body {
 .navbar {
     background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
     padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
     border-bottom: 2px solid var(--color-accent);
     box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
 }
 
 .navbar .container {
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-sticky {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+    padding: 0.75rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-sticky .container {
+    display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
+}
+
+.search-container {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 40px 10px 16px;
+    border: 1px solid #d2d2d7;
+    border-radius: 12px;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    background-color: white;
+    border-color: #0071e3;
+    box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .logo h1 {
@@ -176,10 +224,30 @@ body {
 }
 
 .promo-banner {
-    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-alt));
-    padding: 2rem;
-    text-align: center;
+    position: relative;
+    padding: 0;
     margin: 2rem 0;
+    overflow: hidden;
+}
+
+.promo-slider {
+    position: relative;
+    width: 100%;
+    height: 200px;
+}
+
+.promo-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.promo-slide.active {
+    opacity: 1;
+    pointer-events: all;
 }
 
 .promo-content {
@@ -187,21 +255,117 @@ body {
     align-items: center;
     justify-content: center;
     gap: 2rem;
+    height: 100%;
+    padding: 2rem;
+}
+
+.promo-celulares {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.promo-audifonos {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.promo-tvs {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.promo-computadores {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.promo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .promo-emoji {
-    font-size: 3rem;
+    font-size: 4rem;
     animation: bounce 2s infinite;
 }
 
 .promo-banner h3 {
     color: white;
     font-size: 2rem;
+    margin: 0;
 }
 
 .promo-banner p {
     color: rgba(255, 255, 255, 0.95);
     font-size: 1.1rem;
+    margin: 0;
+}
+
+.promo-tag {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    width: fit-content;
+}
+
+.promo-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border: none;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.promo-nav:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.promo-prev {
+    left: 20px;
+}
+
+.promo-next {
+    right: 20px;
+}
+
+.promo-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: white;
+    width: 30px;
+    border-radius: 5px;
 }
 
 @keyframes bounce {
@@ -255,134 +419,148 @@ body {
 
 .producto-card {
     background: white;
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
+    border: none;
+    border-radius: 16px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .producto-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow);
-    border-color: var(--color-accent);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
 .producto-imagen {
     width: 100%;
-    height: 250px;
-    background: linear-gradient(135deg, #e8ecf1, #f0f4f8);
+    height: 280px;
+    background: #f5f5f7;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
+    font-size: 6.5rem;
     position: relative;
     overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+.producto-card:hover .producto-imagen {
+    background: #e8e8ed;
 }
 
 .producto-badge {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: var(--color-accent-alt);
+    top: 15px;
+    right: 15px;
+    background-color: #ff3b30;
     color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
+    padding: 6px 12px;
+    border-radius: 20px;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
 }
 
 .producto-info {
-    padding: 1.5rem;
+    padding: 1.75rem 1.5rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    gap: 0.75rem;
 }
 
 .producto-categoria {
-    color: var(--color-accent);
-    font-size: 0.85rem;
-    margin-bottom: 0.5rem;
+    color: #86868b;
+    font-size: 0.75rem;
+    margin: 0;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
+    font-weight: 500;
 }
 
 .producto-nombre {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-light);
+    font-size: 1.25rem;
+    margin: 0;
+    color: #1d1d1f;
     font-weight: 600;
+    line-height: 1.3;
 }
 
 .producto-descripcion {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: #6e6e73;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .producto-precios {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin: 0.5rem 0;
 }
 
 .precio-original {
-    font-size: 0.9rem;
-    color: #999;
+    font-size: 0.875rem;
+    color: #86868b;
     text-decoration: line-through;
 }
 
 .precio-actual {
-    font-size: 1.8rem;
-    color: var(--color-accent);
-    font-weight: 700;
+    font-size: 1.5rem;
+    color: #1d1d1f;
+    font-weight: 600;
 }
 
 .descuento {
-    background-color: var(--color-accent-alt);
+    background-color: #ff3b30;
     color: white;
-    padding: 2px 8px;
+    padding: 3px 8px;
     border-radius: 4px;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     font-weight: 600;
 }
 
 .producto-stock {
-    font-size: 0.85rem;
-    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    margin: 0;
 }
 
 .stock-disponible {
-    color: #00aa00;
+    color: #34c759;
+    font-weight: 500;
 }
 
 .stock-agotado {
-    color: #ff4444;
+    color: #ff3b30;
+    font-weight: 500;
 }
 
 .btn-agregar {
-    background-color: var(--color-accent);
+    background-color: #0071e3;
     color: white;
     padding: 12px;
     border: none;
-    border-radius: 6px;
+    border-radius: 12px;
     cursor: pointer;
     font-weight: 600;
     transition: all 0.3s ease;
     width: 100%;
+    font-size: 0.9rem;
+    margin-top: auto;
 }
 
 .btn-agregar:hover:not(:disabled) {
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 102, 204, 0.4);
+    background-color: #0077ed;
+    transform: scale(1.02);
 }
 
 .btn-agregar:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    background-color: #86868b;
 }
 
 .loading {
@@ -616,14 +794,29 @@ body {
 @media (max-width: 768px) {
 
     /* NAVBAR */
-    .navbar .container {
-        flex-direction: column;
-        gap: 0.75rem;
-        padding: 0.75rem 1rem;
+    .navbar {
+        padding: 0.75rem 0;
     }
 
     .logo h1 {
         font-size: 1.4rem;
+    }
+
+    /* NAVBAR STICKY */
+    .navbar-sticky .container {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .search-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .search-input {
+        padding: 9px 40px 9px 14px;
+        font-size: 0.9rem;
     }
 
     .nav-links {
@@ -662,21 +855,46 @@ body {
         margin: 1rem 0;
     }
 
+    .promo-slider {
+        height: 180px;
+    }
+
     .promo-content {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.75rem;
+        padding: 1.5rem 1rem;
     }
 
     .promo-emoji {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     .promo-banner h3 {
         font-size: 1.3rem;
+        text-align: center;
     }
 
     .promo-banner p {
         font-size: 0.9rem;
+        text-align: center;
+    }
+
+    .promo-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    .promo-prev {
+        left: 10px;
+    }
+
+    .promo-next {
+        right: 10px;
+    }
+
+    .promo-text {
+        align-items: center;
     }
 
     /* PRODUCTOS */
@@ -703,7 +921,7 @@ body {
 
     .producto-imagen {
         height: 150px;
-        font-size: 3rem;
+        font-size: 4rem;
     }
 
     .producto-info {

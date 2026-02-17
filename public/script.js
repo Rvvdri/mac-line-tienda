@@ -2,6 +2,7 @@ const API_URL =  `${window.location.origin}/api`;
 let carrito = [];
 let productosActuales = [];
 let filtroActivo = 'todos';
+let terminoBusqueda = '';
 
 document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
@@ -9,29 +10,31 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarCarrito();
 });
 
-async function cargarProductos() {
-    try {
-        const response = await fetch(`${API_URL}/productos`);
-        const data = await response.json();
-        productosActuales = data;
-        renderizarProductos('todos');
-    } catch (error) {
-        console.error('Error al cargar productos:', error);
-        document.getElementById('productosGrid').innerHTML = 
-            '<p style="color: red; grid-column: 1/-1; text-align: center; padding: 2rem;">Error al cargar los productos. Asegúrate de que el servidor esté corriendo en puerto 3000</p>';
-    }
+function buscarProductos() {
+    terminoBusqueda = document.getElementById('searchInput').value.toLowerCase();
+    aplicarFiltros();
 }
 
-function renderizarProductos(filtro) {
+function aplicarFiltros() {
     const grid = document.getElementById('productosGrid');
     let productosFiltrados = productosActuales;
 
-    if (filtro !== 'todos') {
-        productosFiltrados = productosActuales.filter(p => p.categoria === filtro);
+    // Filtrar por categoría
+    if (filtroActivo !== 'todos') {
+        productosFiltrados = productosFiltrados.filter(p => p.categoria === filtroActivo);
+    }
+
+    // Filtrar por búsqueda
+    if (terminoBusqueda) {
+        productosFiltrados = productosFiltrados.filter(p => 
+            p.nombre.toLowerCase().includes(terminoBusqueda) ||
+            p.descripcion.toLowerCase().includes(terminoBusqueda) ||
+            p.categoria.toLowerCase().includes(terminoBusqueda)
+        );
     }
 
     if (productosFiltrados.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">No hay productos en esta categoría</p>';
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">No se encontraron productos</p>';
         return;
     }
 
@@ -66,6 +69,25 @@ function renderizarProductos(filtro) {
     `).join('');
 }
 
+async function cargarProductos() {
+    try {
+        const response = await fetch(`${API_URL}/productos`);
+        const data = await response.json();
+        productosActuales = data;
+        aplicarFiltros();
+    } catch (error) {
+        console.error('Error al cargar productos:', error);
+        document.getElementById('productosGrid').innerHTML = 
+            '<p style="color: red; grid-column: 1/-1; text-align: center; padding: 2rem;">Error al cargar los productos. Asegúrate de que el servidor esté corriendo en puerto 3000</p>';
+    }
+}
+
+function renderizarProductos(filtro) {
+    // Esta función ahora solo cambia el filtro y llama a aplicarFiltros
+    filtroActivo = filtro;
+    aplicarFiltros();
+}
+
 function filtrarProductos(filtro) {
     filtroActivo = filtro;
     
@@ -74,7 +96,7 @@ function filtrarProductos(filtro) {
     });
     event.target.classList.add('active');
     
-    renderizarProductos(filtro);
+    aplicarFiltros();
 }
 
 function agregarAlCarrito(productoId) {
@@ -264,3 +286,45 @@ window.onclick = function(event) {
         cerrarPago();
     }
 }
+
+// ============== CARRUSEL DE PROMOCIONES ==============
+let promoActual = 0;
+let autoPlayInterval;
+
+function mostrarPromo(index) {
+    const slides = document.querySelectorAll('.promo-slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    // Remover active de todos
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Circular: si index es negativo o mayor que el total
+    if (index >= slides.length) promoActual = 0;
+    else if (index < 0) promoActual = slides.length - 1;
+    else promoActual = index;
+    
+    // Activar el actual
+    slides[promoActual].classList.add('active');
+    dots[promoActual].classList.add('active');
+}
+
+function cambiarPromo(direccion) {
+    mostrarPromo(promoActual + direccion);
+    reiniciarAutoPlay();
+}
+
+function irAPromo(index) {
+    mostrarPromo(index);
+    reiniciarAutoPlay();
+}
+
+function reiniciarAutoPlay() {
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = setInterval(() => {
+        mostrarPromo(promoActual + 1);
+    }, 15000);
+}
+
+// Iniciar autoplay
+reiniciarAutoPlay();

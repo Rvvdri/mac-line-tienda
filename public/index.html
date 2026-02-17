@@ -14,6 +14,16 @@
                 <h1>🖥️ MAC LINE</h1>
                 <p class="tagline">Tecnología Premium</p>
             </div>
+        </div>
+    </nav>
+    
+    <!-- BARRA STICKY -->
+    <div class="navbar-sticky">
+        <div class="container">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Buscar productos..." onkeyup="buscarProductos()">
+                <span class="search-icon">🔍</span>
+            </div>
             <ul class="nav-links">
                 <li><a href="#inicio" class="nav-item">Inicio</a></li>
                 <li><a href="#productos" class="nav-item">Productos</a></li>
@@ -22,7 +32,7 @@
                 </a></li>
             </ul>
         </div>
-    </nav>
+    </div>
 
     <!-- HERO SECTION -->
     <section id="inicio" class="hero">
@@ -30,18 +40,60 @@
         <div class="hero-content">
             <h2>Tecnología Premium al Alcance</h2>
             <p>Descubre nuestros productos de última generación con los mejores precios</p>
-            <button class="btn btn-primary btn-lg" onclick="document.getElementById('productos').scrollIntoView({behavior:'smooth'})">
-                Explorar Catálogo
-            </button>
         </div>
     </section>
 
     <!-- BANNER PROMOCIÓN -->
     <section class="promo-banner">
-        <div class="promo-content">
-            <span class="promo-emoji">📱</span>
-            <h3>¡PROMOCIÓN EXCLUSIVA!</h3>
-            <p>Celulares con descuentos de 25% a 40%</p>
+        <button class="promo-nav promo-prev" onclick="cambiarPromo(-1)">‹</button>
+        <div class="promo-slider">
+            <div class="promo-slide active" data-promo="0">
+                <div class="promo-content promo-celulares">
+                    <span class="promo-emoji">📱</span>
+                    <div class="promo-text">
+                        <h3>¡IPHONES EN OFERTA!</h3>
+                        <p>Descuentos de 25% a 40% en celulares</p>
+                        <span class="promo-tag">Hasta agotar stock</span>
+                    </div>
+                </div>
+            </div>
+            <div class="promo-slide" data-promo="1">
+                <div class="promo-content promo-audifonos">
+                    <span class="promo-emoji">🎧</span>
+                    <div class="promo-text">
+                        <h3>AUDÍFONOS PREMIUM</h3>
+                        <p>Hasta 30% de descuento en marcas top</p>
+                        <span class="promo-tag">Envío gratis</span>
+                    </div>
+                </div>
+            </div>
+            <div class="promo-slide" data-promo="2">
+                <div class="promo-content promo-tvs">
+                    <span class="promo-emoji">📺</span>
+                    <div class="promo-text">
+                        <h3>TELEVISORES 4K</h3>
+                        <p>Desde $1.200.000 - Tecnología de punta</p>
+                        <span class="promo-tag">12 cuotas sin interés</span>
+                    </div>
+                </div>
+            </div>
+            <div class="promo-slide" data-promo="3">
+                <div class="promo-content promo-computadores">
+                    <span class="promo-emoji">💻</span>
+                    <div class="promo-text">
+                        <h3>LAPTOPS GAMING</h3>
+                        <p>Computadores de última generación en oferta</p>
+                        <span class="promo-tag">Garantía extendida</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="promo-nav promo-next" onclick="cambiarPromo(1)">›</button>
+        <div class="promo-dots">
+            <span class="dot active" onclick="irAPromo(0)"></span>
+            <span class="dot" onclick="irAPromo(1)"></span>
+            <span class="dot" onclick="irAPromo(2)"></span>
+            <span class="dot" onclick="irAPromo(3)"></span>
         </div>
     </section>
 
