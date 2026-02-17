@@ -49,8 +49,8 @@ function aplicarFiltros() {
                 <h3 class="producto-nombre">${producto.nombre}</h3>
                 <p class="producto-descripcion">${producto.descripcion}</p>
                 <div class="producto-precios">
-                    ${producto.precioOriginal ? `<span class="precio-original">$${producto.precioOriginal.toLocaleString()}</span>` : ''}
-                    <span class="precio-actual">$${producto.precio.toLocaleString()}</span>
+                    ${producto.precioOriginal ? `<span class="precio-original">$${producto.precioOriginal.toLocaleString('es-CL')}</span>` : ''}
+                    <span class="precio-actual">$${producto.precio.toLocaleString('es-CL')}</span>
                     ${producto.descuento ? `<span class="descuento">-${producto.descuento}%</span>` : ''}
                 </div>
                 <div class="producto-stock">
@@ -151,7 +151,7 @@ function abrirCarrito() {
             <div class="carrito-item">
                 <div class="item-info">
                     <div class="item-nombre">${item.nombre}</div>
-                    <div class="item-precio">$${item.precio.toLocaleString()} c/u</div>
+                    <div class="item-precio">$${item.precio.toLocaleString('es-CL')} c/u</div>
                 </div>
                 <div class="item-cantidad">
                     <button onclick="cambiarCantidad(${index}, -1)">−</button>
@@ -165,7 +165,7 @@ function abrirCarrito() {
     }
     
     const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    document.getElementById('totalPrecio').textContent = total.toLocaleString();
+    document.getElementById('totalPrecio').textContent = total.toLocaleString('es-CL');
     
     modal.style.display = 'flex';
 }
@@ -194,8 +194,8 @@ function procederPago() {
     const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
     const totalConEnvio = total + 0;
     
-    document.getElementById('subtotalPago').textContent = total.toLocaleString();
-    document.getElementById('totalPago').textContent = totalConEnvio.toLocaleString();
+    document.getElementById('subtotalPago').textContent = total.toLocaleString('es-CL');
+    document.getElementById('totalPago').textContent = totalConEnvio.toLocaleString('es-CL');
     
     document.getElementById('pagoModal').style.display = 'flex';
 }

@@ -10,6 +10,30 @@ document.addEventListener('DOMContentLoaded', () => {
     actualizarEstadisticas();
 });
 
+// FUNCIÓN PARA CALCULAR DESCUENTO AUTOMÁTICAMENTE
+function calcularDescuento() {
+    const precioOriginal = parseFloat(document.getElementById('precioOriginal').value);
+    const precioFinal = parseFloat(document.getElementById('precio').value);
+    
+    if (precioOriginal && precioFinal && precioOriginal > precioFinal) {
+        const descuento = Math.round(((precioOriginal - precioFinal) / precioOriginal) * 100);
+        document.getElementById('descuento').value = descuento;
+    } else {
+        document.getElementById('descuento').value = 0;
+    }
+}
+
+// FUNCIÓN PARA CALCULAR PRECIO FINAL DESDE DESCUENTO
+function calcularPrecioFinal() {
+    const precioOriginal = parseFloat(document.getElementById('precioOriginal').value);
+    const descuento = parseFloat(document.getElementById('descuento').value);
+    
+    if (precioOriginal && descuento) {
+        const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
+        document.getElementById('precio').value = precioFinal;
+    }
+}
+
 function mostrarSeccion(seccion) {
     document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
     document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
@@ -41,7 +65,7 @@ function renderizarTablaProductos(productos) {
             <td>${p.id}</td>
             <td>${p.nombre}</td>
             <td>${p.categoria}</td>
-            <td>$${p.precio.toLocaleString()}</td>
+            <td>$${p.precio.toLocaleString('es-CL')}</td>
             <td>
                 <strong>${p.stock}</strong>
                 ${p.stock === 0 ? '<br><span style="color: #ff4444;">AGOTADO</span>' : ''}
@@ -195,7 +219,7 @@ function renderizarTablaVentas(ventas) {
             <td>${v.cliente.nombre}</td>
             <td>${v.cliente.email}</td>
             <td>${v.cliente.telefono}</td>
-            <td>$${v.total.toLocaleString()}</td>
+            <td>$${v.total.toLocaleString('es-CL')}</td>
             <td>${new Date(v.fechaCreacion).toLocaleDateString('es-CL')}</td>
             <td>
                 <button class="btn-detalles" onclick="verDetallesVenta(${v.id})">👁️ Ver</button>
@@ -212,8 +236,8 @@ function verDetallesVenta(ventaId) {
         <tr>
             <td>${item.nombre}</td>
             <td>${item.cantidad}</td>
-            <td>$${item.precio.toLocaleString()}</td>
-            <td>$${(item.cantidad * item.precio).toLocaleString()}</td>
+            <td>$${item.precio.toLocaleString('es-CL')}</td>
+            <td>$${(item.cantidad * item.precio).toLocaleString('es-CL')}</td>
         </tr>
     `).join('');
 
@@ -245,7 +269,7 @@ function verDetallesVenta(ventaId) {
         </div>
 
         <div style="background-color: #0f1419; padding: 1rem; border-radius: 6px; border: 2px solid #00d4ff;">
-            <p style="text-align: right; font-size: 1.3rem;"><strong style="color: #00d4ff;">Total: $${venta.total.toLocaleString()}</strong></p>
+            <p style="text-align: right; font-size: 1.3rem;"><strong style="color: #00d4ff;">Total: $${venta.total.toLocaleString('es-CL')}</strong></p>
         </div>
     `;
 
@@ -267,7 +291,7 @@ function actualizarEstadisticas() {
     document.getElementById('stockBajo').textContent = stockBajo;
 
     const totalVentas = ventasAdmin.reduce((sum, v) => sum + v.total, 0);
-    document.getElementById('totalVentas').textContent = '$' + totalVentas.toLocaleString();
+    document.getElementById('totalVentas').textContent = '$' + totalVentas.toLocaleString('es-CL');
 
     renderizarTablaStock();
 }

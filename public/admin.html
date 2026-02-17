@@ -90,19 +90,21 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="precio">Precio (CLP) *</label>
-                            <input type="number" id="precio" required min="1000" step="1000" placeholder="1000000">
+                            <label for="precio">Precio Final (CLP) *</label>
+                            <input type="number" id="precio" required min="1000" step="1" placeholder="484990">
+                            <small style="color: #6e6e73;">Este es el precio que verán los clientes</small>
                         </div>
                         <div class="form-group">
                             <label for="precioOriginal">Precio Original (opcional)</label>
-                            <input type="number" id="precioOriginal" min="1000" step="1000" placeholder="1500000">
+                            <input type="number" id="precioOriginal" min="1000" step="1" placeholder="1500000" oninput="calcularDescuento()">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="descuento">Descuento (%) - Solo números redondos (25, 30, 35, 40)</label>
-                            <input type="number" id="descuento" min="0" max="100" step="5" placeholder="30">
+                            <label for="descuento">Descuento (%)</label>
+                            <input type="number" id="descuento" min="0" max="100" step="1" placeholder="30" oninput="calcularPrecioFinal()" readonly>
+                            <small style="color: #6e6e73;">Se calcula automáticamente</small>
                         </div>
                         <div class="form-group">
                             <label for="stock">Stock *</label>
@@ -207,7 +209,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="editPrecio">Precio</label>
-                        <input type="number" id="editPrecio" required min="1000" step="1000">
+                        <input type="number" id="editPrecio" required min="1000" step="1">
                     </div>
                     <div class="form-group">
                         <label for="editStock">Stock</label>
@@ -218,7 +220,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="editDescuento">Descuento (%)</label>
-                        <input type="number" id="editDescuento" min="0" max="100" step="5">
+                        <input type="number" id="editDescuento" min="0" max="100" step="1">
                     </div>
                 </div>
 
