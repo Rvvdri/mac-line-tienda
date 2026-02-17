@@ -91,7 +91,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="precio">Precio Final (CLP) *</label>
-                            <input type="number" id="precio" required min="1000" step="1" placeholder="484990">
+                            <input type="number" id="precio" required min="1000" step="1" placeholder="484990" oninput="calcularDescuento()">
                             <small style="color: #6e6e73;">Este es el precio que verán los clientes</small>
                         </div>
                         <div class="form-group">
@@ -103,8 +103,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="descuento">Descuento (%)</label>
-                            <input type="number" id="descuento" min="0" max="100" step="1" placeholder="30" oninput="calcularPrecioFinal()" readonly>
-                            <small style="color: #6e6e73;">Se calcula automáticamente</small>
+                            <input type="number" id="descuento" min="0" max="100" step="1" placeholder="30">
+                            <small style="color: #6e6e73;">Se calcula automáticamente al poner precio original y final</small>
                         </div>
                         <div class="form-group">
                             <label for="stock">Stock *</label>
