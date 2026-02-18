@@ -681,7 +681,7 @@ body {
     cursor: pointer;
     padding: 0;
     position: fixed;
-    top: 1rem;
+    top: 85px; /* Debajo del navbar */
     left: 0.75rem;
     z-index: 10001;
     width: 45px;
@@ -826,7 +826,7 @@ body {
         font-size: 0.7rem;
     }
     
-    /* NAVBAR STICKY - BUSCADOR CORRIDO A LA DERECHA */
+    /* NAVBAR STICKY - BUSCADOR SIN PADDING EXTRA */
     .navbar-sticky {
         padding: 0.75rem 0;
     }
@@ -834,7 +834,7 @@ body {
     .navbar-sticky .container {
         flex-direction: row;
         gap: 0.75rem;
-        padding: 0 0.75rem 0 4rem; /* Espacio a la izquierda para el botón ☰ */
+        padding: 0 1rem; /* SIN padding-left extra */
         align-items: center;
     }
     
