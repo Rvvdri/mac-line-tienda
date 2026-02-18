@@ -7,6 +7,30 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- BOTÓN MENÚ HAMBURGUESA (MÓVIL) -->
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menú">☰</button>
+    
+    <!-- OVERLAY PARA CERRAR MENÚ -->
+    <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
+    
+    <!-- MENÚ LATERAL MÓVIL -->
+    <nav class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <h2>🖥️ MAC LINE</h2>
+            <button class="mobile-nav-close" onclick="closeMobileMenu()">&times;</button>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a href="#inicio" onclick="closeMobileMenu()">🏠 Inicio</a></li>
+            <li><a href="#productos" onclick="closeMobileMenu()">📦 Productos</a></li>
+            <li><a href="#" onclick="filtrarProductos('celulares'); closeMobileMenu();">📱 Celulares</a></li>
+            <li><a href="#" onclick="filtrarProductos('audifonos'); closeMobileMenu();">🎧 Audífonos</a></li>
+            <li><a href="#" onclick="filtrarProductos('relojes'); closeMobileMenu();">⌚ Relojes</a></li>
+            <li><a href="#" onclick="filtrarProductos('notebooks'); closeMobileMenu();">💻 Computadores</a></li>
+            <li><a href="#" onclick="filtrarProductos('televisores'); closeMobileMenu();">📺 TVs</a></li>
+            <li><a href="#" onclick="abrirCarrito(); closeMobileMenu();">🛒 Carrito</a></li>
+        </ul>
+    </nav>
+
     <!-- NAVBAR FIJA EN TOP -->
     <nav class="navbar">
         <div class="container">
@@ -176,5 +200,42 @@
     </footer>
 
     <script src="script.js"></script>
+    
+    <!-- FUNCIONES DEL MENÚ MÓVIL -->
+    <script>
+    function toggleMobileMenu() {
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.querySelector('.mobile-overlay');
+        const btn = document.querySelector('.mobile-menu-btn');
+        
+        mobileNav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        btn.classList.toggle('active');
+        
+        if (mobileNav.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+
+    function closeMobileMenu() {
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.querySelector('.mobile-overlay');
+        const btn = document.querySelector('.mobile-menu-btn');
+        
+        mobileNav.classList.remove('active');
+        overlay.classList.remove('active');
+        btn.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Cerrar menú al presionar ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMobileMenu();
+        }
+    });
+    </script>
 </body>
 </html>
