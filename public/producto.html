@@ -37,7 +37,7 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        /* ========== GALERÍA CON CARRUSEL ========== */
+        /* GALERÍA CON CARRUSEL */
         .galeria {
             display: flex;
             flex-direction: column;
@@ -72,7 +72,6 @@
             padding: 1rem;
         }
 
-        /* Botones de navegación del carrusel */
         .carousel-nav {
             position: absolute;
             top: 50%;
@@ -107,7 +106,6 @@
             right: 10px;
         }
 
-        /* Thumbnails (miniaturas) */
         .thumbnails {
             display: flex;
             gap: 0.75rem;
@@ -166,7 +164,6 @@
             font-size: 2.5rem;
         }
 
-        /* Indicador de imagen actual */
         .image-counter {
             position: absolute;
             bottom: 10px;
@@ -293,10 +290,17 @@
             font-size: 1.1rem;
         }
 
+        /* RESPONSIVE PARA MÓVILES */
         @media (max-width: 768px) {
+            .producto-detalle-container {
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+
             .producto-layout {
                 grid-template-columns: 1fr;
                 padding: 1.5rem;
+                gap: 1.5rem;
             }
 
             .imagen-principal {
@@ -351,7 +355,7 @@
                     </div>
                 </div>
 
-                <!-- THUMBNAILS (Miniaturas) -->
+                <!-- THUMBNAILS -->
                 <div class="thumbnails" id="thumbnailsContainer">
                     <!-- Se llenarán dinámicamente -->
                 </div>
