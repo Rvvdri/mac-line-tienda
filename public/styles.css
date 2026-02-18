@@ -681,7 +681,7 @@ body {
     cursor: pointer;
     padding: 0;
     position: fixed;
-    top: 85px; /* Debajo del navbar */
+    top: 120px; /* MÁS ABAJO - después del navbar completo */
     left: 0.75rem;
     z-index: 10001;
     width: 45px;
