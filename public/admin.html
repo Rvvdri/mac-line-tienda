@@ -74,9 +74,10 @@
                             <select id="categoria" required>
                                 <option value="">Seleccionar...</option>
                                 <option value="celulares">📱 Celulares</option>
+                                <option value="audifonos">🎧 Audífonos</option>
+                                <option value="relojes">⌚ Relojes</option>
                                 <option value="televisores">📺 Televisores</option>
                                 <option value="computadores">💻 Computadores</option>
-                                <option value="audifonos">🎧 Audífonos</option>
                             </select>
                         </div>
                     </div>
@@ -90,21 +91,19 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="precio">Precio Final (CLP) *</label>
-                            <input type="number" id="precio" required min="1000" step="1" placeholder="484990" oninput="calcularDescuento()">
-                            <small style="color: #6e6e73;">Este es el precio que verán los clientes</small>
+                            <label for="precio">Precio (CLP) *</label>
+                            <input type="number" id="precio" required min="1000" step="1000" placeholder="1000000">
                         </div>
                         <div class="form-group">
                             <label for="precioOriginal">Precio Original (opcional)</label>
-                            <input type="number" id="precioOriginal" min="1000" step="1" placeholder="1500000" oninput="calcularDescuento()">
+                            <input type="number" id="precioOriginal" min="1000" step="1000" placeholder="1500000">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="descuento">Descuento (%)</label>
-                            <input type="number" id="descuento" min="0" max="100" step="1" placeholder="30">
-                            <small style="color: #6e6e73;">Se calcula automáticamente al poner precio original y final</small>
+                            <label for="descuento">Descuento (%) - Solo números redondos (25, 30, 35, 40)</label>
+                            <input type="number" id="descuento" min="0" max="100" step="5" placeholder="30">
                         </div>
                         <div class="form-group">
                             <label for="stock">Stock *</label>
@@ -199,9 +198,10 @@
                         <label for="editCategoria">Categoría</label>
                         <select id="editCategoria" required>
                             <option value="celulares">Celulares</option>
+                            <option value="audifonos">Audífonos</option>
+                            <option value="relojes">Relojes</option>
                             <option value="televisores">Televisores</option>
                             <option value="computadores">Computadores</option>
-                            <option value="audifonos">Audífonos</option>
                         </select>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="editPrecio">Precio</label>
-                        <input type="number" id="editPrecio" required min="1000" step="1">
+                        <input type="number" id="editPrecio" required min="1000" step="1000">
                     </div>
                     <div class="form-group">
                         <label for="editStock">Stock</label>
@@ -220,7 +220,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="editDescuento">Descuento (%)</label>
-                        <input type="number" id="editDescuento" min="0" max="100" step="1">
+                        <input type="number" id="editDescuento" min="0" max="100" step="5">
                     </div>
                 </div>
 

@@ -1,0 +1,337 @@
+/* ========== ESTILOS PARA MODALES DEL CARRITO ========== */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e0e0e0;
+    background: #f8f9fa;
+    border-radius: 16px 16px 0 0;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1d1d1f;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+/* ITEMS DEL CARRITO */
+.carrito-items {
+    padding: 1.5rem 2rem;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.empty-cart {
+    text-align: center;
+    color: #999;
+    font-size: 1.1rem;
+    padding: 3rem 0;
+}
+
+.carrito-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.item-emoji {
+    font-size: 3rem;
+    min-width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 8px;
+}
+
+.item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.item-nombre {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #1d1d1f;
+}
+
+.item-precio {
+    color: #0071e3;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.item-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.cantidad-btn {
+    background: #0071e3;
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    z-index: 100;
+    position: relative;
+}
+
+.cantidad-btn:hover {
+    background: #0077ed;
+    transform: scale(1.1);
+}
+
+.cantidad-btn:active {
+    transform: scale(0.95);
+}
+
+.item-cantidad span {
+    font-weight: 600;
+    min-width: 30px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.btn-eliminar {
+    background: #ff3b30;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+    z-index: 100;
+    position: relative;
+}
+
+.btn-eliminar:hover {
+    background: #ff2d20;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 59, 48, 0.3);
+}
+
+.btn-eliminar:active {
+    transform: translateY(0);
+}
+
+/* TOTAL DEL CARRITO */
+.carrito-total {
+    padding: 1.5rem 2rem;
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.carrito-total h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #1d1d1f;
+    text-align: right;
+}
+
+/* ACCIONES DEL CARRITO */
+.carrito-acciones {
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn {
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    z-index: 100;
+    position: relative;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.btn-primary {
+    background: #0071e3;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0077ed;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: white;
+    color: #0071e3;
+    border: 2px solid #0071e3;
+}
+
+.btn-secondary:hover {
+    background: #f0f7ff;
+}
+
+/* FORMULARIO DE PAGO */
+.form-group {
+    margin-bottom: 1.5rem;
+    padding: 0 2rem;
+}
+
+.form-group:first-of-type {
+    margin-top: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.875rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #0071e3;
+    box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+}
+
+.total-pago {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin: 0 2rem 1.5rem 2rem;
+}
+
+.payment-modal form button[type="submit"] {
+    margin: 0 2rem 1.5rem 2rem;
+    width: calc(100% - 4rem);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+    
+    .modal-header,
+    .carrito-items,
+    .carrito-total,
+    .carrito-acciones {
+        padding: 1rem 1.5rem;
+    }
+    
+    .carrito-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .item-info {
+        width: 100%;
+        align-items: center;
+    }
+    
+    .item-cantidad {
+        justify-content: center;
+    }
+    
+    .form-group,
+    .total-pago,
+    .payment-modal form button[type="submit"] {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        width: calc(100% - 2rem);
+    }
+}

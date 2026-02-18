@@ -1,0 +1,318 @@
+{
+  "samsung": [
+    {
+      "nombre": "Samsung Neo QLED 8K QN900D 85\"",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 5999,
+      "caracteristicas": "85\" 8K (7680x4320), Neo QLED, Quantum Matrix Pro, Neural Quantum Processor 8K, 120Hz, Object Tracking Sound Pro, Tizen OS, One Connect"
+    },
+    {
+      "nombre": "Samsung Neo QLED 8K QN900D 75\"",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 4499,
+      "caracteristicas": "75\" 8K (7680x4320), Neo QLED, Quantum Matrix Pro, Neural Quantum Processor 8K, 120Hz, Dolby Atmos, Solar Cell Remote"
+    },
+    {
+      "nombre": "Samsung Neo QLED 4K QN95D 85\"",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 4299,
+      "caracteristicas": "85\" 4K QLED, Quantum Matrix Technology, Neural Quantum Processor 4K, 144Hz VRR, Mini LED, HDR10+, Anti-Reflejo"
+    },
+    {
+      "nombre": "Samsung Neo QLED 4K QN90D 75\"",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 2999,
+      "caracteristicas": "75\" 4K Neo QLED, Quantum HDR 32x, Neural Processor 4K, 120Hz, Gaming Hub, Motion Xcelerator Turbo Pro"
+    },
+    {
+      "nombre": "Samsung OLED S95D 77\"",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 4499,
+      "caracteristicas": "77\" 4K OLED, Quantum Dot OLED, Neural Quantum Processor 4K, 144Hz, Dolby Vision IQ, Infinity Screen, LaserSlim Design"
+    },
+    {
+      "nombre": "Samsung OLED S90D 65\"",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 2299,
+      "caracteristicas": "65\" 4K OLED, Quantum Dot Technology, Neural Processor 4K, 120Hz VRR, HDR10+, Object Tracking Sound+"
+    },
+    {
+      "nombre": "Samsung Crystal UHD CU8000 75\"",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 1099,
+      "caracteristicas": "75\" 4K Crystal UHD, Crystal Processor 4K, PurColor, HDR10+, 60Hz, Gaming Hub, Tizen Smart TV"
+    },
+    {
+      "nombre": "Samsung Crystal UHD CU7000 65\"",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 699,
+      "caracteristicas": "65\" 4K Crystal UHD, Crystal Processor 4K, Motion Xcelerator, HDR, Contrast Enhancer, Smart TV Tizen"
+    },
+    {
+      "nombre": "Samsung QLED Q80C 75\"",
+      "marca": "Samsung",
+      "año": 2023,
+      "precio_referencia_usd": 1899,
+      "caracteristicas": "75\" 4K QLED, Quantum Processor Lite 4K, Direct Full Array, 120Hz, Quantum HDR, Gaming Hub, Alexa Built-in"
+    },
+    {
+      "nombre": "Samsung QLED Q60C 65\"",
+      "marca": "Samsung",
+      "año": 2023,
+      "precio_referencia_usd": 899,
+      "caracteristicas": "65\" 4K QLED, Quantum Processor Lite 4K, Dual LED, Quantum HDR, 60Hz, AirSlim Design, Tizen OS"
+    },
+    {
+      "nombre": "Samsung Neo QLED QN85C 55\"",
+      "marca": "Samsung",
+      "año": 2023,
+      "precio_referencia_usd": 1299,
+      "caracteristicas": "55\" 4K Neo QLED, Mini LED, Neural Quantum Processor 4K, 120Hz, Quantum Matrix, Dolby Atmos"
+    },
+    {
+      "nombre": "Samsung The Frame 65\" (2024)",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 1999,
+      "caracteristicas": "65\" 4K QLED Art Mode, Matte Display anti-reflejo, Quantum Processor 4K, Art Store, Marco personalizable, Slim Fit Wall Mount"
+    }
+  ],
+  "xiaomi": [
+    {
+      "nombre": "Xiaomi TV Max 100\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 1999,
+      "caracteristicas": "100\" 4K UHD, 120Hz, Dolby Vision IQ, Dolby Atmos, Google TV, HDMI 2.1, MEMC, 192 zonas dimming local"
+    },
+    {
+      "nombre": "Xiaomi TV S Pro 85\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 1499,
+      "caracteristicas": "85\" 4K QLED, 144Hz VRR, Dolby Vision, Mini LED 384 zonas, Google TV, HDMI 2.1, AMD FreeSync Premium"
+    },
+    {
+      "nombre": "Xiaomi TV S Pro 75\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 1199,
+      "caracteristicas": "75\" 4K QLED, 144Hz, Dolby Vision IQ, Mini LED 240 zonas, Google TV, HDMI 2.1 x4, 60W Dolby Atmos"
+    },
+    {
+      "nombre": "Xiaomi TV S Pro 65\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 899,
+      "caracteristicas": "65\" 4K QLED, 144Hz VRR, Dolby Vision, Mini LED 192 zonas, Google TV, Gaming Mode, AMD FreeSync"
+    },
+    {
+      "nombre": "Xiaomi TV A Pro 75\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 799,
+      "caracteristicas": "75\" 4K UHD, 60Hz, Dolby Vision, Dolby Audio, Google TV, Chromecast built-in, HDMI 2.1, HDR10+"
+    },
+    {
+      "nombre": "Xiaomi TV A Pro 65\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 599,
+      "caracteristicas": "65\" 4K UHD, 60Hz, Dolby Vision, Google TV, HDR10+, MEMC, Far-Field Voice Control, bezel-less"
+    },
+    {
+      "nombre": "Redmi Max 100\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 1699,
+      "caracteristicas": "100\" 4K UHD, 120Hz, Dolby Vision, 240 zonas dimming, Google TV, HDMI 2.1, Gaming Mode, 50W Audio"
+    },
+    {
+      "nombre": "Redmi Smart TV X86 86\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 1099,
+      "caracteristicas": "86\" 4K UHD, 120Hz MEMC, Dolby Vision, Google TV, HDMI 2.1, HDR10+, 30W Dolby Audio"
+    },
+    {
+      "nombre": "Redmi Smart TV X75 75\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 699,
+      "caracteristicas": "75\" 4K UHD, 60Hz, Dolby Vision, Google TV, HDR10, MEMC Motion, Chromecast, bezel-less design"
+    },
+    {
+      "nombre": "Redmi Smart TV X65 65\"",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 499,
+      "caracteristicas": "65\" 4K UHD, 60Hz, Dolby Audio, Google TV, HDR10, Chromecast built-in, PatchWall UI"
+    },
+    {
+      "nombre": "Xiaomi TV Q2 Pro 85\"",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "precio_referencia_usd": 1899,
+      "caracteristicas": "85\" 4K QLED, 120Hz, Dolby Vision IQ, Full Array Local Dimming 360 zonas, Google TV, HDMI 2.1"
+    },
+    {
+      "nombre": "Xiaomi TV Q1E 75\"",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "precio_referencia_usd": 999,
+      "caracteristicas": "75\" 4K QLED, 120Hz, Dolby Vision, HDR10+, Google TV, MEMC, Far-field Voice Control"
+    }
+  ],
+  "huawei": [
+    {
+      "nombre": "Huawei Vision Smart Screen V5 Pro 98\"",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 3999,
+      "caracteristicas": "98\" 4K Mini LED, 120Hz, HarmonyOS 4, Honghu 900 chip, 2304 zonas dimming, AI Camera 24MP, 20 altavoces Devialet"
+    },
+    {
+      "nombre": "Huawei Vision Smart Screen V5 Pro 85\"",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 2999,
+      "caracteristicas": "85\" 4K Mini LED, 120Hz VRR, HarmonyOS 4, 1440 zonas dimming, AI Camera 13MP, Huawei Sound 6 altavoces"
+    },
+    {
+      "nombre": "Huawei Vision Smart Screen V5 75\"",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 1899,
+      "caracteristicas": "75\" 4K QLED, 120Hz, HarmonyOS 4, Honghu 818 chip, 720 zonas dimming, AI Camera pop-up, Super Device"
+    },
+    {
+      "nombre": "Huawei Vision S5 Pro 85\"",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 2199,
+      "caracteristicas": "85\" 4K Mini LED, 144Hz, HarmonyOS 4, 960 zonas dimming local, MEMC, Huawei Sound, Super Device Hub"
+    },
+    {
+      "nombre": "Huawei Vision S5 75\"",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 1499,
+      "caracteristicas": "75\" 4K UHD, 120Hz, HarmonyOS 4, Full Array 480 zonas, AI Camera, Multi-screen Collaboration"
+    },
+    {
+      "nombre": "Huawei Vision SE 75\"",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 999,
+      "caracteristicas": "75\" 4K UHD, 60Hz, HarmonyOS 4, HDR Vivid, Huawei Histen Audio, Chromecast, Kids Mode"
+    },
+    {
+      "nombre": "Huawei Vision SE 65\"",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 699,
+      "caracteristicas": "65\" 4K UHD, 60Hz, HarmonyOS 4, HDR10+, MEMC, Smart Screen Cast, Voice Control"
+    },
+    {
+      "nombre": "Huawei Vision Smart Screen V3 Pro 85\"",
+      "marca": "Huawei",
+      "año": 2023,
+      "precio_referencia_usd": 2699,
+      "caracteristicas": "85\" 4K Mini LED, 120Hz, HarmonyOS 3, 1152 zonas dimming, AI Camera 24MP, Devialet 20 speakers"
+    },
+    {
+      "nombre": "Huawei Vision S3 Pro 75\"",
+      "marca": "Huawei",
+      "año": 2023,
+      "precio_referencia_usd": 1699,
+      "caracteristicas": "75\" 4K QLED, 120Hz, HarmonyOS 3, 480 zonas dimming, AI Camera, Multi-device Collaboration"
+    },
+    {
+      "nombre": "Huawei Vision S3 65\"",
+      "marca": "Huawei",
+      "año": 2023,
+      "precio_referencia_usd": 1199,
+      "caracteristicas": "65\" 4K UHD, 120Hz, HarmonyOS 3, Full Array 240 zonas, MEMC Pro, Huawei Histen"
+    }
+  ],
+  "honor": [
+    {
+      "nombre": "Honor Vision 5 Pro 85\"",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 2199,
+      "caracteristicas": "85\" 4K Mini LED, 144Hz VRR, MagicOS for TV, 960 zonas dimming, AI Camera 24MP, Honor Histen Sound"
+    },
+    {
+      "nombre": "Honor Vision 5 Pro 75\"",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 1599,
+      "caracteristicas": "75\" 4K QLED, 144Hz, MagicOS for TV, 720 zonas dimming local, AI Magic Control, Multi-Screen Collaboration"
+    },
+    {
+      "nombre": "Honor Vision 5 65\"",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 1099,
+      "caracteristicas": "65\" 4K QLED, 120Hz VRR, MagicOS for TV, 480 zonas dimming, MEMC Pro, Gaming Mode, Dolby Vision"
+    },
+    {
+      "nombre": "Honor Smart Screen X5 75\"",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 999,
+      "caracteristicas": "75\" 4K UHD, 120Hz MEMC, MagicOS, Full Array 240 zonas, HDR Vivid, Honor Histen, Voice Control"
+    },
+    {
+      "nombre": "Honor Smart Screen X5 65\"",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 699,
+      "caracteristicas": "65\" 4K UHD, 60Hz, MagicOS for TV, HDR10+, MEMC, Multi-device Control, Kids Mode"
+    },
+    {
+      "nombre": "Honor Smart Screen X3 55\"",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 499,
+      "caracteristicas": "55\" 4K UHD, 60Hz, MagicOS, HDR10, Chromecast built-in, AI Voice, Bezel-less 94% screen"
+    },
+    {
+      "nombre": "Honor Vision 3 Pro 75\"",
+      "marca": "Honor",
+      "año": 2023,
+      "precio_referencia_usd": 1499,
+      "caracteristicas": "75\" 4K QLED, 120Hz, MagicOS, 480 zonas dimming, AI Camera pop-up, Honor Histen 6 speakers"
+    },
+    {
+      "nombre": "Honor Smart Screen V8 Pro 85\"",
+      "marca": "Honor",
+      "año": 2023,
+      "precio_referencia_usd": 2499,
+      "caracteristicas": "85\" 4K Mini LED, 144Hz, MagicOS, 1152 zonas dimming, AI Camera 24MP, Gaming Mode Pro, Dolby Atmos"
+    },
+    {
+      "nombre": "Honor Smart Screen S1 Pro 65\"",
+      "marca": "Honor",
+      "año": 2023,
+      "precio_referencia_usd": 899,
+      "caracteristicas": "65\" 4K UHD, 120Hz MEMC, MagicOS, Full Array 180 zonas, HDR Vivid, Multi-screen Share"
+    },
+    {
+      "nombre": "Honor Smart Screen S1 55\"",
+      "marca": "Honor",
+      "año": 2023,
+      "precio_referencia_usd": 599,
+      "caracteristicas": "55\" 4K UHD, 60Hz, MagicOS, HDR10+, MEMC, Far-field Voice Control, 94% screen-to-body"
+    }
+  ]
+}

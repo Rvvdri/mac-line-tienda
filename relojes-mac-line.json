@@ -1,0 +1,271 @@
+{
+  "apple": [
+    {
+      "nombre": "Apple Watch Series 11",
+      "marca": "Apple",
+      "año": 2025,
+      "caracteristicas": "Presión arterial, Live Translation, Sleep Score, 5G, batería 24h, carga rápida mejorada, pantalla resistente",
+      "precio_referencia_usd": 399
+    },
+    {
+      "nombre": "Apple Watch Ultra 3",
+      "marca": "Apple",
+      "año": 2025,
+      "caracteristicas": "Chip S10, 42h batería, pantalla más grande, titanio, GPS dual-freq, profundidad 100m, botón acción",
+      "precio_referencia_usd": 799
+    },
+    {
+      "nombre": "Apple Watch Series 10",
+      "marca": "Apple",
+      "año": 2024,
+      "caracteristicas": "Pantalla más grande, diseño más delgado, carga rápida, detección caídas, ECG, 18h batería",
+      "precio_referencia_usd": 399
+    },
+    {
+      "nombre": "Apple Watch Ultra 2",
+      "marca": "Apple",
+      "año": 2023,
+      "caracteristicas": "Chip S9, Double Tap, pantalla 3000 nits, 36h batería, titanio, GPS preciso, 100m resistencia agua",
+      "precio_referencia_usd": 799
+    },
+    {
+      "nombre": "Apple Watch Series 9",
+      "marca": "Apple",
+      "año": 2023,
+      "caracteristicas": "Chip S9, Double Tap gesture, Siri en dispositivo, pantalla brillante, 18h batería, aluminio/acero",
+      "precio_referencia_usd": 399
+    },
+    {
+      "nombre": "Apple Watch SE 2",
+      "marca": "Apple",
+      "año": 2022,
+      "caracteristicas": "Detección caídas, SOS emergencia, fitness tracking, notificaciones, 50m agua, precio accesible",
+      "precio_referencia_usd": 249
+    }
+  ],
+  "samsung": [
+    {
+      "nombre": "Galaxy Watch Ultra 2025",
+      "marca": "Samsung",
+      "año": 2025,
+      "caracteristicas": "64GB storage, Titanio azul, Quick Button personalizable, batería larga duración, Galaxy AI, GPS mejorado",
+      "precio_referencia_usd": 649
+    },
+    {
+      "nombre": "Galaxy Watch 8",
+      "marca": "Samsung",
+      "año": 2025,
+      "caracteristicas": "Energy Score con IA, Sleep Coaching, Running Coach personalizado, sensor mejorado, carga rápida",
+      "precio_referencia_usd": 319
+    },
+    {
+      "nombre": "Galaxy Watch 8 Classic",
+      "marca": "Samsung",
+      "año": 2025,
+      "caracteristicas": "Bisel rotatorio, diseño premium, Energy Score IA, monitoreo salud avanzado, carga rápida",
+      "precio_referencia_usd": 419
+    },
+    {
+      "nombre": "Galaxy Watch 7",
+      "marca": "Samsung",
+      "año": 2024,
+      "caracteristicas": "Wear OS 5, sensor BioActive mejorado, Galaxy AI, batería eficiente, seguimiento salud completo",
+      "precio_referencia_usd": 299
+    },
+    {
+      "nombre": "Galaxy Watch 6",
+      "marca": "Samsung",
+      "año": 2023,
+      "caracteristicas": "Batería mayor, más RAM, sensor salud mejorado, Wear OS 4, seguimiento sueño avanzado",
+      "precio_referencia_usd": 299
+    },
+    {
+      "nombre": "Galaxy Watch 6 Classic",
+      "marca": "Samsung",
+      "año": 2023,
+      "caracteristicas": "Bisel rotatorio físico, diseño clásico premium, seguimiento salud completo, batería mejorada",
+      "precio_referencia_usd": 399
+    },
+    {
+      "nombre": "Galaxy Watch FE",
+      "marca": "Samsung",
+      "año": 2024,
+      "caracteristicas": "Basado en Watch 4, precio accesible, seguimiento fitness, salud básica, Sapphire Crystal",
+      "precio_referencia_usd": 199
+    }
+  ],
+  "xiaomi": [
+    {
+      "nombre": "Xiaomi Watch 2 Pro",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "caracteristicas": "Snapdragon W5+, Wear OS 3.5, 1.43\" AMOLED, GPS dual-freq, 65h batería, llamadas Bluetooth",
+      "precio_referencia_usd": 259
+    },
+    {
+      "nombre": "Xiaomi Watch 2",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "Snapdragon W5+, Wear OS 4, 2GB RAM, 32GB storage, 160+ modos deporte, 65h batería, económico",
+      "precio_referencia_usd": 199
+    },
+    {
+      "nombre": "Xiaomi Watch S3",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "caracteristicas": "HyperOS, 1.43\" AMOLED, eSIM 4G/3G, control gestos una mano, batería larga, diseño elegante",
+      "precio_referencia_usd": 149
+    },
+    {
+      "nombre": "Redmi Watch 4",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "caracteristicas": "1.97\" pantalla grande, 470mAh batería, precio accesible, fitness tracking, Bluetooth calling",
+      "precio_referencia_usd": 79
+    },
+    {
+      "nombre": "Redmi Watch 5",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "Batería mejorada, monitoreo salud completo, múltiples modos deporte, diseño moderno, asequible",
+      "precio_referencia_usd": 99
+    },
+    {
+      "nombre": "Redmi Watch 5 Active",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "Ultra económico, fitness básico, larga batería, pantalla AMOLED, ideal principiantes",
+      "precio_referencia_usd": 49
+    },
+    {
+      "nombre": "Xiaomi Smart Band 8 Pro",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "caracteristicas": "1.74\" AMOLED, 14 días batería, GPS integrado, 150+ modos deporte, ultra ligera, económica",
+      "precio_referencia_usd": 69
+    }
+  ],
+  "huawei": [
+    {
+      "nombre": "Huawei Watch 5",
+      "marca": "Huawei",
+      "año": 2025,
+      "caracteristicas": "HarmonyOS 5.1, X-Tap sensor salud IA, ECG, 42mm/46mm opciones, titanio/acero, batería larga",
+      "precio_referencia_usd": 399
+    },
+    {
+      "nombre": "Huawei Watch GT 5 Pro",
+      "marca": "Huawei",
+      "año": 2024,
+      "caracteristicas": "Diseño premium, rutas GPX, batería extendida, monitoreo salud profesional, deportes outdoor",
+      "precio_referencia_usd": 349
+    },
+    {
+      "nombre": "Huawei Watch GT 5",
+      "marca": "Huawei",
+      "año": 2024,
+      "caracteristicas": "HarmonyOS 4, batería 2 semanas, seguimiento salud avanzado, 100+ modos deporte, GPS preciso",
+      "precio_referencia_usd": 249
+    },
+    {
+      "nombre": "Huawei Watch 4 Pro",
+      "marca": "Huawei",
+      "año": 2023,
+      "caracteristicas": "eSIM, HarmonyOS 4, ECG, presión arterial, zafiro crystal, titanio, batería larga, premium",
+      "precio_referencia_usd": 499
+    },
+    {
+      "nombre": "Huawei Watch 4",
+      "marca": "Huawei",
+      "año": 2023,
+      "caracteristicas": "HarmonyOS 4, eSIM, monitoreo salud completo, seguimiento fitness, batería duradera",
+      "precio_referencia_usd": 349
+    },
+    {
+      "nombre": "Huawei Watch GT 4",
+      "marca": "Huawei",
+      "año": 2023,
+      "caracteristicas": "HarmonyOS 4, batería 14 días, gestión calorías, GPS preciso, diseño elegante 41mm/46mm",
+      "precio_referencia_usd": 249
+    },
+    {
+      "nombre": "Huawei Watch Ultimate",
+      "marca": "Huawei",
+      "año": 2023,
+      "caracteristicas": "Liquid Metal zirconio, ultra resistente, zafiro, premium outdoor, buceo, golf, expediciones",
+      "precio_referencia_usd": 799
+    },
+    {
+      "nombre": "Huawei Watch Fit 3",
+      "marca": "Huawei",
+      "año": 2024,
+      "caracteristicas": "HarmonyOS 4.2, pantalla pequeña, ultra ligero, batería larga, fitness tracking, económico",
+      "precio_referencia_usd": 99
+    },
+    {
+      "nombre": "Huawei Watch D2",
+      "marca": "Huawei",
+      "año": 2024,
+      "caracteristicas": "Medición presión arterial médica, ECG, monitoreo salud profesional, inflado automático",
+      "precio_referencia_usd": 399
+    }
+  ],
+  "honor": [
+    {
+      "nombre": "Honor Watch 5",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "MagicOS actualizado, monitoreo salud IA, batería larga, diseño elegante, múltiples modos deporte",
+      "precio_referencia_usd": 199
+    },
+    {
+      "nombre": "Honor Watch GS 4",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "1.43\" AMOLED 46mm, GPS integrado, NFC, MagicOS, batería 14 días, seguimiento salud avanzado",
+      "precio_referencia_usd": 179
+    },
+    {
+      "nombre": "Honor Watch 4",
+      "marca": "Honor",
+      "año": 2023,
+      "caracteristicas": "1.75\" AMOLED, 14 días batería, Bluetooth calling, MagicOS 7.2, fitness tracking, 451mAh",
+      "precio_referencia_usd": 149
+    },
+    {
+      "nombre": "Honor Watch GS 3",
+      "marca": "Honor",
+      "año": 2022,
+      "caracteristicas": "1.43\" AMOLED, 8-Channel Heart Rate IA, SpO2 continuo, GPS dual-freq, acero inoxidable 316L",
+      "precio_referencia_usd": 199
+    },
+    {
+      "nombre": "Honor MagicWatch 2 46mm",
+      "marca": "Honor",
+      "año": 2019,
+      "caracteristicas": "Chip Kirin A1, 14 días batería, 15 modos fitness, TruSleep 2.0, llamadas Bluetooth, clásico",
+      "precio_referencia_usd": 179
+    },
+    {
+      "nombre": "Honor MagicWatch 2 42mm",
+      "marca": "Honor",
+      "año": 2019,
+      "caracteristicas": "Versión compacta, Kirin A1, batería larga, fitness tracking, elegante, TruSeen 3.5",
+      "precio_referencia_usd": 159
+    },
+    {
+      "nombre": "Honor Watch Magic",
+      "marca": "Honor",
+      "año": 2018,
+      "caracteristicas": "Diseño ligero innovador, AMOLED, batería duradera, fitness modes, precio económico, clásico",
+      "precio_referencia_usd": 129
+    },
+    {
+      "nombre": "Honor Band 9",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "Fitness tracker económico, AMOLED compacta, batería larga, múltiples modos, ultra ligera",
+      "precio_referencia_usd": 39
+    }
+  ]
+}

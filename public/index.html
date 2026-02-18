@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- NAVBAR -->
+    <!-- NAVBAR FIJA EN TOP -->
     <nav class="navbar">
         <div class="container">
             <div class="logo">
@@ -16,13 +16,12 @@
             </div>
         </div>
     </nav>
-    
-    <!-- BARRA STICKY -->
-    <div class="navbar-sticky">
+
+    <!-- NAVBAR STICKY CON BÚSQUEDA Y LINKS -->
+    <nav class="navbar-sticky">
         <div class="container">
-            <div class="search-container">
-                <input type="text" id="searchInput" class="search-input" placeholder="Buscar productos..." onkeyup="buscarProductos()">
-                <span class="search-icon">🔍</span>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar productos..." onkeyup="buscarProductos()">
             </div>
             <ul class="nav-links">
                 <li><a href="#inicio" class="nav-item">Inicio</a></li>
@@ -32,7 +31,7 @@
                 </a></li>
             </ul>
         </div>
-    </div>
+    </nav>
 
     <!-- HERO SECTION -->
     <section id="inicio" class="hero">
@@ -43,57 +42,51 @@
         </div>
     </section>
 
-    <!-- BANNER PROMOCIÓN -->
-    <section class="promo-banner">
-        <button class="promo-nav promo-prev" onclick="cambiarPromo(-1)">‹</button>
-        <div class="promo-slider">
-            <div class="promo-slide active" data-promo="0">
-                <div class="promo-content promo-celulares">
+    <!-- CARRUSEL PROMOCIONES -->
+    <section class="promo-carousel">
+        <button class="carousel-btn prev" onclick="cambiarSlide(-1)">❮</button>
+        
+        <div class="carousel-container">
+            <div class="carousel-slide active" data-index="0">
+                <div class="promo-content">
                     <span class="promo-emoji">📱</span>
-                    <div class="promo-text">
-                        <h3>¡IPHONES EN OFERTA!</h3>
-                        <p>Descuentos de 25% a 40% en celulares</p>
-                        <span class="promo-tag">Hasta agotar stock</span>
-                    </div>
+                    <h3>¡CELULARES EN OFERTA!</h3>
+                    <p>Hasta 30% de descuento en smartphones premium</p>
                 </div>
             </div>
-            <div class="promo-slide" data-promo="1">
-                <div class="promo-content promo-audifonos">
+            
+            <div class="carousel-slide" data-index="1">
+                <div class="promo-content">
                     <span class="promo-emoji">🎧</span>
-                    <div class="promo-text">
-                        <h3>AUDÍFONOS PREMIUM</h3>
-                        <p>Hasta 30% de descuento en marcas top</p>
-                        <span class="promo-tag">Envío gratis</span>
-                    </div>
+                    <h3>¡AUDÍFONOS PREMIUM!</h3>
+                    <p>La mejor calidad de audio desde $18.990</p>
                 </div>
             </div>
-            <div class="promo-slide" data-promo="2">
-                <div class="promo-content promo-tvs">
-                    <span class="promo-emoji">📺</span>
-                    <div class="promo-text">
-                        <h3>TELEVISORES 4K</h3>
-                        <p>Desde $1.200.000 - Tecnología de punta</p>
-                        <span class="promo-tag">12 cuotas sin interés</span>
-                    </div>
+            
+            <div class="carousel-slide" data-index="2">
+                <div class="promo-content">
+                    <span class="promo-emoji">⌚</span>
+                    <h3>¡RELOJES INTELIGENTES!</h3>
+                    <p>Smartwatches desde $36.890 - Apple, Samsung, Xiaomi</p>
                 </div>
             </div>
-            <div class="promo-slide" data-promo="3">
-                <div class="promo-content promo-computadores">
+            
+            <div class="carousel-slide" data-index="3">
+                <div class="promo-content">
                     <span class="promo-emoji">💻</span>
-                    <div class="promo-text">
-                        <h3>LAPTOPS GAMING</h3>
-                        <p>Computadores de última generación en oferta</p>
-                        <span class="promo-tag">Garantía extendida</span>
-                    </div>
+                    <h3>¡ENVÍO GRATIS!</h3>
+                    <p>En compras sobre $50.000 a todo Chile</p>
                 </div>
             </div>
         </div>
-        <button class="promo-nav promo-next" onclick="cambiarPromo(1)">›</button>
-        <div class="promo-dots">
-            <span class="dot active" onclick="irAPromo(0)"></span>
-            <span class="dot" onclick="irAPromo(1)"></span>
-            <span class="dot" onclick="irAPromo(2)"></span>
-            <span class="dot" onclick="irAPromo(3)"></span>
+        
+        <button class="carousel-btn next" onclick="cambiarSlide(1)">❯</button>
+        
+        <div class="carousel-dots">
+            <span class="dot active" onclick="irASlide(0)"></span>
+            <span class="dot" onclick="irASlide(1)"></span>
+            <span class="dot" onclick="irASlide(2)"></span>
+            <span class="dot" onclick="irASlide(3)"></span>
         </div>
     </section>
 
@@ -106,9 +99,10 @@
             <div class="filtros">
                 <button class="filtro-btn active" onclick="filtrarProductos('todos')">Todos</button>
                 <button class="filtro-btn" onclick="filtrarProductos('celulares')">📱 Celulares</button>
-                <button class="filtro-btn" onclick="filtrarProductos('televisores')">📺 Televisores</button>
-                <button class="filtro-btn" onclick="filtrarProductos('computadores')">💻 Computadores</button>
                 <button class="filtro-btn" onclick="filtrarProductos('audifonos')">🎧 Audífonos</button>
+                <button class="filtro-btn" onclick="filtrarProductos('relojes')">⌚ Relojes</button>
+                <button class="filtro-btn" onclick="filtrarProductos('televisores')">📺 Televisores</button>
+                <button class="filtro-btn" onclick="filtrarProductos('notebooks')">💻 Computadores</button>
             </div>
 
             <!-- GRID DE PRODUCTOS -->
