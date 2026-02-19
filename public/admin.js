@@ -101,10 +101,10 @@ async function agregarProducto(event) {
         nombre: document.getElementById('nombre').value,
         categoria: document.getElementById('categoria').value,
         descripcion: document.getElementById('descripcion').value,
-        precio: parseInt(document.getElementById('precio').value),
-        precioOriginal: parseInt(document.getElementById('precioOriginal').value) || null,
+        precio: parseFloat(document.getElementById('precio').value),
+        precioOriginal: parseFloat(document.getElementById('precioOriginal').value) || null,
         stock: parseInt(document.getElementById('stock').value),
-        descuento: parseInt(document.getElementById('descuento').value) || 0,
+        descuento: parseFloat(document.getElementById('descuento').value) || 0,
         emoji: document.getElementById('emoji').value || '📦'
     };
     
@@ -159,9 +159,9 @@ async function guardarEdicion(event) {
     const datosActualizados = {
         nombre: document.getElementById('editNombre').value,
         categoria: document.getElementById('editCategoria').value,
-        precio: parseInt(document.getElementById('editPrecio').value),
+        precio: parseFloat(document.getElementById('editPrecio').value),
         stock: parseInt(document.getElementById('editStock').value),
-        descuento: parseInt(document.getElementById('editDescuento').value) || 0
+        descuento: parseFloat(document.getElementById('editDescuento').value) || 0
     };
     
     try {
