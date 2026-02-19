@@ -62,7 +62,7 @@ body {
     padding: 1.2rem 0;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 10100; /* MÁS ALTO que el botón hamburguesa (10001) */
     border-bottom: 2px solid var(--color-accent);
     box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
 }
@@ -681,9 +681,9 @@ body {
     cursor: pointer;
     padding: 0;
     position: fixed;
-    top: 120px; /* MÁS ABAJO - después del navbar completo */
+    top: 1rem;
     left: 0.75rem;
-    z-index: 10001;
+    z-index: 10001; /* MENOR que navbar-sticky (10100) */
     width: 45px;
     height: 45px;
     border-radius: 50%;

@@ -99,7 +99,9 @@ function buscarProductos() {
     grid.innerHTML = productosFiltrados.map(producto => `
         <div class="producto-card" onclick="window.location.href='producto.html?id=${producto.id}'">
             <div class="producto-imagen">
-                ${producto.emoji}
+                ${producto.imagenPortada 
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
+                    : producto.emoji}
                 ${producto.descuento ? `<div class="producto-badge">-${producto.descuento}%</div>` : ''}
             </div>
             <div class="producto-info">
@@ -151,7 +153,9 @@ function renderizarProductos(filtro) {
     grid.innerHTML = productosFiltrados.map(producto => `
         <div class="producto-card" onclick="window.location.href='producto.html?id=${producto.id}'">
             <div class="producto-imagen">
-                ${producto.emoji}
+                ${producto.imagenPortada 
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
+                    : producto.emoji}
                 ${producto.descuento ? `<div class="producto-badge">-${producto.descuento}%</div>` : ''}
             </div>
             <div class="producto-info">
