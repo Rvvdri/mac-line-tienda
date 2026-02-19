@@ -19,18 +19,10 @@
     <div class="admin-container">
         <aside class="sidebar">
             <div class="menu">
-                <button class="menu-item active" onclick="mostrarSeccion('productos')">
-                    📦 Productos
-                </button>
-                <button class="menu-item" onclick="mostrarSeccion('agregar')">
-                    ➕ Agregar Producto
-                </button>
-                <button class="menu-item" onclick="mostrarSeccion('ventas')">
-                    💰 Ventas
-                </button>
-                <button class="menu-item" onclick="mostrarSeccion('stock')">
-                    📊 Reporte Stock
-                </button>
+                <button class="menu-item active" onclick="mostrarSeccion('productos')">📦 Productos</button>
+                <button class="menu-item" onclick="mostrarSeccion('agregar')">➕ Agregar Producto</button>
+                <button class="menu-item" onclick="mostrarSeccion('ventas')">💰 Ventas</button>
+                <button class="menu-item" onclick="mostrarSeccion('stock')">📊 Reporte Stock</button>
             </div>
         </aside>
 
@@ -91,7 +83,7 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="precio">Precio (CLP) * - Acepta decimales (ej: 999990 o 999990.50)</label>
+                            <label for="precio">Precio (CLP) * - Acepta decimales</label>
                             <input type="number" id="precio" required min="1" step="0.01" placeholder="999990">
                         </div>
                         <div class="form-group">
@@ -102,7 +94,7 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="descuento">Descuento (%) - Acepta decimales (ej: 18 o 22.5)</label>
+                            <label for="descuento">Descuento (%) - Acepta decimales</label>
                             <input type="number" id="descuento" min="0" max="100" step="0.01" placeholder="18">
                         </div>
                         <div class="form-group">
@@ -112,7 +104,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="emoji">Emoji (para representar el producto)</label>
+                        <label for="emoji">Emoji</label>
                         <input type="text" id="emoji" maxlength="2" placeholder="📱" value="📦">
                     </div>
 
@@ -187,11 +179,62 @@
         </main>
     </div>
 
-    <div id="modalVenta" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="modal-close" onclick="cerrarModalVenta()">&times;</span>
-            <h2>Detalle de Venta</h2>
-            <div id="detalleVentaContent"></div>
+    <!-- MODAL EDITAR PRODUCTO -->
+    <div id="editarModal" class="modal-admin" style="display: none;">
+        <div class="modal-admin-content">
+            <h2>✏️ Editar Producto</h2>
+            <form onsubmit="guardarEdicion(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editNombre">Nombre</label>
+                        <input type="text" id="editNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategoria">Categoría</label>
+                        <select id="editCategoria" required>
+                            <option value="celulares">📱 Celulares</option>
+                            <option value="televisores">📺 Televisores</option>
+                            <option value="computadores">💻 Computadores</option>
+                            <option value="audifonos">🎧 Audífonos</option>
+                            <option value="relojes">⌚ Relojes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editPrecio">Precio - Acepta decimales</label>
+                        <input type="number" id="editPrecio" required min="1" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="editStock">Stock</label>
+                        <input type="number" id="editStock" required min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editDescuento">Descuento (%) - Acepta decimales</label>
+                        <input type="number" id="editDescuento" min="0" max="100" step="0.01">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DETALLES VENTA -->
+    <div id="detallesVentaModal" class="modal-admin" style="display: none;">
+        <div class="modal-admin-content">
+            <h2>Detalles de la Venta</h2>
+            <div id="detallesVentaContent"></div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="cerrarModalVenta()">Cerrar</button>
+            </div>
         </div>
     </div>
 
