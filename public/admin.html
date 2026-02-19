@@ -28,8 +28,11 @@
                 <button class="menu-item" onclick="mostrarSeccion('ventas')">
                     💰 Ventas
                 </button>
+                <button class="menu-item" onclick="mostrarSeccion('reportes')">
+                    📊 Reportes
+                </button>
                 <button class="menu-item" onclick="mostrarSeccion('stock')">
-                    📊 Reporte Stock
+                    📈 Stock
                 </button>
             </div>
         </aside>
@@ -124,24 +127,127 @@
             </section>
 
             <section id="ventas-seccion" class="seccion">
-                <h2>Historial de Ventas</h2>
+                <h2>💰 Ventas</h2>
+                
+                <!-- FILTROS DE FECHA -->
+                <div class="filtros-ventas" style="background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Período:</label>
+                            <select id="filtroFecha" onchange="aplicarFiltroVentas()" style="width: 100%; padding: 0.75rem; border: 2px solid #d0d8e0; border-radius: 8px; font-size: 1rem;">
+                                <option value="todas">Todas las ventas</option>
+                                <option value="hoy">Hoy</option>
+                                <option value="ayer">Ayer</option>
+                                <option value="semana" selected>Últimos 7 días</option>
+                                <option value="mes">Últimos 30 días</option>
+                                <option value="personalizado">Personalizado</option>
+                            </select>
+                        </div>
+                        
+                        <div id="fechaPersonalizadaDiv" style="display: none;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Desde:</label>
+                            <input type="date" id="fechaInicio" onchange="aplicarFiltroVentas()" style="width: 100%; padding: 0.75rem; border: 2px solid #d0d8e0; border-radius: 8px;">
+                        </div>
+                        
+                        <div id="fechaPersonalizadaDiv2" style="display: none;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Hasta:</label>
+                            <input type="date" id="fechaFin" onchange="aplicarFiltroVentas()" style="width: 100%; padding: 0.75rem; border: 2px solid #d0d8e0; border-radius: 8px;">
+                        </div>
+                        
+                        <div style="display: flex; align-items: flex-end;">
+                            <button onclick="exportarVentasExcel()" style="padding: 0.75rem 1.5rem; background: #00a651; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                                📊 Exportar Excel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CARDS DE ESTADÍSTICAS -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div style="background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%); color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,102,204,0.3);">
+                        <div style="font-size: 0.938rem; margin-bottom: 0.5rem;">Total Ventas</div>
+                        <div style="font-size: 2.5rem; font-weight: 700;" id="totalVentasCard">0</div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #00a651 0%, #008a43 100%); color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,166,81,0.3);">
+                        <div style="font-size: 0.938rem; margin-bottom: 0.5rem;">Ingresos Totales</div>
+                        <div style="font-size: 2rem; font-weight: 700;" id="totalIngresosCard">$0</div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #ff9500 0%, #ff7b00 100%); color: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(255,149,0,0.3);">
+                        <div style="font-size: 0.938rem; margin-bottom: 0.5rem;">Promedio por Venta</div>
+                        <div style="font-size: 2rem; font-weight: 700;" id="promedioVentaCard">$0</div>
+                    </div>
+                </div>
+                
+                <!-- TOP PRODUCTOS -->
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <h3 style="margin-bottom: 1rem;">🏆 Top 5 Productos Más Vendidos</h3>
+                    <div id="topProductos">
+                        <p style="text-align: center; color: #999;">Cargando...</p>
+                    </div>
+                </div>
+                
+                <!-- TABLA DE VENTAS -->
                 <div class="tabla-wrapper">
-                    <table class="tabla-ventas" id="tablaVentas">
+                    <table class="tabla-productos">
                         <thead>
                             <tr>
-                                <th>ID Venta</th>
+                                <th>ID</th>
                                 <th>Cliente</th>
-                                <th>Email</th>
-                                <th>Teléfono</th>
+                                <th>Productos</th>
                                 <th>Total</th>
                                 <th>Fecha</th>
-                                <th>Acciones</th>
+                                <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody id="ventasTableBody">
-                            <tr><td colspan="7" style="text-align: center; padding: 2rem; color: #666;">Cargando ventas...</td></tr>
+                            <tr><td colspan="6" style="text-align: center; padding: 2rem;">Cargando ventas...</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </section>
+
+            <!-- NUEVA SECCIÓN DE REPORTES -->
+            <section id="reportes-seccion" class="seccion">
+                <h2>📊 Reportes de Ventas</h2>
+                
+                <!-- REPORTE SEMANAL -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <h3 style="color: #0066cc; margin-bottom: 1.5rem;">📅 Reporte Semanal (Últimos 7 días)</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div style="text-align: center; padding: 1.5rem; background: #f0f8ff; border-radius: 8px;">
+                            <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.5rem;">Ventas</div>
+                            <div style="font-size: 2.5rem; font-weight: 700; color: #0066cc;" id="ventasSemanales">0</div>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: #e8f5e9; border-radius: 8px;">
+                            <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.5rem;">Ingresos</div>
+                            <div style="font-size: 2rem; font-weight: 700; color: #00a651;" id="ingresosSemanales">$0</div>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: #fff3e0; border-radius: 8px;">
+                            <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.5rem;">Promedio</div>
+                            <div style="font-size: 2rem; font-weight: 700; color: #ff9500;" id="promedioSemanal">$0</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- REPORTE MENSUAL -->
+                <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <h3 style="color: #00a651; margin-bottom: 1.5rem;">📆 Reporte Mensual (Últimos 30 días)</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div style="text-align: center; padding: 1.5rem; background: #f0f8ff; border-radius: 8px;">
+                            <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.5rem;">Ventas</div>
+                            <div style="font-size: 2.5rem; font-weight: 700; color: #0066cc;" id="ventasMensuales">0</div>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: #e8f5e9; border-radius: 8px;">
+                            <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.5rem;">Ingresos</div>
+                            <div style="font-size: 2rem; font-weight: 700; color: #00a651;" id="ingresosMensuales">$0</div>
+                        </div>
+                        <div style="text-align: center; padding: 1.5rem; background: #fff3e0; border-radius: 8px;">
+                            <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.5rem;">Promedio</div>
+                            <div style="font-size: 2rem; font-weight: 700; color: #ff9500;" id="promedioMensual">$0</div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -245,3 +351,21 @@
     <script src="admin.js"></script>
 </body>
 </html>
+
+    <script>
+    // Mostrar/ocultar campos de fecha personalizada
+    document.addEventListener('DOMContentLoaded', function() {
+        const filtroFecha = document.getElementById('filtroFecha');
+        if (filtroFecha) {
+            filtroFecha.addEventListener('change', function() {
+                const valor = this.value;
+                const div1 = document.getElementById('fechaPersonalizadaDiv');
+                const div2 = document.getElementById('fechaPersonalizadaDiv2');
+                if (div1 && div2) {
+                    div1.style.display = valor === 'personalizado' ? 'block' : 'none';
+                    div2.style.display = valor === 'personalizado' ? 'block' : 'none';
+                }
+            });
+        }
+    });
+    </script>

@@ -108,28 +108,45 @@ function renderizarProductos(filtro = 'todos') {
         }
         
         return `
-        <div class="producto-card" data-producto-id="${producto.id}" onclick="window.location.href='producto.html?id=${producto.id}'">
-            <div class="producto-imagen">
+        <div class="producto-card" data-producto-id="${producto.id}">
+            ${descuento > 0 ? `<div class="descuento-badge">-${descuento}%</div>` : ''}
+            
+            <div class="producto-header">
+                <span class="producto-categoria">${producto.categoria.toUpperCase()}</span>
+                <h3 class="producto-titulo">${producto.nombre}</h3>
+            </div>
+            
+            <div class="producto-imagen-container" onclick="window.location.href='producto.html?id=${producto.id}'">
                 ${producto.imagenPortada 
-                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
-                    : producto.emoji}
-                ${descuento > 0 ? `<div class="producto-badge">-${descuento}%</div>` : ''}
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" style="max-width: 100%; height: auto;" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
+                    : `<span class="producto-emoji" style="font-size: 5rem;">${producto.emoji}</span>`}
             </div>
             
             <div class="producto-info">
-                <h3 class="producto-nombre">${producto.nombre}</h3>
+                ${precioOriginal ? `
+                    <p class="precio-original">
+                        Antes: $${precioOriginal.toLocaleString('es-CL')}
+                    </p>
+                ` : ''}
                 
-                <div class="producto-precios">
-                    ${tieneVariantes ? '<span class="precio-desde">Desde</span>' : ''}
-                    ${precioOriginal ? `<span class="precio-original">$${precioOriginal.toLocaleString('es-CL')}</span>` : ''}
-                    <span class="precio-actual">
-                        $${precioBase.toLocaleString('es-CL')}
-                    </span>
-                </div>
+                <p class="producto-precio">
+                    ${tieneVariantes ? '<span style="font-size: 0.875rem; color: #94a3b8; font-weight: 500;">Desde </span>' : ''}
+                    $${precioBase.toLocaleString('es-CL')}
+                </p>
                 
-                <div class="producto-stock ${stockClass}">
+                <p class="stock-${stockClass}">
                     ${stockTexto}
-                </div>
+                </p>
+                
+                ${producto.stock > 0 ? `
+                    <button class="btn-agregar-carrito" onclick="event.stopPropagation(); agregarAlCarrito('${producto.id}')">
+                        🛒 Agregar al Carrito
+                    </button>
+                ` : `
+                    <button class="btn-agregar-carrito" disabled style="opacity: 0.5; cursor: not-allowed;">
+                        Agotado
+                    </button>
+                `}
             </div>
         </div>
     `}).join('');
