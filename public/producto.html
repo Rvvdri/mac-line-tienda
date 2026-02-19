@@ -363,28 +363,33 @@
 
             <!-- DETALLES -->
             <div class="producto-detalles">
+                <div class="producto-categoria" id="productoCategoria" style="font-size: 0.875rem; color: #86868b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">CELULARES</div>
+                
                 <h1 class="producto-titulo" id="productoTitulo">Cargando...</h1>
                 <div class="producto-sku" id="productoSku"></div>
                 
                 <div class="producto-precio">
                     <span class="precio-original-detalle" id="precioOriginalDetalle"></span>
-                    <span id="precioActualDetalle">$0</span>
+                    <span id="productoPrecio">$0</span>
                     <span class="descuento-badge" id="descuentoBadge"></span>
                 </div>
 
-                <div class="stock-info">
-                    <span class="stock-disponible" id="stockInfo">✓ En stock</span>
+                <div class="stock-info" id="productoStock">
+                    <span class="stock-disponible">✓ En stock</span>
                 </div>
+
+                <!-- SELECTORES DE COLOR Y CAPACIDAD -->
+                <div id="selectoresVariantes"></div>
 
                 <!-- DESCRIPCIÓN -->
                 <div class="producto-info">
-                    <div id="productoDescripcion"></div>
+                    <p id="productoDescripcion">Cargando descripción...</p>
                 </div>
 
                 <!-- BOTONES -->
                 <div class="botones-accion">
-                    <button class="btn-agregar-carrito" onclick="agregarAlCarritoDesdeDetalle()">
-                        Agregar al Carrito
+                    <button class="btn-agregar-carrito" onclick="agregarAlCarritoDetalle()">
+                        🛒 Agregar al Carrito
                     </button>
                 </div>
 
@@ -462,5 +467,38 @@
 
     <script src="script.js"></script>
     <script src="producto-detalle.js"></script>
+    <script>
+        // Alias para mantener compatibilidad
+        function cambiarImagenProducto(direccion) {
+            cambiarImagen(direccion);
+        }
+        
+        function agregarAlCarritoDesdeDetalle() {
+            agregarAlCarritoDetalle();
+        }
+        
+        function abrirCarrito() {
+            document.getElementById('carritoModal').style.display = 'flex';
+        }
+        
+        function cerrarCarrito() {
+            document.getElementById('carritoModal').style.display = 'none';
+        }
+        
+        function cerrarPago() {
+            document.getElementById('pagoModal').style.display = 'none';
+        }
+        
+        function procederPago() {
+            document.getElementById('carritoModal').style.display = 'none';
+            document.getElementById('pagoModal').style.display = 'flex';
+        }
+        
+        function procesarPago(event) {
+            event.preventDefault();
+            alert('¡Gracias por tu compra!');
+            document.getElementById('pagoModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

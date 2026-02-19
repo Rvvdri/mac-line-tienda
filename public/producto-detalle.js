@@ -1,10 +1,14 @@
-// producto-detalle.js con GALERÍA DE IMÁGENES
+// producto-detalle.js COMPATIBLE (funciona con o sin variantes)
 const API_URL_BASE = `${window.location.origin}/api`;
 let productoActual = null;
 let imagenesProducto = [];
 let imagenActualIndex = 0;
 
-// Cargar producto al iniciar la página
+// Variantes seleccionadas (si existen)
+let colorSeleccionado = null;
+let capacidadSeleccionada = null;
+let precioActual = 0;
+
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const productoId = urlParams.get('id');
@@ -29,15 +33,26 @@ async function cargarProductoDetalle(productoId) {
         
         const productos = await response.json();
         
-        productoActual = productos.find(p => {
-            return String(p.id) === String(productoId);
-        });
+        productoActual = productos.find(p => String(p.id) === String(productoId));
         
         if (!productoActual) {
             throw new Error('Producto no encontrado');
         }
         
-        // Generar imágenes para el producto
+        // Inicializar variantes SI EXISTEN
+        if (productoActual.colores && productoActual.colores.length > 0) {
+            colorSeleccionado = productoActual.colores[0];
+        }
+        
+        if (productoActual.capacidades && productoActual.capacidades.length > 0) {
+            capacidadSeleccionada = productoActual.capacidades[0];
+        }
+        
+        // Calcular precio inicial
+        const precioBase = productoActual.precioBase || productoActual.precio;
+        const incremento = capacidadSeleccionada ? capacidadSeleccionada.incremento : 0;
+        precioActual = precioBase + incremento;
+        
         imagenesProducto = generarImagenesProducto(productoActual);
         
         renderizarProductoDetalle(productoActual);
@@ -45,14 +60,12 @@ async function cargarProductoDetalle(productoId) {
         
     } catch (error) {
         console.error('Error cargando producto:', error);
-        alert('Error al cargar el producto');
+        alert('Error al cargar el producto: ' + error.message);
         window.location.href = 'index.html';
     }
 }
 
-// Función para generar URLs de imágenes
 function generarImagenesProducto(producto) {
-    // Si el producto tiene imágenes en la base de datos, usarlas
     if (producto.imagenes && producto.imagenes.length > 0) {
         return producto.imagenes.map((url, index) => ({
             type: 'url',
@@ -61,14 +74,11 @@ function generarImagenesProducto(producto) {
         }));
     }
     
-    // Fallback: Usar emoji si no hay imágenes
     const emoji = producto.emoji || '📱';
     return [
         { type: 'emoji', content: emoji, alt: `${producto.nombre} - Vista frontal` },
-        { type: 'emoji', content: emoji, alt: `${producto.nombre} - Vista lateral derecha` },
-        { type: 'emoji', content: emoji, alt: `${producto.nombre} - Vista lateral izquierda` },
-        { type: 'emoji', content: emoji, alt: `${producto.nombre} - Vista trasera` },
-        { type: 'emoji', content: emoji, alt: `${producto.nombre} - Con caja` }
+        { type: 'emoji', content: emoji, alt: `${producto.nombre} - Vista lateral` },
+        { type: 'emoji', content: emoji, alt: `${producto.nombre} - Vista trasera` }
     ];
 }
 
@@ -91,7 +101,7 @@ function mostrarImagen(index) {
         imagenPrincipal.innerHTML = imagen.content;
         imagenPrincipal.style.fontSize = '8rem';
     } else if (imagen.type === 'url') {
-        imagenPrincipal.innerHTML = `<img src="${imagen.content}" alt="${imagen.alt}" onerror="this.parentElement.innerHTML='${productoActual.emoji || '📦'}'">`;
+        imagenPrincipal.innerHTML = `<img src="${imagen.content}" alt="${imagen.alt}" onerror="this.parentElement.innerHTML='${productoActual.emoji || '📦'}'; this.parentElement.style.fontSize='8rem';">`;
     }
     
     if (currentImageIndex) currentImageIndex.textContent = index + 1;
@@ -100,297 +110,212 @@ function mostrarImagen(index) {
     imagenActualIndex = index;
 }
 
+function cambiarImagen(direccion) {
+    imagenActualIndex = (imagenActualIndex + direccion + imagenesProducto.length) % imagenesProducto.length;
+    mostrarImagen(imagenActualIndex);
+}
+
+function seleccionarImagen(index) {
+    mostrarImagen(index);
+}
+
 function renderizarThumbnails() {
-    const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+    const thumbnailsContainer = document.querySelector('.thumbnails');
     if (!thumbnailsContainer) return;
     
     thumbnailsContainer.innerHTML = imagenesProducto.map((imagen, index) => {
         if (imagen.type === 'emoji') {
             return `
-                <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="seleccionarImagen(${index})">
+                <div class="thumbnail ${index === imagenActualIndex ? 'active' : ''}" onclick="seleccionarImagen(${index})">
                     <span class="thumbnail-emoji">${imagen.content}</span>
                 </div>
             `;
         } else {
             return `
-                <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="seleccionarImagen(${index})">
-                    <img src="${imagen.content}" alt="${imagen.alt}" onerror="this.parentElement.innerHTML='<span class=\\'thumbnail-emoji\\'>${productoActual.emoji || '📦'}</span>'">
+                <div class="thumbnail ${index === imagenActualIndex ? 'active' : ''}" onclick="seleccionarImagen(${index})">
+                    <img src="${imagen.content}" alt="${imagen.alt}" onerror="this.parentElement.innerHTML='<span class=thumbnail-emoji>${productoActual.emoji || '📦'}</span>'">
                 </div>
             `;
         }
     }).join('');
 }
 
-function cambiarImagenProducto(direccion) {
-    imagenActualIndex = (imagenActualIndex + direccion + imagenesProducto.length) % imagenesProducto.length;
-    mostrarImagen(imagenActualIndex);
-    actualizarThumbnailActivo();
-}
-
-function seleccionarImagen(index) {
-    mostrarImagen(index);
-    actualizarThumbnailActivo();
-}
-
-function actualizarThumbnailActivo() {
-    document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
-        if (index === imagenActualIndex) {
-            thumb.classList.add('active');
+function renderizarProductoDetalle(producto) {
+    // Título y precio
+    document.getElementById('productoTitulo').textContent = producto.nombre;
+    document.getElementById('productoCategoria').textContent = producto.categoria.toUpperCase();
+    
+    const precioBase = producto.precioBase || producto.precio;
+    actualizarPrecioDisplay(precioBase + (capacidadSeleccionada ? capacidadSeleccionada.incremento : 0));
+    
+    // Descripción
+    document.getElementById('productoDescripcion').textContent = producto.descripcion;
+    
+    // Stock
+    const stockElement = document.getElementById('productoStock');
+    if (producto.stock > 0) {
+        stockElement.innerHTML = `<span style="color: #34c759;">✓ ${producto.stock} disponibles</span>`;
+    } else {
+        stockElement.innerHTML = `<span style="color: #ff3b30;">✗ Agotado</span>`;
+    }
+    
+    // RENDERIZAR SELECTORES SOLO SI EXISTEN
+    const selectoresContainer = document.getElementById('selectoresVariantes');
+    if (selectoresContainer) {
+        if (producto.colores || producto.capacidades) {
+            renderizarSelectores(producto);
         } else {
-            thumb.classList.remove('active');
+            selectoresContainer.innerHTML = ''; // Vacío si no hay variantes
+        }
+    }
+}
+
+function renderizarSelectores(producto) {
+    const selectoresContainer = document.getElementById('selectoresVariantes');
+    if (!selectoresContainer) return;
+    
+    let html = '';
+    
+    // SELECTOR DE COLORES (solo si existen)
+    if (producto.colores && producto.colores.length > 0) {
+        html += `
+            <div class="selector-seccion">
+                <h4 class="selector-titulo">Color: <span id="colorSeleccionadoNombre">${colorSeleccionado.nombre}</span></h4>
+                <div class="colores-opciones-detalle">
+                    ${producto.colores.map((color, idx) => `
+                        <button 
+                            class="color-btn-detalle ${idx === 0 ? 'active' : ''}" 
+                            style="background-color: ${color.hex};"
+                            onclick="cambiarColorDetalle(${idx})"
+                            title="${color.nombre}">
+                            ${idx === 0 ? '<span class="check-mark">✓</span>' : ''}
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    // SELECTOR DE CAPACIDAD (solo si existen)
+    if (producto.capacidades && producto.capacidades.length > 0) {
+        html += `
+            <div class="selector-seccion">
+                <h4 class="selector-titulo">Almacenamiento</h4>
+                <div class="capacidades-opciones-detalle">
+                    ${producto.capacidades.map((cap, idx) => `
+                        <button 
+                            class="capacidad-btn-detalle ${idx === 0 ? 'active' : ''}" 
+                            onclick="cambiarCapacidadDetalle(${idx})">
+                            <span class="capacidad-texto">${cap.capacidad}</span>
+                            <span class="capacidad-precio">+$${cap.incremento.toLocaleString('es-CL')}</span>
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    selectoresContainer.innerHTML = html;
+}
+
+function cambiarColorDetalle(colorIdx) {
+    if (!productoActual.colores) return;
+    
+    colorSeleccionado = productoActual.colores[colorIdx];
+    
+    const botones = document.querySelectorAll('.color-btn-detalle');
+    botones.forEach((btn, idx) => {
+        if (idx === colorIdx) {
+            btn.classList.add('active');
+            btn.innerHTML = '<span class="check-mark">✓</span>';
+        } else {
+            btn.classList.remove('active');
+            btn.innerHTML = '';
         }
     });
+    
+    const nombreElement = document.getElementById('colorSeleccionadoNombre');
+    if (nombreElement) {
+        nombreElement.textContent = colorSeleccionado.nombre;
+    }
 }
 
-function renderizarProductoDetalle(producto) {
-    document.getElementById('pageTitle').textContent = `${producto.nombre} - MAC LINE`;
-    document.getElementById('breadcrumbProducto').textContent = producto.nombre;
-    document.getElementById('productoTitulo').textContent = producto.nombre;
-    document.getElementById('productoSku').textContent = `SKU: ${producto.categoria.toUpperCase()}-${producto.id}`;
+function cambiarCapacidadDetalle(capacidadIdx) {
+    if (!productoActual.capacidades) return;
     
-    const precioActual = document.getElementById('precioActualDetalle');
-    const precioOriginal = document.getElementById('precioOriginalDetalle');
-    const descuentoBadge = document.getElementById('descuentoBadge');
+    capacidadSeleccionada = productoActual.capacidades[capacidadIdx];
     
-    precioActual.textContent = `$${producto.precio.toLocaleString('es-CL')}`;
-    
-    if (producto.precioOriginal && producto.descuento) {
-        precioOriginal.textContent = `$${producto.precioOriginal.toLocaleString('es-CL')}`;
-        precioOriginal.style.display = 'inline';
-        descuentoBadge.textContent = `-${producto.descuento}%`;
-        descuentoBadge.style.display = 'inline-block';
-    } else {
-        precioOriginal.style.display = 'none';
-        descuentoBadge.style.display = 'none';
-    }
-    
-    const stockInfo = document.getElementById('stockInfo');
-    if (producto.stock > 0) {
-        stockInfo.innerHTML = `✓ <strong>${producto.stock}</strong> unidades disponibles`;
-        stockInfo.style.background = '#f0f9ff';
-        const strong = stockInfo.querySelector('strong');
-        if (strong) strong.style.color = '#34c759';
-    } else {
-        stockInfo.innerHTML = '✗ <strong>Sin stock</strong>';
-        stockInfo.style.background = '#fff5f5';
-        const strong = stockInfo.querySelector('strong');
-        if (strong) strong.style.color = '#ff3b30';
-    }
-    
-    document.getElementById('productoDescripcion').innerHTML = formatearDescripcion(producto.descripcion);
-}
-
-function formatearDescripcion(descripcion) {
-    if (descripcion.includes(' - ')) {
-        const partes = descripcion.split(' - ');
-        const titulo = partes[0];
-        const caracteristicas = partes[1];
-        
-        if (caracteristicas) {
-            const specs = caracteristicas.split(', ');
-            
-            let html = '<div style="background: #f9f9f9; padding: 1.5rem; border-radius: 12px; margin-top: 1rem;">';
-            html += '<h3 style="font-size: 1rem; font-weight: 600; color: #1d1d1f; margin: 0 0 1.25rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Especificaciones Técnicas</h3>';
-            html += '<div style="display: grid; gap: 0.75rem;">';
-            
-            specs.forEach(spec => {
-                const specTrim = spec.trim();
-                html += `
-                    <div style="display: flex; align-items: flex-start; gap: 0.75rem; background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                        <span style="color: #34c759; font-size: 1.2rem; font-weight: bold; flex-shrink: 0;">✓</span>
-                        <span style="color: #1d1d1f; font-size: 0.95rem; line-height: 1.5; flex: 1;">${specTrim}</span>
-                    </div>
-                `;
-            });
-            
-            html += '</div></div>';
-            return html;
+    const botones = document.querySelectorAll('.capacidad-btn-detalle');
+    botones.forEach((btn, idx) => {
+        if (idx === capacidadIdx) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
         }
-    }
+    });
     
-    return `<p style="color: #1d1d1f; line-height: 1.8;">${descripcion}</p>`;
+    const precioBase = productoActual.precioBase || productoActual.precio;
+    precioActual = precioBase + capacidadSeleccionada.incremento;
+    actualizarPrecioDisplay(precioActual);
 }
 
-function agregarAlCarritoDesdeDetalle() {
-    if (!productoActual) {
-        alert('Error: producto no cargado');
+function actualizarPrecioDisplay(precio) {
+    const precioElement = document.getElementById('productoPrecio');
+    if (precioElement) {
+        precioElement.textContent = `$${precio.toLocaleString('es-CL')}`;
+    }
+}
+
+function agregarAlCarritoDetalle() {
+    if (!productoActual) return;
+    
+    if (productoActual.stock === 0) {
+        alert('⚠️ Este producto está agotado');
         return;
     }
     
-    if (productoActual.stock <= 0) {
-        alert('Este producto está agotado');
-        return;
-    }
+    // Crear producto con variantes seleccionadas (si existen)
+    const productoParaCarrito = {
+        ...productoActual,
+        color: colorSeleccionado ? colorSeleccionado.nombre : null,
+        capacidad: capacidadSeleccionada ? capacidadSeleccionada.capacidad : null,
+        precio: precioActual || productoActual.precio,
+        idCarrito: `${productoActual.id}-${colorSeleccionado?.nombre || 'default'}-${capacidadSeleccionada?.capacidad || 'default'}`
+    };
     
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     
-    const productoExistente = carrito.find(item => String(item.id) === String(productoActual.id));
+    const existe = carrito.find(item => item.idCarrito === productoParaCarrito.idCarrito);
     
-    if (productoExistente) {
-        if (productoExistente.cantidad >= productoActual.stock) {
-            alert('No hay más stock disponible de este producto');
-            return;
-        }
-        productoExistente.cantidad++;
+    if (existe) {
+        existe.cantidad++;
     } else {
         carrito.push({
-            id: productoActual.id,
-            nombre: productoActual.nombre,
-            precio: productoActual.precio,
-            emoji: productoActual.emoji,
-            cantidad: 1,
-            stock: productoActual.stock
+            ...productoParaCarrito,
+            cantidad: 1
         });
     }
     
     localStorage.setItem('carrito', JSON.stringify(carrito));
     actualizarContadorCarrito();
-    alert(`✓ ${productoActual.nombre} agregado al carrito`);
+    
+    const variantesTexto = [
+        colorSeleccionado ? colorSeleccionado.nombre : null,
+        capacidadSeleccionada ? capacidadSeleccionada.capacidad : null
+    ].filter(Boolean).join(' - ');
+    
+    alert(`✅ ${productoActual.nombre}${variantesTexto ? `\n(${variantesTexto})` : ''}\nagregado al carrito`);
 }
 
 function actualizarContadorCarrito() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-    const cartCount = document.querySelector('.cart-count');
-    if (cartCount) {
-        cartCount.textContent = totalItems;
-    }
+    const contador = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    
+    document.querySelectorAll('.cart-count').forEach(el => {
+        el.textContent = contador;
+    });
 }
 
-// Funciones del carrito
-function abrirCarrito() {
-    actualizarVistaCarrito();
-    document.getElementById('carritoModal').style.display = 'flex';
-}
-
-function cerrarCarrito() {
-    document.getElementById('carritoModal').style.display = 'none';
-}
-
-function actualizarVistaCarrito() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const carritoItems = document.getElementById('carritoItems');
-    const totalPrecio = document.getElementById('totalPrecio');
-    const btnPagar = document.getElementById('btnPagar');
-    
-    if (carrito.length === 0) {
-        carritoItems.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
-        totalPrecio.textContent = '0';
-        if (btnPagar) btnPagar.disabled = true;
-        return;
-    }
-    
-    if (btnPagar) btnPagar.disabled = false;
-    
-    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    totalPrecio.textContent = total.toLocaleString('es-CL');
-    
-    carritoItems.innerHTML = carrito.map(item => `
-        <div class="carrito-item">
-            <div class="item-emoji">${item.emoji || '📦'}</div>
-            <div class="item-info">
-                <div class="item-nombre">${item.nombre}</div>
-                <div class="item-precio">$${item.precio.toLocaleString('es-CL')}</div>
-                <div class="item-cantidad">
-                    <button class="cantidad-btn" onclick="cambiarCantidad('${item.id}', -1)">-</button>
-                    <span>${item.cantidad}</span>
-                    <button class="cantidad-btn" onclick="cambiarCantidad('${item.id}', 1)">+</button>
-                </div>
-                <button class="btn-eliminar" onclick="eliminarDelCarrito('${item.id}')">🗑️ Eliminar</button>
-            </div>
-        </div>
-    `).join('');
-}
-
-function cambiarCantidad(id, cambio) {
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const item = carrito.find(i => String(i.id) === String(id));
-    
-    if (!item) return;
-    
-    item.cantidad += cambio;
-    
-    if (item.cantidad <= 0) {
-        eliminarDelCarrito(id);
-        return;
-    }
-    
-    if (item.stock && item.cantidad > item.stock) {
-        item.cantidad = item.stock;
-        alert('No hay más stock disponible');
-    }
-    
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    actualizarVistaCarrito();
-    actualizarContadorCarrito();
-}
-
-function eliminarDelCarrito(id) {
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    carrito = carrito.filter(item => String(item.id) !== String(id));
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    actualizarVistaCarrito();
-    actualizarContadorCarrito();
-}
-
-function procederPago() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    
-    document.getElementById('subtotalPago').textContent = total.toLocaleString('es-CL');
-    document.getElementById('totalPago').textContent = total.toLocaleString('es-CL');
-    
-    cerrarCarrito();
-    document.getElementById('pagoModal').style.display = 'flex';
-}
-
-function cerrarPago() {
-    document.getElementById('pagoModal').style.display = 'none';
-}
-
-async function procesarPago(event) {
-    event.preventDefault();
-    
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    
-    const datosCompra = {
-        nombre: document.getElementById('nombre').value,
-        email: document.getElementById('email').value,
-        telefono: document.getElementById('telefono').value,
-        direccion: document.getElementById('direccion').value,
-        items: carrito,
-        total: total
-    };
-    
-    try {
-        const response = await fetch(`${API_URL_BASE}/crear-preferencia`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datosCompra)
-        });
-        
-        const data = await response.json();
-        
-        if (data.init_point) {
-            window.location.href = data.init_point;
-        } else {
-            alert('Error al procesar el pago');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error al procesar el pago');
-    }
-}
-
-window.onclick = function(event) {
-    const carritoModal = document.getElementById('carritoModal');
-    const pagoModal = document.getElementById('pagoModal');
-    
-    if (event.target === carritoModal) {
-        cerrarCarrito();
-    }
-    if (event.target === pagoModal) {
-        cerrarPago();
-    }
+function volverATienda() {
+    window.location.href = 'index.html';
 }

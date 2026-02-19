@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========== FUNCIONES DEL CARRUSEL ==========
 
 function iniciarCarrusel() {
-    // Auto-rotación cada 15 segundos
     autoSlideInterval = setInterval(() => {
         cambiarSlide(1);
     }, 15000);
@@ -29,18 +28,14 @@ function cambiarSlide(direccion) {
     
     if (slides.length === 0) return;
     
-    // Remover active del slide actual
     slides[slideActual].classList.remove('active');
     dots[slideActual].classList.remove('active');
     
-    // Calcular nuevo slide
     slideActual = (slideActual + direccion + slides.length) % slides.length;
     
-    // Agregar active al nuevo slide
     slides[slideActual].classList.add('active');
     dots[slideActual].classList.add('active');
     
-    // Reiniciar auto-rotación
     clearInterval(autoSlideInterval);
     iniciarCarrusel();
 }
@@ -51,91 +46,36 @@ function irASlide(index) {
     
     if (slides.length === 0) return;
     
-    // Remover active del slide actual
     slides[slideActual].classList.remove('active');
     dots[slideActual].classList.remove('active');
     
-    // Ir al slide seleccionado
     slideActual = index;
     
-    // Agregar active al nuevo slide
     slides[slideActual].classList.add('active');
     dots[slideActual].classList.add('active');
     
-    // Reiniciar auto-rotación
     clearInterval(autoSlideInterval);
     iniciarCarrusel();
 }
 
-// ========== FUNCIONES DE BÚSQUEDA ==========
-
-function buscarProductos() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const grid = document.getElementById('productosGrid');
-    
-    if (!grid) return;
-    
-    let productosFiltrados = productosActuales;
-    
-    // Aplicar filtro de categoría si hay uno activo
-    if (filtroActivo !== 'todos') {
-        productosFiltrados = productosFiltrados.filter(p => p.categoria === filtroActivo);
-    }
-    
-    // Aplicar búsqueda
-    if (searchTerm) {
-        productosFiltrados = productosFiltrados.filter(p => 
-            p.nombre.toLowerCase().includes(searchTerm) ||
-            p.descripcion.toLowerCase().includes(searchTerm) ||
-            p.categoria.toLowerCase().includes(searchTerm)
-        );
-    }
-    
-    if (productosFiltrados.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 2rem;">No se encontraron productos</p>';
-        return;
-    }
-    
-    grid.innerHTML = productosFiltrados.map(producto => `
-        <div class="producto-card" onclick="window.location.href='producto.html?id=${producto.id}'">
-            <div class="producto-imagen">
-                ${producto.imagenPortada 
-                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
-                    : producto.emoji}
-                ${producto.descuento ? `<div class="producto-badge">-${producto.descuento}%</div>` : ''}
-            </div>
-            <div class="producto-info">
-                <div class="producto-categoria">${producto.categoria}</div>
-                <h3 class="producto-nombre">${producto.nombre}</h3>
-                <p class="producto-descripcion">${producto.descripcion}</p>
-                <div class="producto-precios">
-                    ${producto.precioOriginal ? `<span class="precio-original">$${producto.precioOriginal.toLocaleString('es-CL')}</span>` : ''}
-                    <span class="precio-actual">$${producto.precio.toLocaleString('es-CL')}</span>
-                </div>
-                <div class="producto-stock">📦 Stock: ${producto.stock} unidades</div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// ========== FUNCIONES DE PRODUCTOS ==========
+// ========== CARGAR PRODUCTOS ==========
 
 async function cargarProductos() {
     try {
         const response = await fetch(`${API_URL}/productos`);
-        const data = await response.json();
-        productosActuales = data;
-        renderizarProductos('todos');
+        if (!response.ok) throw new Error('Error al cargar productos');
+        
+        productosActuales = await response.json();
+        renderizarProductos(filtroActivo);
     } catch (error) {
-        console.error('Error al cargar productos:', error);
-        const grid = document.getElementById('productosGrid');
-        if (grid) {
-            grid.innerHTML = '<p style="color: red; grid-column: 1/-1; text-align: center; padding: 2rem;">Error al cargar los productos. Asegúrate de que el servidor esté corriendo en puerto 3000</p>';
-        }
+        console.error('Error:', error);
+        document.getElementById('productosGrid').innerHTML = '<p>Error al cargar productos</p>';
     }
 }
 
-function renderizarProductos(filtro) {
+// ========== RENDERIZAR PRODUCTOS - SIN SELECTORES ==========
+
+function renderizarProductos(filtro = 'todos') {
     const grid = document.getElementById('productosGrid');
     if (!grid) return;
     
@@ -150,213 +90,84 @@ function renderizarProductos(filtro) {
         return;
     }
 
-    grid.innerHTML = productosFiltrados.map(producto => `
-        <div class="producto-card" onclick="window.location.href='producto.html?id=${producto.id}'">
+    grid.innerHTML = productosFiltrados.map(producto => {
+        const precioBase = producto.precioBase || producto.precio;
+        const precioOriginal = producto.precioOriginal;
+        const descuento = producto.descuento || 0;
+        const tieneVariantes = producto.colores && producto.capacidades;
+        
+        let stockClass = 'disponible';
+        let stockTexto = `✓ ${producto.stock} disponibles`;
+        
+        if (producto.stock === 0) {
+            stockClass = 'agotado';
+            stockTexto = '✗ Agotado';
+        } else if (producto.stock < 5) {
+            stockClass = 'bajo';
+            stockTexto = `⚠ Solo ${producto.stock} disponibles`;
+        }
+        
+        return `
+        <div class="producto-card" data-producto-id="${producto.id}" onclick="window.location.href='producto.html?id=${producto.id}'">
             <div class="producto-imagen">
                 ${producto.imagenPortada 
-                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
                     : producto.emoji}
-                ${producto.descuento ? `<div class="producto-badge">-${producto.descuento}%</div>` : ''}
+                ${descuento > 0 ? `<div class="producto-badge">-${descuento}%</div>` : ''}
             </div>
+            
             <div class="producto-info">
-                <div class="producto-categoria">${producto.categoria}</div>
                 <h3 class="producto-nombre">${producto.nombre}</h3>
-                <p class="producto-descripcion">${producto.descripcion}</p>
+                
                 <div class="producto-precios">
-                    ${producto.precioOriginal ? `<span class="precio-original">$${producto.precioOriginal.toLocaleString('es-CL')}</span>` : ''}
-                    <span class="precio-actual">$${producto.precio.toLocaleString('es-CL')}</span>
+                    ${tieneVariantes ? '<span class="precio-desde">Desde</span>' : ''}
+                    ${precioOriginal ? `<span class="precio-original">$${precioOriginal.toLocaleString('es-CL')}</span>` : ''}
+                    <span class="precio-actual">
+                        $${precioBase.toLocaleString('es-CL')}
+                    </span>
                 </div>
-                <div class="producto-stock">📦 Stock: ${producto.stock} unidades</div>
+                
+                <div class="producto-stock ${stockClass}">
+                    ${stockTexto}
+                </div>
             </div>
         </div>
-    `).join('');
+    `}).join('');
 }
+
+// ========== FILTRAR PRODUCTOS ==========
 
 function filtrarProductos(categoria) {
     filtroActivo = categoria;
-    
-    // Actualizar botones activos
-    document.querySelectorAll('.filtro-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    
-    // Limpiar búsqueda
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) searchInput.value = '';
-    
     renderizarProductos(categoria);
+    
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
 }
 
-// ========== FUNCIONES DEL CARRITO ==========
-
-function agregarAlCarrito(producto) {
-    const itemExistente = carrito.find(item => String(item.id) === String(producto.id));
+function buscarProductos() {
+    const busqueda = document.getElementById('searchInput').value.toLowerCase();
     
-    if (itemExistente) {
-        if (itemExistente.cantidad < producto.stock) {
-            itemExistente.cantidad++;
-        } else {
-            alert('No hay más stock disponible');
-            return;
-        }
-    } else {
-        carrito.push({ 
-            id: producto.id,
-            nombre: producto.nombre,
-            precio: producto.precio,
-            emoji: producto.emoji,
-            cantidad: 1,
-            stock: producto.stock
-        });
-    }
+    const productosFiltrados = productosActuales.filter(p => 
+        p.nombre.toLowerCase().includes(busqueda) ||
+        p.descripcion.toLowerCase().includes(busqueda) ||
+        p.categoria.toLowerCase().includes(busqueda)
+    );
     
-    guardarCarritoLocal();
-    actualizarCarrito();
-    mostrarNotificacion('Producto agregado al carrito');
-}
-
-function actualizarCarrito() {
-    const carritoItems = document.getElementById('carritoItems');
-    const totalPrecio = document.getElementById('totalPrecio');
-    const cartCount = document.querySelector('.cart-count');
-    const btnPagar = document.getElementById('btnPagar');
-    
-    const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-    if (cartCount) {
-        cartCount.textContent = totalItems;
-    }
-    
-    if (!carritoItems) return;
-    
-    if (carrito.length === 0) {
-        carritoItems.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
-        if (totalPrecio) totalPrecio.textContent = '0';
-        if (btnPagar) btnPagar.disabled = true;
+    const grid = document.getElementById('productosGrid');
+    if (productosFiltrados.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">No se encontraron productos</p>';
         return;
     }
     
-    if (btnPagar) btnPagar.disabled = false;
-    
-    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    if (totalPrecio) totalPrecio.textContent = total.toLocaleString('es-CL');
-    
-    carritoItems.innerHTML = carrito.map(item => `
-        <div class="carrito-item">
-            <div class="item-emoji">${item.emoji || '📦'}</div>
-            <div class="item-info">
-                <div class="item-nombre">${item.nombre}</div>
-                <div class="item-precio">$${item.precio.toLocaleString('es-CL')}</div>
-                <div class="item-cantidad">
-                    <button class="cantidad-btn" onclick="cambiarCantidad('${item.id}', -1)">-</button>
-                    <span>${item.cantidad}</span>
-                    <button class="cantidad-btn" onclick="cambiarCantidad('${item.id}', 1)">+</button>
-                </div>
-                <button class="btn-eliminar" onclick="eliminarDelCarrito('${item.id}')">🗑️ Eliminar</button>
-            </div>
-        </div>
-    `).join('');
+    filtroActivo = 'todos';
+    productosActuales = productosFiltrados;
+    renderizarProductos('todos');
 }
 
-function cambiarCantidad(id, cambio) {
-    const item = carrito.find(i => String(i.id) === String(id));
-    if (!item) return;
-    
-    item.cantidad += cambio;
-    
-    if (item.cantidad <= 0) {
-        eliminarDelCarrito(id);
-        return;
-    }
-    
-    if (item.cantidad > item.stock) {
-        item.cantidad = item.stock;
-        alert('No hay más stock disponible');
-    }
-    
-    guardarCarritoLocal();
-    actualizarCarrito();
-}
-
-function eliminarDelCarrito(id) {
-    carrito = carrito.filter(item => String(item.id) !== String(id));
-    guardarCarritoLocal();
-    actualizarCarrito();
-}
-
-function abrirCarrito() {
-    actualizarCarrito();
-    const modal = document.getElementById('carritoModal');
-    if (modal) modal.style.display = 'flex';
-}
-
-function cerrarCarrito() {
-    const modal = document.getElementById('carritoModal');
-    if (modal) modal.style.display = 'none';
-}
-
-function procederPago() {
-    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    
-    const subtotalPago = document.getElementById('subtotalPago');
-    const totalPago = document.getElementById('totalPago');
-    
-    if (subtotalPago) subtotalPago.textContent = total.toLocaleString('es-CL');
-    if (totalPago) totalPago.textContent = total.toLocaleString('es-CL');
-    
-    cerrarCarrito();
-    const pagoModal = document.getElementById('pagoModal');
-    if (pagoModal) pagoModal.style.display = 'flex';
-}
-
-function cerrarPago() {
-    const modal = document.getElementById('pagoModal');
-    if (modal) modal.style.display = 'none';
-}
-
-async function procesarPago(event) {
-    event.preventDefault();
-    
-    const nombre = document.getElementById('nombre');
-    const email = document.getElementById('email');
-    const telefono = document.getElementById('telefono');
-    const direccion = document.getElementById('direccion');
-    
-    if (!nombre || !email || !telefono || !direccion) {
-        alert('Por favor completa todos los campos');
-        return;
-    }
-    
-    const datosCompra = {
-        nombre: nombre.value,
-        email: email.value,
-        telefono: telefono.value,
-        direccion: direccion.value,
-        items: carrito,
-        total: carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0)
-    };
-    
-    try {
-        const response = await fetch(`${API_URL}/crear-preferencia`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datosCompra)
-        });
-        
-        const data = await response.json();
-        
-        if (data.init_point) {
-            window.location.href = data.init_point;
-        } else {
-            alert('Error al procesar el pago');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error al procesar el pago');
-    }
-}
-
-function guardarCarritoLocal() {
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-}
+// ========== CARRITO FUNCIONES ==========
 
 function cargarCarritoLocal() {
     const carritoGuardado = localStorage.getItem('carrito');
@@ -365,11 +176,157 @@ function cargarCarritoLocal() {
     }
 }
 
-function mostrarNotificacion(mensaje) {
-    console.log(mensaje);
+function guardarCarritoLocal() {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
-// Cerrar modales al hacer clic fuera
+function agregarAlCarrito(productoId) {
+    const producto = productosActuales.find(p => String(p.id) === String(productoId));
+    if (!producto) return;
+    
+    const existe = carrito.find(item => item.id === productoId);
+    
+    if (existe) {
+        existe.cantidad++;
+    } else {
+        carrito.push({
+            ...producto,
+            cantidad: 1
+        });
+    }
+    
+    guardarCarritoLocal();
+    actualizarCarrito();
+    alert(`✅ ${producto.nombre} agregado al carrito`);
+}
+
+function aumentarCantidad(index) {
+    carrito[index].cantidad++;
+    guardarCarritoLocal();
+    actualizarCarrito();
+}
+
+function disminuirCantidad(index) {
+    if (carrito[index].cantidad > 1) {
+        carrito[index].cantidad--;
+    } else {
+        carrito.splice(index, 1);
+    }
+    guardarCarritoLocal();
+    actualizarCarrito();
+}
+
+function eliminarDelCarrito(index) {
+    carrito.splice(index, 1);
+    guardarCarritoLocal();
+    actualizarCarrito();
+}
+
+function actualizarCarrito() {
+    renderizarCarrito();
+    actualizarContadorCarrito();
+}
+
+function actualizarContadorCarrito() {
+    const contador = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    document.querySelectorAll('.cart-count').forEach(el => {
+        el.textContent = contador;
+    });
+}
+
+function renderizarCarrito() {
+    const carritoItems = document.getElementById('carritoItems');
+    const totalPrecio = document.getElementById('totalPrecio');
+    
+    if (carrito.length === 0) {
+        carritoItems.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">Tu carrito está vacío</p>';
+        totalPrecio.textContent = '0';
+        document.getElementById('btnPagar').disabled = true;
+        return;
+    }
+    
+    document.getElementById('btnPagar').disabled = false;
+    
+    carritoItems.innerHTML = carrito.map((item, index) => {
+        const variantesTexto = [item.color, item.capacidad].filter(Boolean).join(' | ');
+        
+        return `
+            <div class="carrito-item">
+                <div class="item-imagen">${item.imagenPortada ? `<img src="${item.imagenPortada}" alt="${item.nombre}">` : item.emoji || '📦'}</div>
+                <div class="item-info">
+                    <h4>${item.nombre}</h4>
+                    ${variantesTexto ? `<p style="font-size: 0.813rem; color: #86868b; margin: 0.25rem 0;">${variantesTexto}</p>` : ''}
+                    <p class="item-precio">$${item.precio.toLocaleString('es-CL')}</p>
+                </div>
+                <div class="item-controles">
+                    <button onclick="disminuirCantidad(${index})">-</button>
+                    <span>${item.cantidad}</span>
+                    <button onclick="aumentarCantidad(${index})">+</button>
+                </div>
+                <button class="item-eliminar" onclick="eliminarDelCarrito(${index})">🗑️</button>
+            </div>
+        `;
+    }).join('');
+    
+    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+    totalPrecio.textContent = total.toLocaleString('es-CL');
+}
+
+function abrirCarrito() {
+    document.getElementById('carritoModal').style.display = 'flex';
+    renderizarCarrito();
+}
+
+function cerrarCarrito() {
+    document.getElementById('carritoModal').style.display = 'none';
+}
+
+function procederPago() {
+    if (carrito.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+    }
+    
+    cerrarCarrito();
+    document.getElementById('pagoModal').style.display = 'flex';
+    
+    const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+    document.getElementById('subtotalPago').textContent = subtotal.toLocaleString('es-CL');
+    document.getElementById('totalPago').textContent = subtotal.toLocaleString('es-CL');
+}
+
+function cerrarPago() {
+    document.getElementById('pagoModal').style.display = 'none';
+}
+
+function procesarPago(event) {
+    event.preventDefault();
+    
+    const datosCliente = {
+        nombre: document.getElementById('nombre').value,
+        email: document.getElementById('email').value,
+        telefono: document.getElementById('telefono').value,
+        direccion: document.getElementById('direccion').value
+    };
+    
+    const datosCompra = {
+        ...datosCliente,
+        items: carrito,
+        total: carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0)
+    };
+    
+    console.log('Procesando pago:', datosCompra);
+    
+    alert('¡Gracias por tu compra! Recibirás un email de confirmación.');
+    
+    carrito = [];
+    guardarCarritoLocal();
+    actualizarCarrito();
+    cerrarPago();
+    document.getElementById('formularioPago').reset();
+}
+
+// Cerrar modales al hacer click fuera
 window.onclick = function(event) {
     const carritoModal = document.getElementById('carritoModal');
     const pagoModal = document.getElementById('pagoModal');
