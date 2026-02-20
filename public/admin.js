@@ -2,7 +2,7 @@
 const API_URL = window.location.origin + '/api';
 
 let productosActuales = [];
-let productoEditando = null;
+let productoEditandoId = null; // ← CAMBIO: Guardar solo el ID
 
 // ========== INICIALIZACIÓN ==========
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,21 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========== NAVEGACIÓN ==========
 function mostrarSeccion(seccion) {
     console.log('📍 Navegando a:', seccion);
-    
-    // Ocultar todas las secciones
     document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
-    
-    // Mostrar la seleccionada
     const seccionEl = document.getElementById(`${seccion}-seccion`);
-    if (seccionEl) {
-        seccionEl.classList.add('activa');
-    }
-    
-    // Actualizar menú activo
+    if (seccionEl) seccionEl.classList.add('activa');
     document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-    if (event && event.target) {
-        event.target.classList.add('active');
-    }
+    if (event && event.target) event.target.classList.add('active');
 }
 
 // ========== CARGAR PRODUCTOS ==========
@@ -40,9 +30,7 @@ async function cargarProductos() {
         const response = await fetch(`${API_URL}/productos`);
         console.log('📡 Response status:', response.status);
         
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
+        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         
         productosActuales = await response.json();
         console.log('✅ Productos cargados:', productosActuales.length);
@@ -54,7 +42,10 @@ async function cargarProductos() {
         if (tbody) {
             tbody.innerHTML = `
                 <tr><td colspan="7" style="text-align: center; padding: 2rem; color: #e74c3c;">
-                    ❌ Error: ${error.message}
+                    ❌ Error: ${error.message}<br>
+                    <button onclick="cargarProductos()" style="margin-top: 1rem; padding: 0.5rem 1rem; cursor: pointer;">
+                        🔄 Reintentar
+                    </button>
                 </td></tr>
             `;
         }
@@ -107,13 +98,11 @@ function renderizarTablaProductos(productos) {
 // ========== FILTRAR PRODUCTOS ==========
 function filtrarProductosAdmin() {
     const busqueda = document.getElementById('buscarProducto').value.toLowerCase();
-    
     const productosFiltrados = productosActuales.filter(p => 
         p.nombre.toLowerCase().includes(busqueda) ||
         p.categoria.toLowerCase().includes(busqueda) ||
         String(p.id).toLowerCase().includes(busqueda)
     );
-    
     renderizarTablaProductos(productosFiltrados);
 }
 
@@ -168,17 +157,19 @@ async function agregarProducto(event) {
 
 // ========== ABRIR MODAL EDITAR ==========
 function abrirModalEditar(productoId) {
-    console.log('✏️ Editando producto:', productoId);
+    console.log('✏️ Abriendo modal editar para producto:', productoId);
     
     const producto = productosActuales.find(p => String(p.id) === String(productoId));
     
     if (!producto) {
         alert('❌ Producto no encontrado');
         console.error('Producto no encontrado:', productoId);
+        console.log('Productos actuales:', productosActuales.map(p => p.id));
         return;
     }
     
-    productoEditando = producto;
+    // Guardar el ID del producto
+    productoEditandoId = productoId;
     console.log('📝 Producto a editar:', producto);
     
     // Llenar formulario
@@ -196,9 +187,21 @@ function abrirModalEditar(productoId) {
 async function guardarEdicion(event) {
     event.preventDefault();
     console.log('💾 Guardando edición...');
+    console.log('ID del producto editando:', productoEditandoId);
     
-    if (!productoEditando) {
-        alert('❌ Error: No hay producto para editar');
+    if (!productoEditandoId) {
+        alert('❌ Error: No hay producto seleccionado para editar');
+        console.error('productoEditandoId es null');
+        return;
+    }
+    
+    // Buscar el producto actual
+    const producto = productosActuales.find(p => String(p.id) === String(productoEditandoId));
+    
+    if (!producto) {
+        alert('❌ Error: Producto no encontrado');
+        console.error('Producto no encontrado con ID:', productoEditandoId);
+        console.log('Productos actuales:', productosActuales.map(p => p.id));
         return;
     }
     
@@ -213,7 +216,7 @@ async function guardarEdicion(event) {
     console.log('📝 Datos actualizados:', datosActualizados);
     
     try {
-        const response = await fetch(`${API_URL}/productos/${productoEditando.id}`, {
+        const response = await fetch(`${API_URL}/productos/${productoEditandoId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(datosActualizados)
@@ -226,7 +229,9 @@ async function guardarEdicion(event) {
             throw new Error(errorData.error || 'Error al actualizar producto');
         }
         
-        console.log('✅ Producto actualizado');
+        const resultado = await response.json();
+        console.log('✅ Resultado:', resultado);
+        
         alert('✅ Producto actualizado exitosamente');
         cerrarModal();
         await cargarProductos();
@@ -280,7 +285,7 @@ async function eliminarProducto(productoId) {
 // ========== CERRAR MODAL ==========
 function cerrarModal() {
     document.getElementById('editarModal').style.display = 'none';
-    productoEditando = null;
+    productoEditandoId = null; // Limpiar el ID
 }
 
 // ========== CARGAR VENTAS ==========
@@ -288,10 +293,7 @@ async function cargarVentas() {
     console.log('💰 Cargando ventas...');
     try {
         const response = await fetch(`${API_URL}/ventas`);
-        
-        if (!response.ok) {
-            throw new Error('Error al cargar ventas');
-        }
+        if (!response.ok) throw new Error('Error al cargar ventas');
         
         const ventas = await response.json();
         console.log('✅ Ventas cargadas:', ventas.length);
@@ -302,7 +304,7 @@ async function cargarVentas() {
         const tbody = document.getElementById('ventasTableBody');
         if (tbody) {
             tbody.innerHTML = `
-                <tr><td colspan="7" style="text-align: center; padding: 2rem; color: #e74c3c;">
+                <tr><td colspan="6" style="text-align: center; padding: 2rem; color: #e74c3c;">
                     ❌ Error: ${error.message}
                 </td></tr>
             `;
@@ -313,21 +315,17 @@ async function cargarVentas() {
 // ========== RENDERIZAR TABLA VENTAS ==========
 function renderizarTablaVentas(ventas) {
     const tbody = document.getElementById('ventasTableBody');
-    if (!tbody) {
-        console.error('❌ No se encontró ventasTableBody');
-        return;
-    }
+    if (!tbody) return;
     
     if (ventas.length === 0) {
         tbody.innerHTML = `
-            <tr><td colspan="7" style="text-align: center; padding: 2rem; color: #999;">
+            <tr><td colspan="6" style="text-align: center; padding: 2rem; color: #999;">
                 No hay ventas registradas
             </td></tr>
         `;
         return;
     }
     
-    // Ordenar por fecha más reciente
     ventas.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
     
     tbody.innerHTML = ventas.map(venta => {
@@ -387,13 +385,11 @@ async function cargarReporteStock() {
         const productos = await response.json();
         console.log('✅ Stock cargado:', productos.length, 'productos');
         
-        // Calcular estadísticas
         const totalProductos = productos.length;
         const stockTotal = productos.reduce((sum, p) => sum + p.stock, 0);
         const productosAgotados = productos.filter(p => p.stock === 0).length;
         const stockBajo = productos.filter(p => p.stock > 0 && p.stock < 5).length;
         
-        // Actualizar stats
         const totalProdEl = document.getElementById('totalProductos');
         const stockTotalEl = document.getElementById('stockTotal');
         const agotadosEl = document.getElementById('productosAgotados');
@@ -404,7 +400,6 @@ async function cargarReporteStock() {
         if (agotadosEl) agotadosEl.textContent = productosAgotados;
         if (bajoEl) bajoEl.textContent = stockBajo;
         
-        // Renderizar tabla de stock bajo
         const tbody = document.getElementById('stockBajoTableBody');
         if (tbody) {
             const productosBajo = productos.filter(p => p.stock < 5);
@@ -417,16 +412,8 @@ async function cargarReporteStock() {
                 `;
             } else {
                 tbody.innerHTML = productosBajo.map(p => {
-                    let estado = '';
-                    let clase = '';
-                    
-                    if (p.stock === 0) {
-                        estado = 'Agotado';
-                        clase = 'agotado';
-                    } else if (p.stock < 5) {
-                        estado = 'Stock Bajo';
-                        clase = 'bajo';
-                    }
+                    const estado = p.stock === 0 ? 'Agotado' : 'Stock Bajo';
+                    const clase = p.stock === 0 ? 'agotado' : 'bajo';
                     
                     return `
                         <tr>
