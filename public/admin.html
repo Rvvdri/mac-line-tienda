@@ -28,6 +28,7 @@
 
         <main class="main-content">
             
+            <!-- SECCIÓN PRODUCTOS -->
             <section id="productos-seccion" class="seccion activa">
                 <h2>Gestión de Productos</h2>
                 <div class="buscador">
@@ -53,6 +54,7 @@
                 </div>
             </section>
 
+            <!-- SECCIÓN AGREGAR -->
             <section id="agregar-seccion" class="seccion">
                 <h2>Agregar Nuevo Producto</h2>
                 <form id="formularioProducto" onsubmit="agregarProducto(event)" class="formulario-producto">
@@ -115,28 +117,29 @@
                 </form>
             </section>
 
+            <!-- SECCIÓN VENTAS -->
             <section id="ventas-seccion" class="seccion">
                 <h2>Historial de Ventas</h2>
                 <div class="tabla-wrapper">
                     <table class="tabla-ventas" id="tablaVentas">
                         <thead>
                             <tr>
-                                <th>ID Venta</th>
+                                <th>ID</th>
                                 <th>Cliente</th>
-                                <th>Email</th>
-                                <th>Teléfono</th>
+                                <th>Productos</th>
                                 <th>Total</th>
                                 <th>Fecha</th>
-                                <th>Acciones</th>
+                                <th>Estado</th>
                             </tr>
                         </thead>
                         <tbody id="ventasTableBody">
-                            <tr><td colspan="7" style="text-align: center; padding: 2rem; color: #666;">Cargando ventas...</td></tr>
+                            <tr><td colspan="6" style="text-align: center; padding: 2rem; color: #666;">Cargando ventas...</td></tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
+            <!-- SECCIÓN STOCK -->
             <section id="stock-seccion" class="seccion">
                 <h2>Reporte de Stock</h2>
                 <div class="stats-grid">
@@ -170,7 +173,7 @@
                             </tr>
                         </thead>
                         <tbody id="stockBajoTableBody">
-                            <tr><td colspan="4" style="text-align: center; padding: 2rem; color: #666;">Sin productos con stock bajo</td></tr>
+                            <tr><td colspan="4" style="text-align: center; padding: 2rem; color: #666;">Cargando...</td></tr>
                         </tbody>
                     </table>
                 </div>

@@ -214,10 +214,35 @@ function agregarAlCarrito(productoId) {
     
     guardarCarritoLocal();
     actualizarCarrito();
-    alert(`✅ ${producto.nombre} agregado al carrito`);
+    
+    // Notificación mejorada
+    mostrarNotificacion(`✅ ${producto.nombre} agregado al carrito`);
+}
+
+// Función de notificación mejorada (opcional)
+function mostrarNotificacion(mensaje) {
+    // Si existe el elemento de notificación, úsalo
+    const notif = document.getElementById('notificacion');
+    if (notif) {
+        notif.textContent = mensaje;
+        notif.classList.add('mostrar');
+        setTimeout(() => notif.classList.remove('mostrar'), 2000);
+    } else {
+        // Fallback al alert
+        alert(mensaje);
+    }
 }
 
 function aumentarCantidad(index) {
+    const item = carrito[index];
+    const producto = productosActuales.find(p => String(p.id) === String(item.id));
+    
+    // Validar stock
+    if (producto && item.cantidad >= producto.stock) {
+        alert(`⚠️ Solo hay ${producto.stock} unidades disponibles`);
+        return;
+    }
+    
     carrito[index].cantidad++;
     guardarCarritoLocal();
     actualizarCarrito();
@@ -255,32 +280,46 @@ function renderizarCarrito() {
     const carritoItems = document.getElementById('carritoItems');
     const totalPrecio = document.getElementById('totalPrecio');
     
+    if (!carritoItems || !totalPrecio) return;
+    
     if (carrito.length === 0) {
-        carritoItems.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">Tu carrito está vacío</p>';
+        carritoItems.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
         totalPrecio.textContent = '0';
-        document.getElementById('btnPagar').disabled = true;
+        const btnPagar = document.getElementById('btnPagar');
+        if (btnPagar) btnPagar.disabled = true;
         return;
     }
     
-    document.getElementById('btnPagar').disabled = false;
+    const btnPagar = document.getElementById('btnPagar');
+    if (btnPagar) btnPagar.disabled = false;
     
     carritoItems.innerHTML = carrito.map((item, index) => {
         const variantesTexto = [item.color, item.capacidad].filter(Boolean).join(' | ');
+        const producto = productosActuales.find(p => String(p.id) === String(item.id));
+        const stockDisponible = producto ? producto.stock : item.stock;
         
         return `
             <div class="carrito-item">
-                <div class="item-imagen">${item.imagenPortada ? `<img src="${item.imagenPortada}" alt="${item.nombre}">` : item.emoji || '📦'}</div>
+                <div class="item-imagen">
+                    ${item.imagenPortada 
+                        ? `<img src="${item.imagenPortada}" alt="${item.nombre}">` 
+                        : `<span class="item-emoji">${item.emoji || '📦'}</span>`
+                    }
+                </div>
                 <div class="item-info">
-                    <h4>${item.nombre}</h4>
-                    ${variantesTexto ? `<p style="font-size: 0.813rem; color: #86868b; margin: 0.25rem 0;">${variantesTexto}</p>` : ''}
+                    <h4 class="item-nombre">${item.nombre}</h4>
+                    ${variantesTexto ? `<p class="item-variantes">${variantesTexto}</p>` : ''}
                     <p class="item-precio">$${item.precio.toLocaleString('es-CL')}</p>
+                    ${stockDisponible ? `<p class="item-stock">Stock: ${stockDisponible} disponibles</p>` : ''}
                 </div>
                 <div class="item-controles">
-                    <button onclick="disminuirCantidad(${index})">-</button>
-                    <span>${item.cantidad}</span>
-                    <button onclick="aumentarCantidad(${index})">+</button>
+                    <div class="item-cantidad">
+                        <button class="cantidad-btn" onclick="disminuirCantidad(${index})">-</button>
+                        <span class="cantidad-numero">${item.cantidad}</span>
+                        <button class="cantidad-btn" onclick="aumentarCantidad(${index})">+</button>
+                    </div>
+                    <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">Eliminar</button>
                 </div>
-                <button class="item-eliminar" onclick="eliminarDelCarrito(${index})">🗑️</button>
             </div>
         `;
     }).join('');
@@ -289,13 +328,23 @@ function renderizarCarrito() {
     totalPrecio.textContent = total.toLocaleString('es-CL');
 }
 
+// ========== FUNCIONES DE MODAL MEJORADAS CON FIX DE SCROLL ==========
+
 function abrirCarrito() {
-    document.getElementById('carritoModal').style.display = 'flex';
+    const modal = document.getElementById('carritoModal');
+    if (!modal) return;
+    
+    modal.style.display = 'flex';
+    document.body.classList.add('modal-open'); // BLOQUEA SCROLL DE PÁGINA
     renderizarCarrito();
 }
 
 function cerrarCarrito() {
-    document.getElementById('carritoModal').style.display = 'none';
+    const modal = document.getElementById('carritoModal');
+    if (!modal) return;
+    
+    modal.style.display = 'none';
+    document.body.classList.remove('modal-open'); // RESTAURA SCROLL
 }
 
 function procederPago() {
@@ -304,26 +353,52 @@ function procederPago() {
         return;
     }
     
-    cerrarCarrito();
-    document.getElementById('pagoModal').style.display = 'flex';
+    const carritoModal = document.getElementById('carritoModal');
+    const pagoModal = document.getElementById('pagoModal');
+    
+    if (carritoModal) carritoModal.style.display = 'none';
+    if (pagoModal) pagoModal.style.display = 'flex';
+    // NO remover modal-open porque seguimos en un modal
     
     const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    document.getElementById('subtotalPago').textContent = subtotal.toLocaleString('es-CL');
-    document.getElementById('totalPago').textContent = subtotal.toLocaleString('es-CL');
+    const envio = 5000;
+    const total = subtotal + envio;
+    
+    const subtotalEl = document.getElementById('subtotalPago');
+    const envioEl = document.getElementById('envioPago');
+    const totalEl = document.getElementById('totalPago');
+    
+    if (subtotalEl) subtotalEl.textContent = subtotal.toLocaleString('es-CL');
+    if (envioEl) envioEl.textContent = envio.toLocaleString('es-CL');
+    if (totalEl) totalEl.textContent = total.toLocaleString('es-CL');
 }
 
 function cerrarPago() {
-    document.getElementById('pagoModal').style.display = 'none';
+    const modal = document.getElementById('pagoModal');
+    if (!modal) return;
+    
+    modal.style.display = 'none';
+    document.body.classList.remove('modal-open'); // RESTAURA SCROLL
 }
 
 function procesarPago(event) {
     event.preventDefault();
     
+    const nombreEl = document.getElementById('nombre');
+    const emailEl = document.getElementById('email');
+    const telefonoEl = document.getElementById('telefono');
+    const direccionEl = document.getElementById('direccion');
+    
+    if (!nombreEl || !emailEl || !telefonoEl || !direccionEl) {
+        alert('Error: Formulario incompleto');
+        return;
+    }
+    
     const datosCliente = {
-        nombre: document.getElementById('nombre').value,
-        email: document.getElementById('email').value,
-        telefono: document.getElementById('telefono').value,
-        direccion: document.getElementById('direccion').value
+        nombre: nombreEl.value,
+        email: emailEl.value,
+        telefono: telefonoEl.value,
+        direccion: direccionEl.value
     };
     
     const datosCompra = {
@@ -340,10 +415,13 @@ function procesarPago(event) {
     guardarCarritoLocal();
     actualizarCarrito();
     cerrarPago();
-    document.getElementById('formularioPago').reset();
+    
+    const form = document.getElementById('formPago');
+    if (form) form.reset();
 }
 
-// Cerrar modales al hacer click fuera
+// ========== CERRAR MODALES CON CLICK FUERA O ESC ==========
+
 window.onclick = function(event) {
     const carritoModal = document.getElementById('carritoModal');
     const pagoModal = document.getElementById('pagoModal');
@@ -355,3 +433,11 @@ window.onclick = function(event) {
         cerrarPago();
     }
 }
+
+// Cerrar con tecla ESC
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        cerrarCarrito();
+        cerrarPago();
+    }
+});
