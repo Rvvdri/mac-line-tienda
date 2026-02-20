@@ -1,8 +1,14 @@
-// admin.js - Panel de Administración MAC LINE
+// admin.js - Panel de Administración MAC LINE - FIX PARA IDS VIEJOS
 const API_URL = window.location.origin + '/api';
 
 let productosActuales = [];
-let productoEditandoId = null; // ← CAMBIO: Guardar solo el ID
+let productoEditandoId = null;
+
+// ========== FUNCIÓN HELPER PARA OBTENER ID ==========
+function obtenerIdProducto(producto) {
+    // Retorna el ID correcto, ya sea 'id' o '_id'
+    return producto.id || producto._id || String(producto._id);
+}
 
 // ========== INICIALIZACIÓN ==========
 document.addEventListener('DOMContentLoaded', () => {
@@ -34,6 +40,19 @@ async function cargarProductos() {
         
         productosActuales = await response.json();
         console.log('✅ Productos cargados:', productosActuales.length);
+        
+        // Log para debug - ver formato de IDs
+        if (productosActuales.length > 0) {
+            const primer = productosActuales[0];
+            console.log('📝 Ejemplo de producto:', {
+                id: primer.id,
+                _id: primer._id,
+                tipoId: typeof primer.id,
+                tipo_id: typeof primer._id,
+                nombre: primer.nombre
+            });
+        }
+        
         renderizarTablaProductos(productosActuales);
         
     } catch (error) {
@@ -69,9 +88,12 @@ function renderizarTablaProductos(productos) {
         return;
     }
     
-    tbody.innerHTML = productos.map(p => `
+    tbody.innerHTML = productos.map(p => {
+        const productoId = obtenerIdProducto(p);
+        
+        return `
         <tr>
-            <td><code>${p.id}</code></td>
+            <td><code title="${productoId}">${String(productoId).substring(0, 12)}...</code></td>
             <td>${p.nombre}</td>
             <td><span class="badge badge-${p.categoria}">${p.categoria}</span></td>
             <td>$${Number(p.precio).toLocaleString('es-CL')}</td>
@@ -82,15 +104,15 @@ function renderizarTablaProductos(productos) {
             </td>
             <td>${p.descuento ? `<span class="descuento-badge">-${p.descuento}%</span>` : '-'}</td>
             <td class="acciones">
-                <button class="btn-accion btn-editar" onclick="abrirModalEditar('${p.id}')" title="Editar">
+                <button class="btn-accion btn-editar" onclick='abrirModalEditar(${JSON.stringify(productoId)})' title="Editar">
                     ✏️
                 </button>
-                <button class="btn-accion btn-eliminar" onclick="eliminarProducto('${p.id}')" title="Eliminar">
+                <button class="btn-accion btn-eliminar" onclick='eliminarProducto(${JSON.stringify(productoId)})' title="Eliminar">
                     🗑️
                 </button>
             </td>
         </tr>
-    `).join('');
+    `}).join('');
     
     console.log('✅ Tabla renderizada con', productos.length, 'productos');
 }
@@ -98,11 +120,12 @@ function renderizarTablaProductos(productos) {
 // ========== FILTRAR PRODUCTOS ==========
 function filtrarProductosAdmin() {
     const busqueda = document.getElementById('buscarProducto').value.toLowerCase();
-    const productosFiltrados = productosActuales.filter(p => 
-        p.nombre.toLowerCase().includes(busqueda) ||
-        p.categoria.toLowerCase().includes(busqueda) ||
-        String(p.id).toLowerCase().includes(busqueda)
-    );
+    const productosFiltrados = productosActuales.filter(p => {
+        const idProducto = obtenerIdProducto(p);
+        return p.nombre.toLowerCase().includes(busqueda) ||
+               p.categoria.toLowerCase().includes(busqueda) ||
+               String(idProducto).toLowerCase().includes(busqueda);
+    });
     renderizarTablaProductos(productosFiltrados);
 }
 
@@ -158,17 +181,21 @@ async function agregarProducto(event) {
 // ========== ABRIR MODAL EDITAR ==========
 function abrirModalEditar(productoId) {
     console.log('✏️ Abriendo modal editar para producto:', productoId);
+    console.log('Tipo de productoId recibido:', typeof productoId);
     
-    const producto = productosActuales.find(p => String(p.id) === String(productoId));
+    // Buscar el producto con cualquier tipo de ID
+    const producto = productosActuales.find(p => {
+        const idActual = obtenerIdProducto(p);
+        return String(idActual) === String(productoId);
+    });
     
     if (!producto) {
         alert('❌ Producto no encontrado');
         console.error('Producto no encontrado:', productoId);
-        console.log('Productos actuales:', productosActuales.map(p => p.id));
+        console.log('IDs disponibles:', productosActuales.map(p => obtenerIdProducto(p)));
         return;
     }
     
-    // Guardar el ID del producto
     productoEditandoId = productoId;
     console.log('📝 Producto a editar:', producto);
     
@@ -191,17 +218,18 @@ async function guardarEdicion(event) {
     
     if (!productoEditandoId) {
         alert('❌ Error: No hay producto seleccionado para editar');
-        console.error('productoEditandoId es null');
         return;
     }
     
     // Buscar el producto actual
-    const producto = productosActuales.find(p => String(p.id) === String(productoEditandoId));
+    const producto = productosActuales.find(p => {
+        const idActual = obtenerIdProducto(p);
+        return String(idActual) === String(productoEditandoId);
+    });
     
     if (!producto) {
         alert('❌ Error: Producto no encontrado');
         console.error('Producto no encontrado con ID:', productoEditandoId);
-        console.log('Productos actuales:', productosActuales.map(p => p.id));
         return;
     }
     
@@ -245,11 +273,17 @@ async function guardarEdicion(event) {
 // ========== ELIMINAR PRODUCTO ==========
 async function eliminarProducto(productoId) {
     console.log('🗑️ Eliminando producto:', productoId);
+    console.log('Tipo de productoId:', typeof productoId);
     
-    const producto = productosActuales.find(p => String(p.id) === String(productoId));
+    // Buscar el producto
+    const producto = productosActuales.find(p => {
+        const idActual = obtenerIdProducto(p);
+        return String(idActual) === String(productoId);
+    });
     
     if (!producto) {
         alert('❌ Producto no encontrado');
+        console.error('No se encontró producto con ID:', productoId);
         return;
     }
     
@@ -285,7 +319,7 @@ async function eliminarProducto(productoId) {
 // ========== CERRAR MODAL ==========
 function cerrarModal() {
     document.getElementById('editarModal').style.display = 'none';
-    productoEditandoId = null; // Limpiar el ID
+    productoEditandoId = null;
 }
 
 // ========== CARGAR VENTAS ==========
