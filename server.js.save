@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const MONGODB_URI = 'mongodb+srv://rvvdri:9j8rdlLqR4ACotdY@cluster0.vptvpzv.mongodb.net/macline';
 
 // EMAIL
-const EMAIL_USER = 'linemac910@gmail.com';
+const EMAIL_USER = 'linemac9190@gmail.com';
 const EMAIL_PASSWORD = 'skfxenrvydwaycyc';
 const EMAIL_FROM_NAME = 'Mac Line';
 
@@ -455,3 +455,14 @@ conectarMongoDB().then(() => {
 });
 
 module.exports = app;
+
+
+
+
+
+
+
+
+
+npm start
+
