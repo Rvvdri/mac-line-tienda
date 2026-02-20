@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { MongoClient, ObjectId } = require('mongodb');
-const nodemailer = require('nodemailer');
-const axios = require('axios');
 
 const app = express();
 
@@ -11,30 +9,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ==================== CREDENCIALES ====================
-
-// MONGODB
-const MONGODB_URI = 'mongodb+srv://rvvdri:9j8rdlLqR4ACotdY@cluster0.vptvpzv.mongodb.net/macline';
-
-// EMAIL
-const EMAIL_USER = 'linemac910@gmail.com';
-const EMAIL_PASSWORD = 'skfxenrvydwaycyc';
-const EMAIL_FROM_NAME = 'Mac Line';
-
-// MERCADO PAGO - CAMBIAR CON LAS CREDENCIALES DE TU CLIENTE
-const MP_PUBLIC_KEY = 'APP_USR-b1762627-5e4b-4409-88d4-5098974ea645';  // ← CAMBIAR
-const MP_ACCESS_TOKEN = 'APP_USR-1539674871672378-021917-5d3634d0ef2f478d31ea2f5db8abeb5d-3208244091';     // ← CAMBIAR
-const MP_API_URL = 'https://api.mercadopago.com/v1';
-
-console.log('\n✓ SERVIDOR INICIANDO...');
-console.log(`✓ Email: ${EMAIL_USER}`);
-console.log(`✓ Mercado Pago: ${MP_ACCESS_TOKEN ? 'CONFIGURADO' : 'NO CONFIGURADO'}\n`);
-
 // ==================== MONGODB ====================
+const MONGODB_URI = 'mongodb+srv://rvvdri:9j8rdlLqR4ACotdY@cluster0.vptvpzv.mongodb.net/macline';
 let db;
 let productosCollection;
 let ventasCollection;
 
+// Conectar a MongoDB
 async function conectarMongoDB() {
     try {
         const client = await MongoClient.connect(MONGODB_URI);
@@ -48,123 +29,31 @@ async function conectarMongoDB() {
     }
 }
 
-// ==================== NODEMAILER ====================
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: EMAIL_USER,
-        pass: EMAIL_PASSWORD
+// ==================== FUNCIÓN HELPER PARA BUSCAR PRODUCTOS ====================
+function construirFiltroProducto(id) {
+    // Intenta buscar por 'id' personalizado o por '_id' de MongoDB
+    const filtros = [];
+    
+    // Buscar por id personalizado (string o número)
+    filtros.push({ id: id });
+    filtros.push({ id: String(id) });
+    filtros.push({ id: Number(id) });
+    
+    // Si parece un ObjectId de MongoDB (24 caracteres hex), búscalo
+    if (id && id.length === 24 && /^[0-9a-fA-F]{24}$/.test(id)) {
+        try {
+            filtros.push({ _id: new ObjectId(id) });
+        } catch (e) {
+            // No es un ObjectId válido
+        }
     }
-});
-
-transporter.verify((error, success) => {
-    if (error) {
-        console.log('❌ Email Error:', error.message);
-    } else {
-        console.log('✓ Email: Conexión exitosa');
-    }
-});
-
-// Función para enviar email de confirmación
-async function enviarEmailConfirmacion(cliente, pedido) {
-    try {
-        const { nombre, email } = cliente;
-        const { id, productos, total } = pedido;
-
-        const productosHTML = productos.map(item => `
-            <tr>
-                <td style="padding: 8px; border-bottom: 1px solid #e0e0e0;">${item.nombre}</td>
-                <td style="padding: 8px; border-bottom: 1px solid #e0e0e0; text-align: center;">${item.cantidad}</td>
-                <td style="padding: 8px; border-bottom: 1px solid #e0e0e0; text-align: right;">$${item.precio.toLocaleString('es-CL')}</td>
-                <td style="padding: 8px; border-bottom: 1px solid #e0e0e0; text-align: right;">$${(item.cantidad * item.precio).toLocaleString('es-CL')}</td>
-            </tr>
-        `).join('');
-
-        const htmlContent = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="UTF-8">
-                <style>
-                    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-                    .container { max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9; }
-                    .header { background: linear-gradient(135deg, #00d4ff 0%, #9333ea 100%); color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center; }
-                    .content { background: white; padding: 20px; border-radius: 0 0 8px 8px; }
-                    .section { margin: 20px 0; padding: 15px; background-color: #f0f4f8; border-left: 4px solid #00d4ff; border-radius: 4px; }
-                    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-                    th { background-color: #00d4ff; color: white; padding: 12px; text-align: left; }
-                    .total-row { font-weight: bold; font-size: 18px; background-color: #e8f0ff; padding: 12px !important; }
-                    .success-badge { display: inline-block; background-color: #00d450; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; margin: 10px 0; }
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="header">
-                        <h1>🖥️ MAC LINE</h1>
-                        <p>Tienda de Tecnología Premium</p>
-                    </div>
-                    <div class="content">
-                        <h2>¡Hola ${nombre}!</h2>
-                        <div class="section">
-                            <div class="success-badge">✓ PAGO CONFIRMADO</div>
-                            <p>Tu compra ha sido procesada correctamente.</p>
-                        </div>
-                        <h3>Detalle de tu Pedido</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th style="text-align: center;">Cantidad</th>
-                                    <th style="text-align: right;">Precio</th>
-                                    <th style="text-align: right;">Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${productosHTML}
-                                <tr class="total-row">
-                                    <td colspan="3" style="text-align: right;">Total Pagado:</td>
-                                    <td style="text-align: right;">$${total.toLocaleString('es-CL')}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="section">
-                            <h3>📦 Próximos Pasos</h3>
-                            <ol>
-                                <li>Tu pedido está siendo procesado</li>
-                                <li>Prepararemos tus productos</li>
-                                <li>Te notificaremos cuando esté listo para envío</li>
-                            </ol>
-                        </div>
-                        <div class="section">
-                            <p><strong>Número de Referencia:</strong> #${id}</p>
-                            <p><strong>Email:</strong> ${email}</p>
-                        </div>
-                        <p style="text-align: center; color: #666; font-size: 12px;">&copy; 2024 Mac Line - Tecnología Premium</p>
-                    </div>
-                </div>
-            </body>
-            </html>
-        `;
-
-        await transporter.sendMail({
-            from: `${EMAIL_FROM_NAME} <${EMAIL_USER}>`,
-            to: email,
-            subject: '✓ Pago Confirmado - Tu Pedido en Mac Line',
-            html: htmlContent
-        });
-
-        console.log(`✓ Email enviado a ${email}`);
-        return true;
-
-    } catch (error) {
-        console.error('❌ Error al enviar email:', error.message);
-        return false;
-    }
+    
+    return { $or: filtros };
 }
 
 // ==================== RUTAS DE PRODUCTOS ====================
 
+// GET - Obtener todos los productos
 app.get('/api/productos', async (req, res) => {
     try {
         const productos = await productosCollection.find({}).toArray();
@@ -175,9 +64,11 @@ app.get('/api/productos', async (req, res) => {
     }
 });
 
+// GET - Obtener un producto por ID
 app.get('/api/productos/:id', async (req, res) => {
     try {
-        const producto = await productosCollection.findOne({ id: req.params.id });
+        const filtro = construirFiltroProducto(req.params.id);
+        const producto = await productosCollection.findOne(filtro);
         
         if (!producto) {
             return res.status(404).json({ error: 'Producto no encontrado' });
@@ -190,6 +81,7 @@ app.get('/api/productos/:id', async (req, res) => {
     }
 });
 
+// POST - Agregar nuevo producto
 app.post('/api/productos', async (req, res) => {
     try {
         const nuevoProducto = {
@@ -207,7 +99,7 @@ app.post('/api/productos', async (req, res) => {
             createdAt: new Date()
         };
         
-        await productosCollection.insertOne(nuevoProducto);
+        const result = await productosCollection.insertOne(nuevoProducto);
         
         res.status(201).json({ 
             success: true, 
@@ -221,9 +113,13 @@ app.post('/api/productos', async (req, res) => {
     }
 });
 
+// PUT - Actualizar producto
 app.put('/api/productos/:id', async (req, res) => {
     try {
         const { id } = req.params;
+        
+        console.log(`✏️ Actualizando producto con ID: ${id}`);
+        
         const datosActualizados = {
             nombre: req.body.nombre,
             categoria: req.body.categoria,
@@ -233,18 +129,30 @@ app.put('/api/productos/:id', async (req, res) => {
             updatedAt: new Date()
         };
         
+        // Eliminar campos undefined
         Object.keys(datosActualizados).forEach(key => 
             datosActualizados[key] === undefined && delete datosActualizados[key]
         );
         
+        // Construir filtro que busque por 'id' O '_id'
+        const filtro = construirFiltroProducto(id);
+        
+        console.log('Filtro de búsqueda:', JSON.stringify(filtro));
+        console.log('Datos a actualizar:', datosActualizados);
+        
         const result = await productosCollection.updateOne(
-            { id: id },
+            filtro,
             { $set: datosActualizados }
         );
         
+        console.log('Resultado:', { matchedCount: result.matchedCount, modifiedCount: result.modifiedCount });
+        
         if (result.matchedCount === 0) {
+            console.log(`❌ Producto no encontrado con ID: ${id}`);
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
+        
+        console.log(`✅ Producto actualizado: ${id}`);
         
         res.json({ 
             success: true,
@@ -254,17 +162,23 @@ app.put('/api/productos/:id', async (req, res) => {
         
     } catch (error) {
         console.error('Error al actualizar producto:', error);
-        res.status(500).json({ error: 'Error al actualizar producto' });
+        res.status(500).json({ error: 'Error al actualizar producto: ' + error.message });
     }
 });
 
+// DELETE - Eliminar producto
 app.delete('/api/productos/:id', async (req, res) => {
     try {
         const { id } = req.params;
         
         console.log(`🗑️  Intentando eliminar producto con ID: ${id}`);
         
-        const result = await productosCollection.deleteOne({ id: id });
+        // Construir filtro que busque por 'id' O '_id'
+        const filtro = construirFiltroProducto(id);
+        
+        console.log('Filtro de búsqueda:', JSON.stringify(filtro));
+        
+        const result = await productosCollection.deleteOne(filtro);
         
         if (result.deletedCount === 0) {
             console.log(`❌ Producto con ID ${id} no encontrado`);
@@ -285,104 +199,9 @@ app.delete('/api/productos/:id', async (req, res) => {
     }
 });
 
-// ==================== MERCADO PAGO ====================
-
-app.post('/api/crear-preferencia', async (req, res) => {
-    try {
-        const { nombre, email, telefono, direccion, items, total } = req.body;
-        
-        if (!nombre || !email || !items || !total) {
-            return res.status(400).json({ success: false, error: 'Datos incompletos' });
-        }
-
-        console.log('\n💳 CREANDO PREFERENCIA EN MERCADO PAGO...');
-
-        const preferencia = {
-            items: items.map(item => ({
-                id: item.id.toString(),
-                title: item.nombre,
-                quantity: item.cantidad,
-                unit_price: item.precio
-            })),
-            payer: {
-                name: nombre,
-                email: email,
-                phone: {
-                    area_code: '+56',
-                    number: telefono.replace(/\D/g, '')
-                },
-                address: {
-                    street_name: direccion
-                }
-            },
-            back_urls: {
-                success: `${req.protocol}://${req.get('host')}/success.html`,
-                failure: `${req.protocol}://${req.get('host')}/failed.html`,
-                pending: `${req.protocol}://${req.get('host')}/pending.html`
-            },
-            auto_return: 'approved',
-            notification_url: `${req.protocol}://${req.get('host')}/api/webhook`
-        };
-
-        const response = await axios.post(
-            `${MP_API_URL}/checkout/preferences`,
-            preferencia,
-            {
-                headers: {
-                    'Authorization': `Bearer ${MP_ACCESS_TOKEN}`,
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
-
-        console.log('✓ Preferencia creada en Mercado Pago');
-
-        // Guardar venta pendiente
-        const venta = {
-            id: Date.now().toString(),
-            fecha: new Date(),
-            cliente: { nombre, email, telefono, direccion },
-            productos: items,
-            total: total,
-            estado: 'pendiente',
-            mpPreferenceId: response.data.id,
-            mpInitPoint: response.data.init_point
-        };
-
-        await ventasCollection.insertOne(venta);
-
-        return res.json({
-            success: true,
-            enlacePago: response.data.init_point,
-            preferenceId: response.data.id
-        });
-
-    } catch (error) {
-        console.error('❌ Error Mercado Pago:', error.response?.data || error.message);
-        res.status(500).json({ 
-            success: false,
-            error: error.response?.data?.message || 'Error al procesar con Mercado Pago'
-        });
-    }
-});
-
-// Webhook de Mercado Pago
-app.post('/api/webhook', async (req, res) => {
-    try {
-        console.log('📥 Webhook recibido:', req.body);
-        
-        // Aquí puedes actualizar el estado de la venta según la notificación
-        // y enviar el email de confirmación
-        
-        res.json({ recibido: true });
-    } catch (error) {
-        console.error('Error en webhook:', error);
-        res.status(500).json({ error: 'Error procesando webhook' });
-    }
-});
-
 // ==================== RUTAS DE VENTAS ====================
 
+// GET - Obtener todas las ventas
 app.get('/api/ventas', async (req, res) => {
     try {
         const ventas = await ventasCollection.find({}).sort({ fecha: -1 }).toArray();
@@ -393,6 +212,7 @@ app.get('/api/ventas', async (req, res) => {
     }
 });
 
+// POST - Registrar nueva venta
 app.post('/api/ventas', async (req, res) => {
     try {
         const nuevaVenta = {
@@ -410,13 +230,6 @@ app.post('/api/ventas', async (req, res) => {
         };
         
         await ventasCollection.insertOne(nuevaVenta);
-        
-        // Enviar email de confirmación
-        await enviarEmailConfirmacion(nuevaVenta.cliente, {
-            id: nuevaVenta.id,
-            productos: nuevaVenta.productos,
-            total: nuevaVenta.total
-        });
         
         res.json({ 
             success: true,
@@ -442,16 +255,7 @@ const PORT = process.env.PORT || 3000;
 
 conectarMongoDB().then(() => {
     app.listen(PORT, () => {
-        console.log(`\n╔════════════════════════════════════════╗`);
-        console.log(`║  🖥️  MAC LINE - SERVIDOR COMPLETO     ║`);
-        console.log(`║  ✓ Puerto: ${PORT}                        ║`);
-        console.log(`║  ✓ MongoDB: Conectado                 ║`);
-        console.log(`║  ✓ Email: Configurado                 ║`);
-        console.log(`║  💳 Mercado Pago: Configurado         ║`);
-        console.log(`╚════════════════════════════════════════╝\n`);
-        console.log(`📍 Tienda:  http://localhost:${PORT}/index.html`);
-        console.log(`⚙️  Admin:   http://localhost:${PORT}/admin.html\n`);
+        console.log(`\n✓ Servidor corriendo en http://localhost:${PORT}`);
+        console.log('✓ Panel Admin: http://localhost:' + PORT + '/admin.html\n');
     });
 });
-
-module.exports = app;
