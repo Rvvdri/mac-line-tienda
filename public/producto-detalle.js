@@ -1,321 +1,217 @@
-// producto-detalle.js COMPATIBLE (funciona con o sin variantes)
-const API_URL_BASE = `${window.location.origin}/api`;
+// producto-detalle.js - FIX PRECIOS Y 6 IMÁGENES
+// API_URL ya está declarado en script.js
+
 let productoActual = null;
-let imagenesProducto = [];
 let imagenActualIndex = 0;
+let imagenesProducto = [];
 
-// Variantes seleccionadas (si existen)
-let colorSeleccionado = null;
-let capacidadSeleccionada = null;
-let precioActual = 0;
-
-document.addEventListener('DOMContentLoaded', async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const productoId = urlParams.get('id');
+// Cargar producto al iniciar
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const productoId = params.get('id');
     
-    if (!productoId) {
-        alert('Producto no encontrado');
+    if (productoId) {
+        cargarProducto(productoId);
+    } else {
         window.location.href = 'index.html';
-        return;
     }
-    
-    await cargarProductoDetalle(productoId);
-    actualizarContadorCarrito();
 });
 
-async function cargarProductoDetalle(productoId) {
+// Cargar datos del producto
+async function cargarProducto(id) {
     try {
-        const response = await fetch(`${API_URL_BASE}/productos`);
+        const response = await fetch(`${API_URL}/productos/${id}`);
+        if (!response.ok) throw new Error('Producto no encontrado');
         
-        if (!response.ok) {
-            throw new Error('Error al cargar productos');
-        }
-        
-        const productos = await response.json();
-        
-        productoActual = productos.find(p => String(p.id) === String(productoId));
-        
-        if (!productoActual) {
-            throw new Error('Producto no encontrado');
-        }
-        
-        // Inicializar variantes SI EXISTEN
-        if (productoActual.colores && productoActual.colores.length > 0) {
-            colorSeleccionado = productoActual.colores[0];
-        }
-        
-        if (productoActual.capacidades && productoActual.capacidades.length > 0) {
-            capacidadSeleccionada = productoActual.capacidades[0];
-        }
-        
-        // Calcular precio inicial
-        const precioBase = productoActual.precioBase || productoActual.precio;
-        const incremento = capacidadSeleccionada ? capacidadSeleccionada.incremento : 0;
-        precioActual = precioBase + incremento;
-        
-        imagenesProducto = generarImagenesProducto(productoActual);
-        
-        renderizarProductoDetalle(productoActual);
-        renderizarGaleria();
-        
+        productoActual = await response.json();
+        mostrarProducto(productoActual);
     } catch (error) {
-        console.error('Error cargando producto:', error);
-        alert('Error al cargar el producto: ' + error.message);
+        console.error('Error:', error);
+        alert('Producto no encontrado');
         window.location.href = 'index.html';
     }
 }
 
-function generarImagenesProducto(producto) {
-    if (producto.imagenes && producto.imagenes.length > 0) {
-        return producto.imagenes.map((url, index) => ({
-            type: 'url',
-            content: url,
-            alt: `${producto.nombre} - Vista ${index + 1}`
-        }));
+// Mostrar producto en la página
+function mostrarProducto(producto) {
+    // TÍTULO Y CATEGORÍA
+    document.title = `${producto.nombre} - MAC LINE`;
+    document.getElementById('pageTitle').textContent = `${producto.nombre} - MAC LINE`;
+    document.getElementById('productoTitulo').textContent = producto.nombre;
+    document.getElementById('productoCategoria').textContent = producto.categoria.toUpperCase();
+    
+    // SKU (opcional)
+    const skuEl = document.getElementById('productoSku');
+    if (skuEl && producto.id) {
+        skuEl.textContent = `SKU: ${String(producto.id).substring(0, 8)}`;
     }
     
-    const emoji = producto.emoji || '📱';
-    return [
-        { type: 'emoji', content: emoji, alt: `${producto.nombre} - Vista frontal` },
-        { type: 'emoji', content: emoji, alt: `${producto.nombre} - Vista lateral` },
-        { type: 'emoji', content: emoji, alt: `${producto.nombre} - Vista trasera` }
-    ];
+    // PRECIOS - FIX AQUÍ
+    const precioFinal = producto.precio;  // ← Precio con descuento (verde)
+    const precioOriginal = producto.precioOriginal;  // ← Precio antes del descuento (tachado)
+    const descuento = producto.descuento || 0;
+    
+    console.log('💰 Precios del producto:');
+    console.log('  Precio Original:', precioOriginal);
+    console.log('  Descuento:', descuento + '%');
+    console.log('  Precio Final:', precioFinal);
+    
+    // Mostrar precio final
+    document.getElementById('productoPrecio').textContent = `$${precioFinal.toLocaleString('es-CL')}`;
+    
+    // Mostrar precio original tachado si existe
+    const precioOriginalEl = document.getElementById('precioOriginalDetalle');
+    if (precioOriginalEl) {
+        if (precioOriginal && descuento > 0) {
+            precioOriginalEl.textContent = `Antes: $${precioOriginal.toLocaleString('es-CL')}`;
+            precioOriginalEl.style.display = 'block';
+        } else {
+            precioOriginalEl.style.display = 'none';
+        }
+    }
+    
+    // Mostrar badge de descuento
+    const descuentoBadgeEl = document.getElementById('descuentoBadge');
+    if (descuentoBadgeEl) {
+        if (descuento > 0) {
+            descuentoBadgeEl.textContent = `-${descuento}%`;
+            descuentoBadgeEl.style.display = 'inline-block';
+        } else {
+            descuentoBadgeEl.style.display = 'none';
+        }
+    }
+    
+    // STOCK
+    const stockEl = document.getElementById('productoStock');
+    if (stockEl) {
+        if (producto.stock === 0) {
+            stockEl.innerHTML = '<span class="stock-agotado">✗ Agotado</span>';
+        } else if (producto.stock < 5) {
+            stockEl.innerHTML = `<span class="stock-bajo">⚠ Solo ${producto.stock} disponibles</span>`;
+        } else {
+            stockEl.innerHTML = `<span class="stock-disponible">✓ ${producto.stock} disponibles</span>`;
+        }
+    }
+    
+    // DESCRIPCIÓN
+    const descripcionEl = document.getElementById('productoDescripcion');
+    if (descripcionEl) {
+        descripcionEl.textContent = producto.descripcion || 'Sin descripción disponible.';
+    }
+    
+    // IMÁGENES - CARGAR 6 IMÁGENES (1 PORTADA + 5 ADICIONALES)
+    imagenesProducto = [];
+    
+    // Agregar portada
+    if (producto.imagenPortada) {
+        imagenesProducto.push(producto.imagenPortada);
+    }
+    
+    // Agregar imágenes adicionales
+    if (producto.imagenes && Array.isArray(producto.imagenes)) {
+        imagenesProducto = imagenesProducto.concat(producto.imagenes);
+    }
+    
+    console.log('📸 Total imágenes cargadas:', imagenesProducto.length);
+    
+    // Si no hay imágenes, usar emoji
+    if (imagenesProducto.length === 0 && producto.emoji) {
+        document.getElementById('imagenPrincipal').innerHTML = `<span style="font-size: 8rem;">${producto.emoji}</span>`;
+    } else {
+        mostrarImagen(0);
+        crearThumbnails();
+    }
 }
 
-function renderizarGaleria() {
-    imagenActualIndex = 0;
-    mostrarImagen(imagenActualIndex);
-    renderizarThumbnails();
-}
-
+// Mostrar imagen en el carrusel
 function mostrarImagen(index) {
-    const imagenPrincipal = document.getElementById('imagenPrincipal');
-    const currentImageIndex = document.getElementById('currentImageIndex');
-    const totalImages = document.getElementById('totalImages');
-    
-    if (!imagenPrincipal) return;
-    
-    const imagen = imagenesProducto[index];
-    
-    if (imagen.type === 'emoji') {
-        imagenPrincipal.innerHTML = imagen.content;
-        imagenPrincipal.style.fontSize = '8rem';
-    } else if (imagen.type === 'url') {
-        imagenPrincipal.innerHTML = `<img src="${imagen.content}" alt="${imagen.alt}" onerror="this.parentElement.innerHTML='${productoActual.emoji || '📦'}'; this.parentElement.style.fontSize='8rem';">`;
-    }
-    
-    if (currentImageIndex) currentImageIndex.textContent = index + 1;
-    if (totalImages) totalImages.textContent = imagenesProducto.length;
+    if (imagenesProducto.length === 0) return;
     
     imagenActualIndex = index;
+    const imagenEl = document.getElementById('imagenPrincipal');
+    
+    if (imagenEl) {
+        imagenEl.innerHTML = `<img src="${imagenesProducto[index]}" alt="${productoActual?.nombre || 'Producto'}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\\'font-size: 6rem;\\'>📦</span>';">`;
+    }
+    
+    // Actualizar thumbnails activos
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    thumbnails.forEach((thumb, i) => {
+        if (i === index) {
+            thumb.classList.add('active');
+        } else {
+            thumb.classList.remove('active');
+        }
+    });
 }
 
+// Crear thumbnails de las imágenes
+function crearThumbnails() {
+    const container = document.getElementById('thumbnailsContainer');
+    if (!container || imagenesProducto.length === 0) return;
+    
+    container.innerHTML = imagenesProducto.map((img, index) => `
+        <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="mostrarImagen(${index})">
+            <img src="${img}" alt="Vista ${index + 1}">
+        </div>
+    `).join('');
+}
+
+// Cambiar imagen (botones anterior/siguiente)
 function cambiarImagen(direccion) {
+    if (imagenesProducto.length === 0) return;
+    
     imagenActualIndex = (imagenActualIndex + direccion + imagenesProducto.length) % imagenesProducto.length;
     mostrarImagen(imagenActualIndex);
 }
 
-function seleccionarImagen(index) {
-    mostrarImagen(index);
-}
-
-function renderizarThumbnails() {
-    const thumbnailsContainer = document.querySelector('.thumbnails');
-    if (!thumbnailsContainer) return;
-    
-    thumbnailsContainer.innerHTML = imagenesProducto.map((imagen, index) => {
-        if (imagen.type === 'emoji') {
-            return `
-                <div class="thumbnail ${index === imagenActualIndex ? 'active' : ''}" onclick="seleccionarImagen(${index})">
-                    <span class="thumbnail-emoji">${imagen.content}</span>
-                </div>
-            `;
-        } else {
-            return `
-                <div class="thumbnail ${index === imagenActualIndex ? 'active' : ''}" onclick="seleccionarImagen(${index})">
-                    <img src="${imagen.content}" alt="${imagen.alt}" onerror="this.parentElement.innerHTML='<span class=thumbnail-emoji>${productoActual.emoji || '📦'}</span>'">
-                </div>
-            `;
-        }
-    }).join('');
-}
-
-function renderizarProductoDetalle(producto) {
-    // Título y precio
-    document.getElementById('productoTitulo').textContent = producto.nombre;
-    document.getElementById('productoCategoria').textContent = producto.categoria.toUpperCase();
-    
-    const precioBase = producto.precioBase || producto.precio;
-    actualizarPrecioDisplay(precioBase + (capacidadSeleccionada ? capacidadSeleccionada.incremento : 0));
-    
-    // Descripción
-    document.getElementById('productoDescripcion').textContent = producto.descripcion;
-    
-    // Stock
-    const stockElement = document.getElementById('productoStock');
-    if (producto.stock > 0) {
-        stockElement.innerHTML = `<span style="color: #34c759;">✓ ${producto.stock} disponibles</span>`;
-    } else {
-        stockElement.innerHTML = `<span style="color: #ff3b30;">✗ Agotado</span>`;
-    }
-    
-    // RENDERIZAR SELECTORES SOLO SI EXISTEN
-    const selectoresContainer = document.getElementById('selectoresVariantes');
-    if (selectoresContainer) {
-        if (producto.colores || producto.capacidades) {
-            renderizarSelectores(producto);
-        } else {
-            selectoresContainer.innerHTML = ''; // Vacío si no hay variantes
-        }
-    }
-}
-
-function renderizarSelectores(producto) {
-    const selectoresContainer = document.getElementById('selectoresVariantes');
-    if (!selectoresContainer) return;
-    
-    let html = '';
-    
-    // SELECTOR DE COLORES (solo si existen)
-    if (producto.colores && producto.colores.length > 0) {
-        html += `
-            <div class="selector-seccion">
-                <h4 class="selector-titulo">Color: <span id="colorSeleccionadoNombre">${colorSeleccionado.nombre}</span></h4>
-                <div class="colores-opciones-detalle">
-                    ${producto.colores.map((color, idx) => `
-                        <button 
-                            class="color-btn-detalle ${idx === 0 ? 'active' : ''}" 
-                            style="background-color: ${color.hex};"
-                            onclick="cambiarColorDetalle(${idx})"
-                            title="${color.nombre}">
-                            ${idx === 0 ? '<span class="check-mark">✓</span>' : ''}
-                        </button>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    }
-    
-    // SELECTOR DE CAPACIDAD (solo si existen)
-    if (producto.capacidades && producto.capacidades.length > 0) {
-        html += `
-            <div class="selector-seccion">
-                <h4 class="selector-titulo">Almacenamiento</h4>
-                <div class="capacidades-opciones-detalle">
-                    ${producto.capacidades.map((cap, idx) => `
-                        <button 
-                            class="capacidad-btn-detalle ${idx === 0 ? 'active' : ''}" 
-                            onclick="cambiarCapacidadDetalle(${idx})">
-                            <span class="capacidad-texto">${cap.capacidad}</span>
-                            <span class="capacidad-precio">+$${cap.incremento.toLocaleString('es-CL')}</span>
-                        </button>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    }
-    
-    selectoresContainer.innerHTML = html;
-}
-
-function cambiarColorDetalle(colorIdx) {
-    if (!productoActual.colores) return;
-    
-    colorSeleccionado = productoActual.colores[colorIdx];
-    
-    const botones = document.querySelectorAll('.color-btn-detalle');
-    botones.forEach((btn, idx) => {
-        if (idx === colorIdx) {
-            btn.classList.add('active');
-            btn.innerHTML = '<span class="check-mark">✓</span>';
-        } else {
-            btn.classList.remove('active');
-            btn.innerHTML = '';
-        }
-    });
-    
-    const nombreElement = document.getElementById('colorSeleccionadoNombre');
-    if (nombreElement) {
-        nombreElement.textContent = colorSeleccionado.nombre;
-    }
-}
-
-function cambiarCapacidadDetalle(capacidadIdx) {
-    if (!productoActual.capacidades) return;
-    
-    capacidadSeleccionada = productoActual.capacidades[capacidadIdx];
-    
-    const botones = document.querySelectorAll('.capacidad-btn-detalle');
-    botones.forEach((btn, idx) => {
-        if (idx === capacidadIdx) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-    
-    const precioBase = productoActual.precioBase || productoActual.precio;
-    precioActual = precioBase + capacidadSeleccionada.incremento;
-    actualizarPrecioDisplay(precioActual);
-}
-
-function actualizarPrecioDisplay(precio) {
-    const precioElement = document.getElementById('productoPrecio');
-    if (precioElement) {
-        precioElement.textContent = `$${precio.toLocaleString('es-CL')}`;
-    }
-}
-
+// Agregar al carrito desde detalle
 function agregarAlCarritoDetalle() {
     if (!productoActual) return;
     
     if (productoActual.stock === 0) {
-        alert('⚠️ Este producto está agotado');
+        alert('❌ Producto agotado');
         return;
     }
     
-    // Crear producto con variantes seleccionadas (si existen)
-    const productoParaCarrito = {
-        ...productoActual,
-        color: colorSeleccionado ? colorSeleccionado.nombre : null,
-        capacidad: capacidadSeleccionada ? capacidadSeleccionada.capacidad : null,
-        precio: precioActual || productoActual.precio,
-        idCarrito: `${productoActual.id}-${colorSeleccionado?.nombre || 'default'}-${capacidadSeleccionada?.capacidad || 'default'}`
-    };
+    // Obtener carrito actual
+    let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     
-    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    
-    const existe = carrito.find(item => item.idCarrito === productoParaCarrito.idCarrito);
+    // Buscar si ya existe
+    const existe = carrito.find(item => item.id === productoActual.id);
     
     if (existe) {
+        if (existe.cantidad >= productoActual.stock) {
+            alert(`⚠️ Solo hay ${productoActual.stock} unidades disponibles`);
+            return;
+        }
         existe.cantidad++;
     } else {
         carrito.push({
-            ...productoParaCarrito,
+            ...productoActual,
             cantidad: 1
         });
     }
     
+    // Guardar
     localStorage.setItem('carrito', JSON.stringify(carrito));
+    
+    // Actualizar contador
     actualizarContadorCarrito();
     
-    const variantesTexto = [
-        colorSeleccionado ? colorSeleccionado.nombre : null,
-        capacidadSeleccionada ? capacidadSeleccionada.capacidad : null
-    ].filter(Boolean).join(' - ');
-    
-    alert(`✅ ${productoActual.nombre}${variantesTexto ? `\n(${variantesTexto})` : ''}\nagregado al carrito`);
+    // Notificación
+    alert(`✅ ${productoActual.nombre} agregado al carrito`);
 }
 
+// Actualizar contador del carrito
 function actualizarContadorCarrito() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const contador = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
+    const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
     
     document.querySelectorAll('.cart-count').forEach(el => {
-        el.textContent = contador;
+        el.textContent = total;
     });
 }
 
-function volverATienda() {
-    window.location.href = 'index.html';
-}
+// Cargar contador al iniciar
+actualizarContadorCarrito();

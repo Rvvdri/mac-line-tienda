@@ -374,7 +374,7 @@ function cerrarPago() {
     document.body.classList.remove('modal-open');
 }
 
-function procesarPago(event) {
+async function procesarPago(event) {
     event.preventDefault();
     
     const nombreEl = document.getElementById('nombre');
@@ -395,22 +395,44 @@ function procesarPago(event) {
     };
     
     const datosCompra = {
-        ...datosCliente,
+        cliente: datosCliente,
         items: carrito,
         total: carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0)
     };
     
-    console.log('Procesando pago:', datosCompra);
+    console.log('💳 Procesando pago con Mercado Pago...');
     
-    alert('¡Gracias por tu compra! Recibirás un email de confirmación.');
-    
-    carrito = [];
-    guardarCarritoLocal();
-    actualizarCarrito();
-    cerrarPago();
-    
-    const form = document.getElementById('formPago');
-    if (form) form.reset();
+    try {
+        // CREAR PREFERENCIA EN MERCADO PAGO
+        const response = await fetch(`${API_URL}/crear-preferencia`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosCompra)
+        });
+        
+        if (!response.ok) {
+            throw new Error('Error al crear preferencia de pago');
+        }
+        
+        const { init_point } = await response.json();
+        
+        console.log('✅ Preferencia creada');
+        console.log('🔗 Redirigiendo a Mercado Pago...');
+        
+        // GUARDAR VENTA EN BD
+        await fetch(`${API_URL}/ventas`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosCompra)
+        });
+        
+        // REDIRIGIR A MERCADO PAGO
+        window.location.href = init_point;
+        
+    } catch (error) {
+        console.error('❌ Error:', error);
+        alert('❌ Error al procesar el pago. Por favor intenta nuevamente.');
+    }
 }
 
 window.onclick = function(event) {
