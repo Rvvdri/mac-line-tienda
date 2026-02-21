@@ -236,9 +236,9 @@ app.post('/api/crear-preferencia', async (req, res) => {
                 email: cliente.email
             },
             back_urls: {
-                success: 'http://localhost:3000/success.html',
-                failure: 'http://localhost:3000/failure.html',
-                pending: 'http://localhost:3000/pending.html'
+                success: 'https://mac-line.cl/success.html',
+                failure: 'https://mac-line.cl/failure.html',
+                pending: 'https://mac-line.cl/pending.html'
             },
             auto_return: 'approved'
         };
