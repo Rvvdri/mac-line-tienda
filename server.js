@@ -104,7 +104,13 @@ app.post('/api/productos', async (req, res) => {
     try {
         const nuevoId = Date.now().toString() + Math.random().toString(36).substr(2, 9);
         
+        // RECALCULAR PRECIO FINAL
+        const precioOriginal = parseFloat(req.body.precioOriginal);
+        const descuento = parseFloat(req.body.descuento) || 0;
+        const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
+        
         console.log('📦 Agregando producto:', req.body.nombre);
+        console.log(`💰 Precio: $${precioOriginal.toLocaleString('es-CL')} - ${descuento}% = $${precioFinal.toLocaleString('es-CL')}`);
         
         let imagenPortada = req.body.imagenPortada;
         if (imagenPortada && imagenPortada.startsWith('data:image')) {
@@ -128,9 +134,9 @@ app.post('/api/productos', async (req, res) => {
             nombre: req.body.nombre,
             categoria: req.body.categoria,
             descripcion: req.body.descripcion,
-            precioOriginal: req.body.precioOriginal,
-            precio: req.body.precio,
-            descuento: req.body.descuento || 0,
+            precioOriginal: precioOriginal,
+            precio: precioFinal,  // ← PRECIO RECALCULADO
+            descuento: descuento,
             stock: req.body.stock,
             emoji: req.body.emoji || '📦',
             imagenPortada: imagenPortada,
@@ -139,19 +145,12 @@ app.post('/api/productos', async (req, res) => {
         };
         
         await productosCollection.insertOne(nuevoProducto);
-        
         console.log('✅ Producto agregado exitosamente');
-        console.log(`   - Portada: ${imagenPortada ? 'Guardada' : 'No'}`);
-        console.log(`   - Imágenes adicionales: ${imagenesAdicionales.length}`);
         
         res.status(201).json({ 
             success: true, 
             mensaje: 'Producto agregado exitosamente',
-            producto: {
-                ...nuevoProducto,
-                imagenPortada: imagenPortada ? 'Guardada' : null,
-                imagenes: `${imagenesAdicionales.length} imágenes`
-            }
+            producto: nuevoProducto
         });
     } catch (error) {
         console.error('Error al agregar producto:', error);
@@ -159,7 +158,7 @@ app.post('/api/productos', async (req, res) => {
     }
 });
 
-// ========== PUT - ACTUALIZAR PRODUCTO - FIX COMPLETO ==========
+// ========== PUT - FIX CRÍTICO: RECALCULAR PRECIO ==========
 app.put('/api/productos/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -167,60 +166,55 @@ app.put('/api/productos/:id', async (req, res) => {
         console.log(`\n✏️ ========== ACTUALIZANDO PRODUCTO ${id} ==========`);
         console.log('📦 Nombre:', req.body.nombre);
         
+        // ========== RECALCULAR PRECIO FINAL ==========
+        const precioOriginal = parseFloat(req.body.precioOriginal);
+        const descuento = parseFloat(req.body.descuento) || 0;
+        const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
+        
+        console.log(`💰 RECALCULANDO PRECIO:`);
+        console.log(`   Precio Original: $${precioOriginal.toLocaleString('es-CL')}`);
+        console.log(`   Descuento: ${descuento}%`);
+        console.log(`   Precio Final: $${precioFinal.toLocaleString('es-CL')} ← SE GUARDARÁ ESTE`);
+        
         const datosActualizados = {
             nombre: req.body.nombre,
             categoria: req.body.categoria,
             descripcion: req.body.descripcion,
-            precioOriginal: req.body.precioOriginal,
-            precio: req.body.precio,
-            descuento: req.body.descuento || 0,
+            precioOriginal: precioOriginal,
+            precio: precioFinal,  // ← PRECIO RECALCULADO AQUÍ
+            descuento: descuento,
             stock: req.body.stock,
             updatedAt: new Date()
         };
         
-        // PORTADA: Si viene nueva (base64), guardarla
+        // Procesar portada
         if (req.body.imagenPortada && req.body.imagenPortada.startsWith('data:image')) {
             const nuevaPortada = guardarImagenBase64(req.body.imagenPortada, id, 'portada');
             if (nuevaPortada) {
                 datosActualizados.imagenPortada = nuevaPortada;
-                console.log('📸 Nueva portada guardada:', nuevaPortada);
+                console.log('📸 Nueva portada guardada');
             }
         } else if (req.body.imagenPortada && req.body.imagenPortada.startsWith('/imagenes/')) {
-            // Si viene una ruta (imagen existente), mantenerla
             datosActualizados.imagenPortada = req.body.imagenPortada;
-            console.log('📸 Portada mantenida:', req.body.imagenPortada);
         }
         
-        // IMÁGENES ADICIONALES: Procesar cada una
+        // Procesar imágenes adicionales
         if (req.body.imagenes && Array.isArray(req.body.imagenes)) {
-            console.log('📸 Recibidas', req.body.imagenes.length, 'imágenes');
-            
             const imagenesFinales = req.body.imagenes.map((img, index) => {
-                if (!img) {
-                    console.log(`📸 Imagen ${index + 1}: null (vacía)`);
-                    return null;
-                }
+                if (!img) return null;
                 
                 if (img.startsWith('data:image')) {
-                    // Es una imagen nueva en base64, guardarla
-                    const guardada = guardarImagenBase64(img, id, `img${index + 1}`);
-                    console.log(`📸 Imagen ${index + 1}: NUEVA guardada →`, guardada);
-                    return guardada;
+                    return guardarImagenBase64(img, id, `img${index + 1}`);
                 } else if (img.startsWith('/imagenes/')) {
-                    // Es una ruta existente, mantenerla
-                    console.log(`📸 Imagen ${index + 1}: EXISTENTE mantenida →`, img);
-                    return img;
-                } else {
-                    console.log(`📸 Imagen ${index + 1}: Formato desconocido →`, img.substring(0, 50));
                     return img;
                 }
+                return img;
             }).filter(img => img !== null);
             
             datosActualizados.imagenes = imagenesFinales;
-            console.log('✅ Total imágenes finales:', imagenesFinales.length);
+            console.log('📸 Total imágenes:', imagenesFinales.length);
         }
         
-        // Eliminar campos undefined
         Object.keys(datosActualizados).forEach(key => 
             datosActualizados[key] === undefined && delete datosActualizados[key]
         );
@@ -237,13 +231,14 @@ app.put('/api/productos/:id', async (req, res) => {
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
         
-        console.log(`✅ Producto actualizado (${result.modifiedCount} modificado)`);
+        console.log(`✅ PRODUCTO ACTUALIZADO - Precio final: $${precioFinal.toLocaleString('es-CL')}`);
         console.log('========== FIN ACTUALIZACIÓN ==========\n');
         
         res.json({ 
             success: true,
             mensaje: 'Producto actualizado exitosamente',
-            modificados: result.modifiedCount
+            modificados: result.modifiedCount,
+            precioFinal: precioFinal
         });
     } catch (error) {
         console.error('❌ Error al actualizar producto:', error);
@@ -322,11 +317,10 @@ const PORT = process.env.PORT || 3000;
 conectarMongoDB().then(() => {
     app.listen(PORT, () => {
         console.log(`\n╔═══════════════════════════════════════════╗`);
-        console.log(`║  🖥️  MAC LINE - SERVIDOR FIX IMÁGENES    ║`);
+        console.log(`║  🖥️  MAC LINE - FIX PRECIOS FRONT        ║`);
         console.log(`║  ✓ Puerto: ${PORT}                           ║`);
         console.log(`║  ✓ MongoDB: Conectado                    ║`);
-        console.log(`║  ✓ Límite: 50MB                          ║`);
-        console.log(`║  ✓ Imágenes: Base64 + Rutas existentes  ║`);
+        console.log(`║  ✓ Precios: SE RECALCULAN en PUT        ║`);
         console.log(`╚═══════════════════════════════════════════╝\n`);
         console.log(`📍 Tienda:  http://localhost:${PORT}/`);
         console.log(`⚙️  Admin:   http://localhost:${PORT}/admin.html\n`);

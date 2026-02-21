@@ -73,7 +73,7 @@ async function cargarProductos() {
     }
 }
 
-// ========== RENDERIZAR PRODUCTOS - SIN SELECTORES ==========
+// ========== RENDERIZAR PRODUCTOS - FIX PRECIOS ==========
 
 function renderizarProductos(filtro = 'todos') {
     const grid = document.getElementById('productosGrid');
@@ -91,8 +91,9 @@ function renderizarProductos(filtro = 'todos') {
     }
 
     grid.innerHTML = productosFiltrados.map(producto => {
-        const precioBase = producto.precioBase || producto.precio;
-        const precioOriginal = producto.precioOriginal;
+        // FIX: Usar producto.precio (precio final con descuento)
+        const precioFinal = producto.precio;  // ← Precio con descuento (verde)
+        const precioOriginal = producto.precioOriginal;  // ← Precio antes del descuento (tachado)
         const descuento = producto.descuento || 0;
         const tieneVariantes = producto.colores && producto.capacidades;
         
@@ -131,7 +132,7 @@ function renderizarProductos(filtro = 'todos') {
                 
                 <p class="producto-precio">
                     ${tieneVariantes ? '<span style="font-size: 0.875rem; color: #94a3b8; font-weight: 500;">Desde </span>' : ''}
-                    $${precioBase.toLocaleString('es-CL')}
+                    $${precioFinal.toLocaleString('es-CL')}
                 </p>
                 
                 <p class="stock-${stockClass}">
@@ -215,20 +216,16 @@ function agregarAlCarrito(productoId) {
     guardarCarritoLocal();
     actualizarCarrito();
     
-    // Notificación mejorada
     mostrarNotificacion(`✅ ${producto.nombre} agregado al carrito`);
 }
 
-// Función de notificación mejorada (opcional)
 function mostrarNotificacion(mensaje) {
-    // Si existe el elemento de notificación, úsalo
     const notif = document.getElementById('notificacion');
     if (notif) {
         notif.textContent = mensaje;
         notif.classList.add('mostrar');
         setTimeout(() => notif.classList.remove('mostrar'), 2000);
     } else {
-        // Fallback al alert
         alert(mensaje);
     }
 }
@@ -237,7 +234,6 @@ function aumentarCantidad(index) {
     const item = carrito[index];
     const producto = productosActuales.find(p => String(p.id) === String(item.id));
     
-    // Validar stock
     if (producto && item.cantidad >= producto.stock) {
         alert(`⚠️ Solo hay ${producto.stock} unidades disponibles`);
         return;
@@ -328,14 +324,12 @@ function renderizarCarrito() {
     totalPrecio.textContent = total.toLocaleString('es-CL');
 }
 
-// ========== FUNCIONES DE MODAL MEJORADAS CON FIX DE SCROLL ==========
-
 function abrirCarrito() {
     const modal = document.getElementById('carritoModal');
     if (!modal) return;
     
     modal.style.display = 'flex';
-    document.body.classList.add('modal-open'); // BLOQUEA SCROLL DE PÁGINA
+    document.body.classList.add('modal-open');
     renderizarCarrito();
 }
 
@@ -344,7 +338,7 @@ function cerrarCarrito() {
     if (!modal) return;
     
     modal.style.display = 'none';
-    document.body.classList.remove('modal-open'); // RESTAURA SCROLL
+    document.body.classList.remove('modal-open');
 }
 
 function procederPago() {
@@ -358,7 +352,6 @@ function procederPago() {
     
     if (carritoModal) carritoModal.style.display = 'none';
     if (pagoModal) pagoModal.style.display = 'flex';
-    // NO remover modal-open porque seguimos en un modal
     
     const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
     const envio = 5000;
@@ -378,7 +371,7 @@ function cerrarPago() {
     if (!modal) return;
     
     modal.style.display = 'none';
-    document.body.classList.remove('modal-open'); // RESTAURA SCROLL
+    document.body.classList.remove('modal-open');
 }
 
 function procesarPago(event) {
@@ -420,8 +413,6 @@ function procesarPago(event) {
     if (form) form.reset();
 }
 
-// ========== CERRAR MODALES CON CLICK FUERA O ESC ==========
-
 window.onclick = function(event) {
     const carritoModal = document.getElementById('carritoModal');
     const pagoModal = document.getElementById('pagoModal');
@@ -434,7 +425,6 @@ window.onclick = function(event) {
     }
 }
 
-// Cerrar con tecla ESC
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         cerrarCarrito();
