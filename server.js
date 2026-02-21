@@ -2,20 +2,20 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { MongoClient, ObjectId } = require('mongodb');
+const fs = require('fs');
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ==================== MONGODB ====================
 const MONGODB_URI = 'mongodb+srv://rvvdri:9j8rdlLqR4ACotdY@cluster0.vptvpzv.mongodb.net/macline';
 let db;
 let productosCollection;
 let ventasCollection;
 
-// Conectar a MongoDB
 async function conectarMongoDB() {
     try {
         const client = await MongoClient.connect(MONGODB_URI);
@@ -29,31 +29,51 @@ async function conectarMongoDB() {
     }
 }
 
-// ==================== FUNCIÓN HELPER PARA BUSCAR PRODUCTOS ====================
-function construirFiltroProducto(id) {
-    // Intenta buscar por 'id' personalizado o por '_id' de MongoDB
-    const filtros = [];
+function guardarImagenBase64(base64String, productoId, numero = '') {
+    if (!base64String || !base64String.startsWith('data:image')) {
+        return null;
+    }
     
-    // Buscar por id personalizado (string o número)
+    try {
+        const matches = base64String.match(/^data:image\/(\w+);base64,(.+)$/);
+        if (!matches) return null;
+        
+        const extension = matches[1];
+        const data = matches[2];
+        const buffer = Buffer.from(data, 'base64');
+        
+        const filename = `producto-${productoId}${numero ? `-${numero}` : ''}-${Date.now()}.${extension}`;
+        const filepath = path.join(__dirname, 'public', 'imagenes', filename);
+        
+        const dir = path.join(__dirname, 'public', 'imagenes');
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        
+        fs.writeFileSync(filepath, buffer);
+        console.log(`✅ Imagen guardada: ${filename}`);
+        return `/imagenes/${filename}`;
+    } catch (error) {
+        console.error('❌ Error guardando imagen:', error);
+        return null;
+    }
+}
+
+function construirFiltroProducto(id) {
+    const filtros = [];
     filtros.push({ id: id });
     filtros.push({ id: String(id) });
     filtros.push({ id: Number(id) });
     
-    // Si parece un ObjectId de MongoDB (24 caracteres hex), búscalo
     if (id && id.length === 24 && /^[0-9a-fA-F]{24}$/.test(id)) {
         try {
             filtros.push({ _id: new ObjectId(id) });
-        } catch (e) {
-            // No es un ObjectId válido
-        }
+        } catch (e) {}
     }
     
     return { $or: filtros };
 }
 
-// ==================== RUTAS DE PRODUCTOS ====================
-
-// GET - Obtener todos los productos
 app.get('/api/productos', async (req, res) => {
     try {
         const productos = await productosCollection.find({}).toArray();
@@ -64,7 +84,6 @@ app.get('/api/productos', async (req, res) => {
     }
 });
 
-// GET - Obtener un producto por ID
 app.get('/api/productos/:id', async (req, res) => {
     try {
         const filtro = construirFiltroProducto(req.params.id);
@@ -81,127 +100,181 @@ app.get('/api/productos/:id', async (req, res) => {
     }
 });
 
-// POST - Agregar nuevo producto
 app.post('/api/productos', async (req, res) => {
     try {
+        const nuevoId = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+        
+        console.log('📦 Agregando producto:', req.body.nombre);
+        
+        let imagenPortada = req.body.imagenPortada;
+        if (imagenPortada && imagenPortada.startsWith('data:image')) {
+            imagenPortada = guardarImagenBase64(imagenPortada, nuevoId, 'portada');
+        }
+        
+        let imagenesAdicionales = [];
+        if (req.body.imagenes && Array.isArray(req.body.imagenes)) {
+            imagenesAdicionales = req.body.imagenes
+                .map((img, index) => {
+                    if (img && img.startsWith('data:image')) {
+                        return guardarImagenBase64(img, nuevoId, `img${index + 1}`);
+                    }
+                    return null;
+                })
+                .filter(img => img !== null);
+        }
+        
         const nuevoProducto = {
-            id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+            id: nuevoId,
             nombre: req.body.nombre,
             categoria: req.body.categoria,
             descripcion: req.body.descripcion,
+            precioOriginal: req.body.precioOriginal,
             precio: req.body.precio,
-            precioOriginal: req.body.precioOriginal || null,
-            stock: req.body.stock,
             descuento: req.body.descuento || 0,
+            stock: req.body.stock,
             emoji: req.body.emoji || '📦',
-            imagenPortada: req.body.imagenPortada || null,
-            imagenes: req.body.imagenes || [],
+            imagenPortada: imagenPortada,
+            imagenes: imagenesAdicionales,
             createdAt: new Date()
         };
         
-        const result = await productosCollection.insertOne(nuevoProducto);
+        await productosCollection.insertOne(nuevoProducto);
+        
+        console.log('✅ Producto agregado exitosamente');
+        console.log(`   - Portada: ${imagenPortada ? 'Guardada' : 'No'}`);
+        console.log(`   - Imágenes adicionales: ${imagenesAdicionales.length}`);
         
         res.status(201).json({ 
             success: true, 
             mensaje: 'Producto agregado exitosamente',
-            producto: nuevoProducto 
+            producto: {
+                ...nuevoProducto,
+                imagenPortada: imagenPortada ? 'Guardada' : null,
+                imagenes: `${imagenesAdicionales.length} imágenes`
+            }
         });
-        
     } catch (error) {
         console.error('Error al agregar producto:', error);
-        res.status(500).json({ error: 'Error al agregar producto' });
+        res.status(500).json({ error: 'Error al agregar producto: ' + error.message });
     }
 });
 
-// PUT - Actualizar producto
+// ========== PUT - ACTUALIZAR PRODUCTO - FIX COMPLETO ==========
 app.put('/api/productos/:id', async (req, res) => {
     try {
         const { id } = req.params;
         
-        console.log(`✏️ Actualizando producto con ID: ${id}`);
+        console.log(`\n✏️ ========== ACTUALIZANDO PRODUCTO ${id} ==========`);
+        console.log('📦 Nombre:', req.body.nombre);
         
         const datosActualizados = {
             nombre: req.body.nombre,
             categoria: req.body.categoria,
+            descripcion: req.body.descripcion,
+            precioOriginal: req.body.precioOriginal,
             precio: req.body.precio,
-            stock: req.body.stock,
             descuento: req.body.descuento || 0,
+            stock: req.body.stock,
             updatedAt: new Date()
         };
+        
+        // PORTADA: Si viene nueva (base64), guardarla
+        if (req.body.imagenPortada && req.body.imagenPortada.startsWith('data:image')) {
+            const nuevaPortada = guardarImagenBase64(req.body.imagenPortada, id, 'portada');
+            if (nuevaPortada) {
+                datosActualizados.imagenPortada = nuevaPortada;
+                console.log('📸 Nueva portada guardada:', nuevaPortada);
+            }
+        } else if (req.body.imagenPortada && req.body.imagenPortada.startsWith('/imagenes/')) {
+            // Si viene una ruta (imagen existente), mantenerla
+            datosActualizados.imagenPortada = req.body.imagenPortada;
+            console.log('📸 Portada mantenida:', req.body.imagenPortada);
+        }
+        
+        // IMÁGENES ADICIONALES: Procesar cada una
+        if (req.body.imagenes && Array.isArray(req.body.imagenes)) {
+            console.log('📸 Recibidas', req.body.imagenes.length, 'imágenes');
+            
+            const imagenesFinales = req.body.imagenes.map((img, index) => {
+                if (!img) {
+                    console.log(`📸 Imagen ${index + 1}: null (vacía)`);
+                    return null;
+                }
+                
+                if (img.startsWith('data:image')) {
+                    // Es una imagen nueva en base64, guardarla
+                    const guardada = guardarImagenBase64(img, id, `img${index + 1}`);
+                    console.log(`📸 Imagen ${index + 1}: NUEVA guardada →`, guardada);
+                    return guardada;
+                } else if (img.startsWith('/imagenes/')) {
+                    // Es una ruta existente, mantenerla
+                    console.log(`📸 Imagen ${index + 1}: EXISTENTE mantenida →`, img);
+                    return img;
+                } else {
+                    console.log(`📸 Imagen ${index + 1}: Formato desconocido →`, img.substring(0, 50));
+                    return img;
+                }
+            }).filter(img => img !== null);
+            
+            datosActualizados.imagenes = imagenesFinales;
+            console.log('✅ Total imágenes finales:', imagenesFinales.length);
+        }
         
         // Eliminar campos undefined
         Object.keys(datosActualizados).forEach(key => 
             datosActualizados[key] === undefined && delete datosActualizados[key]
         );
         
-        // Construir filtro que busque por 'id' O '_id'
+        console.log('💾 Guardando en MongoDB...');
         const filtro = construirFiltroProducto(id);
-        
-        console.log('Filtro de búsqueda:', JSON.stringify(filtro));
-        console.log('Datos a actualizar:', datosActualizados);
-        
         const result = await productosCollection.updateOne(
             filtro,
             { $set: datosActualizados }
         );
         
-        console.log('Resultado:', { matchedCount: result.matchedCount, modifiedCount: result.modifiedCount });
-        
         if (result.matchedCount === 0) {
-            console.log(`❌ Producto no encontrado con ID: ${id}`);
+            console.log('❌ Producto no encontrado');
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
         
-        console.log(`✅ Producto actualizado: ${id}`);
+        console.log(`✅ Producto actualizado (${result.modifiedCount} modificado)`);
+        console.log('========== FIN ACTUALIZACIÓN ==========\n');
         
         res.json({ 
             success: true,
             mensaje: 'Producto actualizado exitosamente',
             modificados: result.modifiedCount
         });
-        
     } catch (error) {
-        console.error('Error al actualizar producto:', error);
+        console.error('❌ Error al actualizar producto:', error);
         res.status(500).json({ error: 'Error al actualizar producto: ' + error.message });
     }
 });
 
-// DELETE - Eliminar producto
 app.delete('/api/productos/:id', async (req, res) => {
     try {
         const { id } = req.params;
+        console.log(`🗑️  Eliminando producto: ${id}`);
         
-        console.log(`🗑️  Intentando eliminar producto con ID: ${id}`);
-        
-        // Construir filtro que busque por 'id' O '_id'
         const filtro = construirFiltroProducto(id);
-        
-        console.log('Filtro de búsqueda:', JSON.stringify(filtro));
-        
         const result = await productosCollection.deleteOne(filtro);
         
         if (result.deletedCount === 0) {
-            console.log(`❌ Producto con ID ${id} no encontrado`);
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
         
-        console.log(`✅ Producto eliminado exitosamente: ${id}`);
-        
+        console.log(`✅ Producto eliminado: ${id}`);
         res.json({ 
             success: true,
             mensaje: 'Producto eliminado exitosamente',
             id: id
         });
-        
     } catch (error) {
         console.error('Error al eliminar producto:', error);
-        res.status(500).json({ error: 'Error al eliminar producto: ' + error.message });
+        res.status(500).json({ error: 'Error al eliminar producto' });
     }
 });
 
-// ==================== RUTAS DE VENTAS ====================
-
-// GET - Obtener todas las ventas
 app.get('/api/ventas', async (req, res) => {
     try {
         const ventas = await ventasCollection.find({}).sort({ fecha: -1 }).toArray();
@@ -212,7 +285,6 @@ app.get('/api/ventas', async (req, res) => {
     }
 });
 
-// POST - Registrar nueva venta
 app.post('/api/ventas', async (req, res) => {
     try {
         const nuevaVenta = {
@@ -230,32 +302,33 @@ app.post('/api/ventas', async (req, res) => {
         };
         
         await ventasCollection.insertOne(nuevaVenta);
-        
         res.json({ 
             success: true,
             mensaje: 'Venta registrada',
             venta: nuevaVenta
         });
-        
     } catch (error) {
         console.error('Error al registrar venta:', error);
         res.status(500).json({ error: 'Error al registrar venta' });
     }
 });
 
-// ==================== RUTA PARA EL FRONTEND ====================
-
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
-// ==================== INICIAR SERVIDOR ====================
 
 const PORT = process.env.PORT || 3000;
 
 conectarMongoDB().then(() => {
     app.listen(PORT, () => {
-        console.log(`\n✓ Servidor corriendo en http://localhost:${PORT}`);
-        console.log('✓ Panel Admin: http://localhost:' + PORT + '/admin.html\n');
+        console.log(`\n╔═══════════════════════════════════════════╗`);
+        console.log(`║  🖥️  MAC LINE - SERVIDOR FIX IMÁGENES    ║`);
+        console.log(`║  ✓ Puerto: ${PORT}                           ║`);
+        console.log(`║  ✓ MongoDB: Conectado                    ║`);
+        console.log(`║  ✓ Límite: 50MB                          ║`);
+        console.log(`║  ✓ Imágenes: Base64 + Rutas existentes  ║`);
+        console.log(`╚═══════════════════════════════════════════╝\n`);
+        console.log(`📍 Tienda:  http://localhost:${PORT}/`);
+        console.log(`⚙️  Admin:   http://localhost:${PORT}/admin.html\n`);
     });
 });
