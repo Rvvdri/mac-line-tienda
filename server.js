@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const { MongoClient, ObjectId } = require('mongodb');
 const { MercadoPagoConfig, Preference } = require('mercadopago');
+const nodemailer = require('nodemailer');
 const fs = require('fs');
 
 const app = express();
@@ -15,6 +16,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // MERCADO PAGO
 const client = new MercadoPagoConfig({ 
     accessToken: 'APP_USR-1539674871672378-021917-5d3634d0ef2f478d31ea2f5db8abeb5d-3208244091'
+});
+
+// NODEMAILER - CONFIGURACIÓN GMAIL
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'linemac910@gmail.com',  // ← CAMBIA ESTO
+        pass: 'nlxsyovzxjrxlaoz'       // ← CAMBIA ESTO (App Password de Gmail)
+    }
 });
 
 // MONGODB
@@ -74,7 +84,117 @@ function guardarImagenBase64(base64String, productoId, numero = '') {
     }
 }
 
-// RUTAS PRODUCTOS
+// FUNCIÓN PARA ENVIAR EMAIL
+async function enviarEmailConfirmacion(venta) {
+    try {
+        const productosHTML = venta.productos.map(item => `
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.nombre}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.cantidad}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">$${item.precio.toLocaleString('es-CL')}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">$${(item.precio * item.cantidad).toLocaleString('es-CL')}</td>
+            </tr>
+        `).join('');
+
+        const mailOptions = {
+            from: '"MAC LINE - Tienda Tecnología" <linemac910@gmail.com>',
+            to: venta.cliente.email,
+            subject: `✅ Pedido Confirmado #${String(venta.id).substring(0, 8)} - MAC LINE`,
+            html: `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f5f5f7; margin: 0; padding: 0; }
+        .container { max-width: 600px; margin: 0 auto; background: white; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+        .content { padding: 30px; }
+        .order-info { background: #f8f9fa; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .products-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .total { background: #667eea; color: white; padding: 15px; text-align: right; font-size: 20px; font-weight: bold; }
+        .footer { background: #1d1d1f; color: white; padding: 20px; text-align: center; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ MAC LINE</h1>
+            <h2>¡Gracias por tu compra!</h2>
+        </div>
+        
+        <div class="content">
+            <h3>Hola ${venta.cliente.nombre},</h3>
+            <p>Tu pedido ha sido confirmado y está en proceso de preparación.</p>
+            
+            <div class="order-info">
+                <h4>📦 Detalles del Pedido</h4>
+                <p><strong>Número de Pedido:</strong> #${String(venta.id).substring(0, 8)}</p>
+                <p><strong>Fecha:</strong> ${new Date(venta.fecha).toLocaleDateString('es-CL', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })}</p>
+                <p><strong>Dirección de Envío:</strong> ${venta.cliente.direccion}</p>
+            </div>
+            
+            <h4>🛒 Productos</h4>
+            <table class="products-table">
+                <thead>
+                    <tr style="background: #f8f9fa;">
+                        <th style="padding: 10px; text-align: left;">Producto</th>
+                        <th style="padding: 10px; text-align: center;">Cantidad</th>
+                        <th style="padding: 10px; text-align: right;">Precio Unit.</th>
+                        <th style="padding: 10px; text-align: right;">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${productosHTML}
+                </tbody>
+            </table>
+            
+            <div class="total">
+                TOTAL: $${venta.total.toLocaleString('es-CL')}
+            </div>
+            
+            <div style="background: #d4edda; border-left: 4px solid #28a745; padding: 15px; margin: 20px 0; border-radius: 4px;">
+                <h4 style="margin: 0 0 10px 0; color: #155724;">✓ Próximos Pasos:</h4>
+                <ul style="margin: 0; padding-left: 20px; color: #155724;">
+                    <li>Prepararemos tu pedido en 24-48 horas</li>
+                    <li>Te notificaremos cuando esté listo para envío</li>
+                    <li>Recibirás el número de seguimiento</li>
+                    <li>Envío gratis a todo Chile 🚚</li>
+                </ul>
+            </div>
+            
+            <p style="color: #666; font-size: 14px;">Si tienes alguna pregunta, contáctanos respondiendo a este email.</p>
+        </div>
+        
+        <div class="footer">
+            <p>🖥️ MAC LINE - Tienda Tecnología Premium</p>
+            <p>www.mac-line.cl | contacto@mac-line.cl</p>
+            <p style="font-size: 12px; color: #999; margin-top: 10px;">
+                © ${new Date().getFullYear()} MAC LINE. Todos los derechos reservados.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+            `
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`✅ Email enviado a ${venta.cliente.email}`);
+        return true;
+    } catch (error) {
+        console.error('❌ Error enviando email:', error);
+        return false;
+    }
+}
+
+// RUTAS PRODUCTOS (mismas que antes)
 app.get('/api/productos', async (req, res) => {
     try {
         const productos = await productosCollection.find({}).toArray();
@@ -243,12 +363,9 @@ app.post('/api/crear-preferencia', async (req, res) => {
             auto_return: 'approved'
         };
         
-        console.log('📋 Datos de preferencia:', JSON.stringify(preferenceData, null, 2));
-        
         const result = await preference.create({ body: preferenceData });
         
         console.log('✅ Preferencia creada:', result.id);
-        console.log('🔗 URL:', result.init_point);
         console.log('========== FIN ==========\n');
         
         res.json({
@@ -262,31 +379,32 @@ app.post('/api/crear-preferencia', async (req, res) => {
     }
 });
 
+// WEBHOOK DE MERCADO PAGO - ENVÍA EMAIL CUANDO PAGO ES APROBADO
 app.post('/api/webhook', async (req, res) => {
-    console.log('🔔 Webhook:', req.body);
-    res.status(200).send('OK');
-});
-
-// VENTAS
-app.get('/api/ventas', async (req, res) => {
     try {
-        const ventas = await ventasCollection.find({}).sort({ fecha: -1 }).toArray();
-        res.json(ventas);
+        console.log('🔔 Webhook MP recibido:', req.body);
+        
+        // Aquí Mercado Pago notifica cuando se aprueba un pago
+        // Podrías enviar email automáticamente aquí
+        
+        res.status(200).send('OK');
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener ventas' });
+        console.error('Error en webhook:', error);
+        res.status(500).send('Error');
     }
 });
 
+// VENTAS - CON ENVÍO DE EMAIL
 app.post('/api/ventas', async (req, res) => {
     try {
         const nuevaVenta = {
             id: Date.now().toString(),
             fecha: new Date(),
             cliente: {
-                nombre: req.body.nombre,
-                email: req.body.email,
-                telefono: req.body.telefono,
-                direccion: req.body.direccion
+                nombre: req.body.nombre || req.body.cliente?.nombre,
+                email: req.body.email || req.body.cliente?.email,
+                telefono: req.body.telefono || req.body.cliente?.telefono,
+                direccion: req.body.direccion || req.body.cliente?.direccion
             },
             productos: req.body.items,
             total: req.body.total,
@@ -294,9 +412,24 @@ app.post('/api/ventas', async (req, res) => {
         };
         
         await ventasCollection.insertOne(nuevaVenta);
+        
+        // ENVIAR EMAIL
+        console.log('📧 Enviando email de confirmación...');
+        await enviarEmailConfirmacion(nuevaVenta);
+        
         res.json({ success: true, venta: nuevaVenta });
     } catch (error) {
+        console.error('Error al registrar venta:', error);
         res.status(500).json({ error: 'Error al registrar venta' });
+    }
+});
+
+app.get('/api/ventas', async (req, res) => {
+    try {
+        const ventas = await ventasCollection.find({}).sort({ fecha: -1 }).toArray();
+        res.json(ventas);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener ventas' });
     }
 });
 
@@ -309,10 +442,11 @@ const PORT = process.env.PORT || 3000;
 conectarMongoDB().then(() => {
     app.listen(PORT, () => {
         console.log(`\n╔═══════════════════════════════════════════╗`);
-        console.log(`║  🖥️  MAC LINE - MERCADO PAGO FIX         ║`);
+        console.log(`║  🖥️  MAC LINE - CON EMAILS               ║`);
         console.log(`║  ✓ Puerto: ${PORT}                           ║`);
         console.log(`║  ✓ MongoDB: Conectado                    ║`);
         console.log(`║  ✓ Mercado Pago: OK                      ║`);
+        console.log(`║  ✓ Nodemailer: Configurado               ║`);
         console.log(`╚═══════════════════════════════════════════╝\n`);
     });
 });
