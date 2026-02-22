@@ -1,13 +1,9 @@
-// producto-detalle.js - CON VARIANTES (COLORES Y CAPACIDADES)
+// producto-detalle.js - FIX PRECIOS Y 6 IMÁGENES
 // API_URL ya está declarado en script.js
 
 let productoActual = null;
 let imagenActualIndex = 0;
 let imagenesProducto = [];
-
-// Variables de variantes
-let colorSeleccionado = null;
-let capacidadSeleccionada = null;
 
 // Cargar producto al iniciar
 document.addEventListener('DOMContentLoaded', () => {
@@ -97,9 +93,6 @@ function mostrarProducto(producto) {
         }
     }
     
-    // SELECTORES DE VARIANTES (Color y Capacidad)
-    mostrarSelectoresVariantes(producto);
-    
     // DESCRIPCIÓN
     const descripcionEl = document.getElementById('productoDescripcion');
     if (descripcionEl) {
@@ -129,121 +122,6 @@ function mostrarProducto(producto) {
         crearThumbnails();
     }
 }
-
-// ========== FUNCIONES DE VARIANTES ==========
-
-function mostrarSelectoresVariantes(producto) {
-    const container = document.getElementById('selectoresVariantes');
-    
-    // Si no existe el contenedor, no hacer nada
-    if (!container) {
-        console.log('⚠️ Contenedor selectoresVariantes no encontrado');
-        return;
-    }
-    
-    // Si no tiene variantes, limpiar contenedor
-    if (!producto.colores && !producto.capacidades) {
-        container.innerHTML = '';
-        return;
-    }
-    
-    let html = '';
-    
-    // SELECTOR DE COLOR
-    if (producto.colores && producto.colores.length > 0) {
-        colorSeleccionado = producto.colores[0]; // Seleccionar primer color por defecto
-        
-        html += `
-            <div class="selector-variante">
-                <label class="variante-label">Color:</label>
-                <div class="opciones-variante">
-                    ${producto.colores.map((color, index) => `
-                        <button 
-                            class="opcion-color ${index === 0 ? 'active' : ''}" 
-                            onclick="seleccionarColor('${color}')"
-                            title="${color}">
-                            ${color}
-                        </button>
-                    `).join('')}
-                </div>
-                <p class="variante-seleccionada" id="colorSeleccionado">${colorSeleccionado}</p>
-            </div>
-        `;
-    }
-    
-    // SELECTOR DE CAPACIDAD
-    if (producto.capacidades && producto.capacidades.length > 0) {
-        capacidadSeleccionada = producto.capacidades[0]; // Seleccionar primera capacidad por defecto
-        
-        html += `
-            <div class="selector-variante">
-                <label class="variante-label">Almacenamiento:</label>
-                <div class="opciones-variante">
-                    ${producto.capacidades.map((cap, index) => `
-                        <button 
-                            class="opcion-capacidad ${index === 0 ? 'active' : ''}" 
-                            onclick='seleccionarCapacidad(${JSON.stringify(cap)})'>
-                            ${cap.almacenamiento}
-                            <span class="precio-capacidad">$${cap.precio.toLocaleString('es-CL')}</span>
-                        </button>
-                    `).join('')}
-                </div>
-            </div>
-        `;
-    }
-    
-    container.innerHTML = html;
-    
-    // Actualizar precio si tiene capacidades
-    if (producto.capacidades && producto.capacidades.length > 0) {
-        actualizarPrecioCapacidad(producto.capacidades[0].precio);
-    }
-}
-
-function seleccionarColor(color) {
-    colorSeleccionado = color;
-    
-    // Actualizar UI
-    document.querySelectorAll('.opcion-color').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.textContent.trim() === color) {
-            btn.classList.add('active');
-        }
-    });
-    
-    const colorEl = document.getElementById('colorSeleccionado');
-    if (colorEl) {
-        colorEl.textContent = color;
-    }
-    
-    console.log('Color seleccionado:', color);
-}
-
-function seleccionarCapacidad(capacidad) {
-    capacidadSeleccionada = capacidad;
-    
-    // Actualizar UI
-    document.querySelectorAll('.opcion-capacidad').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.textContent.includes(capacidad.almacenamiento)) {
-            btn.classList.add('active');
-        }
-    });
-    
-    // Actualizar precio
-    actualizarPrecioCapacidad(capacidad.precio);
-    
-    console.log('Capacidad seleccionada:', capacidad);
-}
-
-function actualizarPrecioCapacidad(nuevoPrecio) {
-    const precioEl = document.getElementById('productoPrecio');
-    if (precioEl) {
-        precioEl.textContent = `$${nuevoPrecio.toLocaleString('es-CL')}`;
-    }
-}
-
-// ========== FIN FUNCIONES DE VARIANTES ==========
 
 // Mostrar imagen en el carrusel
 function mostrarImagen(index) {
@@ -299,28 +177,8 @@ function agregarAlCarritoDetalle() {
     // Obtener carrito actual
     let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     
-    // Crear objeto del producto con variantes
-    const productoConVariantes = {
-        ...productoActual,
-        cantidad: 1
-    };
-    
-    // Agregar variantes seleccionadas si existen
-    if (colorSeleccionado) {
-        productoConVariantes.color = colorSeleccionado;
-    }
-    
-    if (capacidadSeleccionada) {
-        productoConVariantes.capacidad = capacidadSeleccionada.almacenamiento;
-        productoConVariantes.precio = capacidadSeleccionada.precio; // Usar precio de la capacidad seleccionada
-    }
-    
-    // Buscar si ya existe con las mismas variantes
-    const existe = carrito.find(item => 
-        item.id === productoActual.id &&
-        item.color === productoConVariantes.color &&
-        item.capacidad === productoConVariantes.capacidad
-    );
+    // Buscar si ya existe
+    const existe = carrito.find(item => item.id === productoActual.id);
     
     if (existe) {
         if (existe.cantidad >= productoActual.stock) {
@@ -329,7 +187,10 @@ function agregarAlCarritoDetalle() {
         }
         existe.cantidad++;
     } else {
-        carrito.push(productoConVariantes);
+        carrito.push({
+            ...productoActual,
+            cantidad: 1
+        });
     }
     
     // Guardar
@@ -338,16 +199,8 @@ function agregarAlCarritoDetalle() {
     // Actualizar contador
     actualizarContadorCarrito();
     
-    // Notificación con variantes
-    let mensaje = `✅ ${productoActual.nombre} agregado al carrito`;
-    if (colorSeleccionado && capacidadSeleccionada) {
-        mensaje += `\n${colorSeleccionado} - ${capacidadSeleccionada.almacenamiento}`;
-    } else if (colorSeleccionado) {
-        mensaje += `\n${colorSeleccionado}`;
-    } else if (capacidadSeleccionada) {
-        mensaje += `\n${capacidadSeleccionada.almacenamiento}`;
-    }
-    alert(mensaje);
+    // Notificación
+    alert(`✅ ${productoActual.nombre} agregado al carrito`);
 }
 
 // Actualizar contador del carrito

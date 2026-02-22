@@ -1,4 +1,4 @@
-// admin.js - VERSIÓN COMPLETA ARREGLADA
+// admin.js - FIX EDICIÓN DE IMÁGENES COMPLETO
 const API_URL = window.location.origin + '/api';
 
 let productosActuales = [];
@@ -11,14 +11,14 @@ let imagenesAdicionales = [null, null, null, null, null];
 // Para editar
 let imagenPortadaEditBase64 = null;
 let imagenesAdicionalesEdit = [null, null, null, null, null];
-let imagenesOriginales = [];
+let imagenesOriginales = []; // IMPORTANTE: Guardar las originales
 
 function obtenerIdProducto(producto) {
     return producto.id || producto._id || String(producto._id);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Admin Panel Cargando...');
+    console.log('🚀 Admin Panel - Fix Edición Imágenes');
     cargarProductos();
     cargarVentas();
     cargarReporteStock();
@@ -32,143 +32,188 @@ function mostrarSeccion(seccion) {
     if (event && event.target) event.target.classList.add('active');
 }
 
-// Funciones para calcular precio final
-function calcularPrecioFinalNuevo() {
-    const precioOriginal = parseFloat(document.getElementById('nuevoPrecioOriginal').value) || 0;
-    const descuento = parseFloat(document.getElementById('nuevoDescuento').value) || 0;
+function calcularPrecioFinal() {
+    const precioOriginal = parseFloat(document.getElementById('precioOriginal').value) || 0;
+    const descuento = parseFloat(document.getElementById('descuento').value) || 0;
     const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
-    document.getElementById('nuevoPrecio').value = precioFinal;
+    document.getElementById('precioFinal').value = '$' + precioFinal.toLocaleString('es-CL');
 }
 
-function calcularPrecioFinalEditar() {
-    const precioOriginal = parseFloat(document.getElementById('editarPrecioOriginal').value) || 0;
-    const descuento = parseFloat(document.getElementById('editarDescuento').value) || 0;
+function calcularPrecioFinalEdit() {
+    const precioOriginal = parseFloat(document.getElementById('editPrecioOriginal').value) || 0;
+    const descuento = parseFloat(document.getElementById('editDescuento').value) || 0;
     const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
-    document.getElementById('editarPrecio').value = precioFinal;
+    document.getElementById('editPrecioFinal').value = '$' + precioFinal.toLocaleString('es-CL');
 }
 
-// Función de previsualización para el diseño minimalista
-function previsualizarImagen(input, previewId) {
-    const file = input.files[0];
-    const preview = document.getElementById(previewId);
+function comprimirImagen(file, maxWidth = 800, quality = 0.8) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                let width = img.width;
+                let height = img.height;
+                
+                if (width > maxWidth) {
+                    height = (height * maxWidth) / width;
+                    width = maxWidth;
+                }
+                
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                const comprimido = canvas.toDataURL('image/jpeg', quality);
+                console.log(`✅ Comprimida: ${(file.size / 1024).toFixed(0)}KB → ${(comprimido.length * 0.75 / 1024).toFixed(0)}KB`);
+                resolve(comprimido);
+            };
+            img.onerror = reject;
+            img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+async function previsualizarPortada(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('previewPortada');
     
     if (!file) {
-        preview.classList.remove('tiene-imagen');
-        preview.innerHTML = '';
+        preview.innerHTML = '<p style="color: #999;">Portada</p>';
+        imagenPortadaBase64 = null;
         return;
     }
     
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        preview.classList.add('tiene-imagen');
-        preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
-    };
-    reader.readAsDataURL(file);
+    if (file.size > 10 * 1024 * 1024) {
+        alert('❌ Imagen muy grande. Máximo 10MB.');
+        event.target.value = '';
+        return;
+    }
+    
+    try {
+        imagenPortadaBase64 = await comprimirImagen(file, 800, 0.8);
+        preview.innerHTML = `<img src="${imagenPortadaBase64}" style="max-width: 100%; max-height: 150px; object-fit: contain;">`;
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al procesar la imagen');
+    }
+}
+
+async function previsualizarImagen(event, numero) {
+    const file = event.target.files[0];
+    const preview = document.getElementById(`preview${numero}`);
+    
+    if (!file) {
+        preview.innerHTML = `<p style="color: #999; font-size: 0.75rem;">Imagen ${numero}</p>`;
+        imagenesAdicionales[numero - 1] = null;
+        return;
+    }
+    
+    if (file.size > 10 * 1024 * 1024) {
+        alert(`❌ Imagen ${numero} muy grande.`);
+        event.target.value = '';
+        return;
+    }
+    
+    try {
+        imagenesAdicionales[numero - 1] = await comprimirImagen(file, 800, 0.7);
+        preview.innerHTML = `<img src="${imagenesAdicionales[numero - 1]}" style="max-width: 100%; max-height: 120px; object-fit: contain;">`;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+function limpiarFormulario() {
+    document.getElementById('previewPortada').innerHTML = '<p style="color: #999;">Portada</p>';
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById(`preview${i}`).innerHTML = `<p style="color: #999; font-size: 0.75rem;">Imagen ${i}</p>`;
+    }
+    imagenPortadaBase64 = null;
+    imagenesAdicionales = [null, null, null, null, null];
+    document.getElementById('precioFinal').value = '';
 }
 
 async function cargarProductos() {
     try {
         const response = await fetch(`${API_URL}/productos`);
-        if (!response.ok) throw new Error('Error al cargar productos');
-        
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         productosActuales = await response.json();
-        console.log(`✅ ${productosActuales.length} productos cargados`);
         renderizarTablaProductos(productosActuales);
     } catch (error) {
-        console.error('❌ Error cargando productos:', error);
-        alert('Error al cargar productos');
+        console.error('Error:', error);
     }
 }
 
 function renderizarTablaProductos(productos) {
-    const tbody = document.getElementById('listaProductosAdmin');
-    if (!tbody) return;
-    
-    if (productos.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: #94a3b8;">No hay productos</td></tr>';
-        return;
-    }
+    const tbody = document.getElementById('productosTableBody');
+    if (!tbody || productos.length === 0) return;
     
     tbody.innerHTML = productos.map(p => {
-        const id = obtenerIdProducto(p);
-        const precio = p.precio || 0;
-        const precioOriginal = p.precioOriginal || precio;
+        const productoId = obtenerIdProducto(p);
+        const precioOriginal = p.precioOriginal || p.precio;
+        const precioFinal = p.precio;
         const descuento = p.descuento || 0;
         
         return `
-            <tr>
-                <td>#${String(id).substring(0, 8)}</td>
-                <td>
-                    ${p.imagenPortada ? 
-                        `<img src="${p.imagenPortada}" style="width: 50px; height: 50px; object-fit: contain; background: #f5f5f5; border-radius: 4px;">` : 
-                        `<div style="width: 50px; height: 50px; background: #f5f5f5; border-radius: 4px; display: flex; align-items: center; justify-content: center;">${p.emoji || '📦'}</div>`
-                    }
-                </td>
-                <td><strong>${p.nombre}</strong></td>
-                <td><span style="text-transform: capitalize;">${p.categoria}</span></td>
-                <td>$${precioOriginal.toLocaleString('es-CL')}</td>
-                <td>${descuento}%</td>
-                <td><strong style="color: #00d4ff;">$${precio.toLocaleString('es-CL')}</strong></td>
-                <td>
-                    <span style="padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.875rem; font-weight: 600; ${
-                        p.stock === 0 ? 'background: #fee; color: #c00;' :
-                        p.stock < 5 ? 'background: #fef3cd; color: #856404;' :
-                        'background: #d4edda; color: #155724;'
-                    }">
-                        ${p.stock}
-                    </span>
-                </td>
-                <td>
-                    <button onclick="editarProducto('${id}')" class="btn-accion btn-editar">✏️ Editar</button>
-                    <button onclick="eliminarProducto('${id}')" class="btn-accion btn-eliminar">🗑️</button>
-                </td>
-            </tr>
-        `;
-    }).join('');
+        <tr>
+            <td><code title="${productoId}">${String(productoId).substring(0, 8)}...</code></td>
+            <td>
+                ${p.imagenPortada 
+                    ? `<img src="${p.imagenPortada}" style="width: 50px; height: 50px; object-fit: contain; border-radius: 4px;">` 
+                    : `<span style="font-size: 2rem;">${p.emoji || '📦'}</span>`
+                }
+            </td>
+            <td>${p.nombre}</td>
+            <td><span class="badge badge-${p.categoria}">${p.categoria}</span></td>
+            <td>$${Number(precioOriginal).toLocaleString('es-CL')}</td>
+            <td><strong style="color: #00a651;">$${Number(precioFinal).toLocaleString('es-CL')}</strong></td>
+            <td>${descuento > 0 ? `<span class="descuento-badge">-${descuento}%</span>` : '-'}</td>
+            <td><span class="stock-badge ${p.stock === 0 ? 'agotado' : p.stock < 5 ? 'bajo' : 'disponible'}">${p.stock}</span></td>
+            <td class="acciones">
+                <button class="btn-accion btn-editar" onclick='abrirModalEditar(${JSON.stringify(productoId)})'>✏️</button>
+                <button class="btn-accion btn-eliminar" onclick='eliminarProducto(${JSON.stringify(productoId)})'>🗑️</button>
+            </td>
+        </tr>
+    `}).join('');
 }
 
 function filtrarProductosAdmin() {
-    const termino = document.getElementById('buscarProducto').value.toLowerCase();
-    const filtrados = productosActuales.filter(p => 
-        p.nombre.toLowerCase().includes(termino) ||
-        p.categoria.toLowerCase().includes(termino)
-    );
+    const busqueda = document.getElementById('buscarProducto').value.toLowerCase();
+    const filtrados = productosActuales.filter(p => {
+        const id = obtenerIdProducto(p);
+        return p.nombre.toLowerCase().includes(busqueda) ||
+               p.categoria.toLowerCase().includes(busqueda) ||
+               String(id).toLowerCase().includes(busqueda);
+    });
     renderizarTablaProductos(filtrados);
 }
 
 async function agregarProducto(event) {
     event.preventDefault();
     
-    const precioOriginal = parseFloat(document.getElementById('nuevoPrecioOriginal').value);
-    const descuento = parseFloat(document.getElementById('nuevoDescuento').value) || 0;
+    if (!imagenPortadaBase64) {
+        alert('❌ Debes subir una imagen de portada');
+        return;
+    }
+    
+    const precioOriginal = parseFloat(document.getElementById('precioOriginal').value);
+    const descuento = parseFloat(document.getElementById('descuento').value) || 0;
     const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
-    
-    // Recoger imágenes de los inputs
-    const imagenes = [];
-    for (let i = 1; i <= 5; i++) {
-        const input = document.getElementById(`nuevaImagen${i}`);
-        if (input && input.files[0]) {
-            const base64 = await fileToBase64(input.files[0]);
-            imagenes.push(base64);
-        }
-    }
-    
-    let portada = null;
-    const portadaInput = document.getElementById('nuevaImagenPortada');
-    if (portadaInput && portadaInput.files[0]) {
-        portada = await fileToBase64(portadaInput.files[0]);
-    }
+    const imagenesValidas = imagenesAdicionales.filter(img => img !== null);
     
     const nuevoProducto = {
-        nombre: document.getElementById('nuevoNombre').value,
-        categoria: document.getElementById('nuevaCategoria').value,
-        descripcion: document.getElementById('nuevaDescripcion').value,
+        nombre: document.getElementById('nombre').value,
+        categoria: document.getElementById('categoria').value,
+        descripcion: document.getElementById('descripcion').value,
         precioOriginal: precioOriginal,
-        descuento: descuento,
         precio: precioFinal,
-        stock: parseInt(document.getElementById('nuevoStock').value),
-        imagenPortada: portada,
-        imagenes: imagenes,
+        descuento: descuento,
+        stock: parseInt(document.getElementById('stock').value),
+        imagenPortada: imagenPortadaBase64,
+        imagenes: imagenesValidas,
         emoji: '📦'
     };
     
@@ -179,14 +224,11 @@ async function agregarProducto(event) {
             body: JSON.stringify(nuevoProducto)
         });
         
-        if (!response.ok) throw new Error('Error al agregar');
+        if (!response.ok) throw new Error(`Error ${response.status}`);
         
         alert('✅ Producto agregado exitosamente');
-        document.querySelector('.form-producto').reset();
-        document.querySelectorAll('.imagen-preview').forEach(p => {
-            p.classList.remove('tiene-imagen');
-            p.innerHTML = '';
-        });
+        document.getElementById('formularioProducto').reset();
+        limpiarFormulario();
         await cargarProductos();
         mostrarSeccion('productos');
     } catch (error) {
@@ -195,39 +237,187 @@ async function agregarProducto(event) {
     }
 }
 
-function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
+// ========== EDITAR PRODUCTO - FIX COMPLETO ==========
+function abrirModalEditar(productoId) {
+    const producto = productosActuales.find(p => {
+        const id = obtenerIdProducto(p);
+        return String(id) === String(productoId);
     });
+    
+    if (!producto) {
+        alert('❌ Producto no encontrado');
+        return;
+    }
+    
+    productoEditandoId = productoId;
+    
+    // Llenar formulario
+    document.getElementById('editNombre').value = producto.nombre;
+    document.getElementById('editCategoria').value = producto.categoria;
+    document.getElementById('editDescripcion').value = producto.descripcion || '';
+    document.getElementById('editPrecioOriginal').value = producto.precioOriginal || producto.precio;
+    document.getElementById('editDescuento').value = producto.descuento || 0;
+    document.getElementById('editStock').value = producto.stock;
+    
+    calcularPrecioFinalEdit();
+    
+    // Mostrar imagen portada actual
+    const previewPortada = document.getElementById('editPreviewPortada');
+    if (producto.imagenPortada) {
+        previewPortada.innerHTML = `<img src="${producto.imagenPortada}" style="max-width: 100%; max-height: 150px; object-fit: contain;">`;
+    } else {
+        previewPortada.innerHTML = '<p style="color: #999;">Sin portada</p>';
+    }
+    
+    // IMPORTANTE: Guardar las imágenes originales
+    imagenesOriginales = producto.imagenes || [];
+    console.log('📸 Imágenes originales:', imagenesOriginales.length);
+    
+    // Mostrar imágenes adicionales actuales
+    for (let i = 0; i < 5; i++) {
+        const preview = document.getElementById(`editPreview${i + 1}`);
+        if (imagenesOriginales[i]) {
+            preview.innerHTML = `<img src="${imagenesOriginales[i]}" style="max-width: 100%; max-height: 120px; object-fit: contain;">`;
+        } else {
+            preview.innerHTML = `<p style="color: #999; font-size: 0.75rem;">Imagen ${i + 1}</p>`;
+        }
+    }
+    
+    // Resetear las editadas
+    imagenPortadaEditBase64 = null;
+    imagenesAdicionalesEdit = [null, null, null, null, null];
+    
+    document.getElementById('editarModal').style.display = 'flex';
 }
 
-async function editarProducto(id) {
-    alert('⚠️ Función de editar deshabilitada temporalmente. Usa "Eliminar" y "Agregar Producto" nuevamente.');
+async function previsualizarPortadaEdit(event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('editPreviewPortada');
+    
+    if (!file) return;
+    
+    try {
+        imagenPortadaEditBase64 = await comprimirImagen(file, 800, 0.8);
+        preview.innerHTML = `<img src="${imagenPortadaEditBase64}" style="max-width: 100%; max-height: 150px; object-fit: contain;">`;
+        console.log('✅ Nueva portada cargada');
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-function cerrarModalEditar() {
-    // Modal eliminado
+async function previsualizarImagenEdit(event, numero) {
+    const file = event.target.files[0];
+    const preview = document.getElementById(`editPreview${numero}`);
+    
+    if (!file) return;
+    
+    try {
+        imagenesAdicionalesEdit[numero - 1] = await comprimirImagen(file, 800, 0.7);
+        preview.innerHTML = `<img src="${imagenesAdicionalesEdit[numero - 1]}" style="max-width: 100%; max-height: 120px; object-fit: contain;">`;
+        console.log(`✅ Nueva imagen ${numero} cargada`);
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
-async function eliminarProducto(id) {
-    const producto = productosActuales.find(p => String(obtenerIdProducto(p)) === String(id));
+async function guardarEdicion(event) {
+    event.preventDefault();
+    
+    if (!productoEditandoId) {
+        alert('❌ Error');
+        return;
+    }
+    
+    const precioOriginal = parseFloat(document.getElementById('editPrecioOriginal').value);
+    const descuento = parseFloat(document.getElementById('editDescuento').value) || 0;
+    const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
+    
+    const datosActualizados = {
+        nombre: document.getElementById('editNombre').value,
+        categoria: document.getElementById('editCategoria').value,
+        descripcion: document.getElementById('editDescripcion').value,
+        precioOriginal: precioOriginal,
+        precio: precioFinal,
+        descuento: descuento,
+        stock: parseInt(document.getElementById('editStock').value)
+    };
+    
+    // PORTADA: Si hay nueva, usarla; si no, mantener la original
+    if (imagenPortadaEditBase64) {
+        datosActualizados.imagenPortada = imagenPortadaEditBase64;
+        console.log('📸 Actualizando portada');
+    }
+    
+    // IMÁGENES ADICIONALES: Combinar originales con nuevas
+    const imagenesFinales = [];
+    for (let i = 0; i < 5; i++) {
+        if (imagenesAdicionalesEdit[i]) {
+            // Si hay nueva imagen para esta posición, usarla
+            imagenesFinales.push(imagenesAdicionalesEdit[i]);
+            console.log(`📸 Imagen ${i + 1}: NUEVA`);
+        } else if (imagenesOriginales[i]) {
+            // Si no hay nueva, mantener la original
+            imagenesFinales.push(imagenesOriginales[i]);
+            console.log(`📸 Imagen ${i + 1}: Original mantenida`);
+        }
+        // Si no hay ni nueva ni original, no agregar nada
+    }
+    
+    datosActualizados.imagenes = imagenesFinales;
+    console.log('📸 Total imágenes finales:', imagenesFinales.length);
+    
+    try {
+        const response = await fetch(`${API_URL}/productos/${productoEditandoId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosActualizados)
+        });
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Error del servidor:', errorText);
+            throw new Error('Error al actualizar');
+        }
+        
+        const resultado = await response.json();
+        console.log('✅ Producto actualizado:', resultado);
+        
+        alert('✅ Producto actualizado exitosamente');
+        cerrarModal();
+        await cargarProductos();
+    } catch (error) {
+        console.error('❌ Error:', error);
+        alert('❌ Error al actualizar: ' + error.message);
+    }
+}
+
+function cerrarModal() {
+    document.getElementById('editarModal').style.display = 'none';
+    productoEditandoId = null;
+    imagenPortadaEditBase64 = null;
+    imagenesAdicionalesEdit = [null, null, null, null, null];
+    imagenesOriginales = [];
+}
+
+async function eliminarProducto(productoId) {
+    const producto = productosActuales.find(p => {
+        const id = obtenerIdProducto(p);
+        return String(id) === String(productoId);
+    });
+    
     if (!producto || !confirm(`¿Eliminar "${producto.nombre}"?`)) return;
     
     try {
-        const response = await fetch(`${API_URL}/productos/${id}`, {
+        const response = await fetch(`${API_URL}/productos/${productoId}`, {
             method: 'DELETE'
         });
         
-        if (!response.ok) throw new Error('Error al eliminar');
-        
+        if (!response.ok) throw new Error('Error');
         alert('✅ Producto eliminado');
         await cargarProductos();
     } catch (error) {
         console.error('Error:', error);
-        alert('❌ Error al eliminar producto');
+        alert('❌ Error al eliminar');
     }
 }
 
@@ -237,145 +427,50 @@ async function cargarVentas() {
         if (!response.ok) return;
         const ventas = await response.json();
         renderizarTablaVentas(ventas);
-    } catch (error) {
-        console.error('Error cargando ventas:', error);
-    }
+    } catch (error) {}
 }
 
 function renderizarTablaVentas(ventas) {
-    const container = document.getElementById('listaVentas');
-    if (!container) return;
+    const tbody = document.getElementById('ventasTableBody');
+    if (!tbody || ventas.length === 0) return;
     
-    if (ventas.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #94a3b8; padding: 3rem;">No hay ventas registradas</p>';
-        return;
-    }
-    
-    container.innerHTML = ventas.map(venta => {
-        const productos = venta.productos || venta.items || [];
-        const cliente = venta.cliente || {};
-        
-        return `
-            <div class="venta-card">
-                <div class="venta-header">
-                    <div class="venta-id">Pedido #${String(venta.id || venta._id).substring(0, 8)}</div>
-                    <div class="venta-fecha">${new Date(venta.fecha).toLocaleString('es-CL', {
-                        day: '2-digit',
-                        month: 'long',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    })}</div>
-                </div>
-                
-                <div class="venta-cliente">
-                    <h4>👤 Información del Cliente</h4>
-                    <div class="cliente-info">
-                        <div class="info-item">
-                            <span class="info-label">Nombre</span>
-                            <span class="info-value">${cliente.nombre || 'N/A'}</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Email</span>
-                            <span class="info-value">${cliente.email || 'N/A'}</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Teléfono</span>
-                            <span class="info-value">${cliente.telefono || 'N/A'}</span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Dirección de Envío</span>
-                            <span class="info-value">${cliente.direccion || 'N/A'}</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="venta-productos">
-                    <h4>🛒 Productos (${productos.length})</h4>
-                    ${productos.map(prod => {
-                        const detalles = [];
-                        if (prod.color) detalles.push(prod.color);
-                        if (prod.capacidad) detalles.push(prod.capacidad);
-                        
-                        return `
-                            <div class="producto-venta-item">
-                                <div>
-                                    <div class="producto-venta-nombre">${prod.nombre}</div>
-                                    ${detalles.length > 0 ? `<div class="producto-venta-detalles">${detalles.join(' • ')}</div>` : ''}
-                                    <div class="producto-venta-detalles">Cantidad: ${prod.cantidad}</div>
-                                </div>
-                                <div class="producto-venta-precio">
-                                    $${(prod.precio * prod.cantidad).toLocaleString('es-CL')}
-                                </div>
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-                
-                <div class="venta-total">
-                    <span class="venta-total-label">Total de la Venta</span>
-                    <span class="venta-total-valor">$${Number(venta.total).toLocaleString('es-CL')}</span>
-                </div>
-            </div>
-        `;
-    }).join('');
+    tbody.innerHTML = ventas.map(v => `
+        <tr>
+            <td>#${String(v.id).substring(0, 8)}</td>
+            <td>${v.cliente.nombre}</td>
+            <td>${(v.productos || v.items || []).length} producto(s)</td>
+            <td><strong>$${Number(v.total).toLocaleString('es-CL')}</strong></td>
+            <td><small>${new Date(v.fecha).toLocaleString('es-CL')}</small></td>
+            <td><span style="padding: 0.35rem 0.75rem; border-radius: 20px; background: #d4edda; color: #155724;">COMPLETADA</span></td>
+        </tr>
+    `).join('');
 }
 
 async function cargarReporteStock() {
     try {
         const response = await fetch(`${API_URL}/productos`);
         if (!response.ok) return;
-        
         const productos = await response.json();
-        const container = document.getElementById('reporteStock');
-        if (!container) return;
         
-        const stockBajo = productos.filter(p => p.stock < 5 && p.stock > 0);
-        const agotados = productos.filter(p => p.stock === 0);
+        document.getElementById('totalProductos').textContent = productos.length;
+        document.getElementById('stockTotal').textContent = productos.reduce((sum, p) => sum + p.stock, 0);
+        document.getElementById('productosAgotados').textContent = productos.filter(p => p.stock === 0).length;
+        document.getElementById('stockBajo').textContent = productos.filter(p => p.stock > 0 && p.stock < 5).length;
         
-        container.innerHTML = `
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
-                <div style="padding: 2rem; background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(185, 28, 28, 0.2)); border-radius: 16px; border: 2px solid rgba(220, 38, 38, 0.5);">
-                    <h3 style="color: #fca5a5; margin-bottom: 1rem; font-size: 1.125rem; font-weight: 600;">⚠️ Stock Agotado</h3>
-                    <p style="font-size: 3rem; font-weight: 700; color: #ef4444; margin: 0;">${agotados.length}</p>
-                </div>
-                <div style="padding: 2rem; background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.2)); border-radius: 16px; border: 2px solid rgba(245, 158, 11, 0.5);">
-                    <h3 style="color: #fcd34d; margin-bottom: 1rem; font-size: 1.125rem; font-weight: 600;">📉 Stock Bajo (&lt;5)</h3>
-                    <p style="font-size: 3rem; font-weight: 700; color: #f59e0b; margin: 0;">${stockBajo.length}</p>
-                </div>
-            </div>
+        const tbody = document.getElementById('stockBajoTableBody');
+        if (tbody) {
+            const productosBajo = productos.filter(p => p.stock < 5);
             
-            ${agotados.length > 0 ? `
-                <h3 style="color: #fca5a5; margin: 2rem 0 1rem; font-size: 1.25rem; font-weight: 600;">Productos Agotados:</h3>
-                <div style="display: grid; gap: 1rem;">
-                    ${agotados.map(p => `
-                        <div style="padding: 1.25rem; background: rgba(220, 38, 38, 0.1); border-left: 4px solid #ef4444; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <strong style="color: #fca5a5; font-size: 1.0625rem;">${p.nombre}</strong>
-                                <span style="color: #94a3b8; margin-left: 1rem; text-transform: capitalize;">${p.categoria}</span>
-                            </div>
-                            <span style="background: #ef4444; color: white; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;">AGOTADO</span>
-                        </div>
-                    `).join('')}
-                </div>
-            ` : ''}
-            
-            ${stockBajo.length > 0 ? `
-                <h3 style="color: #fcd34d; margin: 2rem 0 1rem; font-size: 1.25rem; font-weight: 600;">Productos con Stock Bajo:</h3>
-                <div style="display: grid; gap: 1rem;">
-                    ${stockBajo.map(p => `
-                        <div style="padding: 1.25rem; background: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <strong style="color: #fcd34d; font-size: 1.0625rem;">${p.nombre}</strong>
-                                <span style="color: #94a3b8; margin-left: 1rem; text-transform: capitalize;">${p.categoria}</span>
-                            </div>
-                            <span style="background: #f59e0b; color: #1f2937; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;">STOCK: ${p.stock}</span>
-                        </div>
-                    `).join('')}
-                </div>
-            ` : ''}
-        `;
-    } catch (error) {
-        console.error('Error:', error);
-    }
+            tbody.innerHTML = productosBajo.length === 0 
+                ? `<tr><td colspan="4" style="text-align: center; padding: 2rem;">✅ Stock suficiente</td></tr>`
+                : productosBajo.map(p => `
+                    <tr>
+                        <td>${p.nombre}</td>
+                        <td>${p.categoria}</td>
+                        <td><strong>${p.stock}</strong></td>
+                        <td><span class="stock-badge ${p.stock === 0 ? 'agotado' : 'bajo'}">${p.stock === 0 ? 'Agotado' : 'Stock Bajo'}</span></td>
+                    </tr>
+                `).join('');
+        }
+    } catch (error) {}
 }
