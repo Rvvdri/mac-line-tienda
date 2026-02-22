@@ -3446,3 +3446,254 @@ body {
         font-size: 0.688rem !important;
     }
 }
+/* ========== SELECTORES DE VARIANTES - MINIMALISTA ========== */
+
+.selector-variante {
+    margin: 2rem 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+.variante-label {
+    display: block;
+    color: #00d4ff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.opciones-variante {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* ========== BOTONES DE COLOR - MINIMALISTA ========== */
+.opcion-color {
+    position: relative;
+    padding: 0;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.opcion-color::before {
+    content: '';
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--color-muestra);
+    transition: all 0.3s ease;
+}
+
+/* Colores específicos minimalistas */
+.opcion-color:nth-child(1)::before { background: linear-gradient(135deg, #e8e8ed, #d1d1d6); }
+.opcion-color:nth-child(2)::before { background: linear-gradient(135deg, #5b9dd9, #357abd); }
+.opcion-color:nth-child(3)::before { background: linear-gradient(135deg, #ffffff, #f5f5f7); }
+.opcion-color:nth-child(4)::before { background: linear-gradient(135deg, #2c2c2e, #1c1c1e); }
+.opcion-color:nth-child(5)::before { background: linear-gradient(135deg, #ff758c, #ff1f5a); }
+.opcion-color:nth-child(6)::before { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+.opcion-color:nth-child(7)::before { background: linear-gradient(135deg, #ffd93d, #f9ca24); }
+
+/* Ocultar texto, solo mostrar bolita */
+.opcion-color {
+    font-size: 0;
+    color: transparent;
+}
+
+.opcion-color:hover {
+    border-color: #00d4ff;
+    transform: scale(1.1);
+}
+
+.opcion-color:hover::before {
+    transform: scale(1.1);
+}
+
+.opcion-color.active {
+    border-color: #00d4ff;
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.opcion-color.active::before {
+    transform: scale(1.15);
+}
+
+/* ========== BOTONES DE CAPACIDAD - MINIMALISTA ========== */
+.opcion-capacidad {
+    position: relative;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    min-width: 120px;
+}
+
+.opcion-capacidad::before,
+.opcion-capacidad::after {
+    display: none;
+}
+
+/* Capacidad - tamaño grande arriba */
+.opcion-capacidad {
+    color: #e0e0e0;
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.precio-capacidad {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.precio-capacidad::before {
+    display: none;
+}
+
+.opcion-capacidad:hover {
+    border-color: rgba(0, 212, 255, 0.4);
+    background: rgba(0, 212, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.opcion-capacidad.active {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: #00d4ff;
+    color: #00d4ff;
+}
+
+.opcion-capacidad.active .precio-capacidad {
+    color: #00d4ff;
+}
+
+/* ========== VARIANTE SELECCIONADA - MINIMALISTA ========== */
+.variante-seleccionada {
+    display: none;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .opcion-color {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .opcion-color::before {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .opcion-capacidad {
+        padding: 0.875rem 1.25rem;
+        min-width: 100px;
+        font-size: 1rem;
+    }
+    
+    .precio-capacidad {
+        font-size: 0.8125rem;
+    }
+}
+
+/* ========== ANIMACIONES SUAVES ========== */
+.selector-variante {
+    animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== BOTÓN WHATSAPP FLOTANTE ========== */
+.whatsapp-float {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 1000;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: white;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-float svg {
+    width: 32px;
+    height: 32px;
+}
+
+/* Animación de pulso */
+.whatsapp-float::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(37, 211, 102, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .whatsapp-float {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 56px;
+        height: 56px;
+    }
+    
+    .whatsapp-float svg {
+        width: 28px;
+        height: 28px;
+    }
+}
