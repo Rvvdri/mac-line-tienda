@@ -1,0 +1,275 @@
+[
+  {
+    "id": 1771257265975,
+    "cliente": {
+      "nombre": "x",
+      "email": "x@gmai.com",
+      "telefono": "x",
+      "direccion": "x"
+    },
+    "items": [
+      {
+        "id": 1,
+        "nombre": "iPhone 15 Pro",
+        "cantidad": 1,
+        "precio": 900000
+      }
+    ],
+    "total": 905000,
+    "estado": "completada",
+    "fechaCreacion": "2026-02-16T15:54:25.975Z"
+  },
+  {
+    "id": 1771267279547,
+    "cliente": {
+      "nombre": "x",
+      "email": "xx@xx",
+      "telefono": "xx",
+      "direccion": "xx"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 1,
+        "precio": 875000
+      }
+    ],
+    "total": 880000,
+    "estado": "completada_demo",
+    "fechaCreacion": "2026-02-16T18:41:19.547Z"
+  },
+  {
+    "id": 1771267436835,
+    "cliente": {
+      "nombre": "rodrigo leon",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "+56994254292",
+      "direccion": "Llanquihue 6290, la florida "
+    },
+    "items": [
+      {
+        "id": 1,
+        "nombre": "iPhone 15 Pro",
+        "cantidad": 1,
+        "precio": 900000
+      }
+    ],
+    "total": 905000,
+    "estado": "completada_demo",
+    "fechaCreacion": "2026-02-16T18:43:56.835Z"
+  },
+  {
+    "id": 1771267575873,
+    "cliente": {
+      "nombre": "xx",
+      "email": "xx@gmail.com",
+      "telefono": "xx",
+      "direccion": "xx"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 3,
+        "precio": 875000
+      }
+    ],
+    "total": 2630000,
+    "estado": "completada_demo",
+    "fechaCreacion": "2026-02-16T18:46:15.873Z"
+  },
+  {
+    "id": 1771275719465,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290, la florida"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 3,
+        "precio": 875000
+      }
+    ],
+    "total": 2630000,
+    "estado": "completada",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-16T21:01:59.468Z"
+  },
+  {
+    "id": 1771276626588,
+    "cliente": {
+      "nombre": "xx",
+      "email": "xx@gmail.com",
+      "telefono": "xxx",
+      "direccion": "xxx"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 1,
+        "precio": 875000
+      }
+    ],
+    "total": 880000,
+    "estado": "completada",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-16T21:17:06.589Z"
+  },
+  {
+    "id": 1771277639563,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 2,
+        "nombre": "Samsung Galaxy S24",
+        "cantidad": 1,
+        "precio": 875000
+      }
+    ],
+    "total": 880000,
+    "estado": "completada",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-16T21:33:59.563Z"
+  },
+  {
+    "id": 1771278237104,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 3,
+        "nombre": "Xiaomi 14 Ultra",
+        "cantidad": 1,
+        "precio": 750000
+      }
+    ],
+    "total": 755000,
+    "estado": "completada",
+    "emailEnviado": true,
+    "fechaCreacion": "2026-02-16T21:43:57.104Z"
+  },
+  {
+    "id": 1771342287136,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 14,
+        "nombre": "iphone 17 pro max",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "completada",
+    "emailEnviado": true,
+    "fechaCreacion": "2026-02-17T15:31:27.136Z"
+  },
+  {
+    "id": 1771342554617,
+    "cliente": {
+      "nombre": "rodrigo ",
+      "email": "r.alexlsieon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 15,
+        "nombre": "producto de prueba",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "completada",
+    "emailEnviado": true,
+    "fechaCreacion": "2026-02-17T15:35:54.617Z"
+  },
+  {
+    "id": 1771342703156,
+    "cliente": {
+      "nombre": "xx",
+      "email": "xx@gmail.com",
+      "telefono": "xx",
+      "direccion": "xx"
+    },
+    "items": [
+      {
+        "id": 15,
+        "nombre": "producto de prueba",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "completada",
+    "emailEnviado": true,
+    "fechaCreacion": "2026-02-17T15:38:23.156Z"
+  },
+  {
+    "id": 1771344835868,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexisleon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 16,
+        "nombre": "iphone 17 pro max",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "pendiente",
+    "mpPreferenceId": "459565046-d78ea096-5a5c-48ca-b8ec-3e4438eac6be",
+    "mpInitPoint": "https://www.mercadopago.cl/checkout/v1/redirect?pref_id=459565046-d78ea096-5a5c-48ca-b8ec-3e4438eac6be",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-17T16:13:55.868Z"
+  },
+  {
+    "id": 1771344915112,
+    "cliente": {
+      "nombre": "rodrigo",
+      "email": "r.alexsielon.m@gmail.com",
+      "telefono": "994254292",
+      "direccion": "llanquihue 6290"
+    },
+    "items": [
+      {
+        "id": 16,
+        "nombre": "iphone 17 pro max",
+        "cantidad": 1,
+        "precio": 1000
+      }
+    ],
+    "total": 6000,
+    "estado": "pendiente",
+    "mpPreferenceId": "459565046-2606fa5b-22ce-487e-b04b-0320e564386d",
+    "mpInitPoint": "https://www.mercadopago.cl/checkout/v1/redirect?pref_id=459565046-2606fa5b-22ce-487e-b04b-0320e564386d",
+    "emailEnviado": false,
+    "fechaCreacion": "2026-02-17T16:15:15.112Z"
+  }
+]

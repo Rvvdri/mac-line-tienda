@@ -1,0 +1,2518 @@
+════════════════════════════════════════════════════════════════════════════════════════════════════
+📋 LISTA DE PRODUCTOS - NOMBRES DE ARCHIVOS DE IMÁGENES
+════════════════════════════════════════════════════════════════════════════════════════════════════
+
+Guarda las imágenes con estos nombres EXACTOS en: public/images/productos/
+Formatos soportados: .jpg, .png, .jpeg
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+📂 AUDIFONOS
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+1. AirPods 3
+   ID: AUD006
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD006-portada.jpg    (Imagen principal)
+      ├─ producto-AUD006-1.jpg
+      ├─ producto-AUD006-2.jpg
+      ├─ producto-AUD006-3.jpg
+      ├─ producto-AUD006-4.jpg
+      ├─ producto-AUD006-5.jpg
+      └─ producto-AUD006-6.jpg
+
+2. AirPods 4
+   ID: AUD003
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD003-portada.jpg    (Imagen principal)
+      ├─ producto-AUD003-1.jpg
+      ├─ producto-AUD003-2.jpg
+      ├─ producto-AUD003-3.jpg
+      ├─ producto-AUD003-4.jpg
+      ├─ producto-AUD003-5.jpg
+      └─ producto-AUD003-6.jpg
+
+3. AirPods 4 con ANC
+   ID: AUD002
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD002-portada.jpg    (Imagen principal)
+      ├─ producto-AUD002-1.jpg
+      ├─ producto-AUD002-2.jpg
+      ├─ producto-AUD002-3.jpg
+      ├─ producto-AUD002-4.jpg
+      ├─ producto-AUD002-5.jpg
+      └─ producto-AUD002-6.jpg
+
+4. AirPods Max
+   ID: AUD005
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD005-portada.jpg    (Imagen principal)
+      ├─ producto-AUD005-1.jpg
+      ├─ producto-AUD005-2.jpg
+      ├─ producto-AUD005-3.jpg
+      ├─ producto-AUD005-4.jpg
+      ├─ producto-AUD005-5.jpg
+      └─ producto-AUD005-6.jpg
+
+5. AirPods Pro 2
+   ID: AUD004
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD004-portada.jpg    (Imagen principal)
+      ├─ producto-AUD004-1.jpg
+      ├─ producto-AUD004-2.jpg
+      ├─ producto-AUD004-3.jpg
+      ├─ producto-AUD004-4.jpg
+      ├─ producto-AUD004-5.jpg
+      └─ producto-AUD004-6.jpg
+
+6. AirPods Pro 3
+   ID: AUD001
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD001-portada.jpg    (Imagen principal)
+      ├─ producto-AUD001-1.jpg
+      ├─ producto-AUD001-2.jpg
+      ├─ producto-AUD001-3.jpg
+      ├─ producto-AUD001-4.jpg
+      ├─ producto-AUD001-5.jpg
+      └─ producto-AUD001-6.jpg
+
+7. Choice Earbuds X
+   ID: AUD043
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD043-portada.jpg    (Imagen principal)
+      ├─ producto-AUD043-1.jpg
+      ├─ producto-AUD043-2.jpg
+      ├─ producto-AUD043-3.jpg
+      ├─ producto-AUD043-4.jpg
+      ├─ producto-AUD043-5.jpg
+      └─ producto-AUD043-6.jpg
+
+8. Choice Earbuds X3
+   ID: AUD042
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD042-portada.jpg    (Imagen principal)
+      ├─ producto-AUD042-1.jpg
+      ├─ producto-AUD042-2.jpg
+      ├─ producto-AUD042-3.jpg
+      ├─ producto-AUD042-4.jpg
+      ├─ producto-AUD042-5.jpg
+      └─ producto-AUD042-6.jpg
+
+9. Choice Earbuds X3 Lite
+   ID: AUD041
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD041-portada.jpg    (Imagen principal)
+      ├─ producto-AUD041-1.jpg
+      ├─ producto-AUD041-2.jpg
+      ├─ producto-AUD041-3.jpg
+      ├─ producto-AUD041-4.jpg
+      ├─ producto-AUD041-5.jpg
+      └─ producto-AUD041-6.jpg
+
+10. Choice Earbuds X7
+   ID: AUD037
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD037-portada.jpg    (Imagen principal)
+      ├─ producto-AUD037-1.jpg
+      ├─ producto-AUD037-2.jpg
+      ├─ producto-AUD037-3.jpg
+      ├─ producto-AUD037-4.jpg
+      ├─ producto-AUD037-5.jpg
+      └─ producto-AUD037-6.jpg
+
+11. Choice Earbuds X7 Lite
+   ID: AUD038
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD038-portada.jpg    (Imagen principal)
+      ├─ producto-AUD038-1.jpg
+      ├─ producto-AUD038-2.jpg
+      ├─ producto-AUD038-3.jpg
+      ├─ producto-AUD038-4.jpg
+      ├─ producto-AUD038-5.jpg
+      └─ producto-AUD038-6.jpg
+
+12. Choice Earbuds X7e
+   ID: AUD039
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD039-portada.jpg    (Imagen principal)
+      ├─ producto-AUD039-1.jpg
+      ├─ producto-AUD039-2.jpg
+      ├─ producto-AUD039-3.jpg
+      ├─ producto-AUD039-4.jpg
+      ├─ producto-AUD039-5.jpg
+      └─ producto-AUD039-6.jpg
+
+13. Choice Earbuds X7i
+   ID: AUD040
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD040-portada.jpg    (Imagen principal)
+      ├─ producto-AUD040-1.jpg
+      ├─ producto-AUD040-2.jpg
+      ├─ producto-AUD040-3.jpg
+      ├─ producto-AUD040-4.jpg
+      ├─ producto-AUD040-5.jpg
+      └─ producto-AUD040-6.jpg
+
+14. Earbuds 3 Pro
+   ID: AUD036
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD036-portada.jpg    (Imagen principal)
+      ├─ producto-AUD036-1.jpg
+      ├─ producto-AUD036-2.jpg
+      ├─ producto-AUD036-3.jpg
+      ├─ producto-AUD036-4.jpg
+      ├─ producto-AUD036-5.jpg
+      └─ producto-AUD036-6.jpg
+
+15. Earbuds Open
+   ID: AUD044
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD044-portada.jpg    (Imagen principal)
+      ├─ producto-AUD044-1.jpg
+      ├─ producto-AUD044-2.jpg
+      ├─ producto-AUD044-3.jpg
+      ├─ producto-AUD044-4.jpg
+      ├─ producto-AUD044-5.jpg
+      └─ producto-AUD044-6.jpg
+
+16. Earbuds X5
+   ID: AUD035
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD035-portada.jpg    (Imagen principal)
+      ├─ producto-AUD035-1.jpg
+      ├─ producto-AUD035-2.jpg
+      ├─ producto-AUD035-3.jpg
+      ├─ producto-AUD035-4.jpg
+      ├─ producto-AUD035-5.jpg
+      └─ producto-AUD035-6.jpg
+
+17. Earbuds X6
+   ID: AUD034
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD034-portada.jpg    (Imagen principal)
+      ├─ producto-AUD034-1.jpg
+      ├─ producto-AUD034-2.jpg
+      ├─ producto-AUD034-3.jpg
+      ├─ producto-AUD034-4.jpg
+      ├─ producto-AUD034-5.jpg
+      └─ producto-AUD034-6.jpg
+
+18. FreeBuds 5
+   ID: AUD032
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD032-portada.jpg    (Imagen principal)
+      ├─ producto-AUD032-1.jpg
+      ├─ producto-AUD032-2.jpg
+      ├─ producto-AUD032-3.jpg
+      ├─ producto-AUD032-4.jpg
+      ├─ producto-AUD032-5.jpg
+      └─ producto-AUD032-6.jpg
+
+19. FreeBuds 5i
+   ID: AUD031
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD031-portada.jpg    (Imagen principal)
+      ├─ producto-AUD031-1.jpg
+      ├─ producto-AUD031-2.jpg
+      ├─ producto-AUD031-3.jpg
+      ├─ producto-AUD031-4.jpg
+      ├─ producto-AUD031-5.jpg
+      └─ producto-AUD031-6.jpg
+
+20. FreeBuds Pro
+   ID: AUD029
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD029-portada.jpg    (Imagen principal)
+      ├─ producto-AUD029-1.jpg
+      ├─ producto-AUD029-2.jpg
+      ├─ producto-AUD029-3.jpg
+      ├─ producto-AUD029-4.jpg
+      ├─ producto-AUD029-5.jpg
+      └─ producto-AUD029-6.jpg
+
+21. FreeBuds Pro 2
+   ID: AUD028
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD028-portada.jpg    (Imagen principal)
+      ├─ producto-AUD028-1.jpg
+      ├─ producto-AUD028-2.jpg
+      ├─ producto-AUD028-3.jpg
+      ├─ producto-AUD028-4.jpg
+      ├─ producto-AUD028-5.jpg
+      └─ producto-AUD028-6.jpg
+
+22. FreeBuds Pro 3
+   ID: AUD027
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD027-portada.jpg    (Imagen principal)
+      ├─ producto-AUD027-1.jpg
+      ├─ producto-AUD027-2.jpg
+      ├─ producto-AUD027-3.jpg
+      ├─ producto-AUD027-4.jpg
+      ├─ producto-AUD027-5.jpg
+      └─ producto-AUD027-6.jpg
+
+23. FreeBuds Pro 4
+   ID: AUD026
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD026-portada.jpg    (Imagen principal)
+      ├─ producto-AUD026-1.jpg
+      ├─ producto-AUD026-2.jpg
+      ├─ producto-AUD026-3.jpg
+      ├─ producto-AUD026-4.jpg
+      ├─ producto-AUD026-5.jpg
+      └─ producto-AUD026-6.jpg
+
+24. FreeBuds SE 3
+   ID: AUD030
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD030-portada.jpg    (Imagen principal)
+      ├─ producto-AUD030-1.jpg
+      ├─ producto-AUD030-2.jpg
+      ├─ producto-AUD030-3.jpg
+      ├─ producto-AUD030-4.jpg
+      ├─ producto-AUD030-5.jpg
+      └─ producto-AUD030-6.jpg
+
+25. FreeClip
+   ID: AUD033
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD033-portada.jpg    (Imagen principal)
+      ├─ producto-AUD033-1.jpg
+      ├─ producto-AUD033-2.jpg
+      ├─ producto-AUD033-3.jpg
+      ├─ producto-AUD033-4.jpg
+      ├─ producto-AUD033-5.jpg
+      └─ producto-AUD033-6.jpg
+
+26. Galaxy Buds 2
+   ID: AUD012
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD012-portada.jpg    (Imagen principal)
+      ├─ producto-AUD012-1.jpg
+      ├─ producto-AUD012-2.jpg
+      ├─ producto-AUD012-3.jpg
+      ├─ producto-AUD012-4.jpg
+      ├─ producto-AUD012-5.jpg
+      └─ producto-AUD012-6.jpg
+
+27. Galaxy Buds 2 Pro
+   ID: AUD011
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD011-portada.jpg    (Imagen principal)
+      ├─ producto-AUD011-1.jpg
+      ├─ producto-AUD011-2.jpg
+      ├─ producto-AUD011-3.jpg
+      ├─ producto-AUD011-4.jpg
+      ├─ producto-AUD011-5.jpg
+      └─ producto-AUD011-6.jpg
+
+28. Galaxy Buds 3
+   ID: AUD009
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD009-portada.jpg    (Imagen principal)
+      ├─ producto-AUD009-1.jpg
+      ├─ producto-AUD009-2.jpg
+      ├─ producto-AUD009-3.jpg
+      ├─ producto-AUD009-4.jpg
+      ├─ producto-AUD009-5.jpg
+      └─ producto-AUD009-6.jpg
+
+29. Galaxy Buds 3 Pro
+   ID: AUD008
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD008-portada.jpg    (Imagen principal)
+      ├─ producto-AUD008-1.jpg
+      ├─ producto-AUD008-2.jpg
+      ├─ producto-AUD008-3.jpg
+      ├─ producto-AUD008-4.jpg
+      ├─ producto-AUD008-5.jpg
+      └─ producto-AUD008-6.jpg
+
+30. Galaxy Buds 4 Pro
+   ID: AUD007
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD007-portada.jpg    (Imagen principal)
+      ├─ producto-AUD007-1.jpg
+      ├─ producto-AUD007-2.jpg
+      ├─ producto-AUD007-3.jpg
+      ├─ producto-AUD007-4.jpg
+      ├─ producto-AUD007-5.jpg
+      └─ producto-AUD007-6.jpg
+
+31. Galaxy Buds Core
+   ID: AUD013
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD013-portada.jpg    (Imagen principal)
+      ├─ producto-AUD013-1.jpg
+      ├─ producto-AUD013-2.jpg
+      ├─ producto-AUD013-3.jpg
+      ├─ producto-AUD013-4.jpg
+      ├─ producto-AUD013-5.jpg
+      └─ producto-AUD013-6.jpg
+
+32. Galaxy Buds FE
+   ID: AUD010
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD010-portada.jpg    (Imagen principal)
+      ├─ producto-AUD010-1.jpg
+      ├─ producto-AUD010-2.jpg
+      ├─ producto-AUD010-3.jpg
+      ├─ producto-AUD010-4.jpg
+      ├─ producto-AUD010-5.jpg
+      └─ producto-AUD010-6.jpg
+
+33. Redmi Buds 4
+   ID: AUD023
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD023-portada.jpg    (Imagen principal)
+      ├─ producto-AUD023-1.jpg
+      ├─ producto-AUD023-2.jpg
+      ├─ producto-AUD023-3.jpg
+      ├─ producto-AUD023-4.jpg
+      ├─ producto-AUD023-5.jpg
+      └─ producto-AUD023-6.jpg
+
+34. Redmi Buds 4 Active
+   ID: AUD024
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD024-portada.jpg    (Imagen principal)
+      ├─ producto-AUD024-1.jpg
+      ├─ producto-AUD024-2.jpg
+      ├─ producto-AUD024-3.jpg
+      ├─ producto-AUD024-4.jpg
+      ├─ producto-AUD024-5.jpg
+      └─ producto-AUD024-6.jpg
+
+35. Redmi Buds 4 Pro
+   ID: AUD022
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD022-portada.jpg    (Imagen principal)
+      ├─ producto-AUD022-1.jpg
+      ├─ producto-AUD022-2.jpg
+      ├─ producto-AUD022-3.jpg
+      ├─ producto-AUD022-4.jpg
+      ├─ producto-AUD022-5.jpg
+      └─ producto-AUD022-6.jpg
+
+36. Redmi Buds 5
+   ID: AUD021
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD021-portada.jpg    (Imagen principal)
+      ├─ producto-AUD021-1.jpg
+      ├─ producto-AUD021-2.jpg
+      ├─ producto-AUD021-3.jpg
+      ├─ producto-AUD021-4.jpg
+      ├─ producto-AUD021-5.jpg
+      └─ producto-AUD021-6.jpg
+
+37. Redmi Buds 5 Pro
+   ID: AUD020
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD020-portada.jpg    (Imagen principal)
+      ├─ producto-AUD020-1.jpg
+      ├─ producto-AUD020-2.jpg
+      ├─ producto-AUD020-3.jpg
+      ├─ producto-AUD020-4.jpg
+      ├─ producto-AUD020-5.jpg
+      └─ producto-AUD020-6.jpg
+
+38. Redmi Buds 6
+   ID: AUD015
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD015-portada.jpg    (Imagen principal)
+      ├─ producto-AUD015-1.jpg
+      ├─ producto-AUD015-2.jpg
+      ├─ producto-AUD015-3.jpg
+      ├─ producto-AUD015-4.jpg
+      ├─ producto-AUD015-5.jpg
+      └─ producto-AUD015-6.jpg
+
+39. Redmi Buds 6 Active
+   ID: AUD017
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD017-portada.jpg    (Imagen principal)
+      ├─ producto-AUD017-1.jpg
+      ├─ producto-AUD017-2.jpg
+      ├─ producto-AUD017-3.jpg
+      ├─ producto-AUD017-4.jpg
+      ├─ producto-AUD017-5.jpg
+      └─ producto-AUD017-6.jpg
+
+40. Redmi Buds 6 Lite
+   ID: AUD016
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD016-portada.jpg    (Imagen principal)
+      ├─ producto-AUD016-1.jpg
+      ├─ producto-AUD016-2.jpg
+      ├─ producto-AUD016-3.jpg
+      ├─ producto-AUD016-4.jpg
+      ├─ producto-AUD016-5.jpg
+      └─ producto-AUD016-6.jpg
+
+41. Redmi Buds 6 Play
+   ID: AUD018
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD018-portada.jpg    (Imagen principal)
+      ├─ producto-AUD018-1.jpg
+      ├─ producto-AUD018-2.jpg
+      ├─ producto-AUD018-3.jpg
+      ├─ producto-AUD018-4.jpg
+      ├─ producto-AUD018-5.jpg
+      └─ producto-AUD018-6.jpg
+
+42. Redmi Buds 6 Pro
+   ID: AUD014
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD014-portada.jpg    (Imagen principal)
+      ├─ producto-AUD014-1.jpg
+      ├─ producto-AUD014-2.jpg
+      ├─ producto-AUD014-3.jpg
+      ├─ producto-AUD014-4.jpg
+      ├─ producto-AUD014-5.jpg
+      └─ producto-AUD014-6.jpg
+
+43. Xiaomi Buds 5 Pro
+   ID: AUD019
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD019-portada.jpg    (Imagen principal)
+      ├─ producto-AUD019-1.jpg
+      ├─ producto-AUD019-2.jpg
+      ├─ producto-AUD019-3.jpg
+      ├─ producto-AUD019-4.jpg
+      ├─ producto-AUD019-5.jpg
+      └─ producto-AUD019-6.jpg
+
+44. Xiaomi OpenWear Stereo
+   ID: AUD025
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-AUD025-portada.jpg    (Imagen principal)
+      ├─ producto-AUD025-1.jpg
+      ├─ producto-AUD025-2.jpg
+      ├─ producto-AUD025-3.jpg
+      ├─ producto-AUD025-4.jpg
+      ├─ producto-AUD025-5.jpg
+      └─ producto-AUD025-6.jpg
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+📂 CELULARES
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+45. Honor 200
+   ID: 1771367260290
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260290-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260290-1.jpg
+      ├─ producto-1771367260290-2.jpg
+      ├─ producto-1771367260290-3.jpg
+      ├─ producto-1771367260290-4.jpg
+      ├─ producto-1771367260290-5.jpg
+      └─ producto-1771367260290-6.jpg
+
+46. Honor 200 Pro
+   ID: 1771367260289
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260289-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260289-1.jpg
+      ├─ producto-1771367260289-2.jpg
+      ├─ producto-1771367260289-3.jpg
+      ├─ producto-1771367260289-4.jpg
+      ├─ producto-1771367260289-5.jpg
+      └─ producto-1771367260289-6.jpg
+
+47. Honor 70
+   ID: 1771367260295
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260295-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260295-1.jpg
+      ├─ producto-1771367260295-2.jpg
+      ├─ producto-1771367260295-3.jpg
+      ├─ producto-1771367260295-4.jpg
+      ├─ producto-1771367260295-5.jpg
+      └─ producto-1771367260295-6.jpg
+
+48. Honor 90
+   ID: 1771367260291
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260291-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260291-1.jpg
+      ├─ producto-1771367260291-2.jpg
+      ├─ producto-1771367260291-3.jpg
+      ├─ producto-1771367260291-4.jpg
+      ├─ producto-1771367260291-5.jpg
+      └─ producto-1771367260291-6.jpg
+
+49. Honor 90 Lite
+   ID: 1771367260292
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260292-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260292-1.jpg
+      ├─ producto-1771367260292-2.jpg
+      ├─ producto-1771367260292-3.jpg
+      ├─ producto-1771367260292-4.jpg
+      ├─ producto-1771367260292-5.jpg
+      └─ producto-1771367260292-6.jpg
+
+50. Honor Magic5 Lite
+   ID: 1771367260294
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260294-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260294-1.jpg
+      ├─ producto-1771367260294-2.jpg
+      ├─ producto-1771367260294-3.jpg
+      ├─ producto-1771367260294-4.jpg
+      ├─ producto-1771367260294-5.jpg
+      └─ producto-1771367260294-6.jpg
+
+51. Honor Magic5 Pro
+   ID: 1771367260288
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260288-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260288-1.jpg
+      ├─ producto-1771367260288-2.jpg
+      ├─ producto-1771367260288-3.jpg
+      ├─ producto-1771367260288-4.jpg
+      ├─ producto-1771367260288-5.jpg
+      └─ producto-1771367260288-6.jpg
+
+52. Honor Magic6 Pro
+   ID: 1771367260287
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260287-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260287-1.jpg
+      ├─ producto-1771367260287-2.jpg
+      ├─ producto-1771367260287-3.jpg
+      ├─ producto-1771367260287-4.jpg
+      ├─ producto-1771367260287-5.jpg
+      └─ producto-1771367260287-6.jpg
+
+53. Honor Magic7 Lite
+   ID: 1771367260293
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260293-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260293-1.jpg
+      ├─ producto-1771367260293-2.jpg
+      ├─ producto-1771367260293-3.jpg
+      ├─ producto-1771367260293-4.jpg
+      ├─ producto-1771367260293-5.jpg
+      └─ producto-1771367260293-6.jpg
+
+54. Honor Magic7 Pro
+   ID: 1771367260286
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260286-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260286-1.jpg
+      ├─ producto-1771367260286-2.jpg
+      ├─ producto-1771367260286-3.jpg
+      ├─ producto-1771367260286-4.jpg
+      ├─ producto-1771367260286-5.jpg
+      └─ producto-1771367260286-6.jpg
+
+55. Huawei Mate 50 Pro
+   ID: 1771367260300
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260300-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260300-1.jpg
+      ├─ producto-1771367260300-2.jpg
+      ├─ producto-1771367260300-3.jpg
+      ├─ producto-1771367260300-4.jpg
+      ├─ producto-1771367260300-5.jpg
+      └─ producto-1771367260300-6.jpg
+
+56. Huawei Mate 60 Pro
+   ID: 1771367260299
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260299-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260299-1.jpg
+      ├─ producto-1771367260299-2.jpg
+      ├─ producto-1771367260299-3.jpg
+      ├─ producto-1771367260299-4.jpg
+      ├─ producto-1771367260299-5.jpg
+      └─ producto-1771367260299-6.jpg
+
+57. Huawei Nova 10
+   ID: 1771367260303
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260303-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260303-1.jpg
+      ├─ producto-1771367260303-2.jpg
+      ├─ producto-1771367260303-3.jpg
+      ├─ producto-1771367260303-4.jpg
+      ├─ producto-1771367260303-5.jpg
+      └─ producto-1771367260303-6.jpg
+
+58. Huawei Nova 12 SE
+   ID: 1771367260302
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260302-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260302-1.jpg
+      ├─ producto-1771367260302-2.jpg
+      ├─ producto-1771367260302-3.jpg
+      ├─ producto-1771367260302-4.jpg
+      ├─ producto-1771367260302-5.jpg
+      └─ producto-1771367260302-6.jpg
+
+59. Huawei Nova 12i
+   ID: 1771367260301
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260301-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260301-1.jpg
+      ├─ producto-1771367260301-2.jpg
+      ├─ producto-1771367260301-3.jpg
+      ├─ producto-1771367260301-4.jpg
+      ├─ producto-1771367260301-5.jpg
+      └─ producto-1771367260301-6.jpg
+
+60. Huawei P60 Pro
+   ID: 1771367260298
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260298-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260298-1.jpg
+      ├─ producto-1771367260298-2.jpg
+      ├─ producto-1771367260298-3.jpg
+      ├─ producto-1771367260298-4.jpg
+      ├─ producto-1771367260298-5.jpg
+      └─ producto-1771367260298-6.jpg
+
+61. Huawei Pura 70 Pro
+   ID: 1771367260297
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260297-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260297-1.jpg
+      ├─ producto-1771367260297-2.jpg
+      ├─ producto-1771367260297-3.jpg
+      ├─ producto-1771367260297-4.jpg
+      ├─ producto-1771367260297-5.jpg
+      └─ producto-1771367260297-6.jpg
+
+62. Huawei Pura 70 Ultra
+   ID: 1771367260296
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260296-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260296-1.jpg
+      ├─ producto-1771367260296-2.jpg
+      ├─ producto-1771367260296-3.jpg
+      ├─ producto-1771367260296-4.jpg
+      ├─ producto-1771367260296-5.jpg
+      └─ producto-1771367260296-6.jpg
+
+63. POCO F6 Pro
+   ID: 1771367260313
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260313-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260313-1.jpg
+      ├─ producto-1771367260313-2.jpg
+      ├─ producto-1771367260313-3.jpg
+      ├─ producto-1771367260313-4.jpg
+      ├─ producto-1771367260313-5.jpg
+      └─ producto-1771367260313-6.jpg
+
+64. POCO F8 Ultra
+   ID: 1771367260311
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260311-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260311-1.jpg
+      ├─ producto-1771367260311-2.jpg
+      ├─ producto-1771367260311-3.jpg
+      ├─ producto-1771367260311-4.jpg
+      ├─ producto-1771367260311-5.jpg
+      └─ producto-1771367260311-6.jpg
+
+65. POCO X6 Pro
+   ID: 1771367260314
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260314-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260314-1.jpg
+      ├─ producto-1771367260314-2.jpg
+      ├─ producto-1771367260314-3.jpg
+      ├─ producto-1771367260314-4.jpg
+      ├─ producto-1771367260314-5.jpg
+      └─ producto-1771367260314-6.jpg
+
+66. POCO X7 Pro
+   ID: 1771367260312
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260312-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260312-1.jpg
+      ├─ producto-1771367260312-2.jpg
+      ├─ producto-1771367260312-3.jpg
+      ├─ producto-1771367260312-4.jpg
+      ├─ producto-1771367260312-5.jpg
+      └─ producto-1771367260312-6.jpg
+
+67. Redmi 14C
+   ID: 1771367260320
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260320-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260320-1.jpg
+      ├─ producto-1771367260320-2.jpg
+      ├─ producto-1771367260320-3.jpg
+      ├─ producto-1771367260320-4.jpg
+      ├─ producto-1771367260320-5.jpg
+      └─ producto-1771367260320-6.jpg
+
+68. Redmi 15
+   ID: 1771367260319
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260319-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260319-1.jpg
+      ├─ producto-1771367260319-2.jpg
+      ├─ producto-1771367260319-3.jpg
+      ├─ producto-1771367260319-4.jpg
+      ├─ producto-1771367260319-5.jpg
+      └─ producto-1771367260319-6.jpg
+
+69. Redmi Note 13 Pro+
+   ID: 1771367260318
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260318-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260318-1.jpg
+      ├─ producto-1771367260318-2.jpg
+      ├─ producto-1771367260318-3.jpg
+      ├─ producto-1771367260318-4.jpg
+      ├─ producto-1771367260318-5.jpg
+      └─ producto-1771367260318-6.jpg
+
+70. Redmi Note 14
+   ID: 1771367260317
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260317-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260317-1.jpg
+      ├─ producto-1771367260317-2.jpg
+      ├─ producto-1771367260317-3.jpg
+      ├─ producto-1771367260317-4.jpg
+      ├─ producto-1771367260317-5.jpg
+      └─ producto-1771367260317-6.jpg
+
+71. Redmi Note 14 Pro
+   ID: 1771367260316
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260316-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260316-1.jpg
+      ├─ producto-1771367260316-2.jpg
+      ├─ producto-1771367260316-3.jpg
+      ├─ producto-1771367260316-4.jpg
+      ├─ producto-1771367260316-5.jpg
+      └─ producto-1771367260316-6.jpg
+
+72. Redmi Note 14 Pro+
+   ID: 1771367260315
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260315-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260315-1.jpg
+      ├─ producto-1771367260315-2.jpg
+      ├─ producto-1771367260315-3.jpg
+      ├─ producto-1771367260315-4.jpg
+      ├─ producto-1771367260315-5.jpg
+      └─ producto-1771367260315-6.jpg
+
+73. Samsung Galaxy A16
+   ID: 1771367260285
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260285-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260285-1.jpg
+      ├─ producto-1771367260285-2.jpg
+      ├─ producto-1771367260285-3.jpg
+      ├─ producto-1771367260285-4.jpg
+      ├─ producto-1771367260285-5.jpg
+      └─ producto-1771367260285-6.jpg
+
+74. Samsung Galaxy A35
+   ID: 1771367260284
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260284-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260284-1.jpg
+      ├─ producto-1771367260284-2.jpg
+      ├─ producto-1771367260284-3.jpg
+      ├─ producto-1771367260284-4.jpg
+      ├─ producto-1771367260284-5.jpg
+      └─ producto-1771367260284-6.jpg
+
+75. Samsung Galaxy A54
+   ID: 1771367260283
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260283-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260283-1.jpg
+      ├─ producto-1771367260283-2.jpg
+      ├─ producto-1771367260283-3.jpg
+      ├─ producto-1771367260283-4.jpg
+      ├─ producto-1771367260283-5.jpg
+      └─ producto-1771367260283-6.jpg
+
+76. Samsung Galaxy A55
+   ID: 1771367260282
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260282-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260282-1.jpg
+      ├─ producto-1771367260282-2.jpg
+      ├─ producto-1771367260282-3.jpg
+      ├─ producto-1771367260282-4.jpg
+      ├─ producto-1771367260282-5.jpg
+      └─ producto-1771367260282-6.jpg
+
+77. Samsung Galaxy A56
+   ID: 1771367260281
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260281-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260281-1.jpg
+      ├─ producto-1771367260281-2.jpg
+      ├─ producto-1771367260281-3.jpg
+      ├─ producto-1771367260281-4.jpg
+      ├─ producto-1771367260281-5.jpg
+      └─ producto-1771367260281-6.jpg
+
+78. Samsung Galaxy S24
+   ID: 1771367260278
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260278-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260278-1.jpg
+      ├─ producto-1771367260278-2.jpg
+      ├─ producto-1771367260278-3.jpg
+      ├─ producto-1771367260278-4.jpg
+      ├─ producto-1771367260278-5.jpg
+      └─ producto-1771367260278-6.jpg
+
+79. Samsung Galaxy S24 FE
+   ID: 1771367260279
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260279-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260279-1.jpg
+      ├─ producto-1771367260279-2.jpg
+      ├─ producto-1771367260279-3.jpg
+      ├─ producto-1771367260279-4.jpg
+      ├─ producto-1771367260279-5.jpg
+      └─ producto-1771367260279-6.jpg
+
+80. Samsung Galaxy S24 Plus
+   ID: 1771367260277
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260277-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260277-1.jpg
+      ├─ producto-1771367260277-2.jpg
+      ├─ producto-1771367260277-3.jpg
+      ├─ producto-1771367260277-4.jpg
+      ├─ producto-1771367260277-5.jpg
+      └─ producto-1771367260277-6.jpg
+
+81. Samsung Galaxy S24 Ultra
+   ID: 1771367260276
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260276-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260276-1.jpg
+      ├─ producto-1771367260276-2.jpg
+      ├─ producto-1771367260276-3.jpg
+      ├─ producto-1771367260276-4.jpg
+      ├─ producto-1771367260276-5.jpg
+      └─ producto-1771367260276-6.jpg
+
+82. Samsung Galaxy S25
+   ID: 1771367260275
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260275-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260275-1.jpg
+      ├─ producto-1771367260275-2.jpg
+      ├─ producto-1771367260275-3.jpg
+      ├─ producto-1771367260275-4.jpg
+      ├─ producto-1771367260275-5.jpg
+      └─ producto-1771367260275-6.jpg
+
+83. Samsung Galaxy S25 Plus
+   ID: 1771367260274
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260274-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260274-1.jpg
+      ├─ producto-1771367260274-2.jpg
+      ├─ producto-1771367260274-3.jpg
+      ├─ producto-1771367260274-4.jpg
+      ├─ producto-1771367260274-5.jpg
+      └─ producto-1771367260274-6.jpg
+
+84. Samsung Galaxy S25 Ultra
+   ID: 1771367260273
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260273-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260273-1.jpg
+      ├─ producto-1771367260273-2.jpg
+      ├─ producto-1771367260273-3.jpg
+      ├─ producto-1771367260273-4.jpg
+      ├─ producto-1771367260273-5.jpg
+      └─ producto-1771367260273-6.jpg
+
+85. Samsung Galaxy Z Flip6
+   ID: 1771367260280
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260280-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260280-1.jpg
+      ├─ producto-1771367260280-2.jpg
+      ├─ producto-1771367260280-3.jpg
+      ├─ producto-1771367260280-4.jpg
+      ├─ producto-1771367260280-5.jpg
+      └─ producto-1771367260280-6.jpg
+
+86. Xiaomi 14 Pro
+   ID: 1771367260307
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260307-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260307-1.jpg
+      ├─ producto-1771367260307-2.jpg
+      ├─ producto-1771367260307-3.jpg
+      ├─ producto-1771367260307-4.jpg
+      ├─ producto-1771367260307-5.jpg
+      └─ producto-1771367260307-6.jpg
+
+87. Xiaomi 14 Ultra
+   ID: 1771367260306
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260306-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260306-1.jpg
+      ├─ producto-1771367260306-2.jpg
+      ├─ producto-1771367260306-3.jpg
+      ├─ producto-1771367260306-4.jpg
+      ├─ producto-1771367260306-5.jpg
+      └─ producto-1771367260306-6.jpg
+
+88. Xiaomi 14T Pro
+   ID: 1771367260308
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260308-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260308-1.jpg
+      ├─ producto-1771367260308-2.jpg
+      ├─ producto-1771367260308-3.jpg
+      ├─ producto-1771367260308-4.jpg
+      ├─ producto-1771367260308-5.jpg
+      └─ producto-1771367260308-6.jpg
+
+89. Xiaomi 15 Pro
+   ID: 1771367260305
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260305-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260305-1.jpg
+      ├─ producto-1771367260305-2.jpg
+      ├─ producto-1771367260305-3.jpg
+      ├─ producto-1771367260305-4.jpg
+      ├─ producto-1771367260305-5.jpg
+      └─ producto-1771367260305-6.jpg
+
+90. Xiaomi 15 Ultra
+   ID: 1771367260304
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260304-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260304-1.jpg
+      ├─ producto-1771367260304-2.jpg
+      ├─ producto-1771367260304-3.jpg
+      ├─ producto-1771367260304-4.jpg
+      ├─ producto-1771367260304-5.jpg
+      └─ producto-1771367260304-6.jpg
+
+91. Xiaomi 15T
+   ID: 1771367260310
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260310-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260310-1.jpg
+      ├─ producto-1771367260310-2.jpg
+      ├─ producto-1771367260310-3.jpg
+      ├─ producto-1771367260310-4.jpg
+      ├─ producto-1771367260310-5.jpg
+      └─ producto-1771367260310-6.jpg
+
+92. Xiaomi 15T Pro
+   ID: 1771367260309
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260309-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260309-1.jpg
+      ├─ producto-1771367260309-2.jpg
+      ├─ producto-1771367260309-3.jpg
+      ├─ producto-1771367260309-4.jpg
+      ├─ producto-1771367260309-5.jpg
+      └─ producto-1771367260309-6.jpg
+
+93. iPhone 13
+   ID: 1771367260272
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260272-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260272-1.jpg
+      ├─ producto-1771367260272-2.jpg
+      ├─ producto-1771367260272-3.jpg
+      ├─ producto-1771367260272-4.jpg
+      ├─ producto-1771367260272-5.jpg
+      └─ producto-1771367260272-6.jpg
+
+94. iPhone 14
+   ID: 1771367260271
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260271-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260271-1.jpg
+      ├─ producto-1771367260271-2.jpg
+      ├─ producto-1771367260271-3.jpg
+      ├─ producto-1771367260271-4.jpg
+      ├─ producto-1771367260271-5.jpg
+      └─ producto-1771367260271-6.jpg
+
+95. iPhone 15
+   ID: 1771367260270
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260270-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260270-1.jpg
+      ├─ producto-1771367260270-2.jpg
+      ├─ producto-1771367260270-3.jpg
+      ├─ producto-1771367260270-4.jpg
+      ├─ producto-1771367260270-5.jpg
+      └─ producto-1771367260270-6.jpg
+
+96. iPhone 15 Plus
+   ID: 1771367260269
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260269-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260269-1.jpg
+      ├─ producto-1771367260269-2.jpg
+      ├─ producto-1771367260269-3.jpg
+      ├─ producto-1771367260269-4.jpg
+      ├─ producto-1771367260269-5.jpg
+      └─ producto-1771367260269-6.jpg
+
+97. iPhone 15 Pro
+   ID: 1771367260268
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260268-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260268-1.jpg
+      ├─ producto-1771367260268-2.jpg
+      ├─ producto-1771367260268-3.jpg
+      ├─ producto-1771367260268-4.jpg
+      ├─ producto-1771367260268-5.jpg
+      └─ producto-1771367260268-6.jpg
+
+98. iPhone 15 Pro Max
+   ID: 1771367260267
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260267-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260267-1.jpg
+      ├─ producto-1771367260267-2.jpg
+      ├─ producto-1771367260267-3.jpg
+      ├─ producto-1771367260267-4.jpg
+      ├─ producto-1771367260267-5.jpg
+      └─ producto-1771367260267-6.jpg
+
+99. iPhone 16
+   ID: 1771367260266
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260266-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260266-1.jpg
+      ├─ producto-1771367260266-2.jpg
+      ├─ producto-1771367260266-3.jpg
+      ├─ producto-1771367260266-4.jpg
+      ├─ producto-1771367260266-5.jpg
+      └─ producto-1771367260266-6.jpg
+
+100. iPhone 16 Plus
+   ID: 1771367260265
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260265-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260265-1.jpg
+      ├─ producto-1771367260265-2.jpg
+      ├─ producto-1771367260265-3.jpg
+      ├─ producto-1771367260265-4.jpg
+      ├─ producto-1771367260265-5.jpg
+      └─ producto-1771367260265-6.jpg
+
+101. iPhone 16 Pro
+   ID: 1771367260264
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260264-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260264-1.jpg
+      ├─ producto-1771367260264-2.jpg
+      ├─ producto-1771367260264-3.jpg
+      ├─ producto-1771367260264-4.jpg
+      ├─ producto-1771367260264-5.jpg
+      └─ producto-1771367260264-6.jpg
+
+102. iPhone 16 Pro Max
+   ID: 1771367260263
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260263-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260263-1.jpg
+      ├─ producto-1771367260263-2.jpg
+      ├─ producto-1771367260263-3.jpg
+      ├─ producto-1771367260263-4.jpg
+      ├─ producto-1771367260263-5.jpg
+      └─ producto-1771367260263-6.jpg
+
+103. iPhone 17
+   ID: 1771367260261
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260261-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260261-1.jpg
+      ├─ producto-1771367260261-2.jpg
+      ├─ producto-1771367260261-3.jpg
+      ├─ producto-1771367260261-4.jpg
+      ├─ producto-1771367260261-5.jpg
+      └─ producto-1771367260261-6.jpg
+
+104. iPhone 17 Pro
+   ID: 1771367260260
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260260-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260260-1.jpg
+      ├─ producto-1771367260260-2.jpg
+      ├─ producto-1771367260260-3.jpg
+      ├─ producto-1771367260260-4.jpg
+      ├─ producto-1771367260260-5.jpg
+      └─ producto-1771367260260-6.jpg
+
+105. iPhone 17 Pro Max
+   ID: 1771367260259
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260259-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260259-1.jpg
+      ├─ producto-1771367260259-2.jpg
+      ├─ producto-1771367260259-3.jpg
+      ├─ producto-1771367260259-4.jpg
+      ├─ producto-1771367260259-5.jpg
+      └─ producto-1771367260259-6.jpg
+
+106. iPhone Air
+   ID: 1771367260262
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-1771367260262-portada.jpg    (Imagen principal)
+      ├─ producto-1771367260262-1.jpg
+      ├─ producto-1771367260262-2.jpg
+      ├─ producto-1771367260262-3.jpg
+      ├─ producto-1771367260262-4.jpg
+      ├─ producto-1771367260262-5.jpg
+      └─ producto-1771367260262-6.jpg
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+📂 NOTEBOOKS
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+107. Galaxy Book2 Pro (2023)
+   ID: NB015
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB015-portada.jpg    (Imagen principal)
+      ├─ producto-NB015-1.jpg
+      ├─ producto-NB015-2.jpg
+      ├─ producto-NB015-3.jpg
+      ├─ producto-NB015-4.jpg
+      ├─ producto-NB015-5.jpg
+      └─ producto-NB015-6.jpg
+
+108. Galaxy Book3 Pro (2023)
+   ID: NB014
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB014-portada.jpg    (Imagen principal)
+      ├─ producto-NB014-1.jpg
+      ├─ producto-NB014-2.jpg
+      ├─ producto-NB014-3.jpg
+      ├─ producto-NB014-4.jpg
+      ├─ producto-NB014-5.jpg
+      └─ producto-NB014-6.jpg
+
+109. Galaxy Book3 Pro 360 (2023)
+   ID: NB013
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB013-portada.jpg    (Imagen principal)
+      ├─ producto-NB013-1.jpg
+      ├─ producto-NB013-2.jpg
+      ├─ producto-NB013-3.jpg
+      ├─ producto-NB013-4.jpg
+      ├─ producto-NB013-5.jpg
+      └─ producto-NB013-6.jpg
+
+110. Galaxy Book3 Ultra (2023)
+   ID: NB012
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB012-portada.jpg    (Imagen principal)
+      ├─ producto-NB012-1.jpg
+      ├─ producto-NB012-2.jpg
+      ├─ producto-NB012-3.jpg
+      ├─ producto-NB012-4.jpg
+      ├─ producto-NB012-5.jpg
+      └─ producto-NB012-6.jpg
+
+111. Galaxy Book4 (2024)
+   ID: NB011
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB011-portada.jpg    (Imagen principal)
+      ├─ producto-NB011-1.jpg
+      ├─ producto-NB011-2.jpg
+      ├─ producto-NB011-3.jpg
+      ├─ producto-NB011-4.jpg
+      ├─ producto-NB011-5.jpg
+      └─ producto-NB011-6.jpg
+
+112. Galaxy Book4 Pro (2024)
+   ID: NB010
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB010-portada.jpg    (Imagen principal)
+      ├─ producto-NB010-1.jpg
+      ├─ producto-NB010-2.jpg
+      ├─ producto-NB010-3.jpg
+      ├─ producto-NB010-4.jpg
+      ├─ producto-NB010-5.jpg
+      └─ producto-NB010-6.jpg
+
+113. Galaxy Book4 Pro 360 (2024)
+   ID: NB009
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB009-portada.jpg    (Imagen principal)
+      ├─ producto-NB009-1.jpg
+      ├─ producto-NB009-2.jpg
+      ├─ producto-NB009-3.jpg
+      ├─ producto-NB009-4.jpg
+      ├─ producto-NB009-5.jpg
+      └─ producto-NB009-6.jpg
+
+114. Galaxy Book4 Ultra (2024)
+   ID: NB008
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB008-portada.jpg    (Imagen principal)
+      ├─ producto-NB008-1.jpg
+      ├─ producto-NB008-2.jpg
+      ├─ producto-NB008-3.jpg
+      ├─ producto-NB008-4.jpg
+      ├─ producto-NB008-5.jpg
+      └─ producto-NB008-6.jpg
+
+115. MacBook Air 13" M3 (2024)
+   ID: NB002
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB002-portada.jpg    (Imagen principal)
+      ├─ producto-NB002-1.jpg
+      ├─ producto-NB002-2.jpg
+      ├─ producto-NB002-3.jpg
+      ├─ producto-NB002-4.jpg
+      ├─ producto-NB002-5.jpg
+      └─ producto-NB002-6.jpg
+
+116. MacBook Air 15" M2 (2023)
+   ID: NB006
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB006-portada.jpg    (Imagen principal)
+      ├─ producto-NB006-1.jpg
+      ├─ producto-NB006-2.jpg
+      ├─ producto-NB006-3.jpg
+      ├─ producto-NB006-4.jpg
+      ├─ producto-NB006-5.jpg
+      └─ producto-NB006-6.jpg
+
+117. MacBook Air 15" M3 (2024)
+   ID: NB001
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB001-portada.jpg    (Imagen principal)
+      ├─ producto-NB001-1.jpg
+      ├─ producto-NB001-2.jpg
+      ├─ producto-NB001-3.jpg
+      ├─ producto-NB001-4.jpg
+      ├─ producto-NB001-5.jpg
+      └─ producto-NB001-6.jpg
+
+118. MacBook Pro 14" M3 Pro (2023)
+   ID: NB007
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB007-portada.jpg    (Imagen principal)
+      ├─ producto-NB007-1.jpg
+      ├─ producto-NB007-2.jpg
+      ├─ producto-NB007-3.jpg
+      ├─ producto-NB007-4.jpg
+      ├─ producto-NB007-5.jpg
+      └─ producto-NB007-6.jpg
+
+119. MacBook Pro 14" M4 (2024)
+   ID: NB003
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB003-portada.jpg    (Imagen principal)
+      ├─ producto-NB003-1.jpg
+      ├─ producto-NB003-2.jpg
+      ├─ producto-NB003-3.jpg
+      ├─ producto-NB003-4.jpg
+      ├─ producto-NB003-5.jpg
+      └─ producto-NB003-6.jpg
+
+120. MacBook Pro 16" M4 Max (2024)
+   ID: NB005
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB005-portada.jpg    (Imagen principal)
+      ├─ producto-NB005-1.jpg
+      ├─ producto-NB005-2.jpg
+      ├─ producto-NB005-3.jpg
+      ├─ producto-NB005-4.jpg
+      ├─ producto-NB005-5.jpg
+      └─ producto-NB005-6.jpg
+
+121. MacBook Pro 16" M4 Pro (2024)
+   ID: NB004
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB004-portada.jpg    (Imagen principal)
+      ├─ producto-NB004-1.jpg
+      ├─ producto-NB004-2.jpg
+      ├─ producto-NB004-3.jpg
+      ├─ producto-NB004-4.jpg
+      ├─ producto-NB004-5.jpg
+      └─ producto-NB004-6.jpg
+
+122. MagicBook 14 (2023)
+   ID: NB037
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB037-portada.jpg    (Imagen principal)
+      ├─ producto-NB037-1.jpg
+      ├─ producto-NB037-2.jpg
+      ├─ producto-NB037-3.jpg
+      ├─ producto-NB037-4.jpg
+      ├─ producto-NB037-5.jpg
+      └─ producto-NB037-6.jpg
+
+123. MagicBook 14 (2024)
+   ID: NB033
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB033-portada.jpg    (Imagen principal)
+      ├─ producto-NB033-1.jpg
+      ├─ producto-NB033-2.jpg
+      ├─ producto-NB033-3.jpg
+      ├─ producto-NB033-4.jpg
+      ├─ producto-NB033-5.jpg
+      └─ producto-NB033-6.jpg
+
+124. MagicBook Pro 16 (2023)
+   ID: NB036
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB036-portada.jpg    (Imagen principal)
+      ├─ producto-NB036-1.jpg
+      ├─ producto-NB036-2.jpg
+      ├─ producto-NB036-3.jpg
+      ├─ producto-NB036-4.jpg
+      ├─ producto-NB036-5.jpg
+      └─ producto-NB036-6.jpg
+
+125. MagicBook Pro 16 (2024)
+   ID: NB032
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB032-portada.jpg    (Imagen principal)
+      ├─ producto-NB032-1.jpg
+      ├─ producto-NB032-2.jpg
+      ├─ producto-NB032-3.jpg
+      ├─ producto-NB032-4.jpg
+      ├─ producto-NB032-5.jpg
+      └─ producto-NB032-6.jpg
+
+126. MagicBook X 14 (2023)
+   ID: NB039
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB039-portada.jpg    (Imagen principal)
+      ├─ producto-NB039-1.jpg
+      ├─ producto-NB039-2.jpg
+      ├─ producto-NB039-3.jpg
+      ├─ producto-NB039-4.jpg
+      ├─ producto-NB039-5.jpg
+      └─ producto-NB039-6.jpg
+
+127. MagicBook X 14 (2024)
+   ID: NB035
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB035-portada.jpg    (Imagen principal)
+      ├─ producto-NB035-1.jpg
+      ├─ producto-NB035-2.jpg
+      ├─ producto-NB035-3.jpg
+      ├─ producto-NB035-4.jpg
+      ├─ producto-NB035-5.jpg
+      └─ producto-NB035-6.jpg
+
+128. MagicBook X 16 (2023)
+   ID: NB038
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB038-portada.jpg    (Imagen principal)
+      ├─ producto-NB038-1.jpg
+      ├─ producto-NB038-2.jpg
+      ├─ producto-NB038-3.jpg
+      ├─ producto-NB038-4.jpg
+      ├─ producto-NB038-5.jpg
+      └─ producto-NB038-6.jpg
+
+129. MagicBook X 16 Pro (2024)
+   ID: NB034
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB034-portada.jpg    (Imagen principal)
+      ├─ producto-NB034-1.jpg
+      ├─ producto-NB034-2.jpg
+      ├─ producto-NB034-3.jpg
+      ├─ producto-NB034-4.jpg
+      ├─ producto-NB034-5.jpg
+      └─ producto-NB034-6.jpg
+
+130. MateBook 14 (2024)
+   ID: NB026
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB026-portada.jpg    (Imagen principal)
+      ├─ producto-NB026-1.jpg
+      ├─ producto-NB026-2.jpg
+      ├─ producto-NB026-3.jpg
+      ├─ producto-NB026-4.jpg
+      ├─ producto-NB026-5.jpg
+      └─ producto-NB026-6.jpg
+
+131. MateBook 14s (2023)
+   ID: NB031
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB031-portada.jpg    (Imagen principal)
+      ├─ producto-NB031-1.jpg
+      ├─ producto-NB031-2.jpg
+      ├─ producto-NB031-3.jpg
+      ├─ producto-NB031-4.jpg
+      ├─ producto-NB031-5.jpg
+      └─ producto-NB031-6.jpg
+
+132. MateBook 16 (2023)
+   ID: NB030
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB030-portada.jpg    (Imagen principal)
+      ├─ producto-NB030-1.jpg
+      ├─ producto-NB030-2.jpg
+      ├─ producto-NB030-3.jpg
+      ├─ producto-NB030-4.jpg
+      ├─ producto-NB030-5.jpg
+      └─ producto-NB030-6.jpg
+
+133. MateBook 16s (2024)
+   ID: NB025
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB025-portada.jpg    (Imagen principal)
+      ├─ producto-NB025-1.jpg
+      ├─ producto-NB025-2.jpg
+      ├─ producto-NB025-3.jpg
+      ├─ producto-NB025-4.jpg
+      ├─ producto-NB025-5.jpg
+      └─ producto-NB025-6.jpg
+
+134. MateBook D 14 (2024)
+   ID: NB028
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB028-portada.jpg    (Imagen principal)
+      ├─ producto-NB028-1.jpg
+      ├─ producto-NB028-2.jpg
+      ├─ producto-NB028-3.jpg
+      ├─ producto-NB028-4.jpg
+      ├─ producto-NB028-5.jpg
+      └─ producto-NB028-6.jpg
+
+135. MateBook D 16 (2024)
+   ID: NB027
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB027-portada.jpg    (Imagen principal)
+      ├─ producto-NB027-1.jpg
+      ├─ producto-NB027-2.jpg
+      ├─ producto-NB027-3.jpg
+      ├─ producto-NB027-4.jpg
+      ├─ producto-NB027-5.jpg
+      └─ producto-NB027-6.jpg
+
+136. MateBook X Pro (2023)
+   ID: NB029
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB029-portada.jpg    (Imagen principal)
+      ├─ producto-NB029-1.jpg
+      ├─ producto-NB029-2.jpg
+      ├─ producto-NB029-3.jpg
+      ├─ producto-NB029-4.jpg
+      ├─ producto-NB029-5.jpg
+      └─ producto-NB029-6.jpg
+
+137. MateBook X Pro (2024)
+   ID: NB024
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB024-portada.jpg    (Imagen principal)
+      ├─ producto-NB024-1.jpg
+      ├─ producto-NB024-2.jpg
+      ├─ producto-NB024-3.jpg
+      ├─ producto-NB024-4.jpg
+      ├─ producto-NB024-5.jpg
+      └─ producto-NB024-6.jpg
+
+138. Redmi Book 14 (2023)
+   ID: NB023
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB023-portada.jpg    (Imagen principal)
+      ├─ producto-NB023-1.jpg
+      ├─ producto-NB023-2.jpg
+      ├─ producto-NB023-3.jpg
+      ├─ producto-NB023-4.jpg
+      ├─ producto-NB023-5.jpg
+      └─ producto-NB023-6.jpg
+
+139. Redmi Book 16 (2024)
+   ID: NB020
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB020-portada.jpg    (Imagen principal)
+      ├─ producto-NB020-1.jpg
+      ├─ producto-NB020-2.jpg
+      ├─ producto-NB020-3.jpg
+      ├─ producto-NB020-4.jpg
+      ├─ producto-NB020-5.jpg
+      └─ producto-NB020-6.jpg
+
+140. Redmi Book Pro 14 (2023)
+   ID: NB022
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB022-portada.jpg    (Imagen principal)
+      ├─ producto-NB022-1.jpg
+      ├─ producto-NB022-2.jpg
+      ├─ producto-NB022-3.jpg
+      ├─ producto-NB022-4.jpg
+      ├─ producto-NB022-5.jpg
+      └─ producto-NB022-6.jpg
+
+141. Redmi Book Pro 15 (2024)
+   ID: NB019
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB019-portada.jpg    (Imagen principal)
+      ├─ producto-NB019-1.jpg
+      ├─ producto-NB019-2.jpg
+      ├─ producto-NB019-3.jpg
+      ├─ producto-NB019-4.jpg
+      ├─ producto-NB019-5.jpg
+      └─ producto-NB019-6.jpg
+
+142. Xiaomi Book Air 13.3" (2023)
+   ID: NB021
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB021-portada.jpg    (Imagen principal)
+      ├─ producto-NB021-1.jpg
+      ├─ producto-NB021-2.jpg
+      ├─ producto-NB021-3.jpg
+      ├─ producto-NB021-4.jpg
+      ├─ producto-NB021-5.jpg
+      └─ producto-NB021-6.jpg
+
+143. Xiaomi Book Pro 14 (2024)
+   ID: NB017
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB017-portada.jpg    (Imagen principal)
+      ├─ producto-NB017-1.jpg
+      ├─ producto-NB017-2.jpg
+      ├─ producto-NB017-3.jpg
+      ├─ producto-NB017-4.jpg
+      ├─ producto-NB017-5.jpg
+      └─ producto-NB017-6.jpg
+
+144. Xiaomi Book Pro 16 (2024)
+   ID: NB016
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB016-portada.jpg    (Imagen principal)
+      ├─ producto-NB016-1.jpg
+      ├─ producto-NB016-2.jpg
+      ├─ producto-NB016-3.jpg
+      ├─ producto-NB016-4.jpg
+      ├─ producto-NB016-5.jpg
+      └─ producto-NB016-6.jpg
+
+145. Xiaomi Book S 12.4" (2024)
+   ID: NB018
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-NB018-portada.jpg    (Imagen principal)
+      ├─ producto-NB018-1.jpg
+      ├─ producto-NB018-2.jpg
+      ├─ producto-NB018-3.jpg
+      ├─ producto-NB018-4.jpg
+      ├─ producto-NB018-5.jpg
+      └─ producto-NB018-6.jpg
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+📂 RELOJES
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+146. Apple Watch SE 2
+   ID: REL006
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL006-portada.jpg    (Imagen principal)
+      ├─ producto-REL006-1.jpg
+      ├─ producto-REL006-2.jpg
+      ├─ producto-REL006-3.jpg
+      ├─ producto-REL006-4.jpg
+      ├─ producto-REL006-5.jpg
+      └─ producto-REL006-6.jpg
+
+147. Apple Watch Series 10
+   ID: REL003
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL003-portada.jpg    (Imagen principal)
+      ├─ producto-REL003-1.jpg
+      ├─ producto-REL003-2.jpg
+      ├─ producto-REL003-3.jpg
+      ├─ producto-REL003-4.jpg
+      ├─ producto-REL003-5.jpg
+      └─ producto-REL003-6.jpg
+
+148. Apple Watch Series 11
+   ID: REL001
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL001-portada.jpg    (Imagen principal)
+      ├─ producto-REL001-1.jpg
+      ├─ producto-REL001-2.jpg
+      ├─ producto-REL001-3.jpg
+      ├─ producto-REL001-4.jpg
+      ├─ producto-REL001-5.jpg
+      └─ producto-REL001-6.jpg
+
+149. Apple Watch Series 9
+   ID: REL005
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL005-portada.jpg    (Imagen principal)
+      ├─ producto-REL005-1.jpg
+      ├─ producto-REL005-2.jpg
+      ├─ producto-REL005-3.jpg
+      ├─ producto-REL005-4.jpg
+      ├─ producto-REL005-5.jpg
+      └─ producto-REL005-6.jpg
+
+150. Apple Watch Ultra 2
+   ID: REL004
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL004-portada.jpg    (Imagen principal)
+      ├─ producto-REL004-1.jpg
+      ├─ producto-REL004-2.jpg
+      ├─ producto-REL004-3.jpg
+      ├─ producto-REL004-4.jpg
+      ├─ producto-REL004-5.jpg
+      └─ producto-REL004-6.jpg
+
+151. Apple Watch Ultra 3
+   ID: REL002
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL002-portada.jpg    (Imagen principal)
+      ├─ producto-REL002-1.jpg
+      ├─ producto-REL002-2.jpg
+      ├─ producto-REL002-3.jpg
+      ├─ producto-REL002-4.jpg
+      ├─ producto-REL002-5.jpg
+      └─ producto-REL002-6.jpg
+
+152. Galaxy Watch 6
+   ID: REL011
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL011-portada.jpg    (Imagen principal)
+      ├─ producto-REL011-1.jpg
+      ├─ producto-REL011-2.jpg
+      ├─ producto-REL011-3.jpg
+      ├─ producto-REL011-4.jpg
+      ├─ producto-REL011-5.jpg
+      └─ producto-REL011-6.jpg
+
+153. Galaxy Watch 6 Classic
+   ID: REL012
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL012-portada.jpg    (Imagen principal)
+      ├─ producto-REL012-1.jpg
+      ├─ producto-REL012-2.jpg
+      ├─ producto-REL012-3.jpg
+      ├─ producto-REL012-4.jpg
+      ├─ producto-REL012-5.jpg
+      └─ producto-REL012-6.jpg
+
+154. Galaxy Watch 7
+   ID: REL010
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL010-portada.jpg    (Imagen principal)
+      ├─ producto-REL010-1.jpg
+      ├─ producto-REL010-2.jpg
+      ├─ producto-REL010-3.jpg
+      ├─ producto-REL010-4.jpg
+      ├─ producto-REL010-5.jpg
+      └─ producto-REL010-6.jpg
+
+155. Galaxy Watch 8
+   ID: REL008
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL008-portada.jpg    (Imagen principal)
+      ├─ producto-REL008-1.jpg
+      ├─ producto-REL008-2.jpg
+      ├─ producto-REL008-3.jpg
+      ├─ producto-REL008-4.jpg
+      ├─ producto-REL008-5.jpg
+      └─ producto-REL008-6.jpg
+
+156. Galaxy Watch 8 Classic
+   ID: REL009
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL009-portada.jpg    (Imagen principal)
+      ├─ producto-REL009-1.jpg
+      ├─ producto-REL009-2.jpg
+      ├─ producto-REL009-3.jpg
+      ├─ producto-REL009-4.jpg
+      ├─ producto-REL009-5.jpg
+      └─ producto-REL009-6.jpg
+
+157. Galaxy Watch FE
+   ID: REL013
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL013-portada.jpg    (Imagen principal)
+      ├─ producto-REL013-1.jpg
+      ├─ producto-REL013-2.jpg
+      ├─ producto-REL013-3.jpg
+      ├─ producto-REL013-4.jpg
+      ├─ producto-REL013-5.jpg
+      └─ producto-REL013-6.jpg
+
+158. Galaxy Watch Ultra 2025
+   ID: REL007
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL007-portada.jpg    (Imagen principal)
+      ├─ producto-REL007-1.jpg
+      ├─ producto-REL007-2.jpg
+      ├─ producto-REL007-3.jpg
+      ├─ producto-REL007-4.jpg
+      ├─ producto-REL007-5.jpg
+      └─ producto-REL007-6.jpg
+
+159. Honor Band 9
+   ID: REL037
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL037-portada.jpg    (Imagen principal)
+      ├─ producto-REL037-1.jpg
+      ├─ producto-REL037-2.jpg
+      ├─ producto-REL037-3.jpg
+      ├─ producto-REL037-4.jpg
+      ├─ producto-REL037-5.jpg
+      └─ producto-REL037-6.jpg
+
+160. Honor MagicWatch 2 42mm
+   ID: REL035
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL035-portada.jpg    (Imagen principal)
+      ├─ producto-REL035-1.jpg
+      ├─ producto-REL035-2.jpg
+      ├─ producto-REL035-3.jpg
+      ├─ producto-REL035-4.jpg
+      ├─ producto-REL035-5.jpg
+      └─ producto-REL035-6.jpg
+
+161. Honor MagicWatch 2 46mm
+   ID: REL034
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL034-portada.jpg    (Imagen principal)
+      ├─ producto-REL034-1.jpg
+      ├─ producto-REL034-2.jpg
+      ├─ producto-REL034-3.jpg
+      ├─ producto-REL034-4.jpg
+      ├─ producto-REL034-5.jpg
+      └─ producto-REL034-6.jpg
+
+162. Honor Watch 4
+   ID: REL032
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL032-portada.jpg    (Imagen principal)
+      ├─ producto-REL032-1.jpg
+      ├─ producto-REL032-2.jpg
+      ├─ producto-REL032-3.jpg
+      ├─ producto-REL032-4.jpg
+      ├─ producto-REL032-5.jpg
+      └─ producto-REL032-6.jpg
+
+163. Honor Watch 5
+   ID: REL030
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL030-portada.jpg    (Imagen principal)
+      ├─ producto-REL030-1.jpg
+      ├─ producto-REL030-2.jpg
+      ├─ producto-REL030-3.jpg
+      ├─ producto-REL030-4.jpg
+      ├─ producto-REL030-5.jpg
+      └─ producto-REL030-6.jpg
+
+164. Honor Watch GS 3
+   ID: REL033
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL033-portada.jpg    (Imagen principal)
+      ├─ producto-REL033-1.jpg
+      ├─ producto-REL033-2.jpg
+      ├─ producto-REL033-3.jpg
+      ├─ producto-REL033-4.jpg
+      ├─ producto-REL033-5.jpg
+      └─ producto-REL033-6.jpg
+
+165. Honor Watch GS 4
+   ID: REL031
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL031-portada.jpg    (Imagen principal)
+      ├─ producto-REL031-1.jpg
+      ├─ producto-REL031-2.jpg
+      ├─ producto-REL031-3.jpg
+      ├─ producto-REL031-4.jpg
+      ├─ producto-REL031-5.jpg
+      └─ producto-REL031-6.jpg
+
+166. Honor Watch Magic
+   ID: REL036
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL036-portada.jpg    (Imagen principal)
+      ├─ producto-REL036-1.jpg
+      ├─ producto-REL036-2.jpg
+      ├─ producto-REL036-3.jpg
+      ├─ producto-REL036-4.jpg
+      ├─ producto-REL036-5.jpg
+      └─ producto-REL036-6.jpg
+
+167. Huawei Watch 4
+   ID: REL025
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL025-portada.jpg    (Imagen principal)
+      ├─ producto-REL025-1.jpg
+      ├─ producto-REL025-2.jpg
+      ├─ producto-REL025-3.jpg
+      ├─ producto-REL025-4.jpg
+      ├─ producto-REL025-5.jpg
+      └─ producto-REL025-6.jpg
+
+168. Huawei Watch 4 Pro
+   ID: REL024
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL024-portada.jpg    (Imagen principal)
+      ├─ producto-REL024-1.jpg
+      ├─ producto-REL024-2.jpg
+      ├─ producto-REL024-3.jpg
+      ├─ producto-REL024-4.jpg
+      ├─ producto-REL024-5.jpg
+      └─ producto-REL024-6.jpg
+
+169. Huawei Watch 5
+   ID: REL021
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL021-portada.jpg    (Imagen principal)
+      ├─ producto-REL021-1.jpg
+      ├─ producto-REL021-2.jpg
+      ├─ producto-REL021-3.jpg
+      ├─ producto-REL021-4.jpg
+      ├─ producto-REL021-5.jpg
+      └─ producto-REL021-6.jpg
+
+170. Huawei Watch D2
+   ID: REL029
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL029-portada.jpg    (Imagen principal)
+      ├─ producto-REL029-1.jpg
+      ├─ producto-REL029-2.jpg
+      ├─ producto-REL029-3.jpg
+      ├─ producto-REL029-4.jpg
+      ├─ producto-REL029-5.jpg
+      └─ producto-REL029-6.jpg
+
+171. Huawei Watch Fit 3
+   ID: REL028
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL028-portada.jpg    (Imagen principal)
+      ├─ producto-REL028-1.jpg
+      ├─ producto-REL028-2.jpg
+      ├─ producto-REL028-3.jpg
+      ├─ producto-REL028-4.jpg
+      ├─ producto-REL028-5.jpg
+      └─ producto-REL028-6.jpg
+
+172. Huawei Watch GT 4
+   ID: REL026
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL026-portada.jpg    (Imagen principal)
+      ├─ producto-REL026-1.jpg
+      ├─ producto-REL026-2.jpg
+      ├─ producto-REL026-3.jpg
+      ├─ producto-REL026-4.jpg
+      ├─ producto-REL026-5.jpg
+      └─ producto-REL026-6.jpg
+
+173. Huawei Watch GT 5
+   ID: REL023
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL023-portada.jpg    (Imagen principal)
+      ├─ producto-REL023-1.jpg
+      ├─ producto-REL023-2.jpg
+      ├─ producto-REL023-3.jpg
+      ├─ producto-REL023-4.jpg
+      ├─ producto-REL023-5.jpg
+      └─ producto-REL023-6.jpg
+
+174. Huawei Watch GT 5 Pro
+   ID: REL022
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL022-portada.jpg    (Imagen principal)
+      ├─ producto-REL022-1.jpg
+      ├─ producto-REL022-2.jpg
+      ├─ producto-REL022-3.jpg
+      ├─ producto-REL022-4.jpg
+      ├─ producto-REL022-5.jpg
+      └─ producto-REL022-6.jpg
+
+175. Huawei Watch Ultimate
+   ID: REL027
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL027-portada.jpg    (Imagen principal)
+      ├─ producto-REL027-1.jpg
+      ├─ producto-REL027-2.jpg
+      ├─ producto-REL027-3.jpg
+      ├─ producto-REL027-4.jpg
+      ├─ producto-REL027-5.jpg
+      └─ producto-REL027-6.jpg
+
+176. Redmi Watch 4
+   ID: REL017
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL017-portada.jpg    (Imagen principal)
+      ├─ producto-REL017-1.jpg
+      ├─ producto-REL017-2.jpg
+      ├─ producto-REL017-3.jpg
+      ├─ producto-REL017-4.jpg
+      ├─ producto-REL017-5.jpg
+      └─ producto-REL017-6.jpg
+
+177. Redmi Watch 5
+   ID: REL018
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL018-portada.jpg    (Imagen principal)
+      ├─ producto-REL018-1.jpg
+      ├─ producto-REL018-2.jpg
+      ├─ producto-REL018-3.jpg
+      ├─ producto-REL018-4.jpg
+      ├─ producto-REL018-5.jpg
+      └─ producto-REL018-6.jpg
+
+178. Redmi Watch 5 Active
+   ID: REL019
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL019-portada.jpg    (Imagen principal)
+      ├─ producto-REL019-1.jpg
+      ├─ producto-REL019-2.jpg
+      ├─ producto-REL019-3.jpg
+      ├─ producto-REL019-4.jpg
+      ├─ producto-REL019-5.jpg
+      └─ producto-REL019-6.jpg
+
+179. Xiaomi Smart Band 8 Pro
+   ID: REL020
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL020-portada.jpg    (Imagen principal)
+      ├─ producto-REL020-1.jpg
+      ├─ producto-REL020-2.jpg
+      ├─ producto-REL020-3.jpg
+      ├─ producto-REL020-4.jpg
+      ├─ producto-REL020-5.jpg
+      └─ producto-REL020-6.jpg
+
+180. Xiaomi Watch 2
+   ID: REL015
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL015-portada.jpg    (Imagen principal)
+      ├─ producto-REL015-1.jpg
+      ├─ producto-REL015-2.jpg
+      ├─ producto-REL015-3.jpg
+      ├─ producto-REL015-4.jpg
+      ├─ producto-REL015-5.jpg
+      └─ producto-REL015-6.jpg
+
+181. Xiaomi Watch 2 Pro
+   ID: REL014
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL014-portada.jpg    (Imagen principal)
+      ├─ producto-REL014-1.jpg
+      ├─ producto-REL014-2.jpg
+      ├─ producto-REL014-3.jpg
+      ├─ producto-REL014-4.jpg
+      ├─ producto-REL014-5.jpg
+      └─ producto-REL014-6.jpg
+
+182. Xiaomi Watch S3
+   ID: REL016
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-REL016-portada.jpg    (Imagen principal)
+      ├─ producto-REL016-1.jpg
+      ├─ producto-REL016-2.jpg
+      ├─ producto-REL016-3.jpg
+      ├─ producto-REL016-4.jpg
+      ├─ producto-REL016-5.jpg
+      └─ producto-REL016-6.jpg
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+📂 TELEVISORES
+────────────────────────────────────────────────────────────────────────────────────────────────────
+
+183. Honor Smart Screen S1 55"
+   ID: TV044
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV044-portada.jpg    (Imagen principal)
+      ├─ producto-TV044-1.jpg
+      ├─ producto-TV044-2.jpg
+      ├─ producto-TV044-3.jpg
+      ├─ producto-TV044-4.jpg
+      ├─ producto-TV044-5.jpg
+      └─ producto-TV044-6.jpg
+
+184. Honor Smart Screen S1 Pro 65"
+   ID: TV043
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV043-portada.jpg    (Imagen principal)
+      ├─ producto-TV043-1.jpg
+      ├─ producto-TV043-2.jpg
+      ├─ producto-TV043-3.jpg
+      ├─ producto-TV043-4.jpg
+      ├─ producto-TV043-5.jpg
+      └─ producto-TV043-6.jpg
+
+185. Honor Smart Screen V8 Pro 85"
+   ID: TV042
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV042-portada.jpg    (Imagen principal)
+      ├─ producto-TV042-1.jpg
+      ├─ producto-TV042-2.jpg
+      ├─ producto-TV042-3.jpg
+      ├─ producto-TV042-4.jpg
+      ├─ producto-TV042-5.jpg
+      └─ producto-TV042-6.jpg
+
+186. Honor Smart Screen X3 55"
+   ID: TV040
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV040-portada.jpg    (Imagen principal)
+      ├─ producto-TV040-1.jpg
+      ├─ producto-TV040-2.jpg
+      ├─ producto-TV040-3.jpg
+      ├─ producto-TV040-4.jpg
+      ├─ producto-TV040-5.jpg
+      └─ producto-TV040-6.jpg
+
+187. Honor Smart Screen X5 65"
+   ID: TV039
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV039-portada.jpg    (Imagen principal)
+      ├─ producto-TV039-1.jpg
+      ├─ producto-TV039-2.jpg
+      ├─ producto-TV039-3.jpg
+      ├─ producto-TV039-4.jpg
+      ├─ producto-TV039-5.jpg
+      └─ producto-TV039-6.jpg
+
+188. Honor Smart Screen X5 75"
+   ID: TV038
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV038-portada.jpg    (Imagen principal)
+      ├─ producto-TV038-1.jpg
+      ├─ producto-TV038-2.jpg
+      ├─ producto-TV038-3.jpg
+      ├─ producto-TV038-4.jpg
+      ├─ producto-TV038-5.jpg
+      └─ producto-TV038-6.jpg
+
+189. Honor Vision 3 Pro 75"
+   ID: TV041
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV041-portada.jpg    (Imagen principal)
+      ├─ producto-TV041-1.jpg
+      ├─ producto-TV041-2.jpg
+      ├─ producto-TV041-3.jpg
+      ├─ producto-TV041-4.jpg
+      ├─ producto-TV041-5.jpg
+      └─ producto-TV041-6.jpg
+
+190. Honor Vision 5 65"
+   ID: TV037
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV037-portada.jpg    (Imagen principal)
+      ├─ producto-TV037-1.jpg
+      ├─ producto-TV037-2.jpg
+      ├─ producto-TV037-3.jpg
+      ├─ producto-TV037-4.jpg
+      ├─ producto-TV037-5.jpg
+      └─ producto-TV037-6.jpg
+
+191. Honor Vision 5 Pro 75"
+   ID: TV036
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV036-portada.jpg    (Imagen principal)
+      ├─ producto-TV036-1.jpg
+      ├─ producto-TV036-2.jpg
+      ├─ producto-TV036-3.jpg
+      ├─ producto-TV036-4.jpg
+      ├─ producto-TV036-5.jpg
+      └─ producto-TV036-6.jpg
+
+192. Honor Vision 5 Pro 85"
+   ID: TV035
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV035-portada.jpg    (Imagen principal)
+      ├─ producto-TV035-1.jpg
+      ├─ producto-TV035-2.jpg
+      ├─ producto-TV035-3.jpg
+      ├─ producto-TV035-4.jpg
+      ├─ producto-TV035-5.jpg
+      └─ producto-TV035-6.jpg
+
+193. Huawei Vision S3 65"
+   ID: TV034
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV034-portada.jpg    (Imagen principal)
+      ├─ producto-TV034-1.jpg
+      ├─ producto-TV034-2.jpg
+      ├─ producto-TV034-3.jpg
+      ├─ producto-TV034-4.jpg
+      ├─ producto-TV034-5.jpg
+      └─ producto-TV034-6.jpg
+
+194. Huawei Vision S3 Pro 75"
+   ID: TV033
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV033-portada.jpg    (Imagen principal)
+      ├─ producto-TV033-1.jpg
+      ├─ producto-TV033-2.jpg
+      ├─ producto-TV033-3.jpg
+      ├─ producto-TV033-4.jpg
+      ├─ producto-TV033-5.jpg
+      └─ producto-TV033-6.jpg
+
+195. Huawei Vision S5 75"
+   ID: TV029
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV029-portada.jpg    (Imagen principal)
+      ├─ producto-TV029-1.jpg
+      ├─ producto-TV029-2.jpg
+      ├─ producto-TV029-3.jpg
+      ├─ producto-TV029-4.jpg
+      ├─ producto-TV029-5.jpg
+      └─ producto-TV029-6.jpg
+
+196. Huawei Vision S5 Pro 85"
+   ID: TV028
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV028-portada.jpg    (Imagen principal)
+      ├─ producto-TV028-1.jpg
+      ├─ producto-TV028-2.jpg
+      ├─ producto-TV028-3.jpg
+      ├─ producto-TV028-4.jpg
+      ├─ producto-TV028-5.jpg
+      └─ producto-TV028-6.jpg
+
+197. Huawei Vision SE 65"
+   ID: TV031
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV031-portada.jpg    (Imagen principal)
+      ├─ producto-TV031-1.jpg
+      ├─ producto-TV031-2.jpg
+      ├─ producto-TV031-3.jpg
+      ├─ producto-TV031-4.jpg
+      ├─ producto-TV031-5.jpg
+      └─ producto-TV031-6.jpg
+
+198. Huawei Vision SE 75"
+   ID: TV030
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV030-portada.jpg    (Imagen principal)
+      ├─ producto-TV030-1.jpg
+      ├─ producto-TV030-2.jpg
+      ├─ producto-TV030-3.jpg
+      ├─ producto-TV030-4.jpg
+      ├─ producto-TV030-5.jpg
+      └─ producto-TV030-6.jpg
+
+199. Huawei Vision Smart Screen V3 Pro 85"
+   ID: TV032
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV032-portada.jpg    (Imagen principal)
+      ├─ producto-TV032-1.jpg
+      ├─ producto-TV032-2.jpg
+      ├─ producto-TV032-3.jpg
+      ├─ producto-TV032-4.jpg
+      ├─ producto-TV032-5.jpg
+      └─ producto-TV032-6.jpg
+
+200. Huawei Vision Smart Screen V5 75"
+   ID: TV027
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV027-portada.jpg    (Imagen principal)
+      ├─ producto-TV027-1.jpg
+      ├─ producto-TV027-2.jpg
+      ├─ producto-TV027-3.jpg
+      ├─ producto-TV027-4.jpg
+      ├─ producto-TV027-5.jpg
+      └─ producto-TV027-6.jpg
+
+201. Huawei Vision Smart Screen V5 Pro 85"
+   ID: TV026
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV026-portada.jpg    (Imagen principal)
+      ├─ producto-TV026-1.jpg
+      ├─ producto-TV026-2.jpg
+      ├─ producto-TV026-3.jpg
+      ├─ producto-TV026-4.jpg
+      ├─ producto-TV026-5.jpg
+      └─ producto-TV026-6.jpg
+
+202. Huawei Vision Smart Screen V5 Pro 98"
+   ID: TV025
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV025-portada.jpg    (Imagen principal)
+      ├─ producto-TV025-1.jpg
+      ├─ producto-TV025-2.jpg
+      ├─ producto-TV025-3.jpg
+      ├─ producto-TV025-4.jpg
+      ├─ producto-TV025-5.jpg
+      └─ producto-TV025-6.jpg
+
+203. Redmi Max 100"
+   ID: TV019
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV019-portada.jpg    (Imagen principal)
+      ├─ producto-TV019-1.jpg
+      ├─ producto-TV019-2.jpg
+      ├─ producto-TV019-3.jpg
+      ├─ producto-TV019-4.jpg
+      ├─ producto-TV019-5.jpg
+      └─ producto-TV019-6.jpg
+
+204. Redmi Smart TV X65 65"
+   ID: TV022
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV022-portada.jpg    (Imagen principal)
+      ├─ producto-TV022-1.jpg
+      ├─ producto-TV022-2.jpg
+      ├─ producto-TV022-3.jpg
+      ├─ producto-TV022-4.jpg
+      ├─ producto-TV022-5.jpg
+      └─ producto-TV022-6.jpg
+
+205. Redmi Smart TV X75 75"
+   ID: TV021
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV021-portada.jpg    (Imagen principal)
+      ├─ producto-TV021-1.jpg
+      ├─ producto-TV021-2.jpg
+      ├─ producto-TV021-3.jpg
+      ├─ producto-TV021-4.jpg
+      ├─ producto-TV021-5.jpg
+      └─ producto-TV021-6.jpg
+
+206. Redmi Smart TV X86 86"
+   ID: TV020
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV020-portada.jpg    (Imagen principal)
+      ├─ producto-TV020-1.jpg
+      ├─ producto-TV020-2.jpg
+      ├─ producto-TV020-3.jpg
+      ├─ producto-TV020-4.jpg
+      ├─ producto-TV020-5.jpg
+      └─ producto-TV020-6.jpg
+
+207. Samsung Crystal UHD CU7000 65"
+   ID: TV008
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV008-portada.jpg    (Imagen principal)
+      ├─ producto-TV008-1.jpg
+      ├─ producto-TV008-2.jpg
+      ├─ producto-TV008-3.jpg
+      ├─ producto-TV008-4.jpg
+      ├─ producto-TV008-5.jpg
+      └─ producto-TV008-6.jpg
+
+208. Samsung Crystal UHD CU8000 75"
+   ID: TV007
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV007-portada.jpg    (Imagen principal)
+      ├─ producto-TV007-1.jpg
+      ├─ producto-TV007-2.jpg
+      ├─ producto-TV007-3.jpg
+      ├─ producto-TV007-4.jpg
+      ├─ producto-TV007-5.jpg
+      └─ producto-TV007-6.jpg
+
+209. Samsung Neo QLED 4K QN90D 75"
+   ID: TV004
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV004-portada.jpg    (Imagen principal)
+      ├─ producto-TV004-1.jpg
+      ├─ producto-TV004-2.jpg
+      ├─ producto-TV004-3.jpg
+      ├─ producto-TV004-4.jpg
+      ├─ producto-TV004-5.jpg
+      └─ producto-TV004-6.jpg
+
+210. Samsung Neo QLED 4K QN95D 85"
+   ID: TV003
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV003-portada.jpg    (Imagen principal)
+      ├─ producto-TV003-1.jpg
+      ├─ producto-TV003-2.jpg
+      ├─ producto-TV003-3.jpg
+      ├─ producto-TV003-4.jpg
+      ├─ producto-TV003-5.jpg
+      └─ producto-TV003-6.jpg
+
+211. Samsung Neo QLED 8K QN900D 75"
+   ID: TV002
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV002-portada.jpg    (Imagen principal)
+      ├─ producto-TV002-1.jpg
+      ├─ producto-TV002-2.jpg
+      ├─ producto-TV002-3.jpg
+      ├─ producto-TV002-4.jpg
+      ├─ producto-TV002-5.jpg
+      └─ producto-TV002-6.jpg
+
+212. Samsung Neo QLED 8K QN900D 85"
+   ID: TV001
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV001-portada.jpg    (Imagen principal)
+      ├─ producto-TV001-1.jpg
+      ├─ producto-TV001-2.jpg
+      ├─ producto-TV001-3.jpg
+      ├─ producto-TV001-4.jpg
+      ├─ producto-TV001-5.jpg
+      └─ producto-TV001-6.jpg
+
+213. Samsung Neo QLED QN85C 55"
+   ID: TV011
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV011-portada.jpg    (Imagen principal)
+      ├─ producto-TV011-1.jpg
+      ├─ producto-TV011-2.jpg
+      ├─ producto-TV011-3.jpg
+      ├─ producto-TV011-4.jpg
+      ├─ producto-TV011-5.jpg
+      └─ producto-TV011-6.jpg
+
+214. Samsung OLED S90D 65"
+   ID: TV006
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV006-portada.jpg    (Imagen principal)
+      ├─ producto-TV006-1.jpg
+      ├─ producto-TV006-2.jpg
+      ├─ producto-TV006-3.jpg
+      ├─ producto-TV006-4.jpg
+      ├─ producto-TV006-5.jpg
+      └─ producto-TV006-6.jpg
+
+215. Samsung OLED S95D 77"
+   ID: TV005
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV005-portada.jpg    (Imagen principal)
+      ├─ producto-TV005-1.jpg
+      ├─ producto-TV005-2.jpg
+      ├─ producto-TV005-3.jpg
+      ├─ producto-TV005-4.jpg
+      ├─ producto-TV005-5.jpg
+      └─ producto-TV005-6.jpg
+
+216. Samsung QLED Q60C 65"
+   ID: TV010
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV010-portada.jpg    (Imagen principal)
+      ├─ producto-TV010-1.jpg
+      ├─ producto-TV010-2.jpg
+      ├─ producto-TV010-3.jpg
+      ├─ producto-TV010-4.jpg
+      ├─ producto-TV010-5.jpg
+      └─ producto-TV010-6.jpg
+
+217. Samsung QLED Q80C 75"
+   ID: TV009
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV009-portada.jpg    (Imagen principal)
+      ├─ producto-TV009-1.jpg
+      ├─ producto-TV009-2.jpg
+      ├─ producto-TV009-3.jpg
+      ├─ producto-TV009-4.jpg
+      ├─ producto-TV009-5.jpg
+      └─ producto-TV009-6.jpg
+
+218. Samsung The Frame 65" (2024)
+   ID: TV012
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV012-portada.jpg    (Imagen principal)
+      ├─ producto-TV012-1.jpg
+      ├─ producto-TV012-2.jpg
+      ├─ producto-TV012-3.jpg
+      ├─ producto-TV012-4.jpg
+      ├─ producto-TV012-5.jpg
+      └─ producto-TV012-6.jpg
+
+219. Xiaomi TV A Pro 65"
+   ID: TV018
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV018-portada.jpg    (Imagen principal)
+      ├─ producto-TV018-1.jpg
+      ├─ producto-TV018-2.jpg
+      ├─ producto-TV018-3.jpg
+      ├─ producto-TV018-4.jpg
+      ├─ producto-TV018-5.jpg
+      └─ producto-TV018-6.jpg
+
+220. Xiaomi TV A Pro 75"
+   ID: TV017
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV017-portada.jpg    (Imagen principal)
+      ├─ producto-TV017-1.jpg
+      ├─ producto-TV017-2.jpg
+      ├─ producto-TV017-3.jpg
+      ├─ producto-TV017-4.jpg
+      ├─ producto-TV017-5.jpg
+      └─ producto-TV017-6.jpg
+
+221. Xiaomi TV Max 100"
+   ID: TV013
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV013-portada.jpg    (Imagen principal)
+      ├─ producto-TV013-1.jpg
+      ├─ producto-TV013-2.jpg
+      ├─ producto-TV013-3.jpg
+      ├─ producto-TV013-4.jpg
+      ├─ producto-TV013-5.jpg
+      └─ producto-TV013-6.jpg
+
+222. Xiaomi TV Q1E 75"
+   ID: TV024
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV024-portada.jpg    (Imagen principal)
+      ├─ producto-TV024-1.jpg
+      ├─ producto-TV024-2.jpg
+      ├─ producto-TV024-3.jpg
+      ├─ producto-TV024-4.jpg
+      ├─ producto-TV024-5.jpg
+      └─ producto-TV024-6.jpg
+
+223. Xiaomi TV Q2 Pro 85"
+   ID: TV023
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV023-portada.jpg    (Imagen principal)
+      ├─ producto-TV023-1.jpg
+      ├─ producto-TV023-2.jpg
+      ├─ producto-TV023-3.jpg
+      ├─ producto-TV023-4.jpg
+      ├─ producto-TV023-5.jpg
+      └─ producto-TV023-6.jpg
+
+224. Xiaomi TV S Pro 65"
+   ID: TV016
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV016-portada.jpg    (Imagen principal)
+      ├─ producto-TV016-1.jpg
+      ├─ producto-TV016-2.jpg
+      ├─ producto-TV016-3.jpg
+      ├─ producto-TV016-4.jpg
+      ├─ producto-TV016-5.jpg
+      └─ producto-TV016-6.jpg
+
+225. Xiaomi TV S Pro 75"
+   ID: TV015
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV015-portada.jpg    (Imagen principal)
+      ├─ producto-TV015-1.jpg
+      ├─ producto-TV015-2.jpg
+      ├─ producto-TV015-3.jpg
+      ├─ producto-TV015-4.jpg
+      ├─ producto-TV015-5.jpg
+      └─ producto-TV015-6.jpg
+
+226. Xiaomi TV S Pro 85"
+   ID: TV014
+   📸 IMÁGENES A DESCARGAR (6 en total):
+      ├─ producto-TV014-portada.jpg    (Imagen principal)
+      ├─ producto-TV014-1.jpg
+      ├─ producto-TV014-2.jpg
+      ├─ producto-TV014-3.jpg
+      ├─ producto-TV014-4.jpg
+      ├─ producto-TV014-5.jpg
+      └─ producto-TV014-6.jpg
+

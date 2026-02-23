@@ -1,0 +1,138 @@
+[
+  {
+    "id": 1,
+    "nombre": "iPhone 15 Pro",
+    "categoria": "celulares",
+    "descripcion": "Último modelo de Apple, chip A17 Pro, pantalla Dynamic Island",
+    "precio": 900000,
+    "precioOriginal": 1500000,
+    "descuento": 30,
+    "stock": 13,
+    "emoji": "📱"
+  },
+  {
+    "id": 2,
+    "nombre": "Samsung Galaxy S24",
+    "categoria": "celulares",
+    "descripcion": "Pantalla AMOLED 6.2\", cámara 50MP, procesador Snapdragon",
+    "precio": 875000,
+    "precioOriginal": 1250000,
+    "descuento": 30,
+    "stock": 7,
+    "emoji": "📱"
+  },
+  {
+    "id": 3,
+    "nombre": "Xiaomi 14 Ultra",
+    "categoria": "celulares",
+    "descripcion": "Diseño premium, zoom híbrido 3.2x, batería 5000mAh",
+    "precio": 750000,
+    "precioOriginal": 1000000,
+    "descuento": 25,
+    "stock": 19,
+    "emoji": "📱"
+  },
+  {
+    "id": 4,
+    "nombre": "Google Pixel 8 Pro",
+    "categoria": "celulares",
+    "descripcion": "IA integrada, fotografía computacional, Tensor G3",
+    "precio": 925000,
+    "precioOriginal": 1450000,
+    "descuento": 36,
+    "stock": 10,
+    "emoji": "📱"
+  },
+  {
+    "id": 5,
+    "nombre": "55\" LG OLED 4K",
+    "categoria": "televisores",
+    "descripcion": "Panel OLED, procesador α7 Gen 6, 120Hz",
+    "precio": 1200000,
+    "stock": 8,
+    "emoji": "📺"
+  },
+  {
+    "id": 6,
+    "nombre": "65\" Samsung QLED",
+    "categoria": "televisores",
+    "descripcion": "Quantum Dot, 120Hz, gaming, AI upscaling",
+    "precio": 1500000,
+    "stock": 6,
+    "emoji": "📺"
+  },
+  {
+    "id": 7,
+    "nombre": "75\" Sony Bravia 4K",
+    "categoria": "televisores",
+    "descripcion": "Procesamiento 4K HDR, sonido Dolby Atmos",
+    "precio": 1800000,
+    "stock": 5,
+    "emoji": "📺"
+  },
+  {
+    "id": 8,
+    "nombre": "MacBook Pro 16\" M3",
+    "categoria": "computadores",
+    "descripcion": "16GB RAM, SSD 512GB, chip M3 Pro, 10-core",
+    "precio": 2200000,
+    "stock": 4,
+    "emoji": "💻"
+  },
+  {
+    "id": 9,
+    "nombre": "Dell XPS 15",
+    "categoria": "computadores",
+    "descripcion": "Intel Core i9, RTX 4060, 32GB RAM, display OLED",
+    "precio": 1950000,
+    "stock": 7,
+    "emoji": "💻"
+  },
+  {
+    "id": 10,
+    "nombre": "Lenovo ThinkPad X1",
+    "categoria": "computadores",
+    "descripcion": "Intel i7, 16GB RAM, SSD 512GB, ultra portátil",
+    "precio": 1450000,
+    "stock": 9,
+    "emoji": "💻"
+  },
+  {
+    "id": 11,
+    "nombre": "Sony WH-1000XM5",
+    "categoria": "audifonos",
+    "descripcion": "Cancelación de ruido activa premium, 30 horas batería",
+    "precio": 350000,
+    "stock": 25,
+    "emoji": "🎧"
+  },
+  {
+    "id": 12,
+    "nombre": "Apple AirPods Pro 2",
+    "categoria": "audifonos",
+    "descripcion": "Cancelación adaptativa, audio espacial, H2 chip",
+    "precio": 320000,
+    "stock": 20,
+    "emoji": "🎧"
+  },
+  {
+    "id": 13,
+    "nombre": "Sennheiser Momentum 4",
+    "categoria": "audifonos",
+    "descripcion": "Sonido de calidad estudio, hasta 60 horas batería",
+    "precio": 450000,
+    "stock": 15,
+    "emoji": "🎧"
+  },
+  {
+    "id": 14,
+    "nombre": "Iphone 17 pro max",
+    "categoria": "celulares",
+    "descripcion": "Producto de prueba",
+    "precio": 1000,
+    "precioOriginal": 2000,
+    "descuento": 50,
+    "stock": 10,
+    "emoji": "📦"
+  }
+]

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Producto - MAC LINE</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="estilos-carrito.css">
+    <style>
+        .producto-detalle-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: #6e6e73;
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .producto-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* GALERÍA CON CARRUSEL */
+        .galeria {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .imagen-principal-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            background: #f5f5f7;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .imagen-principal {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .imagen-principal img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 1rem;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #1d1d1f;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+
+        .carousel-nav:hover {
+            background: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .carousel-nav.prev {
+            left: 10px;
+        }
+
+        .carousel-nav.next {
+            right: 10px;
+        }
+
+        .thumbnails {
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            padding: 0.5rem 0;
+            scrollbar-width: thin;
+        }
+
+        .thumbnails::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .thumbnails::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+
+        .thumbnails::-webkit-scrollbar-thumb {
+            background: #c0c0c0;
+            border-radius: 3px;
+        }
+
+        .thumbnail {
+            min-width: 80px;
+            width: 80px;
+            height: 80px;
+            background: #f5f5f7;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0.5rem;
+        }
+
+        .thumbnail.active {
+            border-color: #0071e3;
+            box-shadow: 0 0 0 1px #0071e3;
+        }
+
+        .thumbnail:hover {
+            border-color: #0071e3;
+            transform: scale(1.05);
+        }
+
+        .thumbnail-emoji {
+            font-size: 2.5rem;
+        }
+
+        .image-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            z-index: 10;
+        }
+
+        /* DETALLES DEL PRODUCTO */
+        .producto-detalles {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .producto-titulo {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .producto-sku {
+            font-size: 0.875rem;
+            color: #86868b;
+        }
+
+        .producto-precio {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
+        .precio-original-detalle {
+            text-decoration: line-through;
+            color: #86868b;
+            margin-right: 1rem;
+        }
+
+        .descuento-badge {
+            background: #ff3b30;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .botones-accion {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn-agregar-carrito {
+            background: #0071e3;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-agregar-carrito:hover {
+            background: #0077ed;
+            transform: scale(1.02);
+        }
+
+        .producto-info {
+            margin-top: 0.5rem;
+        }
+
+        #productoDescripcion {
+            margin-bottom: 1.5rem;
+        }
+
+        .stock-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: #f0f9ff;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .stock-disponible {
+            color: #34c759;
+            font-weight: 600;
+        }
+
+        .beneficios-lista {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0 0 0;
+            border-top: 1px solid #d2d2d7;
+            padding-top: 1.5rem;
+        }
+
+        .beneficios-lista li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #6e6e73;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .beneficios-lista li:before {
+            content: "✓";
+            color: #34c759;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* RESPONSIVE PARA MÓVILES - COMPACTO COMO IMAGEN 1 */
+        @media (max-width: 768px) {
+            .producto-detalle-container {
+                padding: 0.5rem;
+                margin: 0 auto;
+            }
+
+            .producto-layout {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1rem;
+            }
+            
+            .imagen-principal-container {
+                max-height: 280px !important;
+            }
+
+            .imagen-principal {
+                font-size: 4.5rem !important;
+            }
+
+            .producto-titulo {
+                font-size: 1.5rem !important;
+            }
+
+            .thumbnails {
+                justify-content: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .thumbnail {
+                min-width: 60px !important;
+                width: 60px !important;
+                height: 60px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR STICKY -->
+    <div class="navbar-sticky">
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar productos...">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-item">Inicio</a></li>
+                <li><a href="index.html#productos" class="nav-item">Productos</a></li>
+                <li><a href="#" onclick="abrirCarrito(); return false;" class="cart-link">
+                    🛒 Carrito <span class="cart-count">0</span>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="producto-detalle-container">
+        <div class="breadcrumb">
+            <a href="index.html">Inicio</a> / 
+            <a href="index.html#productos">Productos</a> / 
+            <span id="breadcrumbProducto">Cargando...</span>
+        </div>
+
+        <div class="producto-layout">
+            <!-- GALERÍA CON CARRUSEL -->
+            <div class="galeria">
+                <div class="imagen-principal-container">
+                    <button class="carousel-nav prev" onclick="cambiarImagenProducto(-1)">‹</button>
+                    <button class="carousel-nav next" onclick="cambiarImagenProducto(1)">›</button>
+                    <div class="imagen-principal" id="imagenPrincipal">
+                        📱
+                    </div>
+                    <div class="image-counter">
+                        <span id="currentImageIndex">1</span> / <span id="totalImages">5</span>
+                    </div>
+                </div>
+
+                <!-- THUMBNAILS -->
+                <div class="thumbnails" id="thumbnailsContainer">
+                    <!-- Se llenarán dinámicamente -->
+                </div>
+            </div>
+
+            <!-- DETALLES -->
+            <div class="producto-detalles">
+                <div class="producto-categoria" id="productoCategoria" style="font-size: 0.875rem; color: #86868b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem;">CELULARES</div>
+                
+                <h1 class="producto-titulo" id="productoTitulo">Cargando...</h1>
+                <div class="producto-sku" id="productoSku"></div>
+                
+                <div class="producto-precio">
+                    <span class="precio-original-detalle" id="precioOriginalDetalle"></span>
+                    <span id="productoPrecio">$0</span>
+                    <span class="descuento-badge" id="descuentoBadge"></span>
+                </div>
+
+                <div class="stock-info" id="productoStock">
+                    <span class="stock-disponible">✓ En stock</span>
+                </div>
+
+                <!-- SELECTORES DE COLOR Y CAPACIDAD -->
+                <div id="selectoresVariantes"></div>
+
+                <!-- DESCRIPCIÓN -->
+                <div class="producto-info">
+                    <p id="productoDescripcion">Cargando descripción...</p>
+                </div>
+
+                <!-- BOTONES -->
+                <div class="botones-accion">
+                    <button class="btn-agregar-carrito" onclick="agregarAlCarritoDetalle()">
+                        🛒 Agregar al Carrito
+                    </button>
+                </div>
+
+                <!-- BENEFICIOS -->
+                <ul class="beneficios-lista">
+                    <li>Envío gratis a todo Chile</li>
+                    <li>Retiro en tienda disponible</li>
+                    <li>Garantía de 1 año</li>
+                    <li>Devolución gratis en 30 días</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CARRITO -->
+    <div id="carritoModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Carrito de Compras</h2>
+                <button class="close-btn" onclick="cerrarCarrito()">&times;</button>
+            </div>
+            <div id="carritoItems" class="carrito-items"></div>
+            <div class="carrito-total">
+                <h3>Total: $<span id="totalPrecio">0</span></h3>
+            </div>
+            <div class="carrito-acciones">
+                <button class="btn btn-secondary btn-full" onclick="cerrarCarrito()">Seguir Comprando</button>
+                <button class="btn btn-primary btn-full" id="btnPagar" onclick="procederPago()">Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PAGO -->
+    <div id="pagoModal" class="modal payment-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💳 Finalizar Compra</h2>
+                <button class="close-btn" onclick="cerrarPago()">&times;</button>
+            </div>
+            <form id="formularioPago" onsubmit="procesarPago(event)">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo *</label>
+                    <input type="text" id="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono *</label>
+                    <input type="tel" id="telefono" required>
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección de envío *</label>
+                    <textarea id="direccion" rows="3" required></textarea>
+                </div>
+                <div class="total-pago">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Subtotal:</span>
+                        <span>$<span id="subtotalPago">0</span></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Envío:</span>
+                        <span>Gratis</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; border-top: 2px solid #d0d8e0; padding-top: 0.5rem;">
+                        <span>Total:</span>
+                        <span>$<span id="totalPago">0</span></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Pagar con MercadoPago</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="producto-detalle.js"></script>
+    <script>
+        // Alias para mantener compatibilidad
+        function cambiarImagenProducto(direccion) {
+            cambiarImagen(direccion);
+        }
+        
+        function agregarAlCarritoDesdeDetalle() {
+            agregarAlCarritoDetalle();
+        }
+        
+        function abrirCarrito() {
+            document.getElementById('carritoModal').style.display = 'flex';
+        }
+        
+        function cerrarCarrito() {
+            document.getElementById('carritoModal').style.display = 'none';
+        }
+        
+        function cerrarPago() {
+            document.getElementById('pagoModal').style.display = 'none';
+        }
+        
+        function procederPago() {
+            document.getElementById('carritoModal').style.display = 'none';
+            document.getElementById('pagoModal').style.display = 'flex';
+        }
+        
+        function procesarPago(event) {
+            event.preventDefault();
+            alert('¡Gracias por tu compra!');
+            document.getElementById('pagoModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

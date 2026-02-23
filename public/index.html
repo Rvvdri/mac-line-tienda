@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mac Line - Tienda Tecnología Premium</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="estilos-carrito.css">
+</head>
+<body>
+    <!-- BOTÓN MENÚ HAMBURGUESA (MÓVIL) -->
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menú">☰</button>
+    
+    <!-- OVERLAY PARA CERRAR MENÚ -->
+    <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
+    
+    <!-- MENÚ LATERAL MÓVIL -->
+    <nav class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <h2>🖥️ MAC LINE</h2>
+            <button class="mobile-nav-close" onclick="closeMobileMenu()">&times;</button>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a href="#inicio" onclick="closeMobileMenu()">🏠 Inicio</a></li>
+            <li><a href="#productos" onclick="closeMobileMenu()">📦 Productos</a></li>
+            <li><a href="#" onclick="filtrarProductos('celulares'); closeMobileMenu();">📱 Celulares</a></li>
+            <li><a href="#" onclick="filtrarProductos('audifonos'); closeMobileMenu();">🎧 Audífonos</a></li>
+            <li><a href="#" onclick="filtrarProductos('relojes'); closeMobileMenu();">⌚ Relojes</a></li>
+            <li><a href="#" onclick="filtrarProductos('notebooks'); closeMobileMenu();">💻 Computadores</a></li>
+            <li><a href="#" onclick="filtrarProductos('televisores'); closeMobileMenu();">📺 TVs</a></li>
+            <li><a href="#" onclick="abrirCarrito(); closeMobileMenu();">🛒 Carrito</a></li>
+        </ul>
+    </nav>
+
+    <!-- NAVBAR FIJA EN TOP -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>🖥️ MAC LINE</h1>
+                <p class="tagline">Tecnología Premium</p>
+            </div>
+        </div>
+    </nav>
+
+    <!-- NAVBAR STICKY CON BÚSQUEDA Y LINKS -->
+    <nav class="navbar-sticky">
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar productos..." onkeyup="buscarProductos()">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio" class="nav-item">Inicio</a></li>
+                <li><a href="#productos" class="nav-item">Productos</a></li>
+                <li><a href="javascript:abrirCarrito()" class="cart-link">
+                    🛒 Carrito <span class="cart-count">0</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="inicio" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2>Tecnología Premium al Alcance</h2>
+            <p>Descubre nuestros productos de última generación con los mejores precios</p>
+        </div>
+    </section>
+
+    <!-- CARRUSEL PROMOCIONES -->
+    <section class="promo-carousel">
+        <button class="carousel-btn prev" onclick="cambiarSlide(-1)">❮</button>
+        
+        <div class="carousel-container">
+            <div class="carousel-slide active" data-index="0">
+                <div class="promo-content">
+                    <span class="promo-emoji">📱</span>
+                    <h3>¡CELULARES EN OFERTA!</h3>
+                    <p>Hasta 30% de descuento en smartphones premium</p>
+                </div>
+            </div>
+            
+            <div class="carousel-slide" data-index="1">
+                <div class="promo-content">
+                    <span class="promo-emoji">🎧</span>
+                    <h3>¡AUDÍFONOS PREMIUM!</h3>
+                    <p>La mejor calidad de audio desde $18.990</p>
+                </div>
+            </div>
+            
+            <div class="carousel-slide" data-index="2">
+                <div class="promo-content">
+                    <span class="promo-emoji">⌚</span>
+                    <h3>¡RELOJES INTELIGENTES!</h3>
+                    <p>Smartwatches desde $36.890 - Apple, Samsung, Xiaomi</p>
+                </div>
+            </div>
+            
+            <div class="carousel-slide" data-index="3">
+                <div class="promo-content">
+                    <span class="promo-emoji">💻</span>
+                    <h3>¡ENVÍO GRATIS!</h3>
+                    <p>En compras sobre $50.000 a todo Chile</p>
+                </div>
+            </div>
+        </div>
+        
+        <button class="carousel-btn next" onclick="cambiarSlide(1)">❯</button>
+        
+        <div class="carousel-dots">
+            <span class="dot active" onclick="irASlide(0)"></span>
+            <span class="dot" onclick="irASlide(1)"></span>
+            <span class="dot" onclick="irASlide(2)"></span>
+            <span class="dot" onclick="irASlide(3)"></span>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS -->
+    <section id="productos" class="productos-section">
+        <div class="container">
+            <h2 class="section-title">Nuestro Catálogo</h2>
+            
+            <!-- FILTROS -->
+            <div class="filtros">
+                <button class="filtro-btn active" onclick="filtrarProductos('todos')">Todos</button>
+                <button class="filtro-btn" onclick="filtrarProductos('celulares')">📱 Celulares</button>
+                <button class="filtro-btn" onclick="filtrarProductos('audifonos')">🎧 Audífonos</button>
+                <button class="filtro-btn" onclick="filtrarProductos('relojes')">⌚ Relojes</button>
+                <button class="filtro-btn" onclick="filtrarProductos('televisores')">📺 Televisores</button>
+                <button class="filtro-btn" onclick="filtrarProductos('notebooks')">💻 Computadores</button>
+            </div>
+
+            <!-- GRID DE PRODUCTOS -->
+            <div class="productos-grid" id="productosGrid">
+                <div class="loading">Cargando productos...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BADGES DE CONFIANZA COMPACTOS -->
+    <section class="trust-badges-compact">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="trust-badge-compact">
+                    <div class="trust-badge-icon-compact">🚚</div>
+                    <div class="trust-badge-text-compact">
+                        <h4>Envío Gratis</h4>
+                        <p>Sobre $50.000</p>
+                    </div>
+                </div>
+                
+                <div class="trust-badge-compact">
+                    <div class="trust-badge-icon-compact">🔒</div>
+                    <div class="trust-badge-text-compact">
+                        <h4>Pago Seguro</h4>
+                        <p>Mercado Pago</p>
+                    </div>
+                </div>
+                
+                <div class="trust-badge-compact">
+                    <div class="trust-badge-icon-compact">✅</div>
+                    <div class="trust-badge-text-compact">
+                        <h4>Garantía 1 Año</h4>
+                        <p>Todos los productos</p>
+                    </div>
+                </div>
+                
+                <div class="trust-badge-compact">
+                    <div class="trust-badge-icon-compact">↩️</div>
+                    <div class="trust-badge-text-compact">
+                        <h4>Devolución 30 Días</h4>
+                        <p>Sin preguntas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL CARRITO -->
+    <div id="carritoModal" class="modal" style="display:none">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Mi Carrito de Compras</h2>
+                <button class="close-btn" onclick="cerrarCarrito()">&times;</button>
+            </div>
+            <div id="carritoItems" class="carrito-items">
+                <p class="empty-cart">Tu carrito está vacío</p>
+            </div>
+            <div class="carrito-total">
+                <h3>Total: $<span id="totalPrecio">0</span></h3>
+            </div>
+            <div class="carrito-acciones">
+                <button class="btn btn-secondary" onclick="cerrarCarrito()">Continuar Comprando</button>
+                <button class="btn btn-primary" onclick="procederPago()" id="btnPagar" disabled>Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PAGO -->
+    <div id="pagoModal" class="modal" style="display:none">
+        <div class="modal-content payment-modal">
+            <div class="modal-header">
+                <h2>Finalizar Compra</h2>
+                <button class="close-btn" onclick="cerrarPago()">&times;</button>
+            </div>
+            <form id="formPago" onsubmit="procesarPago(event)">
+                <div class="form-group">
+                    <label for="nombre">Nombre Completo *</label>
+                    <input type="text" id="nombre" required placeholder="Juan Pérez">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono *</label>
+                    <input type="tel" id="telefono" required placeholder="+56912345678">
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección de Entrega *</label>
+                    <input type="text" id="direccion" required placeholder="Calle Principal 123, Santiago">
+                </div>
+                <div class="total-pago">
+                    <p>Subtotal: $<span id="subtotalPago">0</span></p>
+                    <p>Envío: $<span id="envioPago">5000</span></p>
+                    <h3>Total: $<span id="totalPago">0</span></h3>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Pagar con Mercado Pago</button>
+                <button type="button" class="btn btn-secondary btn-full" onclick="cerrarPago()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Mac Line - Tienda Oficial</p>
+            <p>📦 Envío a todo Chile | 💳 Mercado Pago | ✅ Garantía de Productos</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    
+    <!-- FUNCIONES DEL MENÚ MÓVIL -->
+    <script>
+    function toggleMobileMenu() {
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.querySelector('.mobile-overlay');
+        const btn = document.querySelector('.mobile-menu-btn');
+        
+        mobileNav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        btn.classList.toggle('active');
+        
+        if (mobileNav.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+
+    function closeMobileMenu() {
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.querySelector('.mobile-overlay');
+        const btn = document.querySelector('.mobile-menu-btn');
+        
+        mobileNav.classList.remove('active');
+        overlay.classList.remove('active');
+        btn.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Cerrar menú al presionar ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeMobileMenu();
+        }
+    });
+    </script>
+</body>
+</html>

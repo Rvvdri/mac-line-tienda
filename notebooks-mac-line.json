@@ -1,0 +1,285 @@
+{
+  "apple": [
+    {
+      "nombre": "MacBook Air 15\" M3 (2024)",
+      "marca": "Apple",
+      "año": 2024,
+      "precio_referencia_usd": 1299,
+      "caracteristicas": "Chip M3 8-core CPU/10-core GPU, 15.3\" Liquid Retina 2880x1864, 8GB RAM, 256GB SSD, 18h batería, MagSafe 3, 1.51kg"
+    },
+    {
+      "nombre": "MacBook Air 13\" M3 (2024)",
+      "marca": "Apple",
+      "año": 2024,
+      "precio_referencia_usd": 1099,
+      "caracteristicas": "Chip M3 8-core CPU/8-core GPU, 13.6\" Liquid Retina 2560x1664, 8GB RAM, 256GB SSD, 18h batería, MagSafe 3, 1.24kg"
+    },
+    {
+      "nombre": "MacBook Pro 14\" M4 (2024)",
+      "marca": "Apple",
+      "año": 2024,
+      "precio_referencia_usd": 1599,
+      "caracteristicas": "Chip M4 10-core CPU/10-core GPU, 14.2\" Liquid Retina XDR 3024x1964 120Hz, 16GB RAM, 512GB SSD, 22h batería, 1.55kg"
+    },
+    {
+      "nombre": "MacBook Pro 16\" M4 Pro (2024)",
+      "marca": "Apple",
+      "año": 2024,
+      "precio_referencia_usd": 2499,
+      "caracteristicas": "Chip M4 Pro 14-core CPU/20-core GPU, 16.2\" Liquid Retina XDR 3456x2234 120Hz, 24GB RAM, 512GB SSD, 24h batería, 2.15kg"
+    },
+    {
+      "nombre": "MacBook Pro 16\" M4 Max (2024)",
+      "marca": "Apple",
+      "año": 2024,
+      "precio_referencia_usd": 3499,
+      "caracteristicas": "Chip M4 Max 16-core CPU/40-core GPU, 16.2\" Liquid Retina XDR 120Hz, 48GB RAM, 1TB SSD, Thunderbolt 5, 24h batería, 2.15kg"
+    },
+    {
+      "nombre": "MacBook Air 15\" M2 (2023)",
+      "marca": "Apple",
+      "año": 2023,
+      "precio_referencia_usd": 1099,
+      "caracteristicas": "Chip M2 8-core CPU/10-core GPU, 15.3\" Liquid Retina, 8GB RAM, 256GB SSD, MagSafe 3, 18h batería, 1.51kg"
+    },
+    {
+      "nombre": "MacBook Pro 14\" M3 Pro (2023)",
+      "marca": "Apple",
+      "año": 2023,
+      "precio_referencia_usd": 1999,
+      "caracteristicas": "Chip M3 Pro 11-core CPU/14-core GPU, 14.2\" Liquid Retina XDR 120Hz, 18GB RAM, 512GB SSD, 22h batería, 1.61kg"
+    }
+  ],
+  "samsung": [
+    {
+      "nombre": "Galaxy Book4 Ultra (2024)",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 2399,
+      "caracteristicas": "Intel Core Ultra 9 185H, 16\" Dynamic AMOLED 2X 2880x1800 120Hz, NVIDIA RTX 4070 8GB, 32GB RAM, 1TB SSD, S Pen, 1.8kg"
+    },
+    {
+      "nombre": "Galaxy Book4 Pro 360 (2024)",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 1649,
+      "caracteristicas": "Intel Core Ultra 7 155H, 16\" AMOLED 2880x1800 120Hz táctil 360°, 16GB RAM, 512GB SSD, S Pen incluido, 1.66kg"
+    },
+    {
+      "nombre": "Galaxy Book4 Pro (2024)",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 1449,
+      "caracteristicas": "Intel Core Ultra 7 155H, 16\" AMOLED 2880x1800 120Hz, 16GB RAM, 512GB SSD, Intel Arc Graphics, 1.55kg"
+    },
+    {
+      "nombre": "Galaxy Book4 (2024)",
+      "marca": "Samsung",
+      "año": 2024,
+      "precio_referencia_usd": 799,
+      "caracteristicas": "Intel Core 7 150U, 15.6\" FHD 1920x1080, 16GB RAM, 512GB SSD, Intel Graphics, batería 54Wh, 1.55kg"
+    },
+    {
+      "nombre": "Galaxy Book3 Ultra (2023)",
+      "marca": "Samsung",
+      "año": 2023,
+      "precio_referencia_usd": 2199,
+      "caracteristicas": "Intel Core i9-13900H, 16\" AMOLED 2880x1800 120Hz, NVIDIA RTX 4050 6GB, 32GB RAM, 1TB SSD, 1.79kg"
+    },
+    {
+      "nombre": "Galaxy Book3 Pro 360 (2023)",
+      "marca": "Samsung",
+      "año": 2023,
+      "precio_referencia_usd": 1499,
+      "caracteristicas": "Intel Core i7-1360P, 16\" AMOLED 2880x1800 táctil 360°, 16GB RAM, 512GB SSD, S Pen, Intel Iris Xe, 1.66kg"
+    },
+    {
+      "nombre": "Galaxy Book3 Pro (2023)",
+      "marca": "Samsung",
+      "año": 2023,
+      "precio_referencia_usd": 1349,
+      "caracteristicas": "Intel Core i7-1360P, 16\" AMOLED 2880x1800, 16GB RAM, 512GB SSD, Intel Iris Xe Graphics, 1.56kg"
+    },
+    {
+      "nombre": "Galaxy Book2 Pro (2023)",
+      "marca": "Samsung",
+      "año": 2023,
+      "precio_referencia_usd": 1099,
+      "caracteristicas": "Intel Core i7-1260P, 15.6\" AMOLED FHD, 16GB RAM, 512GB SSD, Intel Iris Xe, Thunderbolt 4, 1.11kg"
+    }
+  ],
+  "xiaomi": [
+    {
+      "nombre": "Xiaomi Book Pro 16 (2024)",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 1299,
+      "caracteristicas": "Intel Core Ultra 7 155H, 16\" 3.2K 3200x2000 120Hz, NVIDIA RTX 4060 8GB, 32GB RAM, 1TB SSD, batería 84Wh, 1.98kg"
+    },
+    {
+      "nombre": "Xiaomi Book Pro 14 (2024)",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 999,
+      "caracteristicas": "Intel Core Ultra 7 155H, 14\" 2.8K 2880x1800 120Hz, Intel Arc Graphics, 16GB RAM, 1TB SSD, batería 72Wh, 1.49kg"
+    },
+    {
+      "nombre": "Xiaomi Book S 12.4\" (2024)",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 649,
+      "caracteristicas": "Snapdragon 8cx Gen 3, 12.4\" 2.5K táctil 2560x1600, 16GB RAM, 512GB SSD, Windows 11 ARM, 720g sin teclado"
+    },
+    {
+      "nombre": "Redmi Book Pro 15 (2024)",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 799,
+      "caracteristicas": "Intel Core i7-13700H, 15.6\" 3.2K 3200x2000 120Hz, NVIDIA RTX 3050 6GB, 16GB RAM, 512GB SSD, 1.88kg"
+    },
+    {
+      "nombre": "Redmi Book 16 (2024)",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "precio_referencia_usd": 649,
+      "caracteristicas": "Intel Core i5-13500H, 16\" FHD+ 1920x1200, Intel Iris Xe, 16GB RAM, 512GB SSD, batería 60Wh, 1.9kg"
+    },
+    {
+      "nombre": "Xiaomi Book Air 13.3\" (2023)",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "precio_referencia_usd": 749,
+      "caracteristicas": "Intel Core i5-1240P, 13.3\" 2.5K 2560x1600, Intel Iris Xe, 16GB RAM, 512GB SSD, ultra delgado 1.23kg"
+    },
+    {
+      "nombre": "Redmi Book Pro 14 (2023)",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "precio_referencia_usd": 699,
+      "caracteristicas": "Intel Core i7-12650H, 14\" 2.5K 2560x1600 120Hz, Intel Iris Xe, 16GB RAM, 512GB SSD, 1.45kg"
+    },
+    {
+      "nombre": "Redmi Book 14 (2023)",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "precio_referencia_usd": 549,
+      "caracteristicas": "Intel Core i5-12450H, 14\" FHD 1920x1080, Intel UHD Graphics, 16GB RAM, 512GB SSD, 1.46kg"
+    }
+  ],
+  "huawei": [
+    {
+      "nombre": "MateBook X Pro (2024)",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 1699,
+      "caracteristicas": "Intel Core Ultra 9 185H, 14.2\" OLED 3.1K 3120x2080 120Hz táctil, 32GB RAM, 1TB SSD, HarmonyOS 4, 980g"
+    },
+    {
+      "nombre": "MateBook 16s (2024)",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 1299,
+      "caracteristicas": "Intel Core Ultra 7 155H, 16\" 2.5K 2520x1680 120Hz táctil, 16GB RAM, 1TB SSD, Huawei Share, 1.99kg"
+    },
+    {
+      "nombre": "MateBook 14 (2024)",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 999,
+      "caracteristicas": "Intel Core Ultra 7 155H, 14.2\" 2.8K 2880x1920 120Hz táctil, 16GB RAM, 512GB SSD, Super Device, 1.31kg"
+    },
+    {
+      "nombre": "MateBook D 16 (2024)",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 749,
+      "caracteristicas": "Intel Core i7-13700H, 16\" FHD+ 1920x1200, Intel Iris Xe, 16GB RAM, 512GB SSD, batería 60Wh, 1.7kg"
+    },
+    {
+      "nombre": "MateBook D 14 (2024)",
+      "marca": "Huawei",
+      "año": 2024,
+      "precio_referencia_usd": 649,
+      "caracteristicas": "Intel Core i5-12450H, 14\" FHD 1920x1080, Intel UHD Graphics, 16GB RAM, 512GB SSD, 1.39kg"
+    },
+    {
+      "nombre": "MateBook X Pro (2023)",
+      "marca": "Huawei",
+      "año": 2023,
+      "precio_referencia_usd": 1599,
+      "caracteristicas": "Intel Core i7-1360P, 14.2\" OLED 3.1K 3120x2080 120Hz táctil, 16GB RAM, 1TB SSD, webcam 1080p, 1.26kg"
+    },
+    {
+      "nombre": "MateBook 16 (2023)",
+      "marca": "Huawei",
+      "año": 2023,
+      "precio_referencia_usd": 1099,
+      "caracteristicas": "Intel Core i9-12900H, 16\" 2.5K 2520x1680 táctil, 16GB RAM, 1TB SSD, NVIDIA MX550 2GB, 1.99kg"
+    },
+    {
+      "nombre": "MateBook 14s (2023)",
+      "marca": "Huawei",
+      "año": 2023,
+      "precio_referencia_usd": 949,
+      "caracteristicas": "Intel Core i7-12700H, 14.2\" 2.5K 2520x1680 90Hz táctil, 16GB RAM, 512GB SSD, Thunderbolt 4, 1.43kg"
+    }
+  ],
+  "honor": [
+    {
+      "nombre": "MagicBook Pro 16 (2024)",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 1099,
+      "caracteristicas": "Intel Core Ultra 7 155H, 16\" 3K 3072x1920 144Hz, NVIDIA RTX 4060 8GB, 32GB RAM, 1TB SSD, MagicOS 8, 1.9kg"
+    },
+    {
+      "nombre": "MagicBook 14 (2024)",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 849,
+      "caracteristicas": "Intel Core Ultra 7 155H, 14\" 2.8K 2880x1800 120Hz, Intel Arc Graphics, 16GB RAM, 1TB SSD, Magic Link, 1.54kg"
+    },
+    {
+      "nombre": "MagicBook X 16 Pro (2024)",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 749,
+      "caracteristicas": "Intel Core i7-13700H, 16\" FHD+ 1920x1200, NVIDIA MX570A 2GB, 16GB RAM, 512GB SSD, batería 60Wh, 1.79kg"
+    },
+    {
+      "nombre": "MagicBook X 14 (2024)",
+      "marca": "Honor",
+      "año": 2024,
+      "precio_referencia_usd": 649,
+      "caracteristicas": "Intel Core i5-13500H, 14\" FHD 1920x1080, Intel Iris Xe, 16GB RAM, 512GB SSD, carga rápida 65W, 1.38kg"
+    },
+    {
+      "nombre": "MagicBook Pro 16 (2023)",
+      "marca": "Honor",
+      "año": 2023,
+      "precio_referencia_usd": 999,
+      "caracteristicas": "Intel Core i7-13700H, 16\" 2.5K 2560x1600 144Hz, NVIDIA RTX 3050 6GB, 16GB RAM, 512GB SSD, 1.87kg"
+    },
+    {
+      "nombre": "MagicBook 14 (2023)",
+      "marca": "Honor",
+      "año": 2023,
+      "precio_referencia_usd": 749,
+      "caracteristicas": "Intel Core i7-13500H, 14\" 2.1K 2160x1440, Intel Iris Xe, 16GB RAM, 512GB SSD, webcam HD, 1.54kg"
+    },
+    {
+      "nombre": "MagicBook X 16 (2023)",
+      "marca": "Honor",
+      "año": 2023,
+      "precio_referencia_usd": 649,
+      "caracteristicas": "Intel Core i5-12450H, 16\" FHD 1920x1080, Intel UHD Graphics, 16GB RAM, 512GB SSD, 1.76kg"
+    },
+    {
+      "nombre": "MagicBook X 14 (2023)",
+      "marca": "Honor",
+      "año": 2023,
+      "precio_referencia_usd": 549,
+      "caracteristicas": "Intel Core i5-12450H, 14\" FHD 1920x1080, Intel UHD Graphics, 8GB RAM, 512GB SSD, 1.38kg"
+    }
+  ]
+}

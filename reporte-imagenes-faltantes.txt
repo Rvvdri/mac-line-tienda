@@ -1,0 +1,1492 @@
+══════════════════════════════════════════════════════════════════════════════════════════
+📋 REPORTE DE PRODUCTOS SIN IMÁGENES O INCOMPLETOS
+══════════════════════════════════════════════════════════════════════════════════════════
+
+❌ PRODUCTOS SIN IMÁGENES (134):
+
+1. Galaxy Buds 3
+   ID: AUD009
+   Archivos necesarios:
+   - producto-AUD009-portada.jpg
+   - producto-AUD009-1.jpg
+   - producto-AUD009-2.jpg
+   - producto-AUD009-3.jpg
+   - producto-AUD009-4.jpg
+   - producto-AUD009-5.jpg
+   - producto-AUD009-6.jpg
+
+2. Galaxy Buds FE
+   ID: AUD010
+   Archivos necesarios:
+   - producto-AUD010-portada.jpg
+   - producto-AUD010-1.jpg
+   - producto-AUD010-2.jpg
+   - producto-AUD010-3.jpg
+   - producto-AUD010-4.jpg
+   - producto-AUD010-5.jpg
+   - producto-AUD010-6.jpg
+
+3. Samsung Galaxy Buds 2 Pro
+   ID: AUD011
+   Archivos necesarios:
+   - producto-AUD011-portada.jpg
+   - producto-AUD011-1.jpg
+   - producto-AUD011-2.jpg
+   - producto-AUD011-3.jpg
+   - producto-AUD011-4.jpg
+   - producto-AUD011-5.jpg
+   - producto-AUD011-6.jpg
+
+4. Redmi Buds 5
+   ID: AUD021
+   Archivos necesarios:
+   - producto-AUD021-portada.jpg
+   - producto-AUD021-1.jpg
+   - producto-AUD021-2.jpg
+   - producto-AUD021-3.jpg
+   - producto-AUD021-4.jpg
+   - producto-AUD021-5.jpg
+   - producto-AUD021-6.jpg
+
+5. Redmi Buds 4 Pro
+   ID: AUD022
+   Archivos necesarios:
+   - producto-AUD022-portada.jpg
+   - producto-AUD022-1.jpg
+   - producto-AUD022-2.jpg
+   - producto-AUD022-3.jpg
+   - producto-AUD022-4.jpg
+   - producto-AUD022-5.jpg
+   - producto-AUD022-6.jpg
+
+6. Redmi Buds 4
+   ID: AUD023
+   Archivos necesarios:
+   - producto-AUD023-portada.jpg
+   - producto-AUD023-1.jpg
+   - producto-AUD023-2.jpg
+   - producto-AUD023-3.jpg
+   - producto-AUD023-4.jpg
+   - producto-AUD023-5.jpg
+   - producto-AUD023-6.jpg
+
+7. Redmi Buds 4 Active
+   ID: AUD024
+   Archivos necesarios:
+   - producto-AUD024-portada.jpg
+   - producto-AUD024-1.jpg
+   - producto-AUD024-2.jpg
+   - producto-AUD024-3.jpg
+   - producto-AUD024-4.jpg
+   - producto-AUD024-5.jpg
+   - producto-AUD024-6.jpg
+
+8. Xiaomi OpenWear Stereo
+   ID: AUD025
+   Archivos necesarios:
+   - producto-AUD025-portada.jpg
+   - producto-AUD025-1.jpg
+   - producto-AUD025-2.jpg
+   - producto-AUD025-3.jpg
+   - producto-AUD025-4.jpg
+   - producto-AUD025-5.jpg
+   - producto-AUD025-6.jpg
+
+9. FreeBuds Pro 4
+   ID: AUD026
+   Archivos necesarios:
+   - producto-AUD026-portada.jpg
+   - producto-AUD026-1.jpg
+   - producto-AUD026-2.jpg
+   - producto-AUD026-3.jpg
+   - producto-AUD026-4.jpg
+   - producto-AUD026-5.jpg
+   - producto-AUD026-6.jpg
+
+10. FreeBuds Pro 3
+   ID: AUD027
+   Archivos necesarios:
+   - producto-AUD027-portada.jpg
+   - producto-AUD027-1.jpg
+   - producto-AUD027-2.jpg
+   - producto-AUD027-3.jpg
+   - producto-AUD027-4.jpg
+   - producto-AUD027-5.jpg
+   - producto-AUD027-6.jpg
+
+11. FreeBuds Pro 2
+   ID: AUD028
+   Archivos necesarios:
+   - producto-AUD028-portada.jpg
+   - producto-AUD028-1.jpg
+   - producto-AUD028-2.jpg
+   - producto-AUD028-3.jpg
+   - producto-AUD028-4.jpg
+   - producto-AUD028-5.jpg
+   - producto-AUD028-6.jpg
+
+12. FreeBuds SE 3
+   ID: AUD030
+   Archivos necesarios:
+   - producto-AUD030-portada.jpg
+   - producto-AUD030-1.jpg
+   - producto-AUD030-2.jpg
+   - producto-AUD030-3.jpg
+   - producto-AUD030-4.jpg
+   - producto-AUD030-5.jpg
+   - producto-AUD030-6.jpg
+
+13. FreeClip
+   ID: AUD033
+   Archivos necesarios:
+   - producto-AUD033-portada.jpg
+   - producto-AUD033-1.jpg
+   - producto-AUD033-2.jpg
+   - producto-AUD033-3.jpg
+   - producto-AUD033-4.jpg
+   - producto-AUD033-5.jpg
+   - producto-AUD033-6.jpg
+
+14. Apple Watch Series 11
+   ID: REL001
+   Archivos necesarios:
+   - producto-REL001-portada.jpg
+   - producto-REL001-1.jpg
+   - producto-REL001-2.jpg
+   - producto-REL001-3.jpg
+   - producto-REL001-4.jpg
+   - producto-REL001-5.jpg
+   - producto-REL001-6.jpg
+
+15. Apple Watch Ultra 3
+   ID: REL002
+   Archivos necesarios:
+   - producto-REL002-portada.jpg
+   - producto-REL002-1.jpg
+   - producto-REL002-2.jpg
+   - producto-REL002-3.jpg
+   - producto-REL002-4.jpg
+   - producto-REL002-5.jpg
+   - producto-REL002-6.jpg
+
+16. Apple Watch Series 10
+   ID: REL003
+   Archivos necesarios:
+   - producto-REL003-portada.jpg
+   - producto-REL003-1.jpg
+   - producto-REL003-2.jpg
+   - producto-REL003-3.jpg
+   - producto-REL003-4.jpg
+   - producto-REL003-5.jpg
+   - producto-REL003-6.jpg
+
+17. Apple Watch Ultra 2
+   ID: REL004
+   Archivos necesarios:
+   - producto-REL004-portada.jpg
+   - producto-REL004-1.jpg
+   - producto-REL004-2.jpg
+   - producto-REL004-3.jpg
+   - producto-REL004-4.jpg
+   - producto-REL004-5.jpg
+   - producto-REL004-6.jpg
+
+18. Apple Watch Series 9
+   ID: REL005
+   Archivos necesarios:
+   - producto-REL005-portada.jpg
+   - producto-REL005-1.jpg
+   - producto-REL005-2.jpg
+   - producto-REL005-3.jpg
+   - producto-REL005-4.jpg
+   - producto-REL005-5.jpg
+   - producto-REL005-6.jpg
+
+19. Apple Watch SE 2
+   ID: REL006
+   Archivos necesarios:
+   - producto-REL006-portada.jpg
+   - producto-REL006-1.jpg
+   - producto-REL006-2.jpg
+   - producto-REL006-3.jpg
+   - producto-REL006-4.jpg
+   - producto-REL006-5.jpg
+   - producto-REL006-6.jpg
+
+20. Galaxy Watch Ultra 2025
+   ID: REL007
+   Archivos necesarios:
+   - producto-REL007-portada.jpg
+   - producto-REL007-1.jpg
+   - producto-REL007-2.jpg
+   - producto-REL007-3.jpg
+   - producto-REL007-4.jpg
+   - producto-REL007-5.jpg
+   - producto-REL007-6.jpg
+
+21. Galaxy Watch 8
+   ID: REL008
+   Archivos necesarios:
+   - producto-REL008-portada.jpg
+   - producto-REL008-1.jpg
+   - producto-REL008-2.jpg
+   - producto-REL008-3.jpg
+   - producto-REL008-4.jpg
+   - producto-REL008-5.jpg
+   - producto-REL008-6.jpg
+
+22. Galaxy Watch 8 Classic
+   ID: REL009
+   Archivos necesarios:
+   - producto-REL009-portada.jpg
+   - producto-REL009-1.jpg
+   - producto-REL009-2.jpg
+   - producto-REL009-3.jpg
+   - producto-REL009-4.jpg
+   - producto-REL009-5.jpg
+   - producto-REL009-6.jpg
+
+23. Galaxy Watch 7
+   ID: REL010
+   Archivos necesarios:
+   - producto-REL010-portada.jpg
+   - producto-REL010-1.jpg
+   - producto-REL010-2.jpg
+   - producto-REL010-3.jpg
+   - producto-REL010-4.jpg
+   - producto-REL010-5.jpg
+   - producto-REL010-6.jpg
+
+24. Galaxy Watch 6
+   ID: REL011
+   Archivos necesarios:
+   - producto-REL011-portada.jpg
+   - producto-REL011-1.jpg
+   - producto-REL011-2.jpg
+   - producto-REL011-3.jpg
+   - producto-REL011-4.jpg
+   - producto-REL011-5.jpg
+   - producto-REL011-6.jpg
+
+25. Galaxy Watch 6 Classic
+   ID: REL012
+   Archivos necesarios:
+   - producto-REL012-portada.jpg
+   - producto-REL012-1.jpg
+   - producto-REL012-2.jpg
+   - producto-REL012-3.jpg
+   - producto-REL012-4.jpg
+   - producto-REL012-5.jpg
+   - producto-REL012-6.jpg
+
+26. Galaxy Watch FE
+   ID: REL013
+   Archivos necesarios:
+   - producto-REL013-portada.jpg
+   - producto-REL013-1.jpg
+   - producto-REL013-2.jpg
+   - producto-REL013-3.jpg
+   - producto-REL013-4.jpg
+   - producto-REL013-5.jpg
+   - producto-REL013-6.jpg
+
+27. Xiaomi Watch 2 Pro
+   ID: REL014
+   Archivos necesarios:
+   - producto-REL014-portada.jpg
+   - producto-REL014-1.jpg
+   - producto-REL014-2.jpg
+   - producto-REL014-3.jpg
+   - producto-REL014-4.jpg
+   - producto-REL014-5.jpg
+   - producto-REL014-6.jpg
+
+28. Xiaomi Watch 2
+   ID: REL015
+   Archivos necesarios:
+   - producto-REL015-portada.jpg
+   - producto-REL015-1.jpg
+   - producto-REL015-2.jpg
+   - producto-REL015-3.jpg
+   - producto-REL015-4.jpg
+   - producto-REL015-5.jpg
+   - producto-REL015-6.jpg
+
+29. Xiaomi Watch S3
+   ID: REL016
+   Archivos necesarios:
+   - producto-REL016-portada.jpg
+   - producto-REL016-1.jpg
+   - producto-REL016-2.jpg
+   - producto-REL016-3.jpg
+   - producto-REL016-4.jpg
+   - producto-REL016-5.jpg
+   - producto-REL016-6.jpg
+
+30. Redmi Watch 4
+   ID: REL017
+   Archivos necesarios:
+   - producto-REL017-portada.jpg
+   - producto-REL017-1.jpg
+   - producto-REL017-2.jpg
+   - producto-REL017-3.jpg
+   - producto-REL017-4.jpg
+   - producto-REL017-5.jpg
+   - producto-REL017-6.jpg
+
+31. Redmi Watch 5
+   ID: REL018
+   Archivos necesarios:
+   - producto-REL018-portada.jpg
+   - producto-REL018-1.jpg
+   - producto-REL018-2.jpg
+   - producto-REL018-3.jpg
+   - producto-REL018-4.jpg
+   - producto-REL018-5.jpg
+   - producto-REL018-6.jpg
+
+32. Redmi Watch 5 Active
+   ID: REL019
+   Archivos necesarios:
+   - producto-REL019-portada.jpg
+   - producto-REL019-1.jpg
+   - producto-REL019-2.jpg
+   - producto-REL019-3.jpg
+   - producto-REL019-4.jpg
+   - producto-REL019-5.jpg
+   - producto-REL019-6.jpg
+
+33. Xiaomi Smart Band 8 Pro
+   ID: REL020
+   Archivos necesarios:
+   - producto-REL020-portada.jpg
+   - producto-REL020-1.jpg
+   - producto-REL020-2.jpg
+   - producto-REL020-3.jpg
+   - producto-REL020-4.jpg
+   - producto-REL020-5.jpg
+   - producto-REL020-6.jpg
+
+34. Huawei Watch 5
+   ID: REL021
+   Archivos necesarios:
+   - producto-REL021-portada.jpg
+   - producto-REL021-1.jpg
+   - producto-REL021-2.jpg
+   - producto-REL021-3.jpg
+   - producto-REL021-4.jpg
+   - producto-REL021-5.jpg
+   - producto-REL021-6.jpg
+
+35. Huawei Watch GT 5 Pro
+   ID: REL022
+   Archivos necesarios:
+   - producto-REL022-portada.jpg
+   - producto-REL022-1.jpg
+   - producto-REL022-2.jpg
+   - producto-REL022-3.jpg
+   - producto-REL022-4.jpg
+   - producto-REL022-5.jpg
+   - producto-REL022-6.jpg
+
+36. Huawei Watch GT 5
+   ID: REL023
+   Archivos necesarios:
+   - producto-REL023-portada.jpg
+   - producto-REL023-1.jpg
+   - producto-REL023-2.jpg
+   - producto-REL023-3.jpg
+   - producto-REL023-4.jpg
+   - producto-REL023-5.jpg
+   - producto-REL023-6.jpg
+
+37. Huawei Watch 4 Pro
+   ID: REL024
+   Archivos necesarios:
+   - producto-REL024-portada.jpg
+   - producto-REL024-1.jpg
+   - producto-REL024-2.jpg
+   - producto-REL024-3.jpg
+   - producto-REL024-4.jpg
+   - producto-REL024-5.jpg
+   - producto-REL024-6.jpg
+
+38. Huawei Watch 4
+   ID: REL025
+   Archivos necesarios:
+   - producto-REL025-portada.jpg
+   - producto-REL025-1.jpg
+   - producto-REL025-2.jpg
+   - producto-REL025-3.jpg
+   - producto-REL025-4.jpg
+   - producto-REL025-5.jpg
+   - producto-REL025-6.jpg
+
+39. Huawei Watch GT 4
+   ID: REL026
+   Archivos necesarios:
+   - producto-REL026-portada.jpg
+   - producto-REL026-1.jpg
+   - producto-REL026-2.jpg
+   - producto-REL026-3.jpg
+   - producto-REL026-4.jpg
+   - producto-REL026-5.jpg
+   - producto-REL026-6.jpg
+
+40. Huawei Watch Ultimate
+   ID: REL027
+   Archivos necesarios:
+   - producto-REL027-portada.jpg
+   - producto-REL027-1.jpg
+   - producto-REL027-2.jpg
+   - producto-REL027-3.jpg
+   - producto-REL027-4.jpg
+   - producto-REL027-5.jpg
+   - producto-REL027-6.jpg
+
+41. Huawei Watch Fit 3
+   ID: REL028
+   Archivos necesarios:
+   - producto-REL028-portada.jpg
+   - producto-REL028-1.jpg
+   - producto-REL028-2.jpg
+   - producto-REL028-3.jpg
+   - producto-REL028-4.jpg
+   - producto-REL028-5.jpg
+   - producto-REL028-6.jpg
+
+42. Huawei Watch D2
+   ID: REL029
+   Archivos necesarios:
+   - producto-REL029-portada.jpg
+   - producto-REL029-1.jpg
+   - producto-REL029-2.jpg
+   - producto-REL029-3.jpg
+   - producto-REL029-4.jpg
+   - producto-REL029-5.jpg
+   - producto-REL029-6.jpg
+
+43. Honor Watch 5
+   ID: REL030
+   Archivos necesarios:
+   - producto-REL030-portada.jpg
+   - producto-REL030-1.jpg
+   - producto-REL030-2.jpg
+   - producto-REL030-3.jpg
+   - producto-REL030-4.jpg
+   - producto-REL030-5.jpg
+   - producto-REL030-6.jpg
+
+44. Honor Watch GS 4
+   ID: REL031
+   Archivos necesarios:
+   - producto-REL031-portada.jpg
+   - producto-REL031-1.jpg
+   - producto-REL031-2.jpg
+   - producto-REL031-3.jpg
+   - producto-REL031-4.jpg
+   - producto-REL031-5.jpg
+   - producto-REL031-6.jpg
+
+45. Honor Watch 4
+   ID: REL032
+   Archivos necesarios:
+   - producto-REL032-portada.jpg
+   - producto-REL032-1.jpg
+   - producto-REL032-2.jpg
+   - producto-REL032-3.jpg
+   - producto-REL032-4.jpg
+   - producto-REL032-5.jpg
+   - producto-REL032-6.jpg
+
+46. Honor Watch GS 3
+   ID: REL033
+   Archivos necesarios:
+   - producto-REL033-portada.jpg
+   - producto-REL033-1.jpg
+   - producto-REL033-2.jpg
+   - producto-REL033-3.jpg
+   - producto-REL033-4.jpg
+   - producto-REL033-5.jpg
+   - producto-REL033-6.jpg
+
+47. Honor MagicWatch 2 46mm
+   ID: REL034
+   Archivos necesarios:
+   - producto-REL034-portada.jpg
+   - producto-REL034-1.jpg
+   - producto-REL034-2.jpg
+   - producto-REL034-3.jpg
+   - producto-REL034-4.jpg
+   - producto-REL034-5.jpg
+   - producto-REL034-6.jpg
+
+48. Honor MagicWatch 2 42mm
+   ID: REL035
+   Archivos necesarios:
+   - producto-REL035-portada.jpg
+   - producto-REL035-1.jpg
+   - producto-REL035-2.jpg
+   - producto-REL035-3.jpg
+   - producto-REL035-4.jpg
+   - producto-REL035-5.jpg
+   - producto-REL035-6.jpg
+
+49. Honor Watch Magic
+   ID: REL036
+   Archivos necesarios:
+   - producto-REL036-portada.jpg
+   - producto-REL036-1.jpg
+   - producto-REL036-2.jpg
+   - producto-REL036-3.jpg
+   - producto-REL036-4.jpg
+   - producto-REL036-5.jpg
+   - producto-REL036-6.jpg
+
+50. Honor Band 9
+   ID: REL037
+   Archivos necesarios:
+   - producto-REL037-portada.jpg
+   - producto-REL037-1.jpg
+   - producto-REL037-2.jpg
+   - producto-REL037-3.jpg
+   - producto-REL037-4.jpg
+   - producto-REL037-5.jpg
+   - producto-REL037-6.jpg
+
+51. MacBook Air 15" M3 (2024)
+   ID: NB001
+   Archivos necesarios:
+   - producto-NB001-portada.jpg
+   - producto-NB001-1.jpg
+   - producto-NB001-2.jpg
+   - producto-NB001-3.jpg
+   - producto-NB001-4.jpg
+   - producto-NB001-5.jpg
+   - producto-NB001-6.jpg
+
+52. MacBook Air 13" M3 (2024)
+   ID: NB002
+   Archivos necesarios:
+   - producto-NB002-portada.jpg
+   - producto-NB002-1.jpg
+   - producto-NB002-2.jpg
+   - producto-NB002-3.jpg
+   - producto-NB002-4.jpg
+   - producto-NB002-5.jpg
+   - producto-NB002-6.jpg
+
+53. MacBook Pro 14" M4 (2024)
+   ID: NB003
+   Archivos necesarios:
+   - producto-NB003-portada.jpg
+   - producto-NB003-1.jpg
+   - producto-NB003-2.jpg
+   - producto-NB003-3.jpg
+   - producto-NB003-4.jpg
+   - producto-NB003-5.jpg
+   - producto-NB003-6.jpg
+
+54. MacBook Pro 16" M4 Pro (2024)
+   ID: NB004
+   Archivos necesarios:
+   - producto-NB004-portada.jpg
+   - producto-NB004-1.jpg
+   - producto-NB004-2.jpg
+   - producto-NB004-3.jpg
+   - producto-NB004-4.jpg
+   - producto-NB004-5.jpg
+   - producto-NB004-6.jpg
+
+55. MacBook Pro 16" M4 Max (2024)
+   ID: NB005
+   Archivos necesarios:
+   - producto-NB005-portada.jpg
+   - producto-NB005-1.jpg
+   - producto-NB005-2.jpg
+   - producto-NB005-3.jpg
+   - producto-NB005-4.jpg
+   - producto-NB005-5.jpg
+   - producto-NB005-6.jpg
+
+56. MacBook Air 15" M2 (2023)
+   ID: NB006
+   Archivos necesarios:
+   - producto-NB006-portada.jpg
+   - producto-NB006-1.jpg
+   - producto-NB006-2.jpg
+   - producto-NB006-3.jpg
+   - producto-NB006-4.jpg
+   - producto-NB006-5.jpg
+   - producto-NB006-6.jpg
+
+57. MacBook Pro 14" M3 Pro (2023)
+   ID: NB007
+   Archivos necesarios:
+   - producto-NB007-portada.jpg
+   - producto-NB007-1.jpg
+   - producto-NB007-2.jpg
+   - producto-NB007-3.jpg
+   - producto-NB007-4.jpg
+   - producto-NB007-5.jpg
+   - producto-NB007-6.jpg
+
+58. Galaxy Book4 Ultra (2024)
+   ID: NB008
+   Archivos necesarios:
+   - producto-NB008-portada.jpg
+   - producto-NB008-1.jpg
+   - producto-NB008-2.jpg
+   - producto-NB008-3.jpg
+   - producto-NB008-4.jpg
+   - producto-NB008-5.jpg
+   - producto-NB008-6.jpg
+
+59. Galaxy Book4 Pro 360 (2024)
+   ID: NB009
+   Archivos necesarios:
+   - producto-NB009-portada.jpg
+   - producto-NB009-1.jpg
+   - producto-NB009-2.jpg
+   - producto-NB009-3.jpg
+   - producto-NB009-4.jpg
+   - producto-NB009-5.jpg
+   - producto-NB009-6.jpg
+
+60. Galaxy Book4 Pro (2024)
+   ID: NB010
+   Archivos necesarios:
+   - producto-NB010-portada.jpg
+   - producto-NB010-1.jpg
+   - producto-NB010-2.jpg
+   - producto-NB010-3.jpg
+   - producto-NB010-4.jpg
+   - producto-NB010-5.jpg
+   - producto-NB010-6.jpg
+
+61. Galaxy Book4 (2024)
+   ID: NB011
+   Archivos necesarios:
+   - producto-NB011-portada.jpg
+   - producto-NB011-1.jpg
+   - producto-NB011-2.jpg
+   - producto-NB011-3.jpg
+   - producto-NB011-4.jpg
+   - producto-NB011-5.jpg
+   - producto-NB011-6.jpg
+
+62. Galaxy Book3 Ultra (2023)
+   ID: NB012
+   Archivos necesarios:
+   - producto-NB012-portada.jpg
+   - producto-NB012-1.jpg
+   - producto-NB012-2.jpg
+   - producto-NB012-3.jpg
+   - producto-NB012-4.jpg
+   - producto-NB012-5.jpg
+   - producto-NB012-6.jpg
+
+63. Galaxy Book3 Pro 360 (2023)
+   ID: NB013
+   Archivos necesarios:
+   - producto-NB013-portada.jpg
+   - producto-NB013-1.jpg
+   - producto-NB013-2.jpg
+   - producto-NB013-3.jpg
+   - producto-NB013-4.jpg
+   - producto-NB013-5.jpg
+   - producto-NB013-6.jpg
+
+64. Galaxy Book3 Pro (2023)
+   ID: NB014
+   Archivos necesarios:
+   - producto-NB014-portada.jpg
+   - producto-NB014-1.jpg
+   - producto-NB014-2.jpg
+   - producto-NB014-3.jpg
+   - producto-NB014-4.jpg
+   - producto-NB014-5.jpg
+   - producto-NB014-6.jpg
+
+65. Galaxy Book2 Pro (2023)
+   ID: NB015
+   Archivos necesarios:
+   - producto-NB015-portada.jpg
+   - producto-NB015-1.jpg
+   - producto-NB015-2.jpg
+   - producto-NB015-3.jpg
+   - producto-NB015-4.jpg
+   - producto-NB015-5.jpg
+   - producto-NB015-6.jpg
+
+66. Xiaomi Book Pro 16 (2024)
+   ID: NB016
+   Archivos necesarios:
+   - producto-NB016-portada.jpg
+   - producto-NB016-1.jpg
+   - producto-NB016-2.jpg
+   - producto-NB016-3.jpg
+   - producto-NB016-4.jpg
+   - producto-NB016-5.jpg
+   - producto-NB016-6.jpg
+
+67. Xiaomi Book Pro 14 (2024)
+   ID: NB017
+   Archivos necesarios:
+   - producto-NB017-portada.jpg
+   - producto-NB017-1.jpg
+   - producto-NB017-2.jpg
+   - producto-NB017-3.jpg
+   - producto-NB017-4.jpg
+   - producto-NB017-5.jpg
+   - producto-NB017-6.jpg
+
+68. Xiaomi Book S 12.4" (2024)
+   ID: NB018
+   Archivos necesarios:
+   - producto-NB018-portada.jpg
+   - producto-NB018-1.jpg
+   - producto-NB018-2.jpg
+   - producto-NB018-3.jpg
+   - producto-NB018-4.jpg
+   - producto-NB018-5.jpg
+   - producto-NB018-6.jpg
+
+69. Redmi Book Pro 15 (2024)
+   ID: NB019
+   Archivos necesarios:
+   - producto-NB019-portada.jpg
+   - producto-NB019-1.jpg
+   - producto-NB019-2.jpg
+   - producto-NB019-3.jpg
+   - producto-NB019-4.jpg
+   - producto-NB019-5.jpg
+   - producto-NB019-6.jpg
+
+70. Redmi Book 16 (2024)
+   ID: NB020
+   Archivos necesarios:
+   - producto-NB020-portada.jpg
+   - producto-NB020-1.jpg
+   - producto-NB020-2.jpg
+   - producto-NB020-3.jpg
+   - producto-NB020-4.jpg
+   - producto-NB020-5.jpg
+   - producto-NB020-6.jpg
+
+71. Xiaomi Book Air 13.3" (2023)
+   ID: NB021
+   Archivos necesarios:
+   - producto-NB021-portada.jpg
+   - producto-NB021-1.jpg
+   - producto-NB021-2.jpg
+   - producto-NB021-3.jpg
+   - producto-NB021-4.jpg
+   - producto-NB021-5.jpg
+   - producto-NB021-6.jpg
+
+72. Redmi Book Pro 14 (2023)
+   ID: NB022
+   Archivos necesarios:
+   - producto-NB022-portada.jpg
+   - producto-NB022-1.jpg
+   - producto-NB022-2.jpg
+   - producto-NB022-3.jpg
+   - producto-NB022-4.jpg
+   - producto-NB022-5.jpg
+   - producto-NB022-6.jpg
+
+73. Redmi Book 14 (2023)
+   ID: NB023
+   Archivos necesarios:
+   - producto-NB023-portada.jpg
+   - producto-NB023-1.jpg
+   - producto-NB023-2.jpg
+   - producto-NB023-3.jpg
+   - producto-NB023-4.jpg
+   - producto-NB023-5.jpg
+   - producto-NB023-6.jpg
+
+74. MateBook X Pro (2024)
+   ID: NB024
+   Archivos necesarios:
+   - producto-NB024-portada.jpg
+   - producto-NB024-1.jpg
+   - producto-NB024-2.jpg
+   - producto-NB024-3.jpg
+   - producto-NB024-4.jpg
+   - producto-NB024-5.jpg
+   - producto-NB024-6.jpg
+
+75. MateBook 16s (2024)
+   ID: NB025
+   Archivos necesarios:
+   - producto-NB025-portada.jpg
+   - producto-NB025-1.jpg
+   - producto-NB025-2.jpg
+   - producto-NB025-3.jpg
+   - producto-NB025-4.jpg
+   - producto-NB025-5.jpg
+   - producto-NB025-6.jpg
+
+76. MateBook 14 (2024)
+   ID: NB026
+   Archivos necesarios:
+   - producto-NB026-portada.jpg
+   - producto-NB026-1.jpg
+   - producto-NB026-2.jpg
+   - producto-NB026-3.jpg
+   - producto-NB026-4.jpg
+   - producto-NB026-5.jpg
+   - producto-NB026-6.jpg
+
+77. MateBook D 16 (2024)
+   ID: NB027
+   Archivos necesarios:
+   - producto-NB027-portada.jpg
+   - producto-NB027-1.jpg
+   - producto-NB027-2.jpg
+   - producto-NB027-3.jpg
+   - producto-NB027-4.jpg
+   - producto-NB027-5.jpg
+   - producto-NB027-6.jpg
+
+78. MateBook D 14 (2024)
+   ID: NB028
+   Archivos necesarios:
+   - producto-NB028-portada.jpg
+   - producto-NB028-1.jpg
+   - producto-NB028-2.jpg
+   - producto-NB028-3.jpg
+   - producto-NB028-4.jpg
+   - producto-NB028-5.jpg
+   - producto-NB028-6.jpg
+
+79. MateBook X Pro (2023)
+   ID: NB029
+   Archivos necesarios:
+   - producto-NB029-portada.jpg
+   - producto-NB029-1.jpg
+   - producto-NB029-2.jpg
+   - producto-NB029-3.jpg
+   - producto-NB029-4.jpg
+   - producto-NB029-5.jpg
+   - producto-NB029-6.jpg
+
+80. MateBook 16 (2023)
+   ID: NB030
+   Archivos necesarios:
+   - producto-NB030-portada.jpg
+   - producto-NB030-1.jpg
+   - producto-NB030-2.jpg
+   - producto-NB030-3.jpg
+   - producto-NB030-4.jpg
+   - producto-NB030-5.jpg
+   - producto-NB030-6.jpg
+
+81. MateBook 14s (2023)
+   ID: NB031
+   Archivos necesarios:
+   - producto-NB031-portada.jpg
+   - producto-NB031-1.jpg
+   - producto-NB031-2.jpg
+   - producto-NB031-3.jpg
+   - producto-NB031-4.jpg
+   - producto-NB031-5.jpg
+   - producto-NB031-6.jpg
+
+82. MagicBook Pro 16 (2024)
+   ID: NB032
+   Archivos necesarios:
+   - producto-NB032-portada.jpg
+   - producto-NB032-1.jpg
+   - producto-NB032-2.jpg
+   - producto-NB032-3.jpg
+   - producto-NB032-4.jpg
+   - producto-NB032-5.jpg
+   - producto-NB032-6.jpg
+
+83. MagicBook 14 (2024)
+   ID: NB033
+   Archivos necesarios:
+   - producto-NB033-portada.jpg
+   - producto-NB033-1.jpg
+   - producto-NB033-2.jpg
+   - producto-NB033-3.jpg
+   - producto-NB033-4.jpg
+   - producto-NB033-5.jpg
+   - producto-NB033-6.jpg
+
+84. MagicBook X 16 Pro (2024)
+   ID: NB034
+   Archivos necesarios:
+   - producto-NB034-portada.jpg
+   - producto-NB034-1.jpg
+   - producto-NB034-2.jpg
+   - producto-NB034-3.jpg
+   - producto-NB034-4.jpg
+   - producto-NB034-5.jpg
+   - producto-NB034-6.jpg
+
+85. MagicBook X 14 (2024)
+   ID: NB035
+   Archivos necesarios:
+   - producto-NB035-portada.jpg
+   - producto-NB035-1.jpg
+   - producto-NB035-2.jpg
+   - producto-NB035-3.jpg
+   - producto-NB035-4.jpg
+   - producto-NB035-5.jpg
+   - producto-NB035-6.jpg
+
+86. MagicBook Pro 16 (2023)
+   ID: NB036
+   Archivos necesarios:
+   - producto-NB036-portada.jpg
+   - producto-NB036-1.jpg
+   - producto-NB036-2.jpg
+   - producto-NB036-3.jpg
+   - producto-NB036-4.jpg
+   - producto-NB036-5.jpg
+   - producto-NB036-6.jpg
+
+87. MagicBook 14 (2023)
+   ID: NB037
+   Archivos necesarios:
+   - producto-NB037-portada.jpg
+   - producto-NB037-1.jpg
+   - producto-NB037-2.jpg
+   - producto-NB037-3.jpg
+   - producto-NB037-4.jpg
+   - producto-NB037-5.jpg
+   - producto-NB037-6.jpg
+
+88. MagicBook X 16 (2023)
+   ID: NB038
+   Archivos necesarios:
+   - producto-NB038-portada.jpg
+   - producto-NB038-1.jpg
+   - producto-NB038-2.jpg
+   - producto-NB038-3.jpg
+   - producto-NB038-4.jpg
+   - producto-NB038-5.jpg
+   - producto-NB038-6.jpg
+
+89. MagicBook X 14 (2023)
+   ID: NB039
+   Archivos necesarios:
+   - producto-NB039-portada.jpg
+   - producto-NB039-1.jpg
+   - producto-NB039-2.jpg
+   - producto-NB039-3.jpg
+   - producto-NB039-4.jpg
+   - producto-NB039-5.jpg
+   - producto-NB039-6.jpg
+
+90. Samsung Neo QLED 8K QN900D 85"
+   ID: TV001
+   Archivos necesarios:
+   - producto-TV001-portada.jpg
+   - producto-TV001-1.jpg
+   - producto-TV001-2.jpg
+   - producto-TV001-3.jpg
+   - producto-TV001-4.jpg
+   - producto-TV001-5.jpg
+   - producto-TV001-6.jpg
+
+91. Samsung Neo QLED 8K QN900D 75"
+   ID: TV002
+   Archivos necesarios:
+   - producto-TV002-portada.jpg
+   - producto-TV002-1.jpg
+   - producto-TV002-2.jpg
+   - producto-TV002-3.jpg
+   - producto-TV002-4.jpg
+   - producto-TV002-5.jpg
+   - producto-TV002-6.jpg
+
+92. Samsung Neo QLED 4K QN95D 85"
+   ID: TV003
+   Archivos necesarios:
+   - producto-TV003-portada.jpg
+   - producto-TV003-1.jpg
+   - producto-TV003-2.jpg
+   - producto-TV003-3.jpg
+   - producto-TV003-4.jpg
+   - producto-TV003-5.jpg
+   - producto-TV003-6.jpg
+
+93. Samsung Neo QLED 4K QN90D 75"
+   ID: TV004
+   Archivos necesarios:
+   - producto-TV004-portada.jpg
+   - producto-TV004-1.jpg
+   - producto-TV004-2.jpg
+   - producto-TV004-3.jpg
+   - producto-TV004-4.jpg
+   - producto-TV004-5.jpg
+   - producto-TV004-6.jpg
+
+94. Samsung OLED S95D 77"
+   ID: TV005
+   Archivos necesarios:
+   - producto-TV005-portada.jpg
+   - producto-TV005-1.jpg
+   - producto-TV005-2.jpg
+   - producto-TV005-3.jpg
+   - producto-TV005-4.jpg
+   - producto-TV005-5.jpg
+   - producto-TV005-6.jpg
+
+95. Samsung OLED S90D 65"
+   ID: TV006
+   Archivos necesarios:
+   - producto-TV006-portada.jpg
+   - producto-TV006-1.jpg
+   - producto-TV006-2.jpg
+   - producto-TV006-3.jpg
+   - producto-TV006-4.jpg
+   - producto-TV006-5.jpg
+   - producto-TV006-6.jpg
+
+96. Samsung Crystal UHD CU8000 75"
+   ID: TV007
+   Archivos necesarios:
+   - producto-TV007-portada.jpg
+   - producto-TV007-1.jpg
+   - producto-TV007-2.jpg
+   - producto-TV007-3.jpg
+   - producto-TV007-4.jpg
+   - producto-TV007-5.jpg
+   - producto-TV007-6.jpg
+
+97. Samsung Crystal UHD CU7000 65"
+   ID: TV008
+   Archivos necesarios:
+   - producto-TV008-portada.jpg
+   - producto-TV008-1.jpg
+   - producto-TV008-2.jpg
+   - producto-TV008-3.jpg
+   - producto-TV008-4.jpg
+   - producto-TV008-5.jpg
+   - producto-TV008-6.jpg
+
+98. Samsung QLED Q80C 75"
+   ID: TV009
+   Archivos necesarios:
+   - producto-TV009-portada.jpg
+   - producto-TV009-1.jpg
+   - producto-TV009-2.jpg
+   - producto-TV009-3.jpg
+   - producto-TV009-4.jpg
+   - producto-TV009-5.jpg
+   - producto-TV009-6.jpg
+
+99. Samsung QLED Q60C 65"
+   ID: TV010
+   Archivos necesarios:
+   - producto-TV010-portada.jpg
+   - producto-TV010-1.jpg
+   - producto-TV010-2.jpg
+   - producto-TV010-3.jpg
+   - producto-TV010-4.jpg
+   - producto-TV010-5.jpg
+   - producto-TV010-6.jpg
+
+100. Samsung Neo QLED QN85C 55"
+   ID: TV011
+   Archivos necesarios:
+   - producto-TV011-portada.jpg
+   - producto-TV011-1.jpg
+   - producto-TV011-2.jpg
+   - producto-TV011-3.jpg
+   - producto-TV011-4.jpg
+   - producto-TV011-5.jpg
+   - producto-TV011-6.jpg
+
+101. Samsung The Frame 65" (2024)
+   ID: TV012
+   Archivos necesarios:
+   - producto-TV012-portada.jpg
+   - producto-TV012-1.jpg
+   - producto-TV012-2.jpg
+   - producto-TV012-3.jpg
+   - producto-TV012-4.jpg
+   - producto-TV012-5.jpg
+   - producto-TV012-6.jpg
+
+102. Xiaomi TV Max 100"
+   ID: TV013
+   Archivos necesarios:
+   - producto-TV013-portada.jpg
+   - producto-TV013-1.jpg
+   - producto-TV013-2.jpg
+   - producto-TV013-3.jpg
+   - producto-TV013-4.jpg
+   - producto-TV013-5.jpg
+   - producto-TV013-6.jpg
+
+103. Xiaomi TV S Pro 85"
+   ID: TV014
+   Archivos necesarios:
+   - producto-TV014-portada.jpg
+   - producto-TV014-1.jpg
+   - producto-TV014-2.jpg
+   - producto-TV014-3.jpg
+   - producto-TV014-4.jpg
+   - producto-TV014-5.jpg
+   - producto-TV014-6.jpg
+
+104. Xiaomi TV S Pro 75"
+   ID: TV015
+   Archivos necesarios:
+   - producto-TV015-portada.jpg
+   - producto-TV015-1.jpg
+   - producto-TV015-2.jpg
+   - producto-TV015-3.jpg
+   - producto-TV015-4.jpg
+   - producto-TV015-5.jpg
+   - producto-TV015-6.jpg
+
+105. Xiaomi TV S Pro 65"
+   ID: TV016
+   Archivos necesarios:
+   - producto-TV016-portada.jpg
+   - producto-TV016-1.jpg
+   - producto-TV016-2.jpg
+   - producto-TV016-3.jpg
+   - producto-TV016-4.jpg
+   - producto-TV016-5.jpg
+   - producto-TV016-6.jpg
+
+106. Xiaomi TV A Pro 75"
+   ID: TV017
+   Archivos necesarios:
+   - producto-TV017-portada.jpg
+   - producto-TV017-1.jpg
+   - producto-TV017-2.jpg
+   - producto-TV017-3.jpg
+   - producto-TV017-4.jpg
+   - producto-TV017-5.jpg
+   - producto-TV017-6.jpg
+
+107. Xiaomi TV A Pro 65"
+   ID: TV018
+   Archivos necesarios:
+   - producto-TV018-portada.jpg
+   - producto-TV018-1.jpg
+   - producto-TV018-2.jpg
+   - producto-TV018-3.jpg
+   - producto-TV018-4.jpg
+   - producto-TV018-5.jpg
+   - producto-TV018-6.jpg
+
+108. Redmi Max 100"
+   ID: TV019
+   Archivos necesarios:
+   - producto-TV019-portada.jpg
+   - producto-TV019-1.jpg
+   - producto-TV019-2.jpg
+   - producto-TV019-3.jpg
+   - producto-TV019-4.jpg
+   - producto-TV019-5.jpg
+   - producto-TV019-6.jpg
+
+109. Redmi Smart TV X86 86"
+   ID: TV020
+   Archivos necesarios:
+   - producto-TV020-portada.jpg
+   - producto-TV020-1.jpg
+   - producto-TV020-2.jpg
+   - producto-TV020-3.jpg
+   - producto-TV020-4.jpg
+   - producto-TV020-5.jpg
+   - producto-TV020-6.jpg
+
+110. Redmi Smart TV X75 75"
+   ID: TV021
+   Archivos necesarios:
+   - producto-TV021-portada.jpg
+   - producto-TV021-1.jpg
+   - producto-TV021-2.jpg
+   - producto-TV021-3.jpg
+   - producto-TV021-4.jpg
+   - producto-TV021-5.jpg
+   - producto-TV021-6.jpg
+
+111. Redmi Smart TV X65 65"
+   ID: TV022
+   Archivos necesarios:
+   - producto-TV022-portada.jpg
+   - producto-TV022-1.jpg
+   - producto-TV022-2.jpg
+   - producto-TV022-3.jpg
+   - producto-TV022-4.jpg
+   - producto-TV022-5.jpg
+   - producto-TV022-6.jpg
+
+112. Xiaomi TV Q2 Pro 85"
+   ID: TV023
+   Archivos necesarios:
+   - producto-TV023-portada.jpg
+   - producto-TV023-1.jpg
+   - producto-TV023-2.jpg
+   - producto-TV023-3.jpg
+   - producto-TV023-4.jpg
+   - producto-TV023-5.jpg
+   - producto-TV023-6.jpg
+
+113. Xiaomi TV Q1E 75"
+   ID: TV024
+   Archivos necesarios:
+   - producto-TV024-portada.jpg
+   - producto-TV024-1.jpg
+   - producto-TV024-2.jpg
+   - producto-TV024-3.jpg
+   - producto-TV024-4.jpg
+   - producto-TV024-5.jpg
+   - producto-TV024-6.jpg
+
+114. Huawei Vision Smart Screen V5 Pro 98"
+   ID: TV025
+   Archivos necesarios:
+   - producto-TV025-portada.jpg
+   - producto-TV025-1.jpg
+   - producto-TV025-2.jpg
+   - producto-TV025-3.jpg
+   - producto-TV025-4.jpg
+   - producto-TV025-5.jpg
+   - producto-TV025-6.jpg
+
+115. Huawei Vision Smart Screen V5 Pro 85"
+   ID: TV026
+   Archivos necesarios:
+   - producto-TV026-portada.jpg
+   - producto-TV026-1.jpg
+   - producto-TV026-2.jpg
+   - producto-TV026-3.jpg
+   - producto-TV026-4.jpg
+   - producto-TV026-5.jpg
+   - producto-TV026-6.jpg
+
+116. Huawei Vision Smart Screen V5 75"
+   ID: TV027
+   Archivos necesarios:
+   - producto-TV027-portada.jpg
+   - producto-TV027-1.jpg
+   - producto-TV027-2.jpg
+   - producto-TV027-3.jpg
+   - producto-TV027-4.jpg
+   - producto-TV027-5.jpg
+   - producto-TV027-6.jpg
+
+117. Huawei Vision S5 Pro 85"
+   ID: TV028
+   Archivos necesarios:
+   - producto-TV028-portada.jpg
+   - producto-TV028-1.jpg
+   - producto-TV028-2.jpg
+   - producto-TV028-3.jpg
+   - producto-TV028-4.jpg
+   - producto-TV028-5.jpg
+   - producto-TV028-6.jpg
+
+118. Huawei Vision S5 75"
+   ID: TV029
+   Archivos necesarios:
+   - producto-TV029-portada.jpg
+   - producto-TV029-1.jpg
+   - producto-TV029-2.jpg
+   - producto-TV029-3.jpg
+   - producto-TV029-4.jpg
+   - producto-TV029-5.jpg
+   - producto-TV029-6.jpg
+
+119. Huawei Vision SE 75"
+   ID: TV030
+   Archivos necesarios:
+   - producto-TV030-portada.jpg
+   - producto-TV030-1.jpg
+   - producto-TV030-2.jpg
+   - producto-TV030-3.jpg
+   - producto-TV030-4.jpg
+   - producto-TV030-5.jpg
+   - producto-TV030-6.jpg
+
+120. Huawei Vision SE 65"
+   ID: TV031
+   Archivos necesarios:
+   - producto-TV031-portada.jpg
+   - producto-TV031-1.jpg
+   - producto-TV031-2.jpg
+   - producto-TV031-3.jpg
+   - producto-TV031-4.jpg
+   - producto-TV031-5.jpg
+   - producto-TV031-6.jpg
+
+121. Huawei Vision Smart Screen V3 Pro 85"
+   ID: TV032
+   Archivos necesarios:
+   - producto-TV032-portada.jpg
+   - producto-TV032-1.jpg
+   - producto-TV032-2.jpg
+   - producto-TV032-3.jpg
+   - producto-TV032-4.jpg
+   - producto-TV032-5.jpg
+   - producto-TV032-6.jpg
+
+122. Huawei Vision S3 Pro 75"
+   ID: TV033
+   Archivos necesarios:
+   - producto-TV033-portada.jpg
+   - producto-TV033-1.jpg
+   - producto-TV033-2.jpg
+   - producto-TV033-3.jpg
+   - producto-TV033-4.jpg
+   - producto-TV033-5.jpg
+   - producto-TV033-6.jpg
+
+123. Huawei Vision S3 65"
+   ID: TV034
+   Archivos necesarios:
+   - producto-TV034-portada.jpg
+   - producto-TV034-1.jpg
+   - producto-TV034-2.jpg
+   - producto-TV034-3.jpg
+   - producto-TV034-4.jpg
+   - producto-TV034-5.jpg
+   - producto-TV034-6.jpg
+
+124. Honor Vision 5 Pro 85"
+   ID: TV035
+   Archivos necesarios:
+   - producto-TV035-portada.jpg
+   - producto-TV035-1.jpg
+   - producto-TV035-2.jpg
+   - producto-TV035-3.jpg
+   - producto-TV035-4.jpg
+   - producto-TV035-5.jpg
+   - producto-TV035-6.jpg
+
+125. Honor Vision 5 Pro 75"
+   ID: TV036
+   Archivos necesarios:
+   - producto-TV036-portada.jpg
+   - producto-TV036-1.jpg
+   - producto-TV036-2.jpg
+   - producto-TV036-3.jpg
+   - producto-TV036-4.jpg
+   - producto-TV036-5.jpg
+   - producto-TV036-6.jpg
+
+126. Honor Vision 5 65"
+   ID: TV037
+   Archivos necesarios:
+   - producto-TV037-portada.jpg
+   - producto-TV037-1.jpg
+   - producto-TV037-2.jpg
+   - producto-TV037-3.jpg
+   - producto-TV037-4.jpg
+   - producto-TV037-5.jpg
+   - producto-TV037-6.jpg
+
+127. Honor Smart Screen X5 75"
+   ID: TV038
+   Archivos necesarios:
+   - producto-TV038-portada.jpg
+   - producto-TV038-1.jpg
+   - producto-TV038-2.jpg
+   - producto-TV038-3.jpg
+   - producto-TV038-4.jpg
+   - producto-TV038-5.jpg
+   - producto-TV038-6.jpg
+
+128. Honor Smart Screen X5 65"
+   ID: TV039
+   Archivos necesarios:
+   - producto-TV039-portada.jpg
+   - producto-TV039-1.jpg
+   - producto-TV039-2.jpg
+   - producto-TV039-3.jpg
+   - producto-TV039-4.jpg
+   - producto-TV039-5.jpg
+   - producto-TV039-6.jpg
+
+129. Honor Smart Screen X3 55"
+   ID: TV040
+   Archivos necesarios:
+   - producto-TV040-portada.jpg
+   - producto-TV040-1.jpg
+   - producto-TV040-2.jpg
+   - producto-TV040-3.jpg
+   - producto-TV040-4.jpg
+   - producto-TV040-5.jpg
+   - producto-TV040-6.jpg
+
+130. Honor Vision 3 Pro 75"
+   ID: TV041
+   Archivos necesarios:
+   - producto-TV041-portada.jpg
+   - producto-TV041-1.jpg
+   - producto-TV041-2.jpg
+   - producto-TV041-3.jpg
+   - producto-TV041-4.jpg
+   - producto-TV041-5.jpg
+   - producto-TV041-6.jpg
+
+131. Honor Smart Screen V8 Pro 85"
+   ID: TV042
+   Archivos necesarios:
+   - producto-TV042-portada.jpg
+   - producto-TV042-1.jpg
+   - producto-TV042-2.jpg
+   - producto-TV042-3.jpg
+   - producto-TV042-4.jpg
+   - producto-TV042-5.jpg
+   - producto-TV042-6.jpg
+
+132. Honor Smart Screen S1 Pro 65"
+   ID: TV043
+   Archivos necesarios:
+   - producto-TV043-portada.jpg
+   - producto-TV043-1.jpg
+   - producto-TV043-2.jpg
+   - producto-TV043-3.jpg
+   - producto-TV043-4.jpg
+   - producto-TV043-5.jpg
+   - producto-TV043-6.jpg
+
+133. Honor Smart Screen S1 55"
+   ID: TV044
+   Archivos necesarios:
+   - producto-TV044-portada.jpg
+   - producto-TV044-1.jpg
+   - producto-TV044-2.jpg
+   - producto-TV044-3.jpg
+   - producto-TV044-4.jpg
+   - producto-TV044-5.jpg
+   - producto-TV044-6.jpg
+
+134. c
+   ID: 177163820652134f99of4w
+   Archivos necesarios:
+   - producto-177163820652134f99of4w-portada.jpg
+   - producto-177163820652134f99of4w-1.jpg
+   - producto-177163820652134f99of4w-2.jpg
+   - producto-177163820652134f99of4w-3.jpg
+   - producto-177163820652134f99of4w-4.jpg
+   - producto-177163820652134f99of4w-5.jpg
+   - producto-177163820652134f99of4w-6.jpg
+
+
+⚠️  PRODUCTOS CON IMÁGENES PARCIALES (9):
+
+1. iPhone 16 Plus - Tiene 1, faltan 5
+2. iPhone 15 Pro - Tiene 5, faltan 1
+3. Honor Magic7 Pro - Tiene 4, faltan 2
+4. Honor Magic7 Lite - Tiene 5, faltan 1
+5. Huawei Mate 50 Pro - Tiene 3, faltan 3
+6. Redmi Buds 6 Pro - Tiene 5, faltan 1
+7. Redmi Buds 5 Pro - Tiene 5, faltan 1
+8. FreeBuds Pro 5 - Tiene 5, faltan 1
+9. Choice Earbuds X7i - Tiene 5, faltan 1

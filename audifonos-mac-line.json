@@ -1,0 +1,320 @@
+{
+  "apple": [
+    {
+      "nombre": "AirPods Pro 3",
+      "marca": "Apple",
+      "año": 2025,
+      "caracteristicas": "Cancelación activa de ruido 2x mejor, sensor frecuencia cardíaca, traducción en vivo, IP57, 8h batería con ANC",
+      "precio_referencia_usd": 249
+    },
+    {
+      "nombre": "AirPods 4 con ANC",
+      "marca": "Apple",
+      "año": 2024,
+      "caracteristicas": "Cancelación activa de ruido, chip H2, Audio Espacial, estuche USB-C, resistente al agua",
+      "precio_referencia_usd": 199
+    },
+    {
+      "nombre": "AirPods 4",
+      "marca": "Apple",
+      "año": 2024,
+      "caracteristicas": "Chip H2, Audio Espacial Personalizado, 30h batería total, estuche USB-C",
+      "precio_referencia_usd": 149
+    },
+    {
+      "nombre": "AirPods Pro 2",
+      "marca": "Apple",
+      "año": 2022,
+      "caracteristicas": "Chip H2, ANC 2x mejor, Audio Espacial adaptativo, 6h batería, estuche USB-C",
+      "precio_referencia_usd": 279
+    },
+    {
+      "nombre": "AirPods Max",
+      "marca": "Apple",
+      "año": 2024,
+      "caracteristicas": "Over-ear premium, ANC excepcional, Audio Espacial, 20h batería, USB-C, nuevos colores",
+      "precio_referencia_usd": 629
+    },
+    {
+      "nombre": "AirPods 3",
+      "marca": "Apple",
+      "año": 2021,
+      "caracteristicas": "Audio Espacial, resistente al sudor IPX4, 30h batería total, estuche MagSafe",
+      "precio_referencia_usd": 179
+    }
+  ],
+  "samsung": [
+    {
+      "nombre": "Galaxy Buds 4 Pro",
+      "marca": "Samsung",
+      "año": 2026,
+      "caracteristicas": "Nuevo diseño redondeado, ANC mejorado, modo Interpreter autónomo, puntas de silicona",
+      "precio_referencia_usd": 249
+    },
+    {
+      "nombre": "Galaxy Buds 3 Pro",
+      "marca": "Samsung",
+      "año": 2024,
+      "caracteristicas": "Diseño con stem, Blade Lighting, ANC excepcional, 24bit/96kHz audio, Galaxy AI",
+      "precio_referencia_usd": 249
+    },
+    {
+      "nombre": "Galaxy Buds 3",
+      "marca": "Samsung",
+      "año": 2024,
+      "caracteristicas": "Diseño stem, ANC, 360 audio, SSC HiFi codec, IP57, Super Wideband mics",
+      "precio_referencia_usd": 179
+    },
+    {
+      "nombre": "Galaxy Buds FE",
+      "marca": "Samsung",
+      "año": 2023,
+      "caracteristicas": "ANC, 30h batería total, IPX2, diseño wingtip, excelente relación calidad-precio",
+      "precio_referencia_usd": 99
+    },
+    {
+      "nombre": "Galaxy Buds 2 Pro",
+      "marca": "Samsung",
+      "año": 2022,
+      "caracteristicas": "ANC potente, Hi-Fi 24bit, Audio 360, IPX7, chip mejorado, llamadas nítidas",
+      "precio_referencia_usd": 229
+    },
+    {
+      "nombre": "Galaxy Buds 2",
+      "marca": "Samsung",
+      "año": 2021,
+      "caracteristicas": "ANC, diseño compacto, bajos potentes, modo ambiente, buena cancelación llamadas",
+      "precio_referencia_usd": 149
+    },
+    {
+      "nombre": "Galaxy Buds Core",
+      "marca": "Samsung",
+      "año": 2025,
+      "caracteristicas": "Sucesor Buds FE, ANC, Bluetooth 5.4, traducción IA en tiempo real, IP54, 35h batería",
+      "precio_referencia_usd": 149
+    }
+  ],
+  "xiaomi": [
+    {
+      "nombre": "Redmi Buds 6 Pro",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "ANC 49dB, driver dual cerámico+titanio, 10h batería, Bluetooth 5.3, app Xiaomi Earbuds",
+      "precio_referencia_usd": 79
+    },
+    {
+      "nombre": "Redmi Buds 6",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "ANC avanzado, audio personalizado SoundID, sonido envolvente 360°, diseño ergonómico",
+      "precio_referencia_usd": 59
+    },
+    {
+      "nombre": "Redmi Buds 6 Lite",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "ANC 40dB, 38h batería total, driver titanio 12.4mm, micrófonos dual, Bluetooth 5.3",
+      "precio_referencia_usd": 29
+    },
+    {
+      "nombre": "Redmi Buds 6 Active",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "Diseño semi in-ear, Bluetooth 5.4, controles táctiles, 30h batería, 4g por auricular",
+      "precio_referencia_usd": 25
+    },
+    {
+      "nombre": "Redmi Buds 6 Play",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "Ultra económicos, Bluetooth 5.4, 7.5h batería, drivers 10mm, controles táctiles",
+      "precio_referencia_usd": 19
+    },
+    {
+      "nombre": "Xiaomi Buds 5 Pro",
+      "marca": "Xiaomi",
+      "año": 2025,
+      "caracteristicas": "Premium, Bluetooth 5.4 + Wi-Fi, Hi-Res Audio, ANC avanzado, diseño ligero ergonómico",
+      "precio_referencia_usd": 219
+    },
+    {
+      "nombre": "Redmi Buds 5 Pro",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "ANC 52dB, dual driver cerámico+titanio, 38h batería total, app configurable",
+      "precio_referencia_usd": 69
+    },
+    {
+      "nombre": "Redmi Buds 5",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "ANC 46dB, driver 12.4mm, 40h batería, dual device, cancelación ruido llamadas",
+      "precio_referencia_usd": 39
+    },
+    {
+      "nombre": "Redmi Buds 4 Pro",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "caracteristicas": "ANC 43dB regulable 3 niveles, triple micrófono, controles táctiles, 30h batería",
+      "precio_referencia_usd": 49
+    },
+    {
+      "nombre": "Redmi Buds 4",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "caracteristicas": "ANC 35dB, modo transparencia, 30h batería total, reducción ruido llamadas",
+      "precio_referencia_usd": 35
+    },
+    {
+      "nombre": "Redmi Buds 4 Active",
+      "marca": "Xiaomi",
+      "año": 2023,
+      "caracteristicas": "Súper económicos, drivers 12mm, IPX4, Bluetooth 5.3, Google Fast Pair",
+      "precio_referencia_usd": 15
+    },
+    {
+      "nombre": "Xiaomi OpenWear Stereo",
+      "marca": "Xiaomi",
+      "año": 2024,
+      "caracteristicas": "Deportivos abiertos, dual micrófono IA, 39h batería total, Bluetooth 5.3, 9.6g",
+      "precio_referencia_usd": 79
+    }
+  ],
+  "huawei": [
+    {
+      "nombre": "FreeBuds Pro 4",
+      "marca": "Huawei",
+      "año": 2024,
+      "caracteristicas": "Driver Dual TrueSound, ANC 100dB, códec L2HC 4.0 2.3Mbps, 33h batería, IP54",
+      "precio_referencia_usd": 199
+    },
+    {
+      "nombre": "FreeBuds Pro 3",
+      "marca": "Huawei",
+      "año": 2023,
+      "caracteristicas": "Chip Kirin A2, NearLink 1.5Mbps lossless, ANC mejorado, IP54, 31h batería",
+      "precio_referencia_usd": 199
+    },
+    {
+      "nombre": "FreeBuds Pro 2",
+      "marca": "Huawei",
+      "año": 2022,
+      "caracteristicas": "LDAC codec, Hi-Res Audio, DNN ANC, micrófonos conducción ósea, IP54",
+      "precio_referencia_usd": 199
+    },
+    {
+      "nombre": "FreeBuds Pro",
+      "marca": "Huawei",
+      "año": 2020,
+      "caracteristicas": "ANC 40dB dinámica, doble antena 360°, chip Kirin A1, 7h batería, 3 micrófonos",
+      "precio_referencia_usd": 179
+    },
+    {
+      "nombre": "FreeBuds SE 3",
+      "marca": "Huawei",
+      "año": 2024,
+      "caracteristicas": "Diseño abierto, 42h batería, driver 10mm, 3.8g ligeros, IP54, Bluetooth 5.4",
+      "precio_referencia_usd": 59
+    },
+    {
+      "nombre": "FreeBuds 5i",
+      "marca": "Huawei",
+      "año": 2023,
+      "caracteristicas": "ANC, diseño compacto, 28h batería, Bluetooth 5.2, estuche pequeño",
+      "precio_referencia_usd": 99
+    },
+    {
+      "nombre": "FreeBuds 5",
+      "marca": "Huawei",
+      "año": 2023,
+      "caracteristicas": "Open-fit design, ANC, driver magnético ultra, 30h batería, IP54, Celia IA",
+      "precio_referencia_usd": 149
+    },
+    {
+      "nombre": "FreeClip",
+      "marca": "Huawei",
+      "año": 2023,
+      "caracteristicas": "Diseño C-bridge único, open-ear, ajuste seguro y cómodo, oro rosa disponible",
+      "precio_referencia_usd": 169
+    }
+  ],
+  "honor": [
+    {
+      "nombre": "Earbuds X6",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "40h batería, driver titanio 10mm, HiFi5 DSP, reducción ruido IA llamadas",
+      "precio_referencia_usd": 49
+    },
+    {
+      "nombre": "Earbuds X5",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "Batería larga duración, diseño ergonómico, Bluetooth 5.3, controles táctiles",
+      "precio_referencia_usd": 39
+    },
+    {
+      "nombre": "Earbuds 3 Pro",
+      "marca": "Honor",
+      "año": 2023,
+      "caracteristicas": "ANC premium, Hi-Res Audio, driver dual, batería extendida, IP54",
+      "precio_referencia_usd": 129
+    },
+    {
+      "nombre": "Choice Earbuds X7",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "ANC híbrido 45dB, driver grande, 40h batería, Bluetooth 5.3",
+      "precio_referencia_usd": 59
+    },
+    {
+      "nombre": "Choice Earbuds X7 Lite",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "ANC cómodo 38h batería, sonido envolvente espacial mejorado, económicos",
+      "precio_referencia_usd": 39
+    },
+    {
+      "nombre": "Choice Earbuds X7e",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "Semi-Open ANC, dual-magnet driver, 40h batería, diseño ergonómico",
+      "precio_referencia_usd": 45
+    },
+    {
+      "nombre": "Choice Earbuds X7i",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "ANC híbrido 45dB, driver grande, 40h batería, Bluetooth 5.3, asequibles",
+      "precio_referencia_usd": 49
+    },
+    {
+      "nombre": "Choice Earbuds X3 Lite",
+      "marca": "Honor",
+      "año": 2023,
+      "caracteristicas": "Ultra económicos, batería decente, controles básicos, Bluetooth 5.0",
+      "precio_referencia_usd": 29
+    },
+    {
+      "nombre": "Choice Earbuds X3",
+      "marca": "Honor",
+      "año": 2023,
+      "caracteristicas": "Reducción ruido dual-mic, 28h batería, drivers bio-diaphragm 12mm",
+      "precio_referencia_usd": 39
+    },
+    {
+      "nombre": "Choice Earbuds X",
+      "marca": "Honor",
+      "año": 2023,
+      "caracteristicas": "28h batería, reducción ruido dual-mic llamadas, drivers 12mm bio-diaphragm",
+      "precio_referencia_usd": 35
+    },
+    {
+      "nombre": "Earbuds Open",
+      "marca": "Honor",
+      "año": 2024,
+      "caracteristicas": "Diseño abierto, cómodos todo el día, audio ambiente natural, deportivos",
+      "precio_referencia_usd": 89
+    }
+  ]
+}

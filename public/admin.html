@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAC LINE - Panel de Administración</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <style>
+        /* Fix para campos readonly - FONDO OSCURO */
+        input[readonly] {
+            background: rgba(0, 212, 255, 0.1) !important;
+            color: #00d4ff !important;
+            border: 1px solid rgba(0, 212, 255, 0.3) !important;
+            font-weight: 700 !important;
+        }
+        
+        /* Grid para múltiples imágenes */
+        .imagenes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .imagen-upload-box {
+            border: 2px dashed #0071e3;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            background: #f9f9f9;
+        }
+        
+        .imagen-upload-box label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        
+        .imagen-preview {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        
+        .imagen-preview img {
+            max-width: 100%;
+            max-height: 120px;
+            object-fit: contain;
+        }
+        
+        /* Modal más ancho para edición */
+        .modal-edicion {
+            max-width: 900px !important;
+            max-height: 90vh !important;
+            overflow-y: auto !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="admin-navbar">
+        <div class="navbar-content">
+            <h1>🖥️ MAC LINE - ADMINISTRACIÓN</h1>
+            <div class="nav-buttons">
+                <a href="index.html" class="btn-nav">← Volver a Tienda</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <aside class="sidebar">
+            <div class="menu">
+                <button class="menu-item active" onclick="mostrarSeccion('productos')">📦 Productos</button>
+                <button class="menu-item" onclick="mostrarSeccion('agregar')">➕ Agregar Producto</button>
+                <button class="menu-item" onclick="mostrarSeccion('ventas')">💰 Ventas</button>
+                <button class="menu-item" onclick="mostrarSeccion('stock')">📊 Reporte Stock</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <!-- SECCIÓN PRODUCTOS -->
+            <section id="productos-seccion" class="seccion activa">
+                <h2>Gestión de Productos</h2>
+                <div class="buscador">
+                    <input type="text" id="buscarProducto" placeholder="Buscar producto..." onkeyup="filtrarProductosAdmin()">
+                </div>
+                <div class="tabla-wrapper">
+                    <table class="tabla-productos" id="tablaProductos">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Precio Original</th>
+                                <th>Precio Final</th>
+                                <th>Descuento</th>
+                                <th>Stock</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productosTableBody">
+                            <tr><td colspan="9" style="text-align: center; padding: 2rem; color: #666;">Cargando productos...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECCIÓN AGREGAR -->
+            <section id="agregar-seccion" class="seccion">
+                <h2>Agregar Nuevo Producto</h2>
+                <form id="formularioProducto" onsubmit="agregarProducto(event)" class="formulario-producto">
+                    
+                    <!-- NOMBRE Y CATEGORÍA -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre">Nombre del Producto *</label>
+                            <input type="text" id="nombre" required placeholder="iPhone 15 Pro Max">
+                        </div>
+                        <div class="form-group">
+                            <label for="categoria">Categoría *</label>
+                            <select id="categoria" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="celulares">📱 Celulares</option>
+                                <option value="televisores">📺 Televisores</option>
+                                <option value="computadores">💻 Computadores</option>
+                                <option value="audifonos">🎧 Audífonos</option>
+                                <option value="relojes">⌚ Relojes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- DESCRIPCIÓN -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="descripcion">Descripción *</label>
+                            <textarea id="descripcion" required placeholder="Descripción detallada del producto..." rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- PRECIOS -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="precioOriginal">Precio Original (CLP) *</label>
+                            <input type="number" id="precioOriginal" required min="1" step="0.01" placeholder="1499990" oninput="calcularPrecioFinal()">
+                            <small>Precio antes del descuento</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="descuento">Descuento (%) *</label>
+                            <input type="number" id="descuento" required min="0" max="100" step="0.01" placeholder="18" value="0" oninput="calcularPrecioFinal()">
+                            <small>Porcentaje de descuento</small>
+                        </div>
+                    </div>
+
+                    <!-- PRECIO FINAL (CALCULADO) -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="precioFinal">💰 Precio Final con Descuento (CLP)</label>
+                            <input type="text" id="precioFinal" readonly placeholder="0">
+                            <small>✨ Se calcula automáticamente</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="stock">Stock *</label>
+                            <input type="number" id="stock" required min="0" placeholder="10">
+                            <small>Cantidad disponible</small>
+                        </div>
+                    </div>
+
+                    <!-- IMAGEN PORTADA -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>📸 Imagen de Portada * (principal)</label>
+                            <input type="file" id="imagenPortada" accept="image/*" onchange="previsualizarPortada(event)" required>
+                            <div id="previewPortada" class="imagen-preview" style="margin-top: 0.5rem; min-height: 150px; border: 2px dashed #ccc; border-radius: 8px;">
+                                <p style="color: #999;">Portada</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5 IMÁGENES ADICIONALES -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>🖼️ Imágenes Adicionales (5 máximo)</label>
+                            <small>Estas imágenes aparecerán en la galería del producto</small>
+                        </div>
+                    </div>
+
+                    <div class="imagenes-grid">
+                        <div class="imagen-upload-box">
+                            <label>Imagen 1</label>
+                            <input type="file" id="imagen1" accept="image/*" onchange="previsualizarImagen(event, 1)">
+                            <div id="preview1" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 1</p></div>
+                        </div>
+                        <div class="imagen-upload-box">
+                            <label>Imagen 2</label>
+                            <input type="file" id="imagen2" accept="image/*" onchange="previsualizarImagen(event, 2)">
+                            <div id="preview2" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 2</p></div>
+                        </div>
+                        <div class="imagen-upload-box">
+                            <label>Imagen 3</label>
+                            <input type="file" id="imagen3" accept="image/*" onchange="previsualizarImagen(event, 3)">
+                            <div id="preview3" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 3</p></div>
+                        </div>
+                        <div class="imagen-upload-box">
+                            <label>Imagen 4</label>
+                            <input type="file" id="imagen4" accept="image/*" onchange="previsualizarImagen(event, 4)">
+                            <div id="preview4" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 4</p></div>
+                        </div>
+                        <div class="imagen-upload-box">
+                            <label>Imagen 5</label>
+                            <input type="file" id="imagen5" accept="image/*" onchange="previsualizarImagen(event, 5)">
+                            <div id="preview5" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 5</p></div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions" style="margin-top: 2rem;">
+                        <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                        <button type="reset" class="btn btn-secondary" onclick="limpiarFormulario()">Limpiar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- SECCIÓN VENTAS -->
+            <section id="ventas-seccion" class="seccion">
+                <h2>Historial de Ventas</h2>
+                <div class="tabla-wrapper">
+                    <table class="tabla-ventas">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Productos</th>
+                                <th>Total</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ventasTableBody">
+                            <tr><td colspan="6" style="text-align: center; padding: 2rem;">Cargando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECCIÓN STOCK -->
+            <section id="stock-seccion" class="seccion">
+                <h2>Reporte de Stock</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Productos</h3>
+                        <p class="stat-number" id="totalProductos">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Stock Total</h3>
+                        <p class="stat-number" id="stockTotal">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Productos Agotados</h3>
+                        <p class="stat-number stat-danger" id="productosAgotados">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Stock Bajo (&lt;5)</h3>
+                        <p class="stat-number stat-warning" id="stockBajo">0</p>
+                    </div>
+                </div>
+                
+                <h3>Productos con Stock Bajo</h3>
+                <div class="tabla-wrapper">
+                    <table class="tabla-productos">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Stock</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stockBajoTableBody">
+                            <tr><td colspan="4" style="text-align: center; padding: 2rem;">Cargando...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL EDITAR PRODUCTO CON 6 IMÁGENES -->
+    <div id="editarModal" class="modal-admin" style="display: none;">
+        <div class="modal-admin-content modal-edicion">
+            <h2>✏️ Editar Producto</h2>
+            <form onsubmit="guardarEdicion(event)">
+                
+                <!-- NOMBRE Y CATEGORÍA -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editNombre">Nombre del Producto</label>
+                        <input type="text" id="editNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategoria">Categoría</label>
+                        <select id="editCategoria" required>
+                            <option value="celulares">📱 Celulares</option>
+                            <option value="televisores">📺 Televisores</option>
+                            <option value="computadores">💻 Computadores</option>
+                            <option value="audifonos">🎧 Audífonos</option>
+                            <option value="relojes">⌚ Relojes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- DESCRIPCIÓN -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editDescripcion">Descripción</label>
+                        <textarea id="editDescripcion" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- PRECIOS -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editPrecioOriginal">Precio Original (CLP)</label>
+                        <input type="number" id="editPrecioOriginal" required min="1" step="0.01" oninput="calcularPrecioFinalEdit()">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDescuento">Descuento (%)</label>
+                        <input type="number" id="editDescuento" min="0" max="100" step="0.01" oninput="calcularPrecioFinalEdit()">
+                    </div>
+                </div>
+
+                <!-- PRECIO FINAL Y STOCK -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editPrecioFinal">💰 Precio Final</label>
+                        <input type="text" id="editPrecioFinal" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editStock">Stock</label>
+                        <input type="number" id="editStock" required min="0">
+                    </div>
+                </div>
+
+                <!-- IMAGEN PORTADA -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📸 Imagen de Portada (cambiar opcional)</label>
+                        <input type="file" id="editImagenPortada" accept="image/*" onchange="previsualizarPortadaEdit(event)">
+                        <div id="editPreviewPortada" style="margin-top: 0.5rem; min-height: 150px; border: 2px dashed #ccc; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <p style="color: #999;">Portada actual</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5 IMÁGENES ADICIONALES -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>🖼️ Imágenes Adicionales (cambiar opcionales)</label>
+                    </div>
+                </div>
+
+                <div class="imagenes-grid">
+                    <div class="imagen-upload-box">
+                        <label>Imagen 1</label>
+                        <input type="file" id="editImagen1" accept="image/*" onchange="previsualizarImagenEdit(event, 1)">
+                        <div id="editPreview1" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 1</p></div>
+                    </div>
+                    <div class="imagen-upload-box">
+                        <label>Imagen 2</label>
+                        <input type="file" id="editImagen2" accept="image/*" onchange="previsualizarImagenEdit(event, 2)">
+                        <div id="editPreview2" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 2</p></div>
+                    </div>
+                    <div class="imagen-upload-box">
+                        <label>Imagen 3</label>
+                        <input type="file" id="editImagen3" accept="image/*" onchange="previsualizarImagenEdit(event, 3)">
+                        <div id="editPreview3" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 3</p></div>
+                    </div>
+                    <div class="imagen-upload-box">
+                        <label>Imagen 4</label>
+                        <input type="file" id="editImagen4" accept="image/*" onchange="previsualizarImagenEdit(event, 4)">
+                        <div id="editPreview4" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 4</p></div>
+                    </div>
+                    <div class="imagen-upload-box">
+                        <label>Imagen 5</label>
+                        <input type="file" id="editImagen5" accept="image/*" onchange="previsualizarImagenEdit(event, 5)">
+                        <div id="editPreview5" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 5</p></div>
+                    </div>
+                </div>
+
+                <div class="form-actions" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
