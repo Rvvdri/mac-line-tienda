@@ -326,6 +326,69 @@
                 width: 60px !important;
                 height: 60px !important;
             }
+            
+            /* Botón agregar al carrito fijo en móvil */
+            .btn-agregar-carrito-detalle {
+                position: fixed !important;
+                bottom: 80px !important;
+                left: 1rem !important;
+                right: 1rem !important;
+                z-index: 999 !important;
+                margin: 0 !important;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+            /* Carrito flotante móvil */
+            .cart-floating-mobile {
+                display: flex !important;
+            }
+            
+            /* Ocultar carrito del navbar en móvil */
+            .navbar-sticky .cart-link {
+                display: none !important;
+            }
+        }
+        
+        /* Carrito flotante para móvil */
+        .cart-floating-mobile {
+            display: none;
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 1000;
+            border: none;
+            transition: transform 0.2s;
+        }
+        
+        .cart-floating-mobile:active {
+            transform: scale(0.95);
+        }
+        
+        .cart-floating-mobile .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 2px solid white;
         }
     </style>
 </head>
@@ -512,5 +575,11 @@
             document.getElementById('pagoModal').style.display = 'none';
         }
     </script>
+    
+    <!-- Carrito flotante para móvil -->
+    <button class="cart-floating-mobile" onclick="abrirCarrito()">
+        🛒
+        <span class="cart-count">0</span>
+    </button>
 </body>
 </html>
