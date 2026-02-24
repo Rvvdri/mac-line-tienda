@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
     cargarCarritoLocal();
     actualizarCarrito();
+    actualizarContadorCarrito(); // Actualizar contador al cargar
     iniciarCarrusel();
 });
 
@@ -77,7 +78,23 @@ async function cargarProductos() {
 
 function renderizarProductos(filtro = 'todos') {
     const grid = document.getElementById('productosGrid');
+    const secciones = document.getElementById('seccionesCatalogo');
+    
     if (!grid) return;
+    
+    // Si filtro es 'todos', mostrar secciones
+    if (filtro === 'todos') {
+        grid.style.display = 'none';
+        if (secciones) {
+            secciones.style.display = 'block';
+            renderizarPorSecciones();
+        }
+        return;
+    }
+    
+    // Si hay filtro específico, mostrar grid normal
+    if (secciones) secciones.style.display = 'none';
+    grid.style.display = 'grid';
     
     let productosFiltrados = productosActuales;
 
@@ -157,6 +174,86 @@ function renderizarProductos(filtro = 'todos') {
 
 // ========== FILTRAR PRODUCTOS ==========
 
+function renderizarPorSecciones() {
+    const secciones = document.getElementById('seccionesCatalogo');
+    if (!secciones) return;
+    
+    // Agrupar productos por categoría
+    const categorias = {
+        'celulares': { nombre: 'Celulares', emoji: '📱', productos: [] },
+        'audifonos': { nombre: 'Audífonos', emoji: '🎧', productos: [] },
+        'relojes': { nombre: 'Relojes', emoji: '⌚', productos: [] },
+        'televisores': { nombre: 'Televisores', emoji: '📺', productos: [] },
+        'notebooks': { nombre: 'Computadores', emoji: '💻', productos: [] },
+        'consolas': { nombre: 'Consolas', emoji: '🎮', productos: [] }
+    };
+    
+    // Agrupar productos
+    productosActuales.forEach(producto => {
+        const cat = producto.categoria?.toLowerCase();
+        if (categorias[cat]) {
+            categorias[cat].productos.push(producto);
+        }
+    });
+    
+    // Renderizar secciones
+    let html = '';
+    
+    Object.keys(categorias).forEach(key => {
+        const cat = categorias[key];
+        if (cat.productos.length === 0) return; // Skip categorías vacías
+        
+        html += `
+            <div class="categoria-section">
+                <div class="categoria-header">
+                    <h3 class="categoria-titulo">
+                        <span class="categoria-emoji">${cat.emoji}</span>
+                        <span>${cat.nombre}</span>
+                    </h3>
+                    <span class="categoria-count">${cat.productos.length} productos</span>
+                </div>
+                <div class="categoria-grid">
+                    ${cat.productos.map(producto => crearCardProducto(producto)).join('')}
+                </div>
+            </div>
+        `;
+    });
+    
+    secciones.innerHTML = html || '<p style="text-align:center;color:#999;">No hay productos disponibles</p>';
+}
+
+function crearCardProducto(producto) {
+    const precioFinal = producto.descuento 
+        ? producto.precio * (1 - producto.descuento / 100)
+        : producto.precio;
+    
+    return `
+        <div class="producto-card" onclick="abrirProducto('${producto.id || producto._id}')">
+            ${producto.descuento ? `<span class="descuento-badge">-${producto.descuento}%</span>` : ''}
+            
+            <div class="producto-categoria">${producto.categoria?.toUpperCase() || 'PRODUCTO'}</div>
+            
+            <h3 class="producto-titulo">${producto.nombre}</h3>
+            
+            <div class="producto-imagen-wrapper">
+                ${producto.imagenPortada 
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" class="producto-imagen">` 
+                    : `<div class="producto-emoji">${producto.emoji || '📦'}</div>`
+                }
+            </div>
+            
+            <div class="producto-precio-wrapper">
+                ${producto.descuento ? 
+                    `<p class="producto-precio-anterior">Antes: $${producto.precio.toLocaleString('es-CL')}</p>` 
+                    : ''
+                }
+                <p class="producto-precio">Desde $${precioFinal.toLocaleString('es-CL')}</p>
+                <p class="producto-stock">✅ ${producto.stock || 0} disponibles</p>
+            </div>
+        </div>
+    `;
+}
+
 function filtrarProductos(categoria) {
     filtroActivo = categoria;
     renderizarProductos(categoria);
@@ -198,6 +295,7 @@ function cargarCarritoLocal() {
 
 function guardarCarritoLocal() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
+    actualizarContadorCarrito(); // Actualizar contador inmediatamente
 }
 
 function agregarAlCarrito(productoId) {
@@ -268,10 +366,22 @@ function actualizarCarrito() {
 }
 
 function actualizarContadorCarrito() {
-    const contador = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-    document.querySelectorAll('.cart-count').forEach(el => {
-        el.textContent = contador;
+    const carritoGuardado = localStorage.getItem('carrito');
+    const carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+    const total = carrito.reduce((sum, item) => sum + (item.cantidad || 1), 0);
+    
+    // Actualizar todos los contadores (.cart-count y .cart-badge)
+    document.querySelectorAll('.cart-count, .cart-badge').forEach(el => {
+        el.textContent = total;
+        // Mostrar/ocultar según si hay productos
+        if (total > 0) {
+            el.style.display = 'flex';
+        } else {
+            el.style.display = 'none';
+        }
     });
+    
+    console.log('🔄 Contador actualizado:', total);
 }
 
 function renderizarCarrito() {

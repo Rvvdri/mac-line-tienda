@@ -157,7 +157,11 @@
             </div>
 
             <!-- GRID DE PRODUCTOS -->
-            <div class="productos-grid" id="productosGrid">
+            <!-- SECCIONES POR CATEGORÍA -->
+            <div id="seccionesCatalogo"></div>
+            
+            <!-- GRID DE PRODUCTOS -->
+            <div class="productos-grid" id="productosGrid" style="display: none;">
                 <div class="loading">Cargando productos...</div>
             </div>
         </div>
@@ -850,6 +854,51 @@
         font-weight: 700;
         border: 2px solid white;
     }
+    
+    /* SECCIONES DE CATÁLOGO */
+    .categoria-section {
+        margin-bottom: 4rem;
+    }
+    
+    .categoria-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 3px solid;
+        border-image: linear-gradient(90deg, #667eea 0%, #764ba2 100%) 1;
+    }
+    
+    .categoria-titulo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #f8f9fa;
+        margin: 0;
+    }
+    
+    .categoria-emoji {
+        font-size: 2rem;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+    
+    .categoria-count {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+    
+    .categoria-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+    }
 
     @media (max-width: 768px) {
         /* Mostrar carrito flotante SOLO en móvil */
@@ -864,6 +913,22 @@
         /* Ocultar carrito del navbar en móvil */
         .navbar-sticky .cart-link {
             display: none !important;
+        }
+        
+        /* Secciones responsive */
+        .categoria-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .categoria-titulo {
+            font-size: 1.5rem;
+        }
+        
+        .categoria-grid {
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
         }
     }
     </style>
