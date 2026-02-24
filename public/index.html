@@ -309,6 +309,29 @@
     
     <!-- FUNCIONES DEL MENÚ MÓVIL -->
     <script>
+    // Ocultar hamburguesa cuando se abre modal
+    function observarModales() {
+        const hamburguesa = document.querySelector('.mobile-menu-btn-modern');
+        const modales = document.querySelectorAll('.modal');
+        
+        modales.forEach(modal => {
+            const observer = new MutationObserver(() => {
+                if (modal.classList.contains('active') || modal.style.display !== 'none') {
+                    if (hamburguesa) hamburguesa.style.display = 'none';
+                } else {
+                    if (hamburguesa) hamburguesa.style.display = '';
+                }
+            });
+            
+            observer.observe(modal, { 
+                attributes: true, 
+                attributeFilter: ['class', 'style'] 
+            });
+        });
+    }
+    
+    document.addEventListener('DOMContentLoaded', observarModales);
+    
     function toggleMobileMenu() {
         const mobileNav = document.getElementById('mobileNav');
         const overlay = document.querySelector('.mobile-overlay');
