@@ -119,7 +119,7 @@ function renderizarProductos(filtro = 'todos') {
             
             <div class="producto-imagen-container" onclick="window.location.href='producto.html?id=${producto.id}'">
                 ${producto.imagenPortada 
-                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" style="max-width: 100%; height: auto;" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" class="producto-img" onerror="this.style.display='none'">` 
                     : `<span class="producto-emoji" style="font-size: 5rem;">${producto.emoji}</span>`}
             </div>
             

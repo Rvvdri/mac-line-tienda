@@ -30,11 +30,11 @@ async function actualizarRutasWebP() {
             // Actualizar imagenes array
             if (producto.imagenes && Array.isArray(producto.imagenes)) {
                 const imagenesWebP = producto.imagenes.map(img => {
-                    if (img && !img.endsWith('.webp')) {
+                    if (img && typeof img === 'string' && !img.endsWith('.webp')) {
                         return img.replace(/\.(jpg|jpeg|png)$/i, '.webp');
                     }
                     return img;
-                });
+                }).filter(Boolean);
                 
                 if (JSON.stringify(imagenesWebP) !== JSON.stringify(producto.imagenes)) {
                     update.imagenes = imagenesWebP;

@@ -8,30 +8,96 @@
     <link rel="stylesheet" href="estilos-carrito.css">
 </head>
 <body>
-    <!-- BOTÓN MENÚ HAMBURGUESA (MÓVIL) -->
-    <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menú">☰</button>
+    <!-- BOTÓN MENÚ HAMBURGUESA -->
+    <button class="mobile-menu-btn-modern" onclick="toggleMobileMenu()" aria-label="Menú">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
     
     <!-- OVERLAY PARA CERRAR MENÚ -->
     <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
     
     <!-- MENÚ LATERAL MÓVIL -->
-    <nav class="mobile-nav" id="mobileNav">
-        <div class="mobile-nav-header">
-            <h2>🖥️ MAC LINE</h2>
-            <button class="mobile-nav-close" onclick="closeMobileMenu()">&times;</button>
+    <nav class="mobile-nav-modern" id="mobileNav">
+        <div class="mobile-nav-header-modern">
+            <div class="logo-mobile">
+                <h2>🖥️ MAC LINE</h2>
+                <p>Tecnología Premium</p>
+            </div>
+            <button class="mobile-nav-close-modern" onclick="closeMobileMenu()">
+                <span>✕</span>
+            </button>
         </div>
-        <ul class="mobile-nav-links">
-            <li><a href="#inicio" onclick="closeMobileMenu()">🏠 Inicio</a></li>
-            <li><a href="#productos" onclick="closeMobileMenu()">📦 Productos</a></li>
-            <li><a href="#" onclick="filtrarProductos('celulares'); closeMobileMenu();">📱 Celulares</a></li>
-            <li><a href="#" onclick="filtrarProductos('audifonos'); closeMobileMenu();">🎧 Audífonos</a></li>
-            <li><a href="#" onclick="filtrarProductos('relojes'); closeMobileMenu();">⌚ Relojes</a></li>
-            <li><a href="#" onclick="filtrarProductos('notebooks'); closeMobileMenu();">💻 Computadores</a></li>
-            <li><a href="#" onclick="filtrarProductos('televisores'); closeMobileMenu();">📺 TVs</a></li>
-            <li><a href="#" onclick="abrirCarrito(); closeMobileMenu();">🛒 Carrito</a></li>
+        
+        <div class="mobile-nav-search">
+            <input type="text" id="searchInputMobile" placeholder="🔍 Buscar productos..." onkeyup="buscarProductos()">
+        </div>
+        
+        <ul class="mobile-nav-links-modern">
+            <li>
+                <a href="#inicio" onclick="closeMobileMenu()">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Inicio</span>
+                </a>
+            </li>
+            <li>
+                <a href="#productos" onclick="closeMobileMenu()">
+                    <span class="nav-icon">📦</span>
+                    <span class="nav-text">Productos</span>
+                </a>
+            </li>
+            <li class="nav-divider">
+                <span>Categorías</span>
+            </li>
+            <li>
+                <a href="#" onclick="filtrarProductos('celulares'); closeMobileMenu();">
+                    <span class="nav-icon">📱</span>
+                    <span class="nav-text">Celulares</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="filtrarProductos('audifonos'); closeMobileMenu();">
+                    <span class="nav-icon">🎧</span>
+                    <span class="nav-text">Audífonos</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="filtrarProductos('relojes'); closeMobileMenu();">
+                    <span class="nav-icon">⌚</span>
+                    <span class="nav-text">Relojes</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="filtrarProductos('notebooks'); closeMobileMenu();">
+                    <span class="nav-icon">💻</span>
+                    <span class="nav-text">Computadores</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="filtrarProductos('consolas'); closeMobileMenu();">
+                    <span class="nav-icon">🎮</span>
+                    <span class="nav-text">Consolas</span>
+                </a>
+            </li>
+            <li class="nav-divider">
+                <span>Compras</span>
+            </li>
+            <li>
+                <a href="#" onclick="abrirCarrito(); closeMobileMenu();" class="cart-menu-link">
+                    <span class="nav-icon">🛒</span>
+                    <span class="nav-text">Mi Carrito</span>
+                    <span class="cart-badge">0</span>
+                </a>
+            </li>
         </ul>
+        
+        <div class="mobile-nav-footer">
+            <p>© 2026 MAC LINE</p>
+            <p>Tecnología Premium</p>
+        </div>
     </nav>
-
+    
     <!-- NAVBAR FIJA EN TOP -->
     <nav class="navbar">
         <div class="container">
@@ -246,7 +312,9 @@
     function toggleMobileMenu() {
         const mobileNav = document.getElementById('mobileNav');
         const overlay = document.querySelector('.mobile-overlay');
-        const btn = document.querySelector('.mobile-menu-btn');
+        const btn = document.querySelector('.mobile-menu-btn-modern');
+        const cartBadge = document.querySelector('.cart-badge');
+        const cartCount = document.querySelector('.cart-count');
         
         mobileNav.classList.toggle('active');
         overlay.classList.toggle('active');
@@ -254,6 +322,10 @@
         
         if (mobileNav.classList.contains('active')) {
             document.body.style.overflow = 'hidden';
+            // Sincronizar contador del carrito
+            if (cartBadge && cartCount) {
+                cartBadge.textContent = cartCount.textContent;
+            }
         } else {
             document.body.style.overflow = '';
         }
@@ -262,7 +334,7 @@
     function closeMobileMenu() {
         const mobileNav = document.getElementById('mobileNav');
         const overlay = document.querySelector('.mobile-overlay');
-        const btn = document.querySelector('.mobile-menu-btn');
+        const btn = document.querySelector('.mobile-menu-btn-modern');
         
         mobileNav.classList.remove('active');
         overlay.classList.remove('active');
@@ -277,5 +349,429 @@
         }
     });
     </script>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a 
+        href="https://wa.me/56983931651?text=Hola,%20estoy%20interesado%20en%20sus%20productos" 
+        class="whatsapp-float" 
+        target="_blank"
+        aria-label="Contactar por WhatsApp"
+    >
+        <svg viewBox="0 0 32 32" class="whatsapp-icon">
+            <path fill="currentColor" d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-5.247 1.408 1.417-5.267-0.317-0.522c-1.321-2.18-2.009-4.665-2.009-7.19 0-7.618 6.195-13.813 13.813-13.813s13.813 6.195 13.813 13.813-6.277 13.733-13.893 13.733zM21.789 18.571c-0.214-0.107-1.262-0.623-1.456-0.693s-0.337-0.107-0.479 0.107c-0.142 0.214-0.551 0.693-0.676 0.835s-0.248 0.16-0.462 0.053c-0.214-0.107-0.902-0.332-1.719-1.061-0.635-0.567-1.064-1.268-1.189-1.482s-0.013-0.329 0.094-0.436c0.096-0.096 0.214-0.248 0.321-0.372s0.142-0.214 0.214-0.357 0.036-0.267-0.018-0.372c-0.053-0.107-0.479-1.154-0.657-1.582s-0.349-0.357-0.479-0.364c-0.124-0.007-0.267-0.009-0.409-0.009s-0.372 0.053-0.567 0.267c-0.195 0.214-0.744 0.728-0.744 1.774s0.762 2.058 0.868 2.2c0.107 0.142 1.503 2.292 3.641 3.215 0.508 0.219 0.905 0.349 1.213 0.447 0.511 0.162 0.976 0.139 1.344 0.084 0.41-0.061 1.262-0.516 1.44-1.013s0.178-0.925 0.124-1.013c-0.053-0.089-0.195-0.142-0.409-0.249z"/>
+        </svg>
+        <span class="whatsapp-text">WhatsApp</span>
+    </a>
+
+    <style>
+    .whatsapp-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+        z-index: 1000;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        overflow: hidden;
+    }
+
+    .whatsapp-float::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: rgba(37, 211, 102, 0.3);
+        animation: pulse-whatsapp 2s infinite;
+    }
+
+    @keyframes pulse-whatsapp {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(1.2);
+            opacity: 0;
+        }
+    }
+
+    /* ===== MENÚ HAMBURGUESA MODERNO ===== */
+    .mobile-menu-btn-modern {
+        display: none;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 1001;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        transition: all 0.3s ease;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mobile-menu-btn-modern span {
+        width: 24px;
+        height: 3px;
+        background: white;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn-modern:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .mobile-menu-btn-modern:active {
+        transform: scale(0.95);
+    }
+
+    /* Ocultar botón cuando el menú está abierto */
+    .mobile-menu-btn-modern.active {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .mobile-nav-modern {
+        position: fixed;
+        top: 0;
+        left: -350px;
+        width: 300px;
+        max-width: 85vw;
+        height: 100vh;
+        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+        z-index: 1000;
+        transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        overflow-y: auto;
+        overflow-x: hidden;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+        display: none;
+        flex-direction: column;
+        -webkit-overflow-scrolling: touch;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .mobile-nav-modern.active {
+        left: 0;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .mobile-nav-modern::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .mobile-nav-modern::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .mobile-nav-modern::-webkit-scrollbar-thumb {
+        background: rgba(102, 126, 234, 0.5);
+        border-radius: 3px;
+    }
+
+    .mobile-nav-modern::-webkit-scrollbar-thumb:hover {
+        background: rgba(102, 126, 234, 0.7);
+    }
+
+    .mobile-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mobile-nav-modern.active {
+        left: 0;
+    }
+
+    .mobile-nav-header-modern {
+        padding: 2rem 1.5rem 1.5rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .logo-mobile h2 {
+        color: white;
+        font-size: 1.5rem;
+        margin: 0 0 0.25rem 0;
+    }
+
+    .logo-mobile p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .mobile-nav-close-modern {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-nav-close-modern span {
+        color: white;
+        font-size: 1.5rem;
+        line-height: 1;
+    }
+
+    .mobile-nav-close-modern:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+    }
+
+    .mobile-nav-search {
+        padding: 1.5rem;
+    }
+
+    .mobile-nav-search input {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-nav-search input::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .mobile-nav-search input:focus {
+        outline: none;
+        border-color: #667eea;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .mobile-nav-links-modern {
+        list-style: none;
+        padding: 1rem 0.75rem;
+        margin: 0;
+        flex: 1;
+        overflow-y: auto;
+        padding-bottom: 120px;
+    }
+
+    .mobile-nav-links-modern li {
+        margin-bottom: 0.5rem;
+    }
+
+    .mobile-nav-links-modern .nav-divider {
+        padding: 1.5rem 1rem 0.75rem;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .mobile-nav-links-modern .nav-divider span {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+    }
+
+    .mobile-nav-links-modern a {
+        display: flex;
+        align-items: center;
+        padding: 1.125rem 1.25rem;
+        color: rgba(255, 255, 255, 0.95);
+        text-decoration: none;
+        border-radius: 14px;
+        transition: all 0.3s ease;
+        gap: 1.125rem;
+        margin: 0 0.5rem;
+        position: relative;
+    }
+
+    .mobile-nav-links-modern a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 0 2px 2px 0;
+        transition: height 0.3s ease;
+    }
+
+    .mobile-nav-links-modern a:active {
+        transform: scale(0.98);
+    }
+
+    .mobile-nav-links-modern a:hover {
+        background: rgba(102, 126, 234, 0.15);
+        transform: translateX(3px);
+        padding-left: 1.5rem;
+    }
+
+    .mobile-nav-links-modern a:hover::before {
+        height: 70%;
+    }
+
+    .mobile-nav-links-modern .nav-icon {
+        font-size: 1.25rem;
+        width: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobile-nav-links-modern .nav-text {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+
+    .cart-menu-link {
+        position: relative;
+        background: rgba(102, 126, 234, 0.15) !important;
+    }
+
+    .cart-menu-link:hover {
+        background: rgba(102, 126, 234, 0.3) !important;
+    }
+
+    .cart-badge {
+        margin-left: auto;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.25rem 0.625rem;
+        border-radius: 20px;
+        min-width: 24px;
+        text-align: center;
+    }
+
+    .mobile-nav-footer {
+        padding: 1.5rem;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.875rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: auto;
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .mobile-nav-footer p {
+        margin: 0.25rem 0;
+    }
+
+    @media (max-width: 768px) {
+        .mobile-menu-btn-modern {
+            display: flex;
+        }
+    }
+
+    .whatsapp-icon {
+        width: 32px;
+        height: 32px;
+        color: white;
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+    }
+
+    .whatsapp-text {
+        position: absolute;
+        right: 70px;
+        background: #25D366;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        opacity: 0;
+        transform: translateX(20px);
+        transition: all 0.3s ease;
+        pointer-events: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .whatsapp-float:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+    }
+
+    .whatsapp-float:hover .whatsapp-icon {
+        transform: scale(1.1);
+    }
+
+    .whatsapp-float:hover .whatsapp-text {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .whatsapp-float:active {
+        transform: translateY(-3px) scale(0.95);
+    }
+
+    @media (max-width: 768px) {
+        .whatsapp-float {
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+        }
+        
+        .whatsapp-icon {
+            width: 28px;
+            height: 28px;
+        }
+        
+        .whatsapp-text {
+            display: none;
+        }
+        
+        .mobile-menu-btn-modern {
+            display: flex;
+        }
+        
+        .mobile-nav-modern {
+            display: flex;
+        }
+    }
+    </style>
 </body>
 </html>

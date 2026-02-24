@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-const dirImagenes = path.join(__dirname, 'public', 'imagenes');
-const dirBackup = path.join(__dirname, 'public', 'imagenes-backup');
+const dirImagenes = path.join(__dirname, 'public', 'images', 'productos');
+const dirBackup = path.join(__dirname, 'public', 'images', 'productos-backup');
 
 async function convertirAWebP() {
     console.log('🎨 Iniciando conversión a WebP...\n');
