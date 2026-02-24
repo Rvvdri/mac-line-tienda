@@ -3023,3 +3023,523 @@ body {
         line-height: 1 !important;
     }
 }
+
+/* ===== MODALES CARRITO Y PAGO - ARREGLO COMPLETO ===== */
+
+/* Modal base */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenido del modal */
+.modal-content {
+    background: linear-gradient(180deg, #1a1d3a 0%, #0f1123 100%);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 85vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.modal-header {
+    background: linear-gradient(135deg, #00d4ff 0%, #9333ea 100%);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+.close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+/* Items del carrito */
+.carrito-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    max-height: 400px;
+}
+
+.carrito-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.carrito-item-imagen {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.carrito-item-imagen img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.carrito-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.carrito-item-nombre {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.carrito-item-detalles {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.carrito-item-precio {
+    color: #00d4ff;
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.carrito-item-cantidad {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.cantidad-btn {
+    background: rgba(0, 212, 255, 0.2);
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    color: #00d4ff;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.cantidad-btn:hover {
+    background: rgba(0, 212, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.cantidad-display {
+    color: white;
+    font-weight: 600;
+    min-width: 40px;
+    text-align: center;
+}
+
+.btn-eliminar {
+    background: rgba(239, 68, 68, 0.2);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+}
+
+.btn-eliminar:hover {
+    background: rgba(239, 68, 68, 0.3);
+}
+
+/* Mensaje vacío */
+.empty-cart {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 3rem 1rem;
+    font-size: 1.125rem;
+}
+
+/* Total */
+.carrito-total {
+    background: rgba(0, 212, 255, 0.1);
+    border-top: 1px solid rgba(0, 212, 255, 0.3);
+    padding: 1.5rem;
+}
+
+.carrito-total h3 {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* Acciones */
+.carrito-acciones {
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    border-top: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+/* Botones */
+.btn {
+    padding: 0.875rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    flex: 1;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00d4ff 0%, #9333ea 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+}
+
+.btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Formulario de pago */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group label {
+    color: white;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.938rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.875rem;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #00d4ff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.total-section {
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1.5rem 0;
+}
+
+.total-section p {
+    color: white;
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+}
+
+.total-section h3 {
+    color: #00d4ff;
+    font-size: 1.75rem;
+    margin: 0.75rem 0 0 0;
+    text-align: right;
+}
+
+/* Responsive móvil */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        max-height: 90vh;
+        border-radius: 15px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.25rem;
+    }
+    
+    .carrito-items {
+        padding: 1rem;
+        max-height: 50vh;
+    }
+    
+    .carrito-item {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+    
+    .carrito-item-imagen {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .carrito-item-nombre {
+        font-size: 0.875rem;
+    }
+    
+    .carrito-item-precio {
+        font-size: 1rem;
+    }
+    
+    .carrito-acciones {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+}
+/* ===== BOTÓN CARRITO FLOTANTE ===== */
+.cart-float {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    z-index: 999;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.cart-float::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(102, 126, 234, 0.3);
+    animation: pulse-cart 2s infinite;
+}
+
+@keyframes pulse-cart {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+}
+
+.cart-icon {
+    width: 28px;
+    height: 28px;
+    color: white;
+    position: relative;
+    z-index: 2;
+}
+
+.cart-badge-float {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #ef4444;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.4rem;
+    border-radius: 10px;
+    min-width: 20px;
+    text-align: center;
+    z-index: 3;
+}
+
+.cart-float:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+}
+
+.cart-float:active {
+    transform: translateY(-3px) scale(0.95);
+}
+
+/* ===== ARREGLOS PRODUCTOS MÓVIL ===== */
+@media (max-width: 768px) {
+    /* Botones flotantes en móvil */
+    .cart-float {
+        bottom: 90px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+    }
+    
+    .cart-icon {
+        width: 26px;
+        height: 26px;
+    }
+    
+    .whatsapp-float {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    /* TARJETAS PERFECTAMENTE CUADRADAS */
+    body .producto-card {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+    }
+    
+    /* IMAGEN FIJA SIEMPRE MISMA ALTURA */
+    .producto-imagen {
+        height: 75px !important;
+        min-height: 75px !important;
+        max-height: 75px !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* INFO DISTRIBUIDA UNIFORMEMENTE */
+    .producto-info {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        justify-content: space-between !important;
+    }
+    
+    /* NOMBRE SIEMPRE 1 LÍNEA FIJA */
+    .producto-nombre {
+        font-size: 0.625rem !important;
+        line-height: 1 !important;
+        height: 0.625rem !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        margin-bottom: 0.3rem !important;
+    }
+    
+    /* PRECIOS MÁS PEQUEÑOS PARA QUE QUEPAN */
+    .precio-container {
+        margin: 0.2rem 0 !important;
+    }
+    
+    .precio-desde {
+        font-size: 0.5rem !important;
+        line-height: 1 !important;
+    }
+    
+    .precio-original {
+        font-size: 0.55rem !important;
+        line-height: 1 !important;
+    }
+    
+    .precio-actual {
+        font-size: 0.75rem !important;
+        font-weight: 800 !important;
+        line-height: 1.1 !important;
+    }
+    
+    /* STOCK COMPACTO */
+    .producto-stock {
+        font-size: 0.5rem !important;
+        line-height: 1 !important;
+        padding: 0.2rem 0 !important;
+    }
+    
+    /* BOTÓN AJUSTADO */
+    .btn-agregar {
+        font-size: 0.55rem !important;
+        padding: 0.35rem 0.3rem !important;
+        margin-top: 0.3rem !important;
+    }
+    
+    /* GRID PERFECTAMENTE CUADRADO */
+    body .productos-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-auto-rows: 1fr !important;
+        gap: 0.35rem !important;
+        padding: 0.35rem !important;
+    }
+}
+
+/* Sincronizar contador del carrito flotante */
+@media (min-width: 769px) {
+    .cart-float {
+        display: none;
+    }
+}

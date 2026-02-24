@@ -373,6 +373,20 @@
         <span class="whatsapp-text">WhatsApp</span>
     </a>
 
+    <!-- Botón flotante de Carrito -->
+    <button 
+        class="cart-float" 
+        onclick="abrirCarrito()"
+        aria-label="Abrir carrito"
+    >
+        <svg viewBox="0 0 24 24" class="cart-icon" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-badge-float">0</span>
+    </button>
+
     <style>
     .whatsapp-float {
         position: fixed;
@@ -785,3 +799,23 @@
     </style>
 </body>
 </html>
+
+<script>
+// Sincronizar contador del carrito flotante
+function actualizarContadorCarrito() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    
+    // Actualizar todos los badges
+    const badges = document.querySelectorAll('.cart-count, .cart-badge, .cart-badge-float');
+    badges.forEach(badge => {
+        if (badge) badge.textContent = totalItems;
+    });
+}
+
+// Ejecutar al cargar
+document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
+
+// Ejecutar cada vez que cambie el carrito
+window.addEventListener('storage', actualizarContadorCarrito);
+</script>

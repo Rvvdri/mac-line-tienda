@@ -60,12 +60,40 @@ function irASlide(index) {
 
 // ========== CARGAR PRODUCTOS ==========
 
+// ========== MEZCLAR PRODUCTOS CON VARIEDAD ==========
+function mezclarProductosConVariedad(productos) {
+    const porCategoria = {
+        celulares: [], audifonos: [], relojes: [], notebooks: [], consolas: []
+    };
+    
+    productos.forEach(p => {
+        if (porCategoria[p.categoria]) porCategoria[p.categoria].push(p);
+    });
+    
+    Object.keys(porCategoria).forEach(cat => {
+        porCategoria[cat] = porCategoria[cat].sort(() => Math.random() - 0.5);
+    });
+    
+    const resultado = [];
+    const categorias = Object.keys(porCategoria);
+    let maxLength = Math.max(...Object.values(porCategoria).map(arr => arr.length));
+    
+    for (let i = 0; i < maxLength; i++) {
+        categorias.forEach(cat => {
+            if (porCategoria[cat][i]) resultado.push(porCategoria[cat][i]);
+        });
+    }
+    
+    return resultado;
+}
+
 async function cargarProductos() {
     try {
         const response = await fetch(`${API_URL}/productos`);
         if (!response.ok) throw new Error('Error al cargar productos');
         
-        productosActuales = await response.json();
+        const productos = await response.json();
+        productosActuales = mezclarProductosConVariedad(productos);
         renderizarProductos(filtroActivo);
     } catch (error) {
         console.error('Error:', error);
@@ -119,7 +147,7 @@ function renderizarProductos(filtro = 'todos') {
             
             <div class="producto-imagen-container" onclick="window.location.href='producto.html?id=${producto.id}'">
                 ${producto.imagenPortada 
-                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" class="producto-img" onerror="this.style.display='none'">` 
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" style="max-width: 100%; height: auto;" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
                     : `<span class="producto-emoji" style="font-size: 5rem;">${producto.emoji}</span>`}
             </div>
             
