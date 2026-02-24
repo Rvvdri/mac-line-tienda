@@ -2895,112 +2895,6 @@ body {
     }
 }
 
-/* ===== PRODUCTOS ULTRA COMPACTOS MÓVIL ===== */
-@media (max-width: 768px) {
-    /* GRID FORZADO 2 COLUMNAS */
-    .productos-grid {
-        display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 0.4rem !important;
-        padding: 0.4rem !important;
-        margin-top: 1rem !important;
-    }
-    
-    /* TARJETA MUY COMPACTA */
-    .producto-card {
-        border-radius: 6px !important;
-        max-height: 280px !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-    }
-    
-    /* IMAGEN PEQUEÑA */
-    .producto-imagen {
-        height: 90px !important;
-        font-size: 2.5rem !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-    
-    .producto-imagen img {
-        padding: 0.4rem !important;
-        object-fit: contain !important;
-        max-height: 100% !important;
-    }
-    
-    /* BADGE MINI */
-    .producto-badge {
-        padding: 2px 4px !important;
-        font-size: 0.55rem !important;
-        top: 4px !important;
-        right: 4px !important;
-    }
-    
-    /* INFO SUPER COMPACTA */
-    .producto-info {
-        padding: 0.4rem !important;
-        gap: 0.3rem !important;
-    }
-    
-    /* NOMBRE 1 LÍNEA */
-    .producto-nombre {
-        font-size: 0.7rem !important;
-        min-height: auto !important;
-        line-height: 1.1 !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        white-space: nowrap !important;
-        margin-bottom: 0.2rem !important;
-    }
-    
-    /* OCULTAR SELECTORES */
-    .colores-container,
-    .capacidades-container,
-    .colores-label,
-    .capacidades-label {
-        display: none !important;
-    }
-    
-    /* PRECIOS COMPACTOS */
-    .precio-container {
-        gap: 0.2rem !important;
-        margin: 0.2rem 0 !important;
-    }
-    
-    .precio-desde {
-        font-size: 0.55rem !important;
-    }
-    
-    .precio-original {
-        font-size: 0.65rem !important;
-    }
-    
-    .precio-actual {
-        font-size: 0.9rem !important;
-        font-weight: 800 !important;
-        color: #1a73e8 !important;
-    }
-    
-    /* STOCK COMPACTO */
-    .producto-stock {
-        font-size: 0.6rem !important;
-        padding: 0.2rem 0 !important;
-        margin: 0 !important;
-    }
-    
-    /* BOTÓN PEQUEÑO */
-    .btn-agregar {
-        padding: 0.4rem 0.5rem !important;
-        font-size: 0.65rem !important;
-        margin-top: 0.3rem !important;
-    }
-}
-/* ===== FORZAR 2 COLUMNAS EN MÓVIL - MÁXIMA PRIORIDAD ===== */
-@media screen and (max-width: 768px) {
-    body .productos-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-}
 
 @media screen and (max-width: 480px) {
     body .productos-grid {
@@ -3012,5 +2906,120 @@ body {
     body .productos-grid {
         grid-template-columns: repeat(2, 1fr) !important;
         gap: 0.3rem !important;
+    }
+}
+
+/* ===== TARJETA COMPLETA PERO PEQUEÑA ===== */
+@media (max-width: 768px) {
+    /* GRID 2 COLUMNAS */
+    body .productos-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.375rem !important;
+        padding: 0.375rem !important;
+        margin-top: 0.5rem !important;
+    }
+    
+    /* TARJETA SIN LÍMITE DE ALTURA */
+    .producto-card {
+        border-radius: 6px !important;
+        max-height: none !important;
+        min-height: auto !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1) !important;
+    }
+    
+    /* IMAGEN MUY PEQUEÑA */
+    .producto-imagen {
+        height: 75px !important;
+        font-size: 2rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+    }
+    
+    .producto-imagen img {
+        padding: 0.3rem !important;
+        object-fit: contain !important;
+        max-height: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* BADGE MINI */
+    .producto-badge {
+        padding: 1px 3px !important;
+        font-size: 0.5rem !important;
+        top: 3px !important;
+        right: 3px !important;
+    }
+    
+    /* INFO MUY COMPACTA */
+    .producto-info {
+        padding: 0.35rem !important;
+        gap: 0.25rem !important;
+    }
+    
+    /* NOMBRE 1 LÍNEA SOLO */
+    .producto-nombre {
+        font-size: 0.65rem !important;
+        min-height: auto !important;
+        line-height: 1 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        margin-bottom: 0.15rem !important;
+        font-weight: 600 !important;
+    }
+    
+    /* OCULTAR SELECTORES */
+    .colores-container,
+    .capacidades-container,
+    .colores-label,
+    .capacidades-label {
+        display: none !important;
+    }
+    
+    /* PRECIOS MUY COMPACTOS */
+    .precio-container {
+        gap: 0.15rem !important;
+        margin: 0.15rem 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+    }
+    
+    .precio-desde {
+        font-size: 0.5rem !important;
+        line-height: 1 !important;
+    }
+    
+    .precio-original {
+        font-size: 0.6rem !important;
+        line-height: 1 !important;
+    }
+    
+    .precio-actual {
+        font-size: 0.813rem !important;
+        font-weight: 800 !important;
+        color: #1a73e8 !important;
+        line-height: 1.1 !important;
+    }
+    
+    /* STOCK MUY PEQUEÑO */
+    .producto-stock {
+        font-size: 0.55rem !important;
+        padding: 0.15rem 0 !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+    }
+    
+    /* BOTÓN MINI PERO VISIBLE */
+    .btn-agregar {
+        padding: 0.35rem 0.4rem !important;
+        font-size: 0.6rem !important;
+        margin-top: 0.25rem !important;
+        border-radius: 4px !important;
+        width: 100% !important;
+        line-height: 1 !important;
     }
 }
