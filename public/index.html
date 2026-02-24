@@ -19,7 +19,7 @@
     <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
     
     <!-- MENÚ LATERAL MÓVIL -->
-    <nav class="mobile-nav-modern" id="mobileNav">
+    <nav class="mobile-nav-modern" id="mobileNav" style="transform: translateX(-100%); pointer-events: none;">
         <div class="mobile-nav-header-modern">
             <div class="logo-mobile">
                 <h2>🖥️ MAC LINE</h2>
@@ -321,12 +321,18 @@
         btn.classList.toggle('active');
         
         if (mobileNav.classList.contains('active')) {
+            // Quitar transform inline al abrir
+            mobileNav.style.transform = '';
+            mobileNav.style.pointerEvents = '';
             document.body.style.overflow = 'hidden';
             // Sincronizar contador del carrito
             if (cartBadge && cartCount) {
                 cartBadge.textContent = cartCount.textContent;
             }
         } else {
+            // Restaurar transform al cerrar
+            mobileNav.style.transform = 'translateX(-100%)';
+            mobileNav.style.pointerEvents = 'none';
             document.body.style.overflow = '';
         }
     }
@@ -339,6 +345,10 @@
         mobileNav.classList.remove('active');
         overlay.classList.remove('active');
         btn.classList.remove('active');
+        
+        // Restaurar transform
+        mobileNav.style.transform = 'translateX(-100%)';
+        mobileNav.style.pointerEvents = 'none';
         document.body.style.overflow = '';
     }
 

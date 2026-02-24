@@ -1028,11 +1028,15 @@ body {
 
 @media (max-width: 375px) {
     .productos-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        padding: 0 0.5rem;
     }
     
     .producto-imagen {
-        height: 200px;
+        height: 180px;
+    }
+}
     }
 }
 
