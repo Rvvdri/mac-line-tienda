@@ -2,13 +2,26 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const { MongoClient, ObjectId } = require('mongodb');
-const { MercadoPagoConfig, Preference } = require('mercadopago');
+const { MercadoPagoConfig, Preference, Payment } = require('mercadopago');
+const nodemailer = require('nodemailer');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// ==================== NODEMAILER ====================
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER || 'tu-email@gmail.com',  // TU EMAIL AQUÍ
+        pass: process.env.EMAIL_PASS || 'tu-contraseña-app'    // CONTRASEÑA DE APLICACIÓN
+    }
+});
+
+// Email del dueño (donde llegarán las notificaciones de venta)
+const EMAIL_DUENO = process.env.EMAIL_DUENO || 'tu-email@gmail.com';
 
 // ==================== MERCADO PAGO ====================
 // CONFIGURACIÓN CON CREDENCIALES REALES
@@ -53,15 +66,38 @@ app.get('/api/productos', async (req, res) => {
 // GET - Obtener un producto por ID
 app.get('/api/productos/:id', async (req, res) => {
     try {
-        const producto = await productosCollection.findOne({ id: req.params.id });
+        const idBuscado = req.params.id;
+        console.log('🔍 Buscando producto con ID:', idBuscado);
+        
+        let producto = null;
+        
+        // 1. Buscar por campo 'id' como string
+        producto = await productosCollection.findOne({ id: idBuscado });
+        
+        // 2. Si no existe, buscar por 'id' como número
+        if (!producto && !isNaN(idBuscado)) {
+            producto = await productosCollection.findOne({ id: Number(idBuscado) });
+        }
+        
+        // 3. Si no existe, intentar buscar por _id de MongoDB (ObjectId)
+        if (!producto) {
+            try {
+                producto = await productosCollection.findOne({ _id: new ObjectId(idBuscado) });
+            } catch (e) {
+                // Si no es un ObjectId válido, intentar como string
+                producto = await productosCollection.findOne({ _id: idBuscado });
+            }
+        }
         
         if (!producto) {
+            console.log('❌ Producto no encontrado con ID:', idBuscado);
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
         
+        console.log('✅ Producto encontrado:', producto.nombre);
         res.json(producto);
     } catch (error) {
-        console.error('Error:', error);
+        console.error('❌ Error al obtener producto:', error);
         res.status(500).json({ error: 'Error al obtener producto' });
     }
 });
@@ -69,6 +105,8 @@ app.get('/api/productos/:id', async (req, res) => {
 // POST - Agregar nuevo producto
 app.post('/api/productos', async (req, res) => {
     try {
+        console.log('📦 Creando producto:', req.body.nombre);
+        
         const nuevoProducto = {
             id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
             nombre: req.body.nombre,
@@ -81,10 +119,14 @@ app.post('/api/productos', async (req, res) => {
             emoji: req.body.emoji || '📦',
             imagenPortada: req.body.imagenPortada || null,
             imagenes: req.body.imagenes || [],
+            colores: req.body.colores || [],
+            capacidades: req.body.capacidades || [],
             createdAt: new Date()
         };
         
         const result = await productosCollection.insertOne(nuevoProducto);
+        
+        console.log('✅ Producto creado con ID:', result.insertedId);
         
         res.status(201).json({ 
             success: true, 
@@ -93,8 +135,11 @@ app.post('/api/productos', async (req, res) => {
         });
         
     } catch (error) {
-        console.error('Error al agregar producto:', error);
-        res.status(500).json({ error: 'Error al agregar producto' });
+        console.error('❌ Error al agregar producto:', error);
+        res.status(500).json({ 
+            error: 'Error al agregar producto',
+            details: error.message 
+        });
     }
 });
 
@@ -225,6 +270,9 @@ app.post('/api/crear-preferencia', async (req, res) => {
             currency_id: 'CLP'
         }));
         
+        // Generar referencia única
+        const externalReference = `ORDER-${Date.now()}`;
+        
         // Crear preferencia
         const body = {
             items: mpItems,
@@ -245,12 +293,29 @@ app.post('/api/crear-preferencia', async (req, res) => {
             },
             auto_return: 'approved',
             statement_descriptor: 'MAC LINE',
-            external_reference: `ORDER-${Date.now()}`
+            external_reference: externalReference,
+            notification_url: `${req.protocol}://${req.get('host')}/api/webhook-mercadopago`
         };
         
         const response = await preference.create({ body });
         
         console.log('✅ Preferencia de Mercado Pago creada:', response.id);
+        
+        // GUARDAR VENTA EN BD CON REFERENCIA
+        const venta = {
+            cliente: cliente,
+            items: items,
+            total: total,
+            fecha: new Date(),
+            estado: 'pendiente',
+            mercadopago: {
+                preference_id: response.id,
+                external_reference: externalReference
+            }
+        };
+        
+        const resultado = await ventasCollection.insertOne(venta);
+        console.log('💾 Venta guardada en BD:', resultado.insertedId);
         
         res.json({
             id: response.id,
@@ -273,12 +338,52 @@ app.post('/api/webhook-mercadopago', async (req, res) => {
     try {
         const { type, data } = req.body;
         
-        console.log('📬 Webhook recibido:', type);
+        console.log('📬 Webhook recibido:', type, data);
         
         if (type === 'payment') {
             const paymentId = data.id;
-            console.log('💳 Pago ID:', paymentId);
-            // Aquí puedes actualizar el estado de la venta en MongoDB
+            console.log('💳 Procesando pago ID:', paymentId);
+            
+            // Obtener información del pago desde Mercado Pago
+            const payment = new Payment(client);
+            const paymentInfo = await payment.get({ id: paymentId });
+            
+            console.log('💳 Estado del pago:', paymentInfo.status);
+            console.log('💳 External reference:', paymentInfo.external_reference);
+            
+            if (paymentInfo.status === 'approved') {
+                // Buscar la venta por external_reference
+                const venta = await ventasCollection.findOne({ 
+                    'mercadopago.external_reference': paymentInfo.external_reference 
+                });
+                
+                if (venta) {
+                    console.log('✅ Pago APROBADO - Enviando emails...');
+                    
+                    // ENVIAR EMAIL AL DUEÑO
+                    await enviarEmailDueno(venta);
+                    
+                    // ENVIAR EMAIL AL CLIENTE
+                    await enviarEmailCliente(venta);
+                    
+                    // Actualizar estado en MongoDB
+                    await ventasCollection.updateOne(
+                        { _id: venta._id },
+                        { 
+                            $set: { 
+                                estado: 'pagado', 
+                                'mercadopago.payment_id': paymentId,
+                                'mercadopago.status': 'approved',
+                                'mercadopago.fecha_pago': new Date()
+                            } 
+                        }
+                    );
+                    
+                    console.log('✅ Venta actualizada y emails enviados');
+                } else {
+                    console.log('⚠️ No se encontró la venta con referencia:', paymentInfo.external_reference);
+                }
+            }
         }
         
         res.status(200).send('OK');
@@ -287,6 +392,171 @@ app.post('/api/webhook-mercadopago', async (req, res) => {
         res.status(500).send('Error');
     }
 });
+
+// ==================== FUNCIONES DE EMAIL ====================
+
+async function enviarEmailDueno(venta) {
+    try {
+        const itemsHTML = venta.items.map(item => `
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.nombre}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.cantidad}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">$${item.precio.toLocaleString('es-CL')}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">$${(item.precio * item.cantidad).toLocaleString('es-CL')}</td>
+            </tr>
+        `).join('');
+        
+        const mailOptions = {
+            from: '"MAC LINE" <' + (process.env.EMAIL_USER || 'noreply@macline.cl') + '>',
+            to: EMAIL_DUENO,
+            subject: `🎉 Nueva Venta - $${venta.total.toLocaleString('es-CL')} - ${venta.cliente.nombre}`,
+            html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                        .content { background: white; padding: 30px; border: 1px solid #eee; }
+                        .total { background: #f0f9ff; padding: 20px; margin: 20px 0; border-radius: 8px; text-align: center; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        .cliente-info { background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h1>🖥️ MAC LINE</h1>
+                            <h2>¡Nueva Venta Recibida!</h2>
+                        </div>
+                        <div class="content">
+                            <div class="total">
+                                <h2 style="margin: 0; color: #22c55e;">Total: $${venta.total.toLocaleString('es-CL')}</h2>
+                            </div>
+                            
+                            <div class="cliente-info">
+                                <h3>📋 Datos del Cliente:</h3>
+                                <p><strong>Nombre:</strong> ${venta.cliente.nombre}</p>
+                                <p><strong>Email:</strong> ${venta.cliente.email}</p>
+                                <p><strong>Teléfono:</strong> ${venta.cliente.telefono}</p>
+                                <p><strong>Dirección:</strong> ${venta.cliente.direccion}</p>
+                            </div>
+                            
+                            <h3>🛒 Productos Comprados:</h3>
+                            <table>
+                                <thead>
+                                    <tr style="background: #f9fafb;">
+                                        <th style="padding: 10px; text-align: left;">Producto</th>
+                                        <th style="padding: 10px; text-align: center;">Cant.</th>
+                                        <th style="padding: 10px; text-align: right;">Precio Unit.</th>
+                                        <th style="padding: 10px; text-align: right;">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${itemsHTML}
+                                </tbody>
+                            </table>
+                            
+                            <p style="color: #666; margin-top: 30px;">
+                                <small>Fecha: ${new Date().toLocaleString('es-CL')}</small><br>
+                                <small>ID Venta: ${venta._id}</small>
+                            </p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `
+        };
+        
+        await transporter.sendMail(mailOptions);
+        console.log('✅ Email enviado al dueño:', EMAIL_DUENO);
+        
+    } catch (error) {
+        console.error('❌ Error enviando email al dueño:', error);
+    }
+}
+
+async function enviarEmailCliente(venta) {
+    try {
+        const itemsHTML = venta.items.map(item => `
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.nombre}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.cantidad}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">$${(item.precio * item.cantidad).toLocaleString('es-CL')}</td>
+            </tr>
+        `).join('');
+        
+        const mailOptions = {
+            from: '"MAC LINE" <' + (process.env.EMAIL_USER || 'noreply@macline.cl') + '>',
+            to: venta.cliente.email,
+            subject: `✅ Confirmación de Compra - MAC LINE`,
+            html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                        .content { background: white; padding: 30px; border: 1px solid #eee; }
+                        .total { background: #dcfce7; padding: 20px; margin: 20px 0; border-radius: 8px; text-align: center; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h1>🖥️ MAC LINE</h1>
+                            <h2>¡Gracias por tu compra!</h2>
+                        </div>
+                        <div class="content">
+                            <p>Hola <strong>${venta.cliente.nombre}</strong>,</p>
+                            <p>Tu pago ha sido procesado correctamente. Aquí están los detalles de tu pedido:</p>
+                            
+                            <table>
+                                <thead>
+                                    <tr style="background: #f9fafb;">
+                                        <th style="padding: 10px; text-align: left;">Producto</th>
+                                        <th style="padding: 10px; text-align: center;">Cantidad</th>
+                                        <th style="padding: 10px; text-align: right;">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${itemsHTML}
+                                </tbody>
+                            </table>
+                            
+                            <div class="total">
+                                <h2 style="margin: 0; color: #16a34a;">Total Pagado: $${venta.total.toLocaleString('es-CL')}</h2>
+                            </div>
+                            
+                            <p><strong>📦 Envío a:</strong><br>${venta.cliente.direccion}</p>
+                            
+                            <p style="margin-top: 30px;">Nos pondremos en contacto contigo pronto para coordinar la entrega.</p>
+                            
+                            <p style="color: #666; margin-top: 30px;">
+                                <small>Número de orden: ${venta._id}</small><br>
+                                <small>Fecha: ${new Date().toLocaleString('es-CL')}</small>
+                            </p>
+                            
+                            <p style="text-align: center; margin-top: 40px;">
+                                <a href="https://mac-line.cl" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block;">Volver a la tienda</a>
+                            </p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `
+        };
+        
+        await transporter.sendMail(mailOptions);
+        console.log('✅ Email enviado al cliente:', venta.cliente.email);
+        
+    } catch (error) {
+        console.error('❌ Error enviando email al cliente:', error);
+    }
+}
 
 // ==================== PÁGINAS DE RESULTADO ====================
 

@@ -60,40 +60,12 @@ function irASlide(index) {
 
 // ========== CARGAR PRODUCTOS ==========
 
-// ========== MEZCLAR PRODUCTOS CON VARIEDAD ==========
-function mezclarProductosConVariedad(productos) {
-    const porCategoria = {
-        celulares: [], audifonos: [], relojes: [], notebooks: [], consolas: []
-    };
-    
-    productos.forEach(p => {
-        if (porCategoria[p.categoria]) porCategoria[p.categoria].push(p);
-    });
-    
-    Object.keys(porCategoria).forEach(cat => {
-        porCategoria[cat] = porCategoria[cat].sort(() => Math.random() - 0.5);
-    });
-    
-    const resultado = [];
-    const categorias = Object.keys(porCategoria);
-    let maxLength = Math.max(...Object.values(porCategoria).map(arr => arr.length));
-    
-    for (let i = 0; i < maxLength; i++) {
-        categorias.forEach(cat => {
-            if (porCategoria[cat][i]) resultado.push(porCategoria[cat][i]);
-        });
-    }
-    
-    return resultado;
-}
-
 async function cargarProductos() {
     try {
         const response = await fetch(`${API_URL}/productos`);
         if (!response.ok) throw new Error('Error al cargar productos');
         
-        const productos = await response.json();
-        productosActuales = mezclarProductosConVariedad(productos);
+        productosActuales = await response.json();
         renderizarProductos(filtroActivo);
     } catch (error) {
         console.error('Error:', error);

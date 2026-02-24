@@ -204,6 +204,25 @@ async function agregarProducto(event) {
     const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
     const imagenesValidas = imagenesAdicionales.filter(img => img !== null);
     
+    // Obtener colores y capacidades (opcionales)
+    const coloresInput = document.getElementById('colores')?.value || '';
+    const capacidadesInput = document.getElementById('capacidades')?.value || '';
+    
+    const colores = coloresInput ? coloresInput.split(',').map(c => c.trim()).filter(c => c) : [];
+    const capacidades = capacidadesInput ? capacidadesInput.split(',').map(cap => {
+        const match = cap.trim().match(/^(.+?)\s*\(([+\-]?\d+)\)$/);
+        if (match) {
+            return {
+                nombre: match[1].trim(),
+                precioIncremental: parseInt(match[2])
+            };
+        }
+        return {
+            nombre: cap.trim(),
+            precioIncremental: 0
+        };
+    }).filter(c => c.nombre) : [];
+    
     const nuevoProducto = {
         nombre: document.getElementById('nombre').value,
         categoria: document.getElementById('categoria').value,
@@ -214,8 +233,12 @@ async function agregarProducto(event) {
         stock: parseInt(document.getElementById('stock').value),
         imagenPortada: imagenPortadaBase64,
         imagenes: imagenesValidas,
-        emoji: '📦'
+        emoji: '📦',
+        colores: colores,
+        capacidades: capacidades
     };
+    
+    console.log('📦 Enviando producto:', nuevoProducto);
     
     try {
         const response = await fetch(`${API_URL}/productos`, {
@@ -224,7 +247,11 @@ async function agregarProducto(event) {
             body: JSON.stringify(nuevoProducto)
         });
         
-        if (!response.ok) throw new Error(`Error ${response.status}`);
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || `Error ${response.status}`);
+        }
         
         alert('✅ Producto agregado exitosamente');
         document.getElementById('formularioProducto').reset();
@@ -232,8 +259,8 @@ async function agregarProducto(event) {
         await cargarProductos();
         mostrarSeccion('productos');
     } catch (error) {
-        console.error('Error:', error);
-        alert('❌ Error al agregar producto');
+        console.error('❌ Error completo:', error);
+        alert('❌ Error al agregar producto: ' + error.message);
     }
 }
 

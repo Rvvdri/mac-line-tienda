@@ -127,8 +127,8 @@
                             <select id="categoria" required>
                                 <option value="">Seleccionar...</option>
                                 <option value="celulares">📱 Celulares</option>
-                                <option value="televisores">📺 Televisores</option>
-                                <option value="computadores">💻 Computadores</option>
+                                <option value="consolas">🎮 Consolas</option>
+                                <option value="notebooks">💻 Notebooks</option>
                                 <option value="audifonos">🎧 Audífonos</option>
                                 <option value="relojes">⌚ Relojes</option>
                             </select>
@@ -215,6 +215,23 @@
                             <label>Imagen 5</label>
                             <input type="file" id="imagen5" accept="image/*" onchange="previsualizarImagen(event, 5)">
                             <div id="preview5" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 5</p></div>
+                        </div>
+                    </div>
+
+                    <!-- VARIANTES (OPCIONALES) -->
+                    <div class="form-row" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid #eee;">
+                        <div class="form-group">
+                            <label for="colores">🎨 Colores (opcional)</label>
+                            <input type="text" id="colores" placeholder="Titanio Natural, Titanio Azul, Titanio Blanco">
+                            <small>Separar por comas. Ejemplo: Titanio Natural, Titanio Azul</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="capacidades">💾 Capacidades (opcional)</label>
+                            <input type="text" id="capacidades" placeholder="256GB (+0), 512GB (+100000), 1TB (+200000)">
+                            <small>Formato: NOMBRE (+PRECIO). Ejemplo: 256GB (+0), 512GB (+100000)</small>
                         </div>
                     </div>
 
