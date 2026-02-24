@@ -260,6 +260,11 @@ app.post('/api/crear-preferencia', async (req, res) => {
     try {
         const { cliente, items, total } = req.body;
         
+        console.log('📦 Creando preferencia de Mercado Pago...');
+        console.log('👤 Cliente:', cliente);
+        console.log('🛒 Items:', items);
+        console.log('💰 Total:', total);
+        
         const preference = new Preference(client);
         
         // Crear items en formato de Mercado Pago
@@ -269,6 +274,8 @@ app.post('/api/crear-preferencia', async (req, res) => {
             quantity: Number(item.cantidad),
             currency_id: 'CLP'
         }));
+        
+        console.log('📋 Items formateados:', mpItems);
         
         // Generar referencia única
         const externalReference = `ORDER-${Date.now()}`;
@@ -297,6 +304,8 @@ app.post('/api/crear-preferencia', async (req, res) => {
             notification_url: `${req.protocol}://${req.get('host')}/api/webhook-mercadopago`
         };
         
+        console.log('🔧 Creando preferencia en Mercado Pago...');
+        
         const response = await preference.create({ body });
         
         console.log('✅ Preferencia de Mercado Pago creada:', response.id);
@@ -324,10 +333,15 @@ app.post('/api/crear-preferencia', async (req, res) => {
         });
         
     } catch (error) {
-        console.error('❌ Error creando preferencia de Mercado Pago:', error);
+        console.error('❌ ERROR COMPLETO:', error);
+        console.error('❌ Error name:', error.name);
+        console.error('❌ Error message:', error.message);
+        console.error('❌ Error stack:', error.stack);
+        
         res.status(500).json({ 
             error: 'Error al crear preferencia de pago',
-            details: error.message 
+            details: error.message,
+            type: error.name
         });
     }
 });
