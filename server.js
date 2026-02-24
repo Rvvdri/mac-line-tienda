@@ -269,7 +269,7 @@ app.post('/api/crear-preferencia', async (req, res) => {
         
         // Crear items en formato de Mercado Pago
         const mpItems = items.map(item => ({
-            title: item.nombre,
+            title: String(item.nombre),
             unit_price: Number(item.precio),
             quantity: Number(item.cantidad),
             currency_id: 'CLP'
@@ -280,39 +280,36 @@ app.post('/api/crear-preferencia', async (req, res) => {
         // Generar referencia única
         const externalReference = `ORDER-${Date.now()}`;
         
-        // Construir URLs absolutas
-        const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+        // Obtener host correctamente
+        const protocol = req.protocol;
+        const host = req.get('host');
+        const baseUrl = `${protocol}://${host}`;
         
-        // Crear preferencia
+        console.log('🌐 Base URL:', baseUrl);
+        
+        // Crear preferencia con configuración mínima
         const body = {
             items: mpItems,
             payer: {
-                name: cliente.nombre,
-                email: cliente.email,
-                phone: {
-                    number: cliente.telefono
-                },
-                address: {
-                    street_name: cliente.direccion
-                }
+                name: String(cliente.nombre),
+                email: String(cliente.email)
             },
             back_urls: {
                 success: `${baseUrl}/pago-exitoso`,
                 failure: `${baseUrl}/pago-fallido`,
                 pending: `${baseUrl}/pago-pendiente`
             },
-            auto_return: 'approved',
             statement_descriptor: 'MAC LINE',
-            external_reference: externalReference,
-            notification_url: `${baseUrl}/api/webhook-mercadopago`
+            external_reference: externalReference
         };
         
-        console.log('🔗 Back URLs:', body.back_urls);
+        console.log('📤 Body enviado a Mercado Pago:', JSON.stringify(body, null, 2));
         console.log('🔧 Creando preferencia en Mercado Pago...');
         
         const response = await preference.create({ body });
         
         console.log('✅ Preferencia de Mercado Pago creada:', response.id);
+        console.log('🔗 Init point:', response.init_point);
         
         // GUARDAR VENTA EN BD CON REFERENCIA
         const venta = {
@@ -340,12 +337,17 @@ app.post('/api/crear-preferencia', async (req, res) => {
         console.error('❌ ERROR COMPLETO:', error);
         console.error('❌ Error name:', error.name);
         console.error('❌ Error message:', error.message);
-        console.error('❌ Error stack:', error.stack);
+        console.error('❌ Error cause:', error.cause);
+        
+        // Si hay detalles del error de Mercado Pago
+        if (error.cause && error.cause.length > 0) {
+            console.error('❌ Detalles de Mercado Pago:', error.cause);
+        }
         
         res.status(500).json({ 
             error: 'Error al crear preferencia de pago',
             details: error.message,
-            type: error.name
+            mpError: error.error || null
         });
     }
 });
