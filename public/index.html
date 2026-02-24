@@ -8,13 +8,6 @@
     <link rel="stylesheet" href="estilos-carrito.css">
 </head>
 <body>
-    <!-- BOTÓN MENÚ HAMBURGUESA -->
-    <button class="mobile-menu-btn-modern" onclick="toggleMobileMenu()" aria-label="Menú">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    
     <!-- OVERLAY PARA CERRAR MENÚ -->
     <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
     
@@ -110,6 +103,13 @@
 
     <!-- NAVBAR STICKY CON BÚSQUEDA Y LINKS -->
     <nav class="navbar-sticky">
+        <!-- BOTÓN HAMBURGUESA DENTRO DEL NAVBAR -->
+        <button class="mobile-menu-btn-modern" onclick="toggleMobileMenu()" aria-label="Menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
         <div class="container">
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="🔍 Buscar productos..." onkeyup="buscarProductos()">
