@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Cargar datos del producto
 async function cargarProducto(id) {
     try {
-        const response = await fetch(`${API_URL}/productos/${id}`);
+        const response = await fetch(`${API_URL}/productos/${id}?t=${Date.now()}`);
         if (!response.ok) throw new Error('Producto no encontrado');
         
         productoActual = await response.json();

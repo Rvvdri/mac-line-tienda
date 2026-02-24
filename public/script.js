@@ -63,7 +63,8 @@ function irASlide(index) {
 
 async function cargarProductos() {
     try {
-        const response = await fetch(`${API_URL}/productos`);
+        // Agregar timestamp para evitar caché
+        const response = await fetch(`${API_URL}/productos?t=${Date.now()}`);
         if (!response.ok) throw new Error('Error al cargar productos');
         
         productosActuales = await response.json();
@@ -223,32 +224,54 @@ function renderizarPorSecciones() {
 }
 
 function crearCardProducto(producto) {
-    const precioFinal = producto.descuento 
-        ? producto.precio * (1 - producto.descuento / 100)
-        : producto.precio;
+    const descuento = producto.descuento || 0;
+    const precioOriginal = descuento > 0 ? producto.precioOriginal || producto.precio : null;
+    const precioFinal = producto.precio;
+    const tieneVariantes = (producto.colores && producto.colores.length > 0) || 
+                          (producto.capacidades && producto.capacidades.length > 0);
+    
+    // Stock class
+    let stockClass = 'disponible';
+    let stockTexto = `✅ ${producto.stock || 0} disponibles`;
+    
+    if (producto.stock === 0) {
+        stockClass = 'agotado';
+        stockTexto = '❌ Agotado';
+    } else if (producto.stock < 5) {
+        stockClass = 'bajo';
+        stockTexto = `⚠️ Últimas ${producto.stock} unidades`;
+    }
     
     return `
-        <div class="producto-card" onclick="abrirProducto('${producto.id || producto._id}')">
-            ${producto.descuento ? `<span class="descuento-badge">-${producto.descuento}%</span>` : ''}
+        <div class="producto-card" data-producto-id="${producto.id || producto._id}" onclick="window.location.href='producto.html?id=${producto.id || producto._id}'">
+            ${descuento > 0 ? `<div class="descuento-badge">-${descuento}%</div>` : ''}
             
-            <div class="producto-categoria">${producto.categoria?.toUpperCase() || 'PRODUCTO'}</div>
-            
-            <h3 class="producto-titulo">${producto.nombre}</h3>
-            
-            <div class="producto-imagen-wrapper">
-                ${producto.imagenPortada 
-                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" class="producto-imagen">` 
-                    : `<div class="producto-emoji">${producto.emoji || '📦'}</div>`
-                }
+            <div class="producto-header">
+                <span class="producto-categoria">${(producto.categoria || 'producto').toUpperCase()}</span>
+                <h3 class="producto-titulo">${producto.nombre}</h3>
             </div>
             
-            <div class="producto-precio-wrapper">
-                ${producto.descuento ? 
-                    `<p class="producto-precio-anterior">Antes: $${producto.precio.toLocaleString('es-CL')}</p>` 
-                    : ''
-                }
-                <p class="producto-precio">Desde $${precioFinal.toLocaleString('es-CL')}</p>
-                <p class="producto-stock">✅ ${producto.stock || 0} disponibles</p>
+            <div class="producto-imagen-container">
+                ${producto.imagenPortada 
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" style="max-width: 100%; height: auto;" onerror="this.parentElement.innerHTML='${producto.emoji || '📦'}'; this.parentElement.style.fontSize='5rem';">` 
+                    : `<span class="producto-emoji" style="font-size: 5rem;">${producto.emoji || '📦'}</span>`}
+            </div>
+            
+            <div class="producto-info">
+                ${precioOriginal ? `
+                    <p class="precio-original">
+                        Antes: $${precioOriginal.toLocaleString('es-CL')}
+                    </p>
+                ` : ''}
+                
+                <p class="producto-precio">
+                    ${tieneVariantes ? '<span style="font-size: 0.875rem; color: #94a3b8; font-weight: 500;">Desde </span>' : ''}
+                    $${precioFinal.toLocaleString('es-CL')}
+                </p>
+                
+                <p class="stock-${stockClass}">
+                    ${stockTexto}
+                </p>
             </div>
         </div>
     `;
