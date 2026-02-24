@@ -354,7 +354,7 @@ function procederPago() {
     if (pagoModal) pagoModal.style.display = 'flex';
     
     const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
-    const envio = 5000;
+    const envio = 0;
     const total = subtotal + envio;
     
     const subtotalEl = document.getElementById('subtotalPago');
@@ -362,7 +362,7 @@ function procederPago() {
     const totalEl = document.getElementById('totalPago');
     
     if (subtotalEl) subtotalEl.textContent = subtotal.toLocaleString('es-CL');
-    if (envioEl) envioEl.textContent = envio.toLocaleString('es-CL');
+    if (envioEl) envioEl.textContent = 'GRATIS';
     if (totalEl) totalEl.textContent = total.toLocaleString('es-CL');
 }
 
