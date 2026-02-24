@@ -376,7 +376,7 @@ body {
 /* GRID DE PRODUCTOS */
 .productos-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
@@ -959,7 +959,7 @@ body {
 
 @media (max-width: 768px) {
     .productos-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
         gap: 0.875rem;
         padding: 0 0.75rem;
     }
@@ -1028,7 +1028,7 @@ body {
 
 @media (max-width: 375px) {
     .productos-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
         gap: 0.5rem;
         padding: 0 0.5rem;
     }
