@@ -280,6 +280,9 @@ app.post('/api/crear-preferencia', async (req, res) => {
         // Generar referencia única
         const externalReference = `ORDER-${Date.now()}`;
         
+        // Construir URLs absolutas
+        const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+        
         // Crear preferencia
         const body = {
             items: mpItems,
@@ -294,16 +297,17 @@ app.post('/api/crear-preferencia', async (req, res) => {
                 }
             },
             back_urls: {
-                success: `${req.protocol}://${req.get('host')}/pago-exitoso`,
-                failure: `${req.protocol}://${req.get('host')}/pago-fallido`,
-                pending: `${req.protocol}://${req.get('host')}/pago-pendiente`
+                success: `${baseUrl}/pago-exitoso`,
+                failure: `${baseUrl}/pago-fallido`,
+                pending: `${baseUrl}/pago-pendiente`
             },
             auto_return: 'approved',
             statement_descriptor: 'MAC LINE',
             external_reference: externalReference,
-            notification_url: `${req.protocol}://${req.get('host')}/api/webhook-mercadopago`
+            notification_url: `${baseUrl}/api/webhook-mercadopago`
         };
         
+        console.log('🔗 Back URLs:', body.back_urls);
         console.log('🔧 Creando preferencia en Mercado Pago...');
         
         const response = await preference.create({ body });
