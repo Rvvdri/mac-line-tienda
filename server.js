@@ -15,13 +15,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.EMAIL_USER || 'tu-email@gmail.com',  // TU EMAIL AQUÍ
-        pass: process.env.EMAIL_PASS || 'tu-contraseña-app'    // CONTRASEÑA DE APLICACIÓN
+        user: 'linemac910@gmail.com',
+        pass: 'kqlxbwylmztcipco'
     }
 });
 
 // Email del dueño (donde llegarán las notificaciones de venta)
-const EMAIL_DUENO = process.env.EMAIL_DUENO || 'tu-email@gmail.com';
+const EMAIL_DUENO = 'linemac910@gmail.com';
 
 // ==================== MERCADO PAGO ====================
 // CONFIGURACIÓN CON CREDENCIALES REALES
@@ -300,7 +300,11 @@ app.post('/api/crear-preferencia', async (req, res) => {
                 pending: `${baseUrl}/pago-pendiente`
             },
             statement_descriptor: 'MAC LINE',
-            external_reference: externalReference
+            external_reference: externalReference,
+            payment_methods: {
+                installments: 12,  // Hasta 12 cuotas
+                default_installments: 1  // Por defecto sin cuotas
+            }
         };
         
         console.log('📤 Body enviado a Mercado Pago:', JSON.stringify(body, null, 2));
