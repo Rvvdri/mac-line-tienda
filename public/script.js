@@ -142,6 +142,7 @@ function renderizarProductos(filtro = 'todos') {
                     ${stockTexto}
                 </p>
                 
+                <!-- BOTÓN DESACTIVADO: Solo se agrega desde producto.html
                 ${producto.stock > 0 ? `
                     <button class="btn-agregar-carrito" onclick="event.stopPropagation(); ${tieneVariantes ? `abrirModalVariantes('${productoId}')` : `agregarAlCarritoDirecto('${productoId}')`}">
                         🛒 Agregar al Carrito
@@ -151,6 +152,7 @@ function renderizarProductos(filtro = 'todos') {
                         Agotado
                     </button>
                 `}
+                -->
             </div>
         </div>
     `}).join('');

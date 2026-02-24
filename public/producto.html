@@ -337,21 +337,29 @@
                 margin: 0 !important;
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
             }
+                position: fixed !important;
+                bottom: 80px !important;
+                left: 1rem !important;
+                right: 1rem !important;
+                z-index: 999 !important;
+                margin: 0 !important;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+            }
             
             /* Carrito flotante móvil */
             .cart-floating-mobile {
                 display: flex !important;
             }
             
-            /* Ocultar carrito del navbar en móvil */
+            /* Mostrar carrito del navbar en móvil también */
             .navbar-sticky .cart-link {
-                display: none !important;
+                display: flex !important;
             }
         }
         
-        /* Carrito flotante para móvil */
+        /* Carrito flotante para móvil y desktop */
         .cart-floating-mobile {
-            display: none;
+            display: flex; /* VISIBLE en desktop también */
             position: fixed;
             bottom: 1rem;
             right: 1rem;
