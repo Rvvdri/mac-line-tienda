@@ -340,7 +340,18 @@ function agregarAlCarritoDetalle() {
         incrementoPrecio = parseInt(capacidadSeleccionadaDiv.dataset.incremento) || 0;
     }
     
-    const precioFinal = productoActual.precio + incrementoPrecio;
+    const precioFinal = (productoActual.precio || 0) + incrementoPrecio;
+    
+    console.log('💰 Calculando precio:');
+    console.log('  - Precio base:', productoActual.precio);
+    console.log('  - Incremento:', incrementoPrecio);
+    console.log('  - Precio final:', precioFinal);
+    
+    if (!precioFinal || precioFinal === 0) {
+        alert('⚠️ Error: El producto no tiene precio configurado');
+        console.error('❌ Producto sin precio:', productoActual);
+        return;
+    }
     
     // Obtener carrito actual
     let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
@@ -365,12 +376,15 @@ function agregarAlCarritoDetalle() {
             nombre: productoActual.nombre,
             precio: precioFinal,
             cantidad: 1,
-            imagenPortada: productoActual.imagenPortada || productoActual.emoji,
+            imagenPortada: productoActual.imagenPortada || null,
             emoji: productoActual.emoji || '📦',
             color: colorSeleccionado,
             capacidad: capacidadSeleccionada,
-            stock: productoActual.stock
+            stock: productoActual.stock,
+            categoria: productoActual.categoria
         };
+        
+        console.log('📦 Nuevo item para carrito:', itemCarrito);
         
         carrito.push(itemCarrito);
     }
@@ -378,7 +392,9 @@ function agregarAlCarritoDetalle() {
     // Guardar
     localStorage.setItem('carrito', JSON.stringify(carrito));
     
-    console.log('✅ Carrito actualizado:', carrito);
+    console.log('✅ Carrito guardado en localStorage');
+    console.log('📦 Total items:', carrito.length);
+    console.log('🛒 Carrito completo:', JSON.stringify(carrito, null, 2));
     
     // Actualizar contador
     actualizarContadorCarrito();

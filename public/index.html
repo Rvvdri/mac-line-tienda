@@ -8,88 +8,10 @@
     <link rel="stylesheet" href="estilos-carrito.css">
 </head>
 <body>
+   
+    
     <!-- OVERLAY PARA CERRAR MENÚ -->
     <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
-    
-    <!-- MENÚ LATERAL MÓVIL -->
-    <nav class="mobile-nav-modern" id="mobileNav" style="transform: translateX(-100%); pointer-events: none;">
-        <div class="mobile-nav-header-modern">
-            <div class="logo-mobile">
-                <h2>🖥️ MAC LINE</h2>
-                <p>Tecnología Premium</p>
-            </div>
-            <button class="mobile-nav-close-modern" onclick="closeMobileMenu()">
-                <span>✕</span>
-            </button>
-        </div>
-        
-        <div class="mobile-nav-search">
-            <input type="text" id="searchInputMobile" placeholder="🔍 Buscar productos..." onkeyup="buscarProductos()">
-        </div>
-        
-        <ul class="mobile-nav-links-modern">
-            <li>
-                <a href="#inicio" onclick="closeMobileMenu()">
-                    <span class="nav-icon">🏠</span>
-                    <span class="nav-text">Inicio</span>
-                </a>
-            </li>
-            <li>
-                <a href="#productos" onclick="closeMobileMenu()">
-                    <span class="nav-icon">📦</span>
-                    <span class="nav-text">Productos</span>
-                </a>
-            </li>
-            <li class="nav-divider">
-                <span>Categorías</span>
-            </li>
-            <li>
-                <a href="#" onclick="filtrarProductos('celulares'); closeMobileMenu();">
-                    <span class="nav-icon">📱</span>
-                    <span class="nav-text">Celulares</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" onclick="filtrarProductos('audifonos'); closeMobileMenu();">
-                    <span class="nav-icon">🎧</span>
-                    <span class="nav-text">Audífonos</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" onclick="filtrarProductos('relojes'); closeMobileMenu();">
-                    <span class="nav-icon">⌚</span>
-                    <span class="nav-text">Relojes</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" onclick="filtrarProductos('notebooks'); closeMobileMenu();">
-                    <span class="nav-icon">💻</span>
-                    <span class="nav-text">Computadores</span>
-                </a>
-            </li>
-            <li>
-                <a href="#" onclick="filtrarProductos('consolas'); closeMobileMenu();">
-                    <span class="nav-icon">🎮</span>
-                    <span class="nav-text">Consolas</span>
-                </a>
-            </li>
-            <li class="nav-divider">
-                <span>Compras</span>
-            </li>
-            <li>
-                <a href="#" onclick="abrirCarrito(); closeMobileMenu();" class="cart-menu-link">
-                    <span class="nav-icon">🛒</span>
-                    <span class="nav-text">Mi Carrito</span>
-                    <span class="cart-badge">0</span>
-                </a>
-            </li>
-        </ul>
-        
-        <div class="mobile-nav-footer">
-            <p>© 2026 MAC LINE</p>
-            <p>Tecnología Premium</p>
-        </div>
-    </nav>
     
     <!-- NAVBAR FIJA EN TOP -->
     <nav class="navbar">
@@ -103,13 +25,6 @@
 
     <!-- NAVBAR STICKY CON BÚSQUEDA Y LINKS -->
     <nav class="navbar-sticky">
-        <!-- BOTÓN HAMBURGUESA DENTRO DEL NAVBAR -->
-        <button class="mobile-menu-btn-modern" onclick="toggleMobileMenu()" aria-label="Menú">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        
         <div class="container">
             <div class="search-bar">
                 <input type="text" id="searchInput" placeholder="🔍 Buscar productos..." onkeyup="buscarProductos()">
@@ -166,7 +81,7 @@
                 <div class="promo-content">
                     <span class="promo-emoji">💻</span>
                     <h3>¡ENVÍO GRATIS!</h3>
-                    <p>En compras sobre $100.000 a todo Chile</p>
+                    <p>En compras sobre $50.000 a todo Chile</p>
                 </div>
             </div>
         </div>
@@ -192,7 +107,7 @@
                 <button class="filtro-btn" onclick="filtrarProductos('celulares')">📱 Celulares</button>
                 <button class="filtro-btn" onclick="filtrarProductos('audifonos')">🎧 Audífonos</button>
                 <button class="filtro-btn" onclick="filtrarProductos('relojes')">⌚ Relojes</button>
-                <button class="filtro-btn" onclick="filtrarProductos('consolas')">🎮 Consolas</button>
+                <button class="filtro-btn" onclick="filtrarProductos('televisores')">📺 Televisores</button>
                 <button class="filtro-btn" onclick="filtrarProductos('notebooks')">💻 Computadores</button>
             </div>
 
@@ -211,7 +126,7 @@
                     <div class="trust-badge-icon-compact">🚚</div>
                     <div class="trust-badge-text-compact">
                         <h4>Envío Gratis</h4>
-                        <p>Sobre $100.000</p>
+                        <p>Sobre $50.000</p>
                     </div>
                 </div>
                 
@@ -228,6 +143,14 @@
                     <div class="trust-badge-text-compact">
                         <h4>Garantía 1 Año</h4>
                         <p>Todos los productos</p>
+                    </div>
+                </div>
+                
+                <div class="trust-badge-compact">
+                    <div class="trust-badge-icon-compact">↩️</div>
+                    <div class="trust-badge-text-compact">
+                        <h4>Devolución 30 Días</h4>
+                        <p>Sin preguntas</p>
                     </div>
                 </div>
             </div>
@@ -262,32 +185,393 @@
                 <button class="close-btn" onclick="cerrarPago()">&times;</button>
             </div>
             <form id="formPago" onsubmit="procesarPago(event)">
-                <div class="form-group">
-                    <label for="nombre">Nombre Completo *</label>
-                    <input type="text" id="nombre" required placeholder="Juan Pérez">
+                <!-- DATOS PERSONALES -->
+                <div class="form-section">
+                    <h3 class="form-section-title">📋 Datos Personales</h3>
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo *</label>
+                        <input type="text" id="nombre" required placeholder="Juan Pérez González">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" required placeholder="juan@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono *</label>
+                            <input type="tel" id="telefono" required placeholder="+56912345678">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" required placeholder="tu@email.com">
+
+                <!-- DATOS DE ENVÍO -->
+                <div class="form-section">
+                    <h3 class="form-section-title">📦 Dirección de Envío</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ciudad">Ciudad *</label>
+                            <input type="text" id="ciudad" required placeholder="Santiago">
+                        </div>
+                        <div class="form-group">
+                            <label for="comuna">Comuna *</label>
+                            <input type="text" id="comuna" required placeholder="Las Condes">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group form-group-large">
+                            <label for="calle">Calle/Avenida *</label>
+                            <input type="text" id="calle" required placeholder="Avenida Apoquindo">
+                        </div>
+                        <div class="form-group form-group-small">
+                            <label for="numero">Número *</label>
+                            <input type="text" id="numero" required placeholder="4501">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Depto/Casa/Oficina (Opcional)</label>
+                        <input type="text" id="direccion" placeholder="Depto 305, Torre A">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="telefono">Teléfono *</label>
-                    <input type="tel" id="telefono" required placeholder="+56912345678">
+
+                <!-- MÉTODO DE ENTREGA -->
+                <div class="form-section">
+                    <h3 class="form-section-title">🚚 Método de Entrega</h3>
+                    <div class="delivery-options">
+                        <label class="delivery-option">
+                            <input type="radio" name="metodoEntrega" value="normal" data-precio="3990" checked onchange="actualizarTotalPago()">
+                            <div class="delivery-card">
+                                <div class="delivery-header">
+                                    <span class="delivery-icon">🚚</span>
+                                    <div class="delivery-info">
+                                        <h4>Envío Normal</h4>
+                                        <p>3-5 días hábiles</p>
+                                    </div>
+                                </div>
+                                <div class="delivery-price">$3.990</div>
+                            </div>
+                        </label>
+                        
+                        <label class="delivery-option">
+                            <input type="radio" name="metodoEntrega" value="flash" data-precio="4990" onchange="actualizarTotalPago()">
+                            <div class="delivery-card">
+                                <div class="delivery-header">
+                                    <span class="delivery-icon">⚡</span>
+                                    <div class="delivery-info">
+                                        <h4>Envío Flash</h4>
+                                        <p>24-48 horas</p>
+                                    </div>
+                                </div>
+                                <div class="delivery-price">$4.990</div>
+                            </div>
+                        </label>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="direccion">Dirección de Entrega *</label>
-                    <input type="text" id="direccion" required placeholder="Calle Principal 123, Santiago">
-                </div>
+
+                <!-- RESUMEN DE PAGO -->
                 <div class="total-pago">
-                    <p>Subtotal: $<span id="subtotalPago">0</span></p>
-                    <p>Envío: $<span id="envioPago">5000</span></p>
-                    <h3>Total: $<span id="totalPago">0</span></h3>
+                    <div class="total-row">
+                        <span>Subtotal:</span>
+                        <span>$<span id="subtotalPago">0</span></span>
+                    </div>
+                    <div class="total-row">
+                        <span>Envío:</span>
+                        <span>$<span id="envioPago">3.990</span></span>
+                    </div>
+                    <div class="total-row total-final">
+                        <span>Total a Pagar:</span>
+                        <span>$<span id="totalPago">0</span></span>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-full">Pagar con Mercado Pago</button>
-                <button type="button" class="btn btn-secondary btn-full" onclick="cerrarPago()">Cancelar</button>
+                
+                <div class="form-buttons">
+                    <button type="button" class="btn btn-secondary" onclick="cerrarPago()">
+                        ← Continuar Comprando
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        💳 Proceder al Pago
+                    </button>
+                </div>
             </form>
         </div>
     </div>
+
+    <style>
+        /* Modal responsive */
+        .payment-modal {
+            max-width: 600px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 1rem;
+        }
+        
+        .form-section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-section:last-of-type {
+            border-bottom: none;
+        }
+        
+        .form-section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-group-large {
+            grid-column: span 2;
+        }
+        
+        .form-group-small {
+            grid-column: span 1;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-modal {
+                width: 100%;
+                max-height: 100vh;
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group-large,
+            .form-group-small {
+                grid-column: span 1;
+            }
+            
+            .form-section-title {
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Delivery options */
+        .delivery-options {
+            display: grid;
+            gap: 0.75rem;
+        }
+        
+        .delivery-option {
+            cursor: pointer;
+            display: block;
+        }
+        
+        .delivery-option input[type="radio"] {
+            display: none;
+        }
+        
+        .delivery-card {
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .delivery-option:hover .delivery-card {
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+        }
+        
+        .delivery-option input[type="radio"]:checked + .delivery-card {
+            border-color: #00d4ff;
+            background: rgba(0, 212, 255, 0.15);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.2);
+        }
+        
+        .delivery-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .delivery-icon {
+            font-size: 1.75rem;
+        }
+        
+        .delivery-info h4 {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .delivery-info p {
+            margin: 0.25rem 0 0 0;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        
+        .delivery-price {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+        
+        @media (max-width: 768px) {
+            .delivery-card {
+                padding: 0.875rem;
+            }
+            
+            .delivery-icon {
+                font-size: 1.5rem;
+            }
+            
+            .delivery-info h4 {
+                font-size: 0.875rem;
+            }
+            
+            .delivery-info p {
+                font-size: 0.75rem;
+            }
+            
+            .delivery-price {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Total section */
+        .total-pago {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.625rem;
+            font-size: 0.95rem;
+            color: #e2e8f0;
+        }
+        
+        .total-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .total-final {
+            margin-top: 0.875rem;
+            padding-top: 0.875rem;
+            border-top: 2px solid rgba(0, 212, 255, 0.3);
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+        
+        @media (max-width: 768px) {
+            .total-pago {
+                padding: 1rem;
+            }
+            
+            .total-row {
+                font-size: 0.875rem;
+            }
+            
+            .total-final {
+                font-size: 1rem;
+            }
+        }
+        
+        /* Buttons */
+        .form-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .form-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .btn {
+                padding: 0.875rem;
+                font-size: 0.95rem;
+            }
+            
+            /* En móvil, botón de pagar primero */
+            .form-buttons {
+                display: flex;
+                flex-direction: column-reverse;
+            }
+        }
+        
+        /* Scrollbar del modal */
+        .payment-modal::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .payment-modal::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        .payment-modal::-webkit-scrollbar-thumb {
+            background: rgba(0, 212, 255, 0.3);
+            border-radius: 4px;
+        }
+        
+        .payment-modal::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 212, 255, 0.5);
+        }
+    </style>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -301,29 +585,6 @@
     
     <!-- FUNCIONES DEL MENÚ MÓVIL -->
     <script>
-    // Ocultar hamburguesa cuando se abre modal
-    function observarModales() {
-        const hamburguesa = document.querySelector('.mobile-menu-btn-modern');
-        const modales = document.querySelectorAll('.modal');
-        
-        modales.forEach(modal => {
-            const observer = new MutationObserver(() => {
-                if (modal.classList.contains('active') || modal.style.display !== 'none') {
-                    if (hamburguesa) hamburguesa.style.display = 'none';
-                } else {
-                    if (hamburguesa) hamburguesa.style.display = '';
-                }
-            });
-            
-            observer.observe(modal, { 
-                attributes: true, 
-                attributeFilter: ['class', 'style'] 
-            });
-        });
-    }
-    
-    document.addEventListener('DOMContentLoaded', observarModales);
-    
     function toggleMobileMenu() {
         const mobileNav = document.getElementById('mobileNav');
         const overlay = document.querySelector('.mobile-overlay');
@@ -336,18 +597,12 @@
         btn.classList.toggle('active');
         
         if (mobileNav.classList.contains('active')) {
-            // Quitar transform inline al abrir
-            mobileNav.style.transform = '';
-            mobileNav.style.pointerEvents = '';
             document.body.style.overflow = 'hidden';
             // Sincronizar contador del carrito
             if (cartBadge && cartCount) {
                 cartBadge.textContent = cartCount.textContent;
             }
         } else {
-            // Restaurar transform al cerrar
-            mobileNav.style.transform = 'translateX(-100%)';
-            mobileNav.style.pointerEvents = 'none';
             document.body.style.overflow = '';
         }
     }
@@ -360,10 +615,6 @@
         mobileNav.classList.remove('active');
         overlay.classList.remove('active');
         btn.classList.remove('active');
-        
-        // Restaurar transform
-        mobileNav.style.transform = 'translateX(-100%)';
-        mobileNav.style.pointerEvents = 'none';
         document.body.style.overflow = '';
     }
 
@@ -387,20 +638,6 @@
         </svg>
         <span class="whatsapp-text">WhatsApp</span>
     </a>
-
-    <!-- Botón flotante de Carrito -->
-    <button 
-        class="cart-float" 
-        onclick="abrirCarrito()"
-        aria-label="Abrir carrito"
-    >
-        <svg viewBox="0 0 24 24" class="cart-icon" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="9" cy="21" r="1"/>
-            <circle cx="20" cy="21" r="1"/>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-        </svg>
-        <span class="cart-badge-float">0</span>
-    </button>
 
     <style>
     .whatsapp-float {
@@ -455,22 +692,12 @@
         border: none;
         border-radius: 12px;
         cursor: pointer;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 5px;
         box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         transition: all 0.3s ease;
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .mobile-menu-btn-modern span {
-        width: 24px;
-        height: 3px;
-        background: white;
-        border-radius: 2px;
-        transition: all 0.3s ease;
+        color: white;
+        font-size: 1.5rem;
     }
 
     .mobile-menu-btn-modern:hover {
@@ -480,13 +707,6 @@
 
     .mobile-menu-btn-modern:active {
         transform: scale(0.95);
-    }
-
-    /* Ocultar botón cuando el menú está abierto */
-    .mobile-menu-btn-modern.active {
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
     }
 
     .mobile-nav-modern {
@@ -814,23 +1034,3 @@
     </style>
 </body>
 </html>
-
-<script>
-// Sincronizar contador del carrito flotante
-function actualizarContadorCarrito() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
-    
-    // Actualizar todos los badges
-    const badges = document.querySelectorAll('.cart-count, .cart-badge, .cart-badge-float');
-    badges.forEach(badge => {
-        if (badge) badge.textContent = totalItems;
-    });
-}
-
-// Ejecutar al cargar
-document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
-
-// Ejecutar cada vez que cambie el carrito
-window.addEventListener('storage', actualizarContadorCarrito);
-</script>
