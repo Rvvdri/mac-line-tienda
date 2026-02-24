@@ -3488,113 +3488,84 @@ body {
         display: none !important;
     }
 }
-/* ===== IMÁGENES PERFECTAMENTE CUADRADAS MÓVIL ===== */
+    .navbar-sticky.is-sticky ~ * .mobile-menu-btn-modern,
+    body:has(.navbar-sticky) .mobile-menu-btn-modern {
+        top: 8px !important;
+    }
+}
+/* ===== FIX IMÁGENES CUADRADAS - TODAS MISMA ALTURA ===== */
 @media (max-width: 768px) {
-    /* CONTENEDOR DE IMAGEN CUADRADO */
-    .producto-imagen {
+    /* GRID CON FILAS IGUALES */
+    body .productos-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        grid-auto-rows: minmax(auto, 1fr) !important;
+        gap: 0.3rem !important;
+        padding: 0.3rem !important;
+    }
+    
+    /* FORZAR ALTURA IGUAL EN TODAS LAS CARDS */
+    body .producto-card {
+        display: grid !important;
+        grid-template-rows: 65px 1fr auto !important;
+        height: 100% !important;
+    }
+    
+    /* IMAGEN EXACTAMENTE 65PX */
+    body .producto-imagen {
+        grid-row: 1 !important;
         height: 65px !important;
         min-height: 65px !important;
         max-height: 65px !important;
+        width: 100% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        overflow: hidden !important;
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
-        position: relative !important;
     }
     
-    /* IMAGEN CONTENIDA Y CENTRADA */
-    .producto-imagen img {
-        width: 100% !important;
-        height: 100% !important;
+    body .producto-imagen img {
+        max-width: 90% !important;
+        max-height: 90% !important;
         object-fit: contain !important;
-        object-position: center !important;
-        padding: 0.35rem !important;
+        padding: 0.25rem !important;
     }
     
-    /* ASEGURAR QUE TODAS LAS CARDS TENGAN LA MISMA ESTRUCTURA */
-    .producto-card {
-        display: flex !important;
-        flex-direction: column !important;
-        overflow: hidden !important;
-    }
-    
-    /* INFO TOMA EL RESTO DEL ESPACIO */
-    .producto-info {
-        flex: 1 !important;
+    /* INFO OCUPA EL ESPACIO RESTANTE */
+    body .producto-info {
+        grid-row: 2 / -1 !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
     }
 }
-/* ===== NAVBAR Y HAMBURGUESA MÓVIL ===== */
+/* ===== HAMBURGUESA SE MUEVE CON NAVBAR STICKY ===== */
 @media (max-width: 768px) {
-    /* NAVBAR NORMAL - Visible */
-    .navbar {
-        position: relative;
-        padding: 1rem 0;
-    }
-    
-    /* HERO - Visible */
-    .hero {
-        display: block;
-    }
-    
-    /* CARRUSEL - Visible */
-    .promo-carousel {
-        display: block;
-    }
-    
-    /* NAVBAR STICKY - SE PEGA AL SCROLLEAR */
-    .navbar-sticky {
-        position: sticky !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 998 !important;
-        background: rgba(10, 14, 39, 0.98) !important;
-        backdrop-filter: blur(10px) !important;
-        border-bottom: 1px solid rgba(0, 212, 255, 0.3) !important;
-        padding: 0.5rem 0.5rem 0.5rem 70px !important;
-    }
-    
-    .navbar-sticky .container {
-        padding: 0 !important;
-        max-width: 100% !important;
-    }
-    
-    /* BUSCADOR FULL WIDTH */
-    .search-bar {
-        width: 100% !important;
-        margin: 0 !important;
-    }
-    
-    .search-bar input {
-        width: 100% !important;
-        padding: 0.75rem 1rem !important;
-        font-size: 0.938rem !important;
-        border-radius: 10px !important;
-    }
-    
-    /* OCULTAR NAV LINKS */
-    .nav-links {
-        display: none !important;
-    }
-    
-    /* HAMBURGUESA - FIJA CON NAVBAR STICKY */
+    /* QUITAR POSITION FIXED DE HAMBURGUESA */
     .mobile-menu-btn-modern {
-        position: fixed !important;
+        position: absolute !important;
         top: 8px !important;
         left: 8px !important;
         z-index: 999 !important;
-        width: 50px !important;
-        height: 50px !important;
-        transition: opacity 0.3s ease, visibility 0.3s ease !important;
     }
     
-    /* Ajustar posición cuando navbar es sticky */
-    .navbar-sticky.is-sticky ~ * .mobile-menu-btn-modern,
-    body:has(.navbar-sticky) .mobile-menu-btn-modern {
-        top: 8px !important;
+    /* NAVBAR STICKY CON ESPACIO PARA HAMBURGUESA */
+    .navbar-sticky {
+        position: sticky !important;
+        top: 0 !important;
+        padding-left: 65px !important;
+        position: relative !important;
+    }
+    
+    /* HAMBURGUESA DENTRO DEL NAVBAR STICKY */
+    .navbar-sticky::before {
+        content: '' !important;
+        position: absolute !important;
+        left: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        width: 60px !important;
+        height: 100% !important;
+        pointer-events: none !important;
     }
 }
