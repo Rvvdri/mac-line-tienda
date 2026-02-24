@@ -432,6 +432,92 @@ body {
 .producto-nombre {
     font-size: 1.2rem;
     color: var(--color-dark);
+@media (max-width: 768px) {
+    .productos-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    
+    .producto-card {
+        border-radius: 8px;
+        max-height: 320px;
+    }
+    
+    /* IMAGEN MÁS PEQUEÑA */
+    .producto-imagen {
+        height: 110px;
+        font-size: 3rem;
+    }
+    
+    .producto-imagen img {
+        padding: 0.5rem;
+        object-fit: contain;
+    }
+    
+    /* BADGE MÁS PEQUEÑO */
+    .producto-badge {
+        padding: 2px 5px;
+        font-size: 0.6rem;
+        top: 4px;
+        right: 4px;
+    }
+    
+    /* INFO MÁS COMPACTA */
+    .producto-info {
+        padding: 0.5rem;
+        gap: 0.375rem;
+    }
+    
+    /* NOMBRE MÁS PEQUEÑO */
+    .producto-nombre {
+        font-size: 0.75rem;
+        min-height: auto;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    
+    /* OCULTAR SELECTORES DE COLOR Y CAPACIDAD */
+    .colores-container,
+    .capacidades-container {
+        display: none;
+    }
+    
+    /* PRECIOS MÁS COMPACTOS Y LEGIBLES */
+    .precio-container {
+        gap: 0.25rem;
+    }
+    
+    .precio-desde {
+        font-size: 0.6rem;
+    }
+    
+    .precio-original {
+        font-size: 0.7rem;
+    }
+    
+    .precio-actual {
+        font-size: 1rem;
+        font-weight: 800;
+        color: #1a73e8;
+    }
+    
+    .producto-stock {
+        font-size: 0.65rem;
+        padding: 0.25rem 0;
+    }
+    
+    /* BOTÓN MÁS PEQUEÑO */
+    .btn-agregar {
+        padding: 0.5rem;
+        font-size: 0.7rem;
+        margin-top: 0.25rem;
+    }
+}
     margin-bottom: 0.5rem;
 }
 
@@ -671,67 +757,6 @@ body {
 }
 
 /* RESPONSIVE */
-@media (max-width: 768px) {
-    .navbar-sticky .container {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .search-bar {
-        max-width: 100%;
-    }
-    
-    .nav-links {
-        gap: 1rem;
-    }
-    
-    .hero h2 {
-        font-size: 1.8rem;
-    }
-    
-    .hero p {
-        font-size: 1rem;
-    }
-    
-    .promo-content h3 {
-        font-size: 1.5rem;
-    }
-    
-    .promo-content p {
-        font-size: 1rem;
-    }
-    
-    .promo-emoji {
-        font-size: 3.5rem;
-    }
-    
-    .carousel-container {
-        height: 220px;
-    }
-    
-    .carousel-btn {
-        width: 45px;
-        height: 45px;
-        font-size: 1.5rem;
-    }
-    
-    .carousel-btn.prev {
-        left: 10px;
-    }
-    
-    .carousel-btn.next {
-        right: 10px;
-    }
-    
-    .productos-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1rem;
-    }
-    
-    .carrito-acciones {
-        flex-direction: column;
-    }
-}
 /* ========== CARDS MINIMALISTAS CON VARIANTES ========== */
 
 /* Grid de productos */
@@ -957,72 +982,6 @@ body {
 
 /* ========== RESPONSIVE MÓVIL ========== */
 
-@media (max-width: 768px) {
-    .productos-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 0.875rem;
-        padding: 0 0.75rem;
-    }
-    
-    .producto-card {
-        border-radius: 10px;
-    }
-    
-    .producto-imagen {
-        height: 160px;
-        font-size: 4rem;
-    }
-    
-    .producto-imagen img {
-        padding: 1rem;
-    }
-    
-    .producto-badge {
-        padding: 4px 8px;
-        font-size: 0.7rem;
-        top: 8px;
-        right: 8px;
-    }
-    
-    .producto-info {
-        padding: 0.875rem;
-        gap: 0.6rem;
-    }
-    
-    .producto-nombre {
-        font-size: 0.938rem;
-        min-height: 2.8em;
-    }
-    
-    .colores-label,
-    .capacidades-label {
-        font-size: 0.7rem;
-    }
-    
-    .color-btn {
-        width: 24px;
-        height: 24px;
-    }
-    
-    .capacidad-btn {
-        padding: 0.4rem 0.7rem;
-        font-size: 0.75rem;
-    }
-    
-    .precio-desde {
-        font-size: 0.7rem;
-    }
-    
-    .precio-original {
-        font-size: 0.85rem;
-    }
-    
-    .precio-actual {
-        font-size: 1.125rem;
-    }
-    
-    .producto-stock {
-        font-size: 0.75rem;
     }
 }
 
@@ -1173,44 +1132,6 @@ body {
 
 /* ========== RESPONSIVE ========== */
 
-@media (max-width: 768px) {
-    #selectoresVariantes {
-        margin: 1.5rem 0;
-        padding: 1rem 0;
-    }
-    
-    .selector-titulo {
-        font-size: 0.938rem;
-        margin-bottom: 0.75rem;
-    }
-    
-    .color-btn-detalle {
-        width: 38px;
-        height: 38px;
-        border-width: 2.5px;
-    }
-    
-    .color-btn-detalle.active {
-        border-width: 2.5px;
-    }
-    
-    .check-mark {
-        font-size: 0.95rem;
-    }
-    
-    .capacidad-btn-detalle {
-        padding: 0.75rem 1rem;
-        min-width: 95px;
-    }
-    
-    .capacidad-texto {
-        font-size: 0.938rem;
-    }
-    
-    .capacidad-precio {
-        font-size: 0.75rem;
-    }
-}
 
 /* ========== ANIMACIONES SUAVES ========== */
 
@@ -1254,281 +1175,9 @@ body {
 }
 
 /* 2. CONFIGURACIÓN CORRECTA PARA MÓVIL */
-@media (max-width: 768px) {
-    
-    /* Botón hamburguesa */
-    .mobile-menu-btn {
-        display: flex !important;
-        position: fixed;
-        top: 1rem;
-        left: 0.75rem;
-        z-index: 10001;
-        background: white;
-        border: 2px solid #0066cc;
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        color: #0066cc;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 102, 204, 0.25);
-    }
-    
-    /* Menú lateral */
-    .mobile-nav {
-        display: block !important;
-        position: fixed;
-        top: 0;
-        left: -300px;
-        width: 280px;
-        height: 100vh;
-        background: white;
-        z-index: 10002; /* MÁS ALTO que navbar */
-        transition: left 0.3s ease;
-        box-shadow: 4px 0 12px rgba(0,0,0,0.15);
-        overflow-y: auto;
-    }
-    
-    .mobile-nav.active {
-        left: 0;
-    }
-    
-    /* Overlay oscuro */
-    .mobile-overlay {
-        display: block !important;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0,0,0,0.5);
-        z-index: 10000;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s;
-    }
-    
-    .mobile-overlay.active {
-        opacity: 1;
-        pointer-events: all;
-    }
-    
-    /* 3. NAVBAR STICKY - MENOR Z-INDEX QUE EL MENÚ */
-    .navbar-sticky {
-        z-index: 999 !important; /* MENOR que el menú (10002) */
-    }
-    
-    /* Asegurar que el buscador no se superponga */
-    .navbar-sticky .search-bar {
-        z-index: 1 !important; /* Relativo al navbar, no global */
-    }
-}
 
 /* ========== FIX RESPONSIVE PRODUCTO MÓVIL ========== */
 
-@media (max-width: 768px) {
-    /* Contenedor principal del producto */
-    .producto-detalle-container {
-        padding: 0.5rem;
-        margin: 0.5rem auto;
-    }
-    
-    /* Layout de una columna compacto */
-    .producto-layout {
-        grid-template-columns: 1fr;
-        padding: 1rem;
-        gap: 1rem;
-    }
-    
-    /* GALERÍA COMPACTA */
-    .galeria {
-        gap: 0.75rem;
-    }
-    
-    .imagen-principal-container {
-        aspect-ratio: 1;
-        max-height: 300px;
-        margin-bottom: 0.75rem;
-    }
-    
-    .imagen-principal {
-        font-size: 5rem !important;
-        padding: 1rem;
-    }
-    
-    .imagen-principal img {
-        padding: 0.75rem !important;
-    }
-    
-    /* Thumbnails compactos */
-    .thumbnails {
-        gap: 0.5rem;
-        padding: 0.25rem 0;
-    }
-    
-    .thumbnail {
-        min-width: 60px;
-        width: 60px;
-        height: 60px;
-    }
-    
-    .thumbnail-emoji {
-        font-size: 2rem;
-    }
-    
-    /* DETALLES COMPACTOS */
-    .producto-detalles {
-        gap: 1rem;
-    }
-    
-    .producto-categoria {
-        font-size: 0.75rem !important;
-        margin-bottom: 0.25rem !important;
-    }
-    
-    .producto-titulo {
-        font-size: 1.5rem !important;
-        line-height: 1.2;
-        margin-bottom: 0.5rem !important;
-    }
-    
-    .producto-sku {
-        font-size: 0.75rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    /* PRECIO COMPACTO */
-    .producto-precio {
-        font-size: 1.25rem !important;
-        margin: 0.5rem 0 !important;
-    }
-    
-    .precio-original-detalle {
-        font-size: 0.938rem;
-    }
-    
-    .descuento-badge {
-        font-size: 0.75rem;
-        padding: 3px 10px;
-    }
-    
-    /* STOCK COMPACTO */
-    .stock-info {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.813rem;
-        margin: 0.5rem 0;
-    }
-    
-    /* SELECTORES COMPACTOS */
-    #selectoresVariantes {
-        margin: 1rem 0 !important;
-        padding: 1rem 0 !important;
-    }
-    
-    .selector-seccion {
-        margin-bottom: 1rem !important;
-    }
-    
-    .selector-titulo {
-        font-size: 0.875rem !important;
-        margin-bottom: 0.75rem !important;
-    }
-    
-    /* Colores compactos */
-    .color-btn-detalle {
-        width: 36px !important;
-        height: 36px !important;
-        border-width: 2px !important;
-    }
-    
-    .color-btn-detalle.active {
-        border-width: 3px !important;
-    }
-    
-    .check-mark {
-        font-size: 0.9rem !important;
-    }
-    
-    /* Capacidades compactas */
-    .capacidades-opciones-detalle {
-        gap: 0.5rem;
-    }
-    
-    .capacidad-btn-detalle {
-        padding: 0.625rem 0.875rem !important;
-        min-width: 85px !important;
-        border-radius: 8px !important;
-    }
-    
-    .capacidad-texto {
-        font-size: 0.875rem !important;
-    }
-    
-    .capacidad-precio {
-        font-size: 0.7rem !important;
-    }
-    
-    /* DESCRIPCIÓN COMPACTA */
-    .producto-info {
-        margin-top: 0.5rem;
-    }
-    
-    #productoDescripcion,
-    .producto-descripcion {
-        font-size: 0.875rem;
-        line-height: 1.5;
-        margin-bottom: 1rem;
-    }
-    
-    /* BOTÓN COMPACTO */
-    .botones-accion {
-        margin-top: 1rem;
-        gap: 0.75rem;
-    }
-    
-    .btn-agregar-carrito {
-        padding: 12px !important;
-        font-size: 0.938rem !important;
-        border-radius: 10px !important;
-    }
-    
-    /* BENEFICIOS COMPACTOS */
-    .beneficios-lista {
-        margin: 1rem 0 0 0;
-        padding-top: 1rem;
-    }
-    
-    .beneficios-lista li {
-        padding: 0.5rem 0;
-        font-size: 0.813rem;
-    }
-    
-    .beneficios-lista li:before {
-        font-size: 0.938rem;
-    }
-    
-    /* Breadcrumb compacto */
-    .breadcrumb {
-        font-size: 0.75rem;
-        margin-bottom: 1rem;
-    }
-    
-    /* Controles de navegación */
-    .carousel-nav {
-        width: 32px;
-        height: 32px;
-        font-size: 1.25rem;
-    }
-    
-    .image-counter {
-        font-size: 0.75rem;
-        padding: 3px 10px;
-        bottom: 8px;
-        right: 8px;
-    }
-}
 
 /* Extra pequeño (iPhone SE, etc) */
 @media (max-width: 375px) {
@@ -1903,27 +1552,6 @@ body {
 }
 
 /* ========== RESPONSIVE ========== */
-@media (max-width: 768px) {
-    .logo h1 {
-        font-size: 1.75rem;
-    }
-    
-    .hero-content h2 {
-        font-size: 2rem;
-    }
-    
-    .promo-content h3 {
-        font-size: 1.75rem;
-    }
-    
-    .carousel-slide {
-        min-height: 300px;
-    }
-    
-    .trust-badges-compact {
-        grid-template-columns: 1fr;
-    }
-}
 /* ========== FIX: CARDS Y PÁGINA DE DETALLE OSCURA ========== */
 
 /* ========== CARDS DE PRODUCTOS - TEXTO VISIBLE ========== */
@@ -2612,30 +2240,6 @@ body {
 
 /* ========== RESPONSIVE ========== */
 
-@media (max-width: 768px) {
-    .productos-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    
-    .producto-imagen-container {
-        min-height: 180px !important;
-        max-height: 200px !important;
-    }
-    
-    .trust-badge-compact {
-        min-width: 180px !important;
-        padding: 0.875rem 1rem !important;
-    }
-    
-    .trust-badge-text-compact h4 {
-        font-size: 0.875rem !important;
-    }
-    
-    .trust-badge-text-compact p {
-        font-size: 0.75rem !important;
-    }
-}
 
 @media (max-width: 480px) {
     .trust-badge-compact {
@@ -2830,48 +2434,6 @@ body {
 
 /* ========== RESPONSIVE ========== */
 
-@media (max-width: 768px) {
-    .hero {
-        min-height: 35vh !important;
-    }
-    
-    .hero-content h2 {
-        font-size: 1.5rem !important;
-    }
-    
-    .hero-content p {
-        font-size: 0.875rem !important;
-    }
-    
-    .carousel-slide {
-        min-height: 300px;
-    }
-    
-    .promo-content {
-        padding: 3rem 1.5rem;
-    }
-    
-    .promo-content h3 {
-        font-size: 1.75rem;
-    }
-    
-    .promo-content p {
-        font-size: 1rem;
-    }
-    
-    .carousel-btn {
-        padding: 0.75rem 1rem;
-        font-size: 1.5rem;
-    }
-    
-    .carousel-btn.prev {
-        left: 1rem;
-    }
-    
-    .carousel-btn.next {
-        right: 1rem;
-    }
-}
 
 @media (max-width: 480px) {
     .hero {
@@ -3091,42 +2653,6 @@ body {
     }
 }
 
-@media (max-width: 768px) {
-    .carousel-container {
-        height: 300px;
-    }
-    
-    .promo-content {
-        padding: 2rem 1.5rem;
-    }
-    
-    .promo-content h3 {
-        font-size: 1.75rem;
-    }
-    
-    .promo-content p {
-        font-size: 1rem;
-    }
-    
-    .carousel-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
-    
-    .carousel-btn.prev {
-        left: 1rem;
-    }
-    
-    .carousel-btn.next {
-        right: 1rem;
-    }
-    
-    .dot {
-        width: 10px;
-        height: 10px;
-    }
-}
 
 @media (max-width: 480px) {
     .carousel-container {
@@ -3290,21 +2816,6 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    .producto-imagen-container {
-        min-height: 180px !important;
-        max-height: 200px !important;
-        padding: 1.5rem !important;
-    }
-    
-    .producto-header {
-        padding: 0.875rem !important;
-    }
-    
-    .producto-info {
-        padding: 1rem !important;
-    }
-}
 /* ========== FIX: BADGE DE DESCUENTO SIN SOBRESALIR ========== */
 
 /* Card con overflow hidden para contener el badge */
@@ -3425,24 +2936,6 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    .descuento-badge {
-        padding: 0.3rem 0.625rem !important;
-        font-size: 0.75rem !important;
-        top: 0.5rem !important;
-        right: 0.5rem !important;
-    }
-    
-    .producto-header {
-        padding-top: 2.5rem !important;
-    }
-    
-    .producto-imagen-container {
-        min-height: 180px !important;
-        max-height: 200px !important;
-        padding: 1.5rem !important;
-    }
-}
 
 @media (max-width: 480px) {
     .descuento-badge {
