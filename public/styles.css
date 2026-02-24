@@ -2943,3 +2943,39 @@ body {
         font-size: 0.688rem !important;
     }
 }
+/* ===== ARREGLOS MÓVIL ===== */
+@media (max-width: 768px) {
+    /* Navbar sticky con espacio para hamburguesa */
+    .navbar-sticky {
+        padding-left: 70px;
+    }
+    
+    .navbar-sticky .container {
+        padding: 0.5rem;
+    }
+    
+    /* Buscador más grande en móvil */
+    .search-bar {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .search-bar input {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        font-size: 1rem;
+        border-radius: 12px;
+    }
+    
+    /* Ocultar nav-links en móvil */
+    .nav-links {
+        display: none;
+    }
+    
+    /* Botón hamburguesa */
+    .mobile-menu-btn-modern {
+        top: 80px;
+        left: 15px;
+        z-index: 1002;
+    }
+}
