@@ -63,8 +63,7 @@ function irASlide(index) {
 
 async function cargarProductos() {
     try {
-        // Agregar timestamp para evitar caché
-        const response = await fetch(`${API_URL}/productos?t=${Date.now()}`);
+        const response = await fetch(`${API_URL}/productos`);
         if (!response.ok) throw new Error('Error al cargar productos');
         
         productosActuales = await response.json();
@@ -115,13 +114,6 @@ function renderizarProductos(filtro = 'todos') {
         const descuento = producto.descuento || 0;
         const tieneVariantes = producto.colores && producto.capacidades;
         
-        // Agregar timestamp a imagen para forzar recarga
-        const imagenConCache = producto.imagenPortada ? 
-            (producto.imagenPortada.includes('?') ? 
-                `${producto.imagenPortada}&t=${Date.now()}` : 
-                `${producto.imagenPortada}?t=${Date.now()}`) 
-            : null;
-        
         let stockClass = 'disponible';
         let stockTexto = `✓ ${producto.stock} disponibles`;
         
@@ -144,7 +136,7 @@ function renderizarProductos(filtro = 'todos') {
             
             <div class="producto-imagen-container" onclick="window.location.href='producto.html?id=${producto.id}'">
                 ${producto.imagenPortada 
-                    ? `<img src="${imagenConCache}" alt="${producto.nombre}" style="max-width: 100%; height: auto;" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" style="max-width: 100%; height: auto;" onerror="this.parentElement.innerHTML='${producto.emoji}'; this.parentElement.style.fontSize='5rem';">` 
                     : `<span class="producto-emoji" style="font-size: 5rem;">${producto.emoji}</span>`}
             </div>
             
@@ -191,8 +183,9 @@ function renderizarPorSecciones() {
         'celulares': { nombre: 'Celulares', emoji: '📱', productos: [] },
         'audifonos': { nombre: 'Audífonos', emoji: '🎧', productos: [] },
         'relojes': { nombre: 'Relojes', emoji: '⌚', productos: [] },
-        'consolas': { nombre: 'Consolas', emoji: '🎮', productos: [] },
-        'notebooks': { nombre: 'Computadores', emoji: '💻', productos: [] }
+        'televisores': { nombre: 'Televisores', emoji: '📺', productos: [] },
+        'notebooks': { nombre: 'Computadores', emoji: '💻', productos: [] },
+        'consolas': { nombre: 'Consolas', emoji: '🎮', productos: [] }
     };
     
     // Agrupar productos
@@ -230,61 +223,32 @@ function renderizarPorSecciones() {
 }
 
 function crearCardProducto(producto) {
-    const descuento = producto.descuento || 0;
-    const precioOriginal = descuento > 0 ? producto.precioOriginal || producto.precio : null;
-    const precioFinal = producto.precio;
-    const tieneVariantes = (producto.colores && producto.colores.length > 0) || 
-                          (producto.capacidades && producto.capacidades.length > 0);
-    
-    // Stock class
-    let stockClass = 'disponible';
-    let stockTexto = `✅ ${producto.stock || 0} disponibles`;
-    
-    if (producto.stock === 0) {
-        stockClass = 'agotado';
-        stockTexto = '❌ Agotado';
-    } else if (producto.stock < 5) {
-        stockClass = 'bajo';
-        stockTexto = `⚠️ Últimas ${producto.stock} unidades`;
-    }
-    
-    // Agregar timestamp a la imagen para forzar recarga
-    const imagenConCache = producto.imagenPortada ? 
-        (producto.imagenPortada.includes('?') ? 
-            `${producto.imagenPortada}&t=${Date.now()}` : 
-            `${producto.imagenPortada}?t=${Date.now()}`) 
-        : null;
+    const precioFinal = producto.descuento 
+        ? producto.precio * (1 - producto.descuento / 100)
+        : producto.precio;
     
     return `
-        <div class="producto-card" data-producto-id="${producto.id || producto._id}" onclick="window.location.href='producto.html?id=${producto.id || producto._id}'">
-            ${descuento > 0 ? `<div class="descuento-badge">-${descuento}%</div>` : ''}
+        <div class="producto-card" onclick="abrirProducto('${producto.id || producto._id}')">
+            ${producto.descuento ? `<span class="descuento-badge">-${producto.descuento}%</span>` : ''}
             
-            <div class="producto-header">
-                <span class="producto-categoria">${(producto.categoria || 'producto').toUpperCase()}</span>
-                <h3 class="producto-titulo">${producto.nombre}</h3>
-            </div>
+            <div class="producto-categoria">${producto.categoria?.toUpperCase() || 'PRODUCTO'}</div>
             
-            <div class="producto-imagen-container">
+            <h3 class="producto-titulo">${producto.nombre}</h3>
+            
+            <div class="producto-imagen-wrapper">
                 ${producto.imagenPortada 
-                    ? `<img src="${imagenConCache}" alt="${producto.nombre}" style="max-width: 100%; height: auto;" onerror="this.parentElement.innerHTML='${producto.emoji || '📦'}'; this.parentElement.style.fontSize='5rem';">` 
-                    : `<span class="producto-emoji" style="font-size: 5rem;">${producto.emoji || '📦'}</span>`}
+                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" class="producto-imagen">` 
+                    : `<div class="producto-emoji">${producto.emoji || '📦'}</div>`
+                }
             </div>
             
-            <div class="producto-info">
-                ${precioOriginal ? `
-                    <p class="precio-original">
-                        Antes: $${precioOriginal.toLocaleString('es-CL')}
-                    </p>
-                ` : ''}
-                
-                <p class="producto-precio">
-                    ${tieneVariantes ? '<span style="font-size: 0.875rem; color: #94a3b8; font-weight: 500;">Desde </span>' : ''}
-                    $${precioFinal.toLocaleString('es-CL')}
-                </p>
-                
-                <p class="stock-${stockClass}">
-                    ${stockTexto}
-                </p>
+            <div class="producto-precio-wrapper">
+                ${producto.descuento ? 
+                    `<p class="producto-precio-anterior">Antes: $${producto.precio.toLocaleString('es-CL')}</p>` 
+                    : ''
+                }
+                <p class="producto-precio">Desde $${precioFinal.toLocaleString('es-CL')}</p>
+                <p class="producto-stock">✅ ${producto.stock || 0} disponibles</p>
             </div>
         </div>
     `;
@@ -571,73 +535,42 @@ function procederPago() {
         return sum + (precio * cantidad);
     }, 0);
     
-    // Mostrar/ocultar secciones según subtotal
-    const seccionMetodoEntrega = document.getElementById('seccionMetodoEntrega');
-    const mensajeEnvioGratis = document.getElementById('mensajeEnvioGratis');
-    const envioPagoWrapper = document.getElementById('envioPagoWrapper');
-    
-    let envio = 0;
-    
-    if (subtotal >= 100000) {
-        // ENVÍO GRATIS
-        if (seccionMetodoEntrega) seccionMetodoEntrega.style.display = 'none';
-        if (mensajeEnvioGratis) mensajeEnvioGratis.style.display = 'block';
-        envio = 0;
-        if (envioPagoWrapper) {
-            envioPagoWrapper.innerHTML = '<span style="color: #00d4ff; font-weight: 700;">GRATIS ✅</span>';
-        }
-    } else {
-        // MOSTRAR OPCIONES DE ENVÍO
-        if (seccionMetodoEntrega) seccionMetodoEntrega.style.display = 'block';
-        if (mensajeEnvioGratis) mensajeEnvioGratis.style.display = 'none';
-        const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
-        envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
-        if (envioPagoWrapper) {
-            envioPagoWrapper.innerHTML = '$<span id="envioPago">' + envio.toLocaleString('es-CL') + '</span>';
-        }
-    }
-    
+    // Obtener método de entrega seleccionado (por defecto normal = 3990)
+    const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
+    const envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
     const total = subtotal + envio;
     
     const subtotalEl = document.getElementById('subtotalPago');
+    const envioEl = document.getElementById('envioPago');
     const totalEl = document.getElementById('totalPago');
     
     if (subtotalEl) subtotalEl.textContent = subtotal.toLocaleString('es-CL');
+    if (envioEl) envioEl.textContent = envio.toLocaleString('es-CL');
     if (totalEl) totalEl.textContent = total.toLocaleString('es-CL');
 }
 
 // Función para actualizar el total cuando cambia el método de entrega
 function actualizarTotalPago() {
     const subtotalEl = document.getElementById('subtotalPago');
+    const envioEl = document.getElementById('envioPago');
     const totalEl = document.getElementById('totalPago');
-    const envioPagoWrapper = document.getElementById('envioPagoWrapper');
     
-    if (!subtotalEl || !totalEl) return;
+    if (!subtotalEl || !envioEl || !totalEl) return;
     
     const subtotal = parseInt(subtotalEl.textContent.replace(/\./g, '')) || 0;
-    let envio = 0;
     
-    if (subtotal >= 100000) {
-        // ENVÍO GRATIS
-        envio = 0;
-        if (envioPagoWrapper) {
-            envioPagoWrapper.innerHTML = '<span style="color: #00d4ff; font-weight: 700;">GRATIS ✅</span>';
-        }
-    } else {
-        // Obtener método de entrega seleccionado
-        const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
-        envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
-        if (envioPagoWrapper) {
-            envioPagoWrapper.innerHTML = '$<span id="envioPago">' + envio.toLocaleString('es-CL') + '</span>';
-        }
-    }
+    // Obtener método de entrega seleccionado
+    const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
+    const envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
     
     const total = subtotal + envio;
+    
+    envioEl.textContent = envio.toLocaleString('es-CL');
     totalEl.textContent = total.toLocaleString('es-CL');
     
     console.log('📦 Total actualizado:');
     console.log('  Subtotal:', subtotal);
-    console.log('  Envío:', envio === 0 ? 'GRATIS' : envio);
+    console.log('  Envío:', envio);
     console.log('  Total:', total);
 }
 
@@ -655,76 +588,59 @@ async function procesarPago(event) {
     const nombreEl = document.getElementById('nombre');
     const emailEl = document.getElementById('email');
     const telefonoEl = document.getElementById('telefono');
-    const regionEl = document.getElementById('region');
+    const ciudadEl = document.getElementById('ciudad');
     const comunaEl = document.getElementById('comuna');
-    const direccionEl = document.getElementById('direccion');
+    const calleEl = document.getElementById('calle');
     const numeroEl = document.getElementById('numero');
-    const complementoEl = document.getElementById('complemento');
+    const direccionEl = document.getElementById('direccion');
     
-    if (!nombreEl || !emailEl || !telefonoEl || !regionEl || !comunaEl || !direccionEl || !numeroEl) {
+    if (!nombreEl || !emailEl || !telefonoEl || !ciudadEl || !comunaEl || !calleEl || !numeroEl) {
         alert('Error: Por favor completa todos los campos obligatorios');
         return;
     }
     
-    // Calcular subtotal
+    // Obtener método de entrega
+    const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
+    if (!metodoEntregaSeleccionado) {
+        alert('Por favor selecciona un método de entrega');
+        return;
+    }
+    
+    const metodoEntrega = {
+        tipo: metodoEntregaSeleccionado.value,
+        nombre: metodoEntregaSeleccionado.value === 'normal' ? 'Envío Normal (3-5 días)' : 'Envío Flash (24-48h)',
+        precio: parseInt(metodoEntregaSeleccionado.dataset.precio)
+    };
+    
+    // Construir dirección completa
+    const direccionCompleta = `${calleEl.value} ${numeroEl.value}${direccionEl.value ? ', ' + direccionEl.value : ''}`;
+    
+    const datosCliente = {
+        nombre: nombreEl.value,
+        email: emailEl.value,
+        telefono: telefonoEl.value,
+        ciudad: ciudadEl.value,
+        comuna: comunaEl.value,
+        calle: calleEl.value,
+        numero: numeroEl.value,
+        complemento: direccionEl.value || '',
+        direccion: direccionCompleta
+    };
+    
     const subtotal = carrito.reduce((sum, item) => {
         const precio = item.precio || 0;
         const cantidad = item.cantidad || 1;
         return sum + (precio * cantidad);
     }, 0);
     
-    // Determinar método de entrega y costo
-    let metodoEntrega;
-    let costoEnvio;
-    
-    if (subtotal >= 100000) {
-        // ENVÍO GRATIS
-        metodoEntrega = {
-            tipo: 'gratis',
-            nombre: 'Envío Gratis (Compra sobre $100.000)',
-            precio: 0
-        };
-        costoEnvio = 0;
-    } else {
-        // Obtener método seleccionado
-        const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
-        if (!metodoEntregaSeleccionado) {
-            alert('Por favor selecciona un método de entrega');
-            return;
-        }
-        
-        metodoEntrega = {
-            tipo: metodoEntregaSeleccionado.value,
-            nombre: metodoEntregaSeleccionado.value === 'normal' ? 'Envío Normal (3-5 días)' : 'Envío Flash (24-48h)',
-            precio: parseInt(metodoEntregaSeleccionado.dataset.precio)
-        };
-        costoEnvio = metodoEntrega.precio;
-    }
-    
-    // Construir dirección completa
-    const complemento = complementoEl ? complementoEl.value : '';
-    const direccionCompleta = `${direccionEl.value} ${numeroEl.value}${complemento ? ', ' + complemento : ''}, ${comunaEl.value}, ${regionEl.options[regionEl.selectedIndex].text}`;
-    
-    const datosCliente = {
-        nombre: nombreEl.value,
-        email: emailEl.value,
-        telefono: telefonoEl.value,
-        region: regionEl.options[regionEl.selectedIndex].text,
-        comuna: comunaEl.value,
-        direccion: direccionEl.value,
-        numero: numeroEl.value,
-        complemento: complemento,
-        direccionCompleta: direccionCompleta
-    };
-    
-    const total = subtotal + costoEnvio;
+    const total = subtotal + metodoEntrega.precio;
     
     const datosCompra = {
         cliente: datosCliente,
         items: carrito,
         metodoEntrega: metodoEntrega,
         subtotal: subtotal,
-        costoEnvio: costoEnvio,
+        costoEnvio: metodoEntrega.precio,
         total: total
     };
     

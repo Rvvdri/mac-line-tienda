@@ -99,6 +99,148 @@ function mostrarProducto(producto) {
         descripcionEl.textContent = producto.descripcion || 'Sin descripción disponible.';
     }
     
+    // SELECTORES DE VARIANTES (Color y Capacidad) - MEJORADOS
+    const selectoresDiv = document.getElementById('selectoresVariantes');
+    if (selectoresDiv) {
+        let selectoresHTML = '';
+        
+        // Selector de COLOR - Estilo mejorado con círculos de colores
+        if (producto.colores && producto.colores.length > 0) {
+            selectoresHTML += `
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 0.75rem; color: #f8f9fa; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                        🎨 Color: <span id="colorSeleccionadoTexto" style="color: #00d4ff; font-weight: 700;">${producto.colores[0]}</span>
+                    </label>
+                    <div id="colorProducto" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        ${producto.colores.map((color, index) => {
+                            const colorMap = {
+                                'Negro': '#000000',
+                                'Blanco': '#FFFFFF',
+                                'Azul': '#0066CC',
+                                'Rojo': '#FF0000',
+                                'Verde': '#00CC66',
+                                'Rosa': '#FF69B4',
+                                'Gris': '#808080',
+                                'Dorado': '#FFD700',
+                                'Plata': '#C0C0C0',
+                                'Morado': '#9B59B6',
+                                'Amarillo': '#FFD700',
+                                'Naranja': '#FF6B35',
+                                'Titanio Natural': '#E8E8E8',
+                                'Titanio Azul': '#5B7C99',
+                                'Titanio Blanco': '#F5F5F5',
+                                'Titanio Negro': '#2C2C2C',
+                                'Gris Espacial': '#4A4A4A'
+                            };
+                            const colorHex = colorMap[color] || '#667eea';
+                            const borderColor = color.includes('Blanco') || color.includes('Plata') ? '#555' : colorHex;
+                            
+                            return `
+                                <div class="color-option ${index === 0 ? 'selected' : ''}" 
+                                     data-color="${color}"
+                                     onclick="seleccionarColor('${color}')"
+                                     style="
+                                         cursor: pointer;
+                                         text-align: center;
+                                         transition: all 0.3s;
+                                     ">
+                                    <div style="
+                                        width: 40px;
+                                        height: 40px;
+                                        border-radius: 50%;
+                                        background: ${colorHex};
+                                        border: 2px solid ${borderColor};
+                                        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                                        margin: 0 auto 0.35rem;
+                                        transition: all 0.3s;
+                                    " class="color-circle"></div>
+                                    <span style="font-size: 0.7rem; color: #b0b0b0; display: block;">${color}</span>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+                <style>
+                    .color-option:hover .color-circle {
+                        transform: scale(1.15);
+                        box-shadow: 0 4px 12px rgba(0, 212, 255, 0.4) !important;
+                    }
+                    .color-option.selected .color-circle {
+                        border-width: 3px !important;
+                        box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.4), 0 4px 12px rgba(0, 212, 255, 0.3) !important;
+                    }
+                    .color-option.selected span {
+                        color: #00d4ff !important;
+                        font-weight: 600;
+                    }
+                </style>
+            `;
+        }
+        
+        // Selector de CAPACIDAD - Estilo mejorado con tarjetas más pequeñas
+        if (producto.capacidades && producto.capacidades.length > 0) {
+            selectoresHTML += `
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 0.75rem; color: #f8f9fa; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">💾 Capacidad:</label>
+                    <div id="capacidadProducto" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 0.6rem;">
+                        ${producto.capacidades.map((cap, index) => {
+                            const nombreCap = cap.nombre || `${cap.capacidad || 'N/A'}`;
+                            const incremento = cap.precioIncremental || 0;
+                            
+                            return `
+                            <div class="capacidad-option ${index === 0 ? 'selected' : ''}"
+                                 data-incremento="${incremento}"
+                                 data-nombre="${nombreCap}"
+                                 onclick="seleccionarCapacidad('${nombreCap}', ${incremento})"
+                                 style="
+                                     cursor: pointer;
+                                     padding: 0.75rem 0.5rem;
+                                     border: 2px solid #444;
+                                     border-radius: 10px;
+                                     text-align: center;
+                                     transition: all 0.3s;
+                                     background: rgba(30, 30, 30, 0.6);
+                                     backdrop-filter: blur(10px);
+                                 ">
+                                <div style="font-weight: 700; font-size: 0.95rem; color: #f8f9fa; margin-bottom: 0.15rem;">
+                                    ${nombreCap}
+                                </div>
+                                <div style="font-size: 0.75rem; color: #00d4ff; font-weight: 600;">
+                                    ${incremento > 0 ? `+$${(incremento/1000).toFixed(0)}K` : 'Incluido'}
+                                </div>
+                            </div>
+                        `;
+                        }).join('')}
+                    </div>
+                    <div style="margin-top: 1.25rem; padding: 0.85rem; background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%); border-radius: 10px; text-align: center; box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);">
+                        <div style="font-size: 0.8rem; color: rgba(255,255,255,0.95); margin-bottom: 0.2rem; font-weight: 600;">Precio Total:</div>
+                        <div id="precioTotalDetalle" style="font-size: 1.75rem; font-weight: 700; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                            $${precioFinal.toLocaleString('es-CL')}
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .capacidad-option:hover {
+                        border-color: #00d4ff;
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+                        background: rgba(0, 212, 255, 0.1);
+                    }
+                    .capacidad-option.selected {
+                        border-color: #00d4ff;
+                        background: rgba(0, 212, 255, 0.15);
+                        box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.3), 0 4px 12px rgba(0, 212, 255, 0.4);
+                    }
+                    .capacidad-option.selected > div:first-child {
+                        color: #00d4ff;
+                    }
+                </style>
+            `;
+        }
+        
+        selectoresDiv.innerHTML = selectoresHTML;
+    }
+    
     // IMÁGENES - CARGAR 6 IMÁGENES (1 PORTADA + 5 ADICIONALES)
     imagenesProducto = [];
     
@@ -167,18 +309,60 @@ function cambiarImagen(direccion) {
 
 // Agregar al carrito desde detalle
 function agregarAlCarritoDetalle() {
-    if (!productoActual) return;
+    if (!productoActual) {
+        alert('❌ Error: Producto no cargado');
+        return;
+    }
     
     if (productoActual.stock === 0) {
         alert('❌ Producto agotado');
         return;
     }
     
+    // Obtener ID correcto
+    const productoId = productoActual.id || productoActual._id || String(productoActual._id);
+    
+    // Obtener color y capacidad de los nuevos selectores visuales
+    let colorSeleccionado = null;
+    let capacidadSeleccionada = null;
+    let incrementoPrecio = 0;
+    
+    // Obtener COLOR del selector visual
+    const colorSeleccionadoDiv = document.querySelector('.color-option.selected');
+    if (colorSeleccionadoDiv) {
+        colorSeleccionado = colorSeleccionadoDiv.dataset.color;
+    }
+    
+    // Obtener CAPACIDAD del selector visual
+    const capacidadSeleccionadaDiv = document.querySelector('.capacidad-option.selected');
+    if (capacidadSeleccionadaDiv) {
+        capacidadSeleccionada = capacidadSeleccionadaDiv.dataset.nombre;
+        incrementoPrecio = parseInt(capacidadSeleccionadaDiv.dataset.incremento) || 0;
+    }
+    
+    const precioFinal = (productoActual.precio || 0) + incrementoPrecio;
+    
+    console.log('💰 Calculando precio:');
+    console.log('  - Precio base:', productoActual.precio);
+    console.log('  - Incremento:', incrementoPrecio);
+    console.log('  - Precio final:', precioFinal);
+    
+    if (!precioFinal || precioFinal === 0) {
+        alert('⚠️ Error: El producto no tiene precio configurado');
+        console.error('❌ Producto sin precio:', productoActual);
+        return;
+    }
+    
     // Obtener carrito actual
     let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     
-    // Buscar si ya existe
-    const existe = carrito.find(item => item.id === productoActual.id);
+    // Buscar si ya existe (mismo producto, color y capacidad)
+    const existe = carrito.find(item => {
+        const itemId = item.id || item._id || String(item._id);
+        return String(itemId) === String(productoId) && 
+               item.color === colorSeleccionado && 
+               item.capacidad === capacidadSeleccionada;
+    });
     
     if (existe) {
         if (existe.cantidad >= productoActual.stock) {
@@ -187,20 +371,51 @@ function agregarAlCarritoDetalle() {
         }
         existe.cantidad++;
     } else {
-        carrito.push({
-            ...productoActual,
-            cantidad: 1
-        });
+        const itemCarrito = {
+            id: productoId,
+            nombre: productoActual.nombre,
+            precio: precioFinal,
+            cantidad: 1,
+            imagenPortada: productoActual.imagenPortada || null,
+            emoji: productoActual.emoji || '📦',
+            color: colorSeleccionado,
+            capacidad: capacidadSeleccionada,
+            stock: productoActual.stock,
+            categoria: productoActual.categoria
+        };
+        
+        console.log('📦 Nuevo item para carrito:', itemCarrito);
+        
+        carrito.push(itemCarrito);
     }
     
     // Guardar
     localStorage.setItem('carrito', JSON.stringify(carrito));
     
+    console.log('✅ Carrito guardado en localStorage');
+    console.log('📦 Total items:', carrito.length);
+    console.log('🛒 Carrito completo:', JSON.stringify(carrito, null, 2));
+    
     // Actualizar contador
     actualizarContadorCarrito();
     
-    // Notificación
-    alert(`✅ ${productoActual.nombre} agregado al carrito`);
+    // Notificación mejorada
+    const mensaje = colorSeleccionado || capacidadSeleccionada 
+        ? `✅ ${productoActual.nombre}\n${colorSeleccionado ? `Color: ${colorSeleccionado}` : ''}\n${capacidadSeleccionada ? `Capacidad: ${capacidadSeleccionada}` : ''}\n¡Agregado al carrito!`
+        : `✅ ${productoActual.nombre} agregado al carrito`;
+    
+    alert(mensaje);
+    
+    // Opcional: Animar el botón
+    const btn = document.querySelector('.btn-agregar-carrito-detalle');
+    if (btn) {
+        btn.textContent = '✓ Agregado';
+        btn.style.background = '#22c55e';
+        setTimeout(() => {
+            btn.textContent = '🛒 Agregar al Carrito';
+            btn.style.background = '';
+        }, 2000);
+    }
 }
 
 // Actualizar contador del carrito
@@ -210,184 +425,56 @@ function actualizarContadorCarrito() {
     
     document.querySelectorAll('.cart-count').forEach(el => {
         el.textContent = total;
+        if (total > 0) {
+            el.style.display = 'flex';
+        }
     });
+}
+
+// Actualizar precio cuando cambia la capacidad
+function actualizarPrecioDetalle() {
+    if (!productoActual) return;
+    
+    const capacidadSelect = document.getElementById('capacidadProducto');
+    const precioTotalEl = document.getElementById('precioTotalDetalle');
+    
+    if (capacidadSelect && precioTotalEl) {
+        const incremento = parseInt(capacidadSelect.value) || 0;
+        const precioTotal = productoActual.precio + incremento;
+        precioTotalEl.textContent = `$${precioTotal.toLocaleString('es-CL')}`;
+    }
+}
+
+// Seleccionar color
+function seleccionarColor(color) {
+    // Actualizar texto
+    const textoEl = document.getElementById('colorSeleccionadoTexto');
+    if (textoEl) textoEl.textContent = color;
+    
+    // Actualizar clases selected
+    document.querySelectorAll('.color-option').forEach(el => {
+        el.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+}
+
+// Seleccionar capacidad
+function seleccionarCapacidad(nombre, incremento) {
+    // Actualizar clases selected
+    document.querySelectorAll('.capacidad-option').forEach(el => {
+        el.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+    
+    // Actualizar precio
+    if (productoActual) {
+        const precioTotal = productoActual.precio + incremento;
+        const precioTotalEl = document.getElementById('precioTotalDetalle');
+        if (precioTotalEl) {
+            precioTotalEl.textContent = `$${precioTotal.toLocaleString('es-CL')}`;
+        }
+    }
 }
 
 // Cargar contador al iniciar
 actualizarContadorCarrito();
-
-// ========== FUNCIONES DE PAGO ==========
-
-function procederPago() {
-    if (carrito.length === 0) {
-        alert('Tu carrito está vacío');
-        return;
-    }
-    
-    const carritoModal = document.getElementById('carritoModal');
-    const pagoModal = document.getElementById('pagoModal');
-    
-    if (carritoModal) carritoModal.style.display = 'none';
-    if (pagoModal) pagoModal.style.display = 'flex';
-    
-    // Calcular subtotal
-    const subtotal = carrito.reduce((sum, item) => {
-        const precio = item.precio || 0;
-        const cantidad = item.cantidad || 1;
-        return sum + (precio * cantidad);
-    }, 0);
-    
-    // Mostrar/ocultar secciones según subtotal
-    const seccionMetodoEntrega = document.getElementById('seccionMetodoEntrega');
-    const mensajeEnvioGratis = document.getElementById('mensajeEnvioGratis');
-    const envioPagoWrapper = document.getElementById('envioPagoWrapper');
-    
-    let envio = 0;
-    
-    if (subtotal >= 100000) {
-        // ENVÍO GRATIS
-        if (seccionMetodoEntrega) seccionMetodoEntrega.style.display = 'none';
-        if (mensajeEnvioGratis) mensajeEnvioGratis.style.display = 'block';
-        envio = 0;
-        if (envioPagoWrapper) {
-            envioPagoWrapper.innerHTML = '<span style="color: #00d4ff; font-weight: 700;">GRATIS ✅</span>';
-        }
-    } else {
-        // MOSTRAR OPCIONES DE ENVÍO
-        if (seccionMetodoEntrega) seccionMetodoEntrega.style.display = 'block';
-        if (mensajeEnvioGratis) mensajeEnvioGratis.style.display = 'none';
-        const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
-        envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
-        if (envioPagoWrapper) {
-            envioPagoWrapper.innerHTML = '$<span id="envioPago">' + envio.toLocaleString('es-CL') + '</span>';
-        }
-    }
-    
-    const total = subtotal + envio;
-    
-    const subtotalEl = document.getElementById('subtotalPago');
-    const totalEl = document.getElementById('totalPago');
-    
-    if (subtotalEl) subtotalEl.textContent = subtotal.toLocaleString('es-CL');
-    if (totalEl) totalEl.textContent = total.toLocaleString('es-CL');
-}
-
-function actualizarTotalPago() {
-    const subtotalEl = document.getElementById('subtotalPago');
-    const totalEl = document.getElementById('totalPago');
-    const envioPagoWrapper = document.getElementById('envioPagoWrapper');
-    
-    if (!subtotalEl || !totalEl) return;
-    
-    const subtotal = parseInt(subtotalEl.textContent.replace(/\./g, '')) || 0;
-    let envio = 0;
-    
-    if (subtotal >= 100000) {
-        // ENVÍO GRATIS
-        envio = 0;
-        if (envioPagoWrapper) {
-            envioPagoWrapper.innerHTML = '<span style="color: #00d4ff; font-weight: 700;">GRATIS ✅</span>';
-        }
-    } else {
-        // Obtener método de entrega seleccionado
-        const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
-        envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
-        if (envioPagoWrapper) {
-            envioPagoWrapper.innerHTML = '$<span id="envioPago">' + envio.toLocaleString('es-CL') + '</span>';
-        }
-    }
-    
-    const total = subtotal + envio;
-    totalEl.textContent = total.toLocaleString('es-CL');
-}
-
-function cerrarPago() {
-    const modal = document.getElementById('pagoModal');
-    if (!modal) return;
-    
-    modal.style.display = 'none';
-    document.body.classList.remove('modal-open');
-}
-
-async function procesarPago(event) {
-    event.preventDefault();
-    
-    const nombreEl = document.getElementById('nombre');
-    const emailEl = document.getElementById('email');
-    const telefonoEl = document.getElementById('telefono');
-    const regionEl = document.getElementById('region');
-    const comunaEl = document.getElementById('comuna');
-    const direccionEl = document.getElementById('direccion');
-    const numeroEl = document.getElementById('numero');
-    const complementoEl = document.getElementById('complemento');
-    
-    if (!nombreEl || !emailEl || !telefonoEl || !regionEl || !comunaEl || !direccionEl || !numeroEl) {
-        alert('Error: Por favor completa todos los campos obligatorios');
-        return;
-    }
-    
-    // Calcular subtotal
-    const subtotal = carrito.reduce((sum, item) => {
-        const precio = item.precio || 0;
-        const cantidad = item.cantidad || 1;
-        return sum + (precio * cantidad);
-    }, 0);
-    
-    // Determinar método de entrega y costo
-    let metodoEntrega;
-    let costoEnvio;
-    
-    if (subtotal >= 100000) {
-        // ENVÍO GRATIS
-        metodoEntrega = {
-            tipo: 'gratis',
-            nombre: 'Envío Gratis (Compra sobre $100.000)',
-            precio: 0
-        };
-        costoEnvio = 0;
-    } else {
-        // Obtener método seleccionado
-        const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
-        if (!metodoEntregaSeleccionado) {
-            alert('Por favor selecciona un método de entrega');
-            return;
-        }
-        
-        metodoEntrega = {
-            tipo: metodoEntregaSeleccionado.value,
-            nombre: metodoEntregaSeleccionado.value === 'normal' ? 'Envío Normal (3-5 días)' : 'Envío Flash (24-48h)',
-            precio: parseInt(metodoEntregaSeleccionado.dataset.precio)
-        };
-        costoEnvio = metodoEntrega.precio;
-    }
-    
-    // Construir dirección completa
-    const complemento = complementoEl ? complementoEl.value : '';
-    const direccionCompleta = `${direccionEl.value} ${numeroEl.value}${complemento ? ', ' + complemento : ''}, ${comunaEl.value}, ${regionEl.options[regionEl.selectedIndex].text}`;
-    
-    const datosCliente = {
-        nombre: nombreEl.value,
-        email: emailEl.value,
-        telefono: telefonoEl.value,
-        region: regionEl.options[regionEl.selectedIndex].text,
-        comuna: comunaEl.value,
-        direccion: direccionEl.value,
-        numero: numeroEl.value,
-        complemento: complemento,
-        direccionCompleta: direccionCompleta
-    };
-    
-    const total = subtotal + costoEnvio;
-    
-    const datosCompra = {
-        cliente: datosCliente,
-        items: carrito,
-        metodoEntrega: metodoEntrega,
-        subtotal: subtotal,
-        costoEnvio: costoEnvio,
-        total: total
-    };
-    
-    console.log('📦 Datos de compra:', datosCompra);
-    alert('Función de pago en desarrollo. Ver consola para datos.');
-}
