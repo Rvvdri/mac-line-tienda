@@ -339,9 +339,6 @@
             <ul class="nav-links">
                 <li><a href="index.html" class="nav-item">Inicio</a></li>
                 <li><a href="index.html#productos" class="nav-item">Productos</a></li>
-                <li><a href="#" onclick="abrirCarrito(); return false;" class="cart-link">
-                    🛒 Carrito <span class="cart-count">0</span>
-                </a></li>
             </ul>
         </div>
     </div>
@@ -412,24 +409,6 @@
                     <li>Garantía de 1 año</li>
                     <li>Devolución gratis en 30 días</li>
                 </ul>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL CARRITO -->
-    <div id="carritoModal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>🛒 Carrito de Compras</h2>
-                <button class="close-btn" onclick="cerrarCarrito()">&times;</button>
-            </div>
-            <div id="carritoItems" class="carrito-items"></div>
-            <div class="carrito-total">
-                <h3>Total: $<span id="totalPrecio">0</span></h3>
-            </div>
-            <div class="carrito-acciones">
-                <button class="btn btn-secondary btn-full" onclick="cerrarCarrito()">Seguir Comprando</button>
-                <button class="btn btn-primary btn-full" id="btnPagar" onclick="procederPago()">Proceder al Pago</button>
             </div>
         </div>
     </div>
@@ -1147,21 +1126,8 @@
             agregarAlCarritoDetalle();
         }
         
-        function abrirCarrito() {
-            document.getElementById('carritoModal').style.display = 'flex';
-        }
-        
-        function cerrarCarrito() {
-            document.getElementById('carritoModal').style.display = 'none';
-        }
-        
         function cerrarPago() {
             document.getElementById('pagoModal').style.display = 'none';
-        }
-        
-        function procederPago() {
-            document.getElementById('carritoModal').style.display = 'none';
-            document.getElementById('pagoModal').style.display = 'flex';
         }
         
         function procesarPago(event) {
