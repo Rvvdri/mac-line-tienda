@@ -46,7 +46,7 @@ function calcularPrecioFinalEdit() {
     document.getElementById('editPrecioFinal').value = '$' + precioFinal.toLocaleString('es-CL');
 }
 
-function comprimirImagen(file, maxWidth = 800, quality = 0.8) {
+function comprimirImagen(file, maxWidth = 600, quality = 0.7) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -65,8 +65,8 @@ function comprimirImagen(file, maxWidth = 800, quality = 0.8) {
                 canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-                const comprimido = canvas.toDataURL('image/jpeg', quality);
-                console.log(`✅ Comprimida: ${(file.size / 1024).toFixed(0)}KB → ${(comprimido.length * 0.75 / 1024).toFixed(0)}KB`);
+                const comprimido = canvas.toDataURL('image/webp', quality);
+                console.log(`✅ Comprimida a WebP: ${(file.size / 1024).toFixed(0)}KB → ${(comprimido.length * 0.75 / 1024).toFixed(0)}KB`);
                 resolve(comprimido);
             };
             img.onerror = reject;
@@ -94,7 +94,7 @@ async function previsualizarPortada(event) {
     }
     
     try {
-        imagenPortadaBase64 = await comprimirImagen(file, 800, 0.8);
+        imagenPortadaBase64 = await comprimirImagen(file, 600, 0.7);
         preview.innerHTML = `<img src="${imagenPortadaBase64}" style="max-width: 100%; max-height: 150px; object-fit: contain;">`;
     } catch (error) {
         console.error('Error:', error);
@@ -119,7 +119,7 @@ async function previsualizarImagen(event, numero) {
     }
     
     try {
-        imagenesAdicionales[numero - 1] = await comprimirImagen(file, 800, 0.7);
+        imagenesAdicionales[numero - 1] = await comprimirImagen(file, 600, 0.6);
         preview.innerHTML = `<img src="${imagenesAdicionales[numero - 1]}" style="max-width: 100%; max-height: 120px; object-fit: contain;">`;
     } catch (error) {
         console.error('Error:', error);
@@ -204,6 +204,24 @@ async function agregarProducto(event) {
     const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
     const imagenesValidas = imagenesAdicionales.filter(img => img !== null);
     
+    // Obtener colores (si existen)
+    const coloresInput = document.getElementById('colores')?.value || '';
+    const colores = coloresInput ? coloresInput.split(',').map(c => c.trim()).filter(c => c) : [];
+    
+    // Obtener capacidades (si existen)
+    const capacidadesInput = document.getElementById('capacidades')?.value || '';
+    let capacidades = [];
+    if (capacidadesInput) {
+        // Formato: "128GB:0, 256GB:50000, 512GB:100000"
+        capacidades = capacidadesInput.split(',').map(cap => {
+            const [nombre, precio] = cap.trim().split(':');
+            return {
+                nombre: nombre?.trim(),
+                precioIncremental: parseInt(precio?.trim()) || 0
+            };
+        }).filter(c => c.nombre);
+    }
+    
     const nuevoProducto = {
         nombre: document.getElementById('nombre').value,
         categoria: document.getElementById('categoria').value,
@@ -217,6 +235,15 @@ async function agregarProducto(event) {
         emoji: '📦'
     };
     
+    // Agregar colores y capacidades solo si existen
+    if (colores.length > 0) {
+        nuevoProducto.colores = colores;
+    }
+    
+    if (capacidades.length > 0) {
+        nuevoProducto.capacidades = capacidades;
+    }
+    
     try {
         const response = await fetch(`${API_URL}/productos`, {
             method: 'POST',
@@ -224,7 +251,10 @@ async function agregarProducto(event) {
             body: JSON.stringify(nuevoProducto)
         });
         
-        if (!response.ok) throw new Error(`Error ${response.status}`);
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Error ${response.status}: ${error}`);
+        }
         
         alert('✅ Producto agregado exitosamente');
         document.getElementById('formularioProducto').reset();
@@ -232,8 +262,8 @@ async function agregarProducto(event) {
         await cargarProductos();
         mostrarSeccion('productos');
     } catch (error) {
-        console.error('Error:', error);
-        alert('❌ Error al agregar producto');
+        console.error('Error completo:', error);
+        alert('❌ Error al agregar producto: ' + error.message);
     }
 }
 
@@ -260,25 +290,6 @@ function abrirModalEditar(productoId) {
     document.getElementById('editStock').value = producto.stock;
     
     calcularPrecioFinalEdit();
-    
-    // Cargar colores si existen
-    const editColoresEl = document.getElementById('editColores');
-    if (editColoresEl && producto.colores && producto.colores.length > 0) {
-        editColoresEl.value = producto.colores.join(', ');
-    } else if (editColoresEl) {
-        editColoresEl.value = '';
-    }
-    
-    // Cargar capacidades si existen
-    const editCapacidadesEl = document.getElementById('editCapacidades');
-    if (editCapacidadesEl && producto.capacidades && producto.capacidades.length > 0) {
-        const capacidadesStr = producto.capacidades.map(cap => 
-            `${cap.nombre}:${cap.precioIncremental || 0}`
-        ).join(', ');
-        editCapacidadesEl.value = capacidadesStr;
-    } else if (editCapacidadesEl) {
-        editCapacidadesEl.value = '';
-    }
     
     // Mostrar imagen portada actual
     const previewPortada = document.getElementById('editPreviewPortada');
@@ -316,7 +327,7 @@ async function previsualizarPortadaEdit(event) {
     if (!file) return;
     
     try {
-        imagenPortadaEditBase64 = await comprimirImagen(file, 800, 0.8);
+        imagenPortadaEditBase64 = await comprimirImagen(file, 600, 0.7);
         preview.innerHTML = `<img src="${imagenPortadaEditBase64}" style="max-width: 100%; max-height: 150px; object-fit: contain;">`;
         console.log('✅ Nueva portada cargada');
     } catch (error) {
@@ -331,7 +342,7 @@ async function previsualizarImagenEdit(event, numero) {
     if (!file) return;
     
     try {
-        imagenesAdicionalesEdit[numero - 1] = await comprimirImagen(file, 800, 0.7);
+        imagenesAdicionalesEdit[numero - 1] = await comprimirImagen(file, 600, 0.6);
         preview.innerHTML = `<img src="${imagenesAdicionalesEdit[numero - 1]}" style="max-width: 100%; max-height: 120px; object-fit: contain;">`;
         console.log(`✅ Nueva imagen ${numero} cargada`);
     } catch (error) {
@@ -360,34 +371,6 @@ async function guardarEdicion(event) {
         descuento: descuento,
         stock: parseInt(document.getElementById('editStock').value)
     };
-    
-    // Parsear colores (opcional)
-    const coloresInput = document.getElementById('editColores')?.value || '';
-    if (coloresInput.trim()) {
-        const colores = coloresInput.split(',').map(c => c.trim()).filter(c => c);
-        if (colores.length > 0) {
-            datosActualizados.colores = colores;
-        }
-    }
-    
-    // Parsear capacidades (opcional)
-    const capacidadesInput = document.getElementById('editCapacidades')?.value || '';
-    if (capacidadesInput.trim()) {
-        const capacidades = capacidadesInput.split(',').map(cap => {
-            const [nombre, precio] = cap.trim().split(':');
-            if (nombre && nombre.trim()) {
-                return {
-                    nombre: nombre.trim(),
-                    precioIncremental: parseInt(precio?.trim()) || 0
-                };
-            }
-            return null;
-        }).filter(c => c !== null);
-        
-        if (capacidades.length > 0) {
-            datosActualizados.capacidades = capacidades;
-        }
-    }
     
     // PORTADA: Si hay nueva, usarla; si no, mantener la original
     if (imagenPortadaEditBase64) {

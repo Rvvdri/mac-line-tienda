@@ -115,13 +115,11 @@ function renderizarProductos(filtro = 'todos') {
         const descuento = producto.descuento || 0;
         const tieneVariantes = producto.colores && producto.capacidades;
         
-        // Agregar timestamp a imagen para forzar recarga (solo si no es base64)
+        // Agregar timestamp a imagen para forzar recarga
         const imagenConCache = producto.imagenPortada ? 
-            (producto.imagenPortada.startsWith('data:') ? 
-                producto.imagenPortada : 
-                (producto.imagenPortada.includes('?') ? 
-                    `${producto.imagenPortada}&t=${Date.now()}` : 
-                    `${producto.imagenPortada}?t=${Date.now()}`)) 
+            (producto.imagenPortada.includes('?') ? 
+                `${producto.imagenPortada}&t=${Date.now()}` : 
+                `${producto.imagenPortada}?t=${Date.now()}`) 
             : null;
         
         let stockClass = 'disponible';
@@ -250,13 +248,11 @@ function crearCardProducto(producto) {
         stockTexto = `⚠️ Últimas ${producto.stock} unidades`;
     }
     
-    // Agregar timestamp a la imagen para forzar recarga (solo si no es base64)
+    // Agregar timestamp a la imagen para forzar recarga
     const imagenConCache = producto.imagenPortada ? 
-        (producto.imagenPortada.startsWith('data:') ? 
-            producto.imagenPortada : 
-            (producto.imagenPortada.includes('?') ? 
-                `${producto.imagenPortada}&t=${Date.now()}` : 
-                `${producto.imagenPortada}?t=${Date.now()}`)) 
+        (producto.imagenPortada.includes('?') ? 
+            `${producto.imagenPortada}&t=${Date.now()}` : 
+            `${producto.imagenPortada}?t=${Date.now()}`) 
         : null;
     
     return `
