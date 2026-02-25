@@ -142,20 +142,33 @@ app.post('/api/productos', async (req, res) => {
     }
 });
 
-// PUT - Actualizar producto
 app.put('/api/productos/:id', async (req, res) => {
     try {
         const { id } = req.params;
+        
+        // Procesar las strings de colores y capacidades para convertirlas en Arrays (listas)
+        const procesarLista = (campo) => {
+            if (typeof campo === 'string') return campo.split(',').map(item => item.trim()).filter(item => item !== "");
+            return campo || [];
+        };
+
         const datosActualizados = {
             nombre: req.body.nombre,
             categoria: req.body.categoria,
-            precio: req.body.precio,
-            stock: req.body.stock,
-            descuento: req.body.descuento || 0,
+            descripcion: req.body.descripcion,
+            precio: Number(req.body.precio),
+            precioOriginal: Number(req.body.precioOriginal),
+            stock: Number(req.body.stock),
+            descuento: Number(req.body.descuento || 0),
+            // NUEVOS CAMPOS AGREGADOS PARA QUE SE GUARDEN
+            imagenPortada: req.body.imagenPortada,
+            imagenes: req.body.imagenes || [],
+            colores: procesarLista(req.body.colores),
+            capacidades: procesarLista(req.body.capacidades),
             updatedAt: new Date()
         };
         
-        // Eliminar campos undefined
+        // Eliminar campos que vengan como undefined
         Object.keys(datosActualizados).forEach(key => 
             datosActualizados[key] === undefined && delete datosActualizados[key]
         );
@@ -165,18 +178,9 @@ app.put('/api/productos/:id', async (req, res) => {
             { $set: datosActualizados }
         );
         
-        if (result.matchedCount === 0) {
-            return res.status(404).json({ error: 'Producto no encontrado' });
-        }
-        
-        res.json({ 
-            success: true,
-            mensaje: 'Producto actualizado exitosamente',
-            modificados: result.modifiedCount
-        });
-        
+        res.json({ success: true, mensaje: 'Producto y variantes actualizados' });
     } catch (error) {
-        console.error('Error al actualizar producto:', error);
+        console.error('Error al actualizar:', error);
         res.status(500).json({ error: 'Error al actualizar producto' });
     }
 });
