@@ -119,11 +119,10 @@ app.post('/api/productos', async (req, res) => {
             emoji: req.body.emoji || '📦',
             imagenPortada: req.body.imagenPortada || null,
             imagenes: req.body.imagenes || [],
-            colores: req.body.colores || [],
-            capacidades: req.body.capacidades || [],
+            colores: typeof req.body.colores === 'string' ? req.body.colores.split(',').map(c => c.trim()) : (req.body.colores || []),
+            capacidades: typeof req.body.capacidades === 'string' ? req.body.capacidades.split(',').map(g => g.trim()) : (req.body.capacidades || []),
             createdAt: new Date()
-        };
-        
+};
         const result = await productosCollection.insertOne(nuevoProducto);
         
         console.log('✅ Producto creado con ID:', result.insertedId);
