@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
     cargarCarritoLocal();
     actualizarCarrito();
-    actualizarContadorCarrito(); // Actualizar contador al cargar
     iniciarCarrusel();
 });
 
@@ -78,23 +77,7 @@ async function cargarProductos() {
 
 function renderizarProductos(filtro = 'todos') {
     const grid = document.getElementById('productosGrid');
-    const secciones = document.getElementById('seccionesCatalogo');
-    
     if (!grid) return;
-    
-    // Si filtro es 'todos', mostrar secciones
-    if (filtro === 'todos') {
-        grid.style.display = 'none';
-        if (secciones) {
-            secciones.style.display = 'block';
-            renderizarPorSecciones();
-        }
-        return;
-    }
-    
-    // Si hay filtro específico, mostrar grid normal
-    if (secciones) secciones.style.display = 'none';
-    grid.style.display = 'grid';
     
     let productosFiltrados = productosActuales;
 
@@ -156,7 +139,6 @@ function renderizarProductos(filtro = 'todos') {
                     ${stockTexto}
                 </p>
                 
-                <!-- BOTÓN DESACTIVADO: Solo se agrega desde producto.html
                 ${producto.stock > 0 ? `
                     <button class="btn-agregar-carrito" onclick="event.stopPropagation(); agregarAlCarrito('${producto.id}')">
                         🛒 Agregar al Carrito
@@ -166,93 +148,12 @@ function renderizarProductos(filtro = 'todos') {
                         Agotado
                     </button>
                 `}
-                -->
             </div>
         </div>
     `}).join('');
 }
 
 // ========== FILTRAR PRODUCTOS ==========
-
-function renderizarPorSecciones() {
-    const secciones = document.getElementById('seccionesCatalogo');
-    if (!secciones) return;
-    
-    // Agrupar productos por categoría
-    const categorias = {
-        'celulares': { nombre: 'Celulares', emoji: '📱', productos: [] },
-        'audifonos': { nombre: 'Audífonos', emoji: '🎧', productos: [] },
-        'relojes': { nombre: 'Relojes', emoji: '⌚', productos: [] },
-        'televisores': { nombre: 'Televisores', emoji: '📺', productos: [] },
-        'notebooks': { nombre: 'Computadores', emoji: '💻', productos: [] },
-        'consolas': { nombre: 'Consolas', emoji: '🎮', productos: [] }
-    };
-    
-    // Agrupar productos
-    productosActuales.forEach(producto => {
-        const cat = producto.categoria?.toLowerCase();
-        if (categorias[cat]) {
-            categorias[cat].productos.push(producto);
-        }
-    });
-    
-    // Renderizar secciones
-    let html = '';
-    
-    Object.keys(categorias).forEach(key => {
-        const cat = categorias[key];
-        if (cat.productos.length === 0) return; // Skip categorías vacías
-        
-        html += `
-            <div class="categoria-section">
-                <div class="categoria-header">
-                    <h3 class="categoria-titulo">
-                        <span class="categoria-emoji">${cat.emoji}</span>
-                        <span>${cat.nombre}</span>
-                    </h3>
-                    <span class="categoria-count">${cat.productos.length} productos</span>
-                </div>
-                <div class="categoria-grid">
-                    ${cat.productos.map(producto => crearCardProducto(producto)).join('')}
-                </div>
-            </div>
-        `;
-    });
-    
-    secciones.innerHTML = html || '<p style="text-align:center;color:#999;">No hay productos disponibles</p>';
-}
-
-function crearCardProducto(producto) {
-    const precioFinal = producto.descuento 
-        ? producto.precio * (1 - producto.descuento / 100)
-        : producto.precio;
-    
-    return `
-        <div class="producto-card" onclick="abrirProducto('${producto.id || producto._id}')">
-            ${producto.descuento ? `<span class="descuento-badge">-${producto.descuento}%</span>` : ''}
-            
-            <div class="producto-categoria">${producto.categoria?.toUpperCase() || 'PRODUCTO'}</div>
-            
-            <h3 class="producto-titulo">${producto.nombre}</h3>
-            
-            <div class="producto-imagen-wrapper">
-                ${producto.imagenPortada 
-                    ? `<img src="${producto.imagenPortada}" alt="${producto.nombre}" class="producto-imagen">` 
-                    : `<div class="producto-emoji">${producto.emoji || '📦'}</div>`
-                }
-            </div>
-            
-            <div class="producto-precio-wrapper">
-                ${producto.descuento ? 
-                    `<p class="producto-precio-anterior">Antes: $${producto.precio.toLocaleString('es-CL')}</p>` 
-                    : ''
-                }
-                <p class="producto-precio">Desde $${precioFinal.toLocaleString('es-CL')}</p>
-                <p class="producto-stock">✅ ${producto.stock || 0} disponibles</p>
-            </div>
-        </div>
-    `;
-}
 
 function filtrarProductos(categoria) {
     filtroActivo = categoria;
@@ -295,7 +196,6 @@ function cargarCarritoLocal() {
 
 function guardarCarritoLocal() {
     localStorage.setItem('carrito', JSON.stringify(carrito));
-    actualizarContadorCarrito(); // Actualizar contador inmediatamente
 }
 
 function agregarAlCarrito(productoId) {
@@ -366,63 +266,19 @@ function actualizarCarrito() {
 }
 
 function actualizarContadorCarrito() {
-    const carritoGuardado = localStorage.getItem('carrito');
-    const carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
-    const total = carrito.reduce((sum, item) => sum + (item.cantidad || 1), 0);
-    
-    // Actualizar todos los contadores (.cart-count y .cart-badge)
-    document.querySelectorAll('.cart-count, .cart-badge').forEach(el => {
-        el.textContent = total;
-        // Mostrar/ocultar según si hay productos
-        if (total > 0) {
-            el.style.display = 'flex';
-        } else {
-            el.style.display = 'none';
-        }
+    const contador = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    document.querySelectorAll('.cart-count').forEach(el => {
+        el.textContent = contador;
     });
-    
-    console.log('🔄 Contador actualizado:', total);
 }
 
 function renderizarCarrito() {
-    // SIEMPRE recargar desde localStorage primero
-    const carritoGuardado = localStorage.getItem('carrito');
-    
-    console.log('═'.repeat(60));
-    console.log('🔄 RENDERIZANDO CARRITO');
-    console.log('═'.repeat(60));
-    console.log('📦 localStorage raw:', carritoGuardado);
-    
-    if (carritoGuardado) {
-        try {
-            carrito = JSON.parse(carritoGuardado);
-            console.log('✅ Carrito parseado correctamente:', carrito);
-        } catch (e) {
-            console.error('❌ Error parseando carrito:', e);
-            carrito = [];
-        }
-    } else {
-        console.log('⚠️ No hay carrito en localStorage');
-        carrito = [];
-    }
-    
-    console.log(`📊 Total items en carrito: ${carrito.length}`);
-    
     const carritoItems = document.getElementById('carritoItems');
     const totalPrecio = document.getElementById('totalPrecio');
     
-    if (!carritoItems) {
-        console.error('❌ No se encontró carritoItems');
-        return;
-    }
-    
-    if (!totalPrecio) {
-        console.error('❌ No se encontró totalPrecio');
-        return;
-    }
+    if (!carritoItems || !totalPrecio) return;
     
     if (carrito.length === 0) {
-        console.log('⚠️ Carrito vacío - mostrando mensaje');
         carritoItems.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
         totalPrecio.textContent = '0';
         const btnPagar = document.getElementById('btnPagar');
@@ -430,73 +286,42 @@ function renderizarCarrito() {
         return;
     }
     
-    console.log('✅ Carrito tiene items - generando HTML');
-    
     const btnPagar = document.getElementById('btnPagar');
     if (btnPagar) btnPagar.disabled = false;
     
-    console.log('🔨 Construyendo HTML para cada item...');
-    
-    const itemsHTML = carrito.map((item, index) => {
-        console.log(`\n📝 Item ${index}:`, item);
-        
+    carritoItems.innerHTML = carrito.map((item, index) => {
         const variantesTexto = [item.color, item.capacidad].filter(Boolean).join(' | ');
+        const producto = productosActuales.find(p => String(p.id) === String(item.id));
+        const stockDisponible = producto ? producto.stock : item.stock;
         
-        // Proteger contra valores null/undefined
-        const precio = item.precio || 0;
-        const cantidad = item.cantidad || 1;
-        
-        // Intentar buscar producto si productosActuales existe
-        let stockDisponible = item.stock || 0;
-        if (typeof productosActuales !== 'undefined' && productosActuales && productosActuales.length > 0) {
-            const producto = productosActuales.find(p => String(p.id) === String(item.id));
-            if (producto) {
-                stockDisponible = producto.stock;
-            }
-        }
-        
-        const html = `
+        return `
             <div class="carrito-item">
                 <div class="item-imagen">
                     ${item.imagenPortada 
-                        ? `<img src="${item.imagenPortada}" alt="${item.nombre || 'Producto'}" onerror="console.error('Error cargando imagen'); this.parentElement.innerHTML='<span class=\\'item-emoji\\'>${item.emoji || '📦'}</span>'">` 
+                        ? `<img src="${item.imagenPortada}" alt="${item.nombre}">` 
                         : `<span class="item-emoji">${item.emoji || '📦'}</span>`
                     }
                 </div>
                 <div class="item-info">
-                    <h4 class="item-nombre">${item.nombre || 'Producto sin nombre'}</h4>
+                    <h4 class="item-nombre">${item.nombre}</h4>
                     ${variantesTexto ? `<p class="item-variantes">${variantesTexto}</p>` : ''}
-                    <p class="item-precio">$${precio.toLocaleString('es-CL')}</p>
+                    <p class="item-precio">$${item.precio.toLocaleString('es-CL')}</p>
                     ${stockDisponible ? `<p class="item-stock">Stock: ${stockDisponible} disponibles</p>` : ''}
                 </div>
                 <div class="item-controles">
                     <div class="item-cantidad">
                         <button class="cantidad-btn" onclick="disminuirCantidad(${index})">-</button>
-                        <span class="cantidad-numero">${cantidad}</span>
+                        <span class="cantidad-numero">${item.cantidad}</span>
                         <button class="cantidad-btn" onclick="aumentarCantidad(${index})">+</button>
                     </div>
                     <button class="btn-eliminar" onclick="eliminarDelCarrito(${index})">Eliminar</button>
                 </div>
             </div>
         `;
-        
-        console.log(`✅ HTML generado para item ${index}`);
-        return html;
     }).join('');
     
-    console.log('📄 Insertando HTML en carritoItems...');
-    carritoItems.innerHTML = itemsHTML;
-    console.log('✅ HTML insertado');
-    
-    const total = carrito.reduce((sum, item) => {
-        const precio = item.precio || 0;
-        const cantidad = item.cantidad || 1;
-        return sum + (precio * cantidad);
-    }, 0);
+    const total = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
     totalPrecio.textContent = total.toLocaleString('es-CL');
-    
-    console.log(`💰 Total: $${total.toLocaleString('es-CL')}`);
-    console.log('═'.repeat(60));
 }
 
 function abrirCarrito() {
@@ -528,16 +353,8 @@ function procederPago() {
     if (carritoModal) carritoModal.style.display = 'none';
     if (pagoModal) pagoModal.style.display = 'flex';
     
-    // Calcular subtotal
-    const subtotal = carrito.reduce((sum, item) => {
-        const precio = item.precio || 0;
-        const cantidad = item.cantidad || 1;
-        return sum + (precio * cantidad);
-    }, 0);
-    
-    // Obtener método de entrega seleccionado (por defecto normal = 3990)
-    const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
-    const envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
+    const subtotal = carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+    const envio = 0;
     const total = subtotal + envio;
     
     const subtotalEl = document.getElementById('subtotalPago');
@@ -545,33 +362,8 @@ function procederPago() {
     const totalEl = document.getElementById('totalPago');
     
     if (subtotalEl) subtotalEl.textContent = subtotal.toLocaleString('es-CL');
-    if (envioEl) envioEl.textContent = envio.toLocaleString('es-CL');
+    if (envioEl) envioEl.textContent = 'GRATIS';
     if (totalEl) totalEl.textContent = total.toLocaleString('es-CL');
-}
-
-// Función para actualizar el total cuando cambia el método de entrega
-function actualizarTotalPago() {
-    const subtotalEl = document.getElementById('subtotalPago');
-    const envioEl = document.getElementById('envioPago');
-    const totalEl = document.getElementById('totalPago');
-    
-    if (!subtotalEl || !envioEl || !totalEl) return;
-    
-    const subtotal = parseInt(subtotalEl.textContent.replace(/\./g, '')) || 0;
-    
-    // Obtener método de entrega seleccionado
-    const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
-    const envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
-    
-    const total = subtotal + envio;
-    
-    envioEl.textContent = envio.toLocaleString('es-CL');
-    totalEl.textContent = total.toLocaleString('es-CL');
-    
-    console.log('📦 Total actualizado:');
-    console.log('  Subtotal:', subtotal);
-    console.log('  Envío:', envio);
-    console.log('  Total:', total);
 }
 
 function cerrarPago() {
@@ -588,63 +380,25 @@ async function procesarPago(event) {
     const nombreEl = document.getElementById('nombre');
     const emailEl = document.getElementById('email');
     const telefonoEl = document.getElementById('telefono');
-    const ciudadEl = document.getElementById('ciudad');
-    const comunaEl = document.getElementById('comuna');
-    const calleEl = document.getElementById('calle');
-    const numeroEl = document.getElementById('numero');
     const direccionEl = document.getElementById('direccion');
     
-    if (!nombreEl || !emailEl || !telefonoEl || !ciudadEl || !comunaEl || !calleEl || !numeroEl) {
-        alert('Error: Por favor completa todos los campos obligatorios');
+    if (!nombreEl || !emailEl || !telefonoEl || !direccionEl) {
+        alert('Error: Formulario incompleto');
         return;
     }
-    
-    // Obtener método de entrega
-    const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
-    if (!metodoEntregaSeleccionado) {
-        alert('Por favor selecciona un método de entrega');
-        return;
-    }
-    
-    const metodoEntrega = {
-        tipo: metodoEntregaSeleccionado.value,
-        nombre: metodoEntregaSeleccionado.value === 'normal' ? 'Envío Normal (3-5 días)' : 'Envío Flash (24-48h)',
-        precio: parseInt(metodoEntregaSeleccionado.dataset.precio)
-    };
-    
-    // Construir dirección completa
-    const direccionCompleta = `${calleEl.value} ${numeroEl.value}${direccionEl.value ? ', ' + direccionEl.value : ''}`;
     
     const datosCliente = {
         nombre: nombreEl.value,
         email: emailEl.value,
         telefono: telefonoEl.value,
-        ciudad: ciudadEl.value,
-        comuna: comunaEl.value,
-        calle: calleEl.value,
-        numero: numeroEl.value,
-        complemento: direccionEl.value || '',
-        direccion: direccionCompleta
+        direccion: direccionEl.value
     };
-    
-    const subtotal = carrito.reduce((sum, item) => {
-        const precio = item.precio || 0;
-        const cantidad = item.cantidad || 1;
-        return sum + (precio * cantidad);
-    }, 0);
-    
-    const total = subtotal + metodoEntrega.precio;
     
     const datosCompra = {
         cliente: datosCliente,
         items: carrito,
-        metodoEntrega: metodoEntrega,
-        subtotal: subtotal,
-        costoEnvio: metodoEntrega.precio,
-        total: total
+        total: carrito.reduce((sum, item) => sum + (item.precio * item.cantidad), 0)
     };
-    
-    console.log('📦 Datos de compra:', datosCompra);
     
     console.log('💳 Procesando pago con Mercado Pago...');
     

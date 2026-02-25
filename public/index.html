@@ -8,57 +8,23 @@
     <link rel="stylesheet" href="estilos-carrito.css">
 </head>
 <body>
-   
-    
     <!-- OVERLAY PARA CERRAR MENÚ -->
     <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
     
-    <!-- NAVBAR FIJA EN TOP -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <h1>🖥️ MAC LINE</h1>
-                <p class="tagline">Tecnología Premium</p>
-            </div>
-        </div>
-    </nav>
-
-    <!-- NAVBAR STICKY CON BÚSQUEDA Y LINKS -->
-    <nav class="navbar-sticky">
-        <div class="container">
-            <!-- Botón de menú móvil (hamburguesa) -->
-            <button class="mobile-menu-btn-modern" onclick="toggleMobileMenu()" aria-label="Menú">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="🔍 Buscar productos..." onkeyup="buscarProductos()">
-            </div>
-            <ul class="nav-links">
-                <li><a href="#inicio" class="nav-item">Inicio</a></li>
-                <li><a href="#productos" class="nav-item">Productos</a></li>
-                <li><a href="javascript:abrirCarrito()" class="cart-link">
-                    🛒 Carrito <span class="cart-count">0</span>
-                </a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- OVERLAY PARA MENÚ MÓVIL -->
-    <div class="mobile-overlay" onclick="closeMobileMenu()"></div>
-
-    <!-- MENÚ MÓVIL LATERAL -->
-    <nav id="mobileNav" class="mobile-nav-modern">
+    <!-- MENÚ LATERAL MÓVIL -->
+    <nav class="mobile-nav-modern" id="mobileNav" style="transform: translateX(-100%); pointer-events: none;">
         <div class="mobile-nav-header-modern">
-            <div class="nav-logo">
-                <span class="logo-icon">🖥️</span>
-                <span class="logo-text">MAC LINE</span>
+            <div class="logo-mobile">
+                <h2>🖥️ MAC LINE</h2>
+                <p>Tecnología Premium</p>
             </div>
-            <button class="close-mobile-nav" onclick="closeMobileMenu()" aria-label="Cerrar menú">
-                ✕
+            <button class="mobile-nav-close-modern" onclick="closeMobileMenu()">
+                <span>✕</span>
             </button>
+        </div>
+        
+        <div class="mobile-nav-search">
+            <input type="text" id="searchInputMobile" placeholder="🔍 Buscar productos..." onkeyup="buscarProductos()">
         </div>
         
         <ul class="mobile-nav-links-modern">
@@ -74,14 +40,88 @@
                     <span class="nav-text">Productos</span>
                 </a>
             </li>
+            <li class="nav-divider">
+                <span>Categorías</span>
+            </li>
             <li>
-                <a href="javascript:void(0)" onclick="abrirCarrito(); closeMobileMenu();">
+                <a href="#" onclick="filtrarProductos('celulares'); closeMobileMenu();">
+                    <span class="nav-icon">📱</span>
+                    <span class="nav-text">Celulares</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="filtrarProductos('audifonos'); closeMobileMenu();">
+                    <span class="nav-icon">🎧</span>
+                    <span class="nav-text">Audífonos</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="filtrarProductos('relojes'); closeMobileMenu();">
+                    <span class="nav-icon">⌚</span>
+                    <span class="nav-text">Relojes</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="filtrarProductos('notebooks'); closeMobileMenu();">
+                    <span class="nav-icon">💻</span>
+                    <span class="nav-text">Computadores</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" onclick="filtrarProductos('consolas'); closeMobileMenu();">
+                    <span class="nav-icon">🎮</span>
+                    <span class="nav-text">Consolas</span>
+                </a>
+            </li>
+            <li class="nav-divider">
+                <span>Compras</span>
+            </li>
+            <li>
+                <a href="#" onclick="abrirCarrito(); closeMobileMenu();" class="cart-menu-link">
                     <span class="nav-icon">🛒</span>
-                    <span class="nav-text">Carrito</span>
+                    <span class="nav-text">Mi Carrito</span>
                     <span class="cart-badge">0</span>
                 </a>
             </li>
         </ul>
+        
+        <div class="mobile-nav-footer">
+            <p>© 2026 MAC LINE</p>
+            <p>Tecnología Premium</p>
+        </div>
+    </nav>
+    
+    <!-- NAVBAR FIJA EN TOP -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <h1>🖥️ MAC LINE</h1>
+                <p class="tagline">Tecnología Premium</p>
+            </div>
+        </div>
+    </nav>
+
+    <!-- NAVBAR STICKY CON BÚSQUEDA Y LINKS -->
+    <nav class="navbar-sticky">
+        <!-- BOTÓN HAMBURGUESA DENTRO DEL NAVBAR -->
+        <button class="mobile-menu-btn-modern" onclick="toggleMobileMenu()" aria-label="Menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar productos..." onkeyup="buscarProductos()">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio" class="nav-item">Inicio</a></li>
+                <li><a href="#productos" class="nav-item">Productos</a></li>
+                <li><a href="javascript:abrirCarrito()" class="cart-link">
+                    🛒 Carrito <span class="cart-count">0</span>
+                </a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- HERO SECTION -->
@@ -126,7 +166,7 @@
                 <div class="promo-content">
                     <span class="promo-emoji">💻</span>
                     <h3>¡ENVÍO GRATIS!</h3>
-                    <p>En compras sobre $50.000 a todo Chile</p>
+                    <p>En compras sobre $100.000 a todo Chile</p>
                 </div>
             </div>
         </div>
@@ -152,16 +192,12 @@
                 <button class="filtro-btn" onclick="filtrarProductos('celulares')">📱 Celulares</button>
                 <button class="filtro-btn" onclick="filtrarProductos('audifonos')">🎧 Audífonos</button>
                 <button class="filtro-btn" onclick="filtrarProductos('relojes')">⌚ Relojes</button>
-                <button class="filtro-btn" onclick="filtrarProductos('televisores')">📺 Televisores</button>
+                <button class="filtro-btn" onclick="filtrarProductos('consolas')">🎮 Consolas</button>
                 <button class="filtro-btn" onclick="filtrarProductos('notebooks')">💻 Computadores</button>
             </div>
 
             <!-- GRID DE PRODUCTOS -->
-            <!-- SECCIONES POR CATEGORÍA -->
-            <div id="seccionesCatalogo"></div>
-            
-            <!-- GRID DE PRODUCTOS -->
-            <div class="productos-grid" id="productosGrid" style="display: none;">
+            <div class="productos-grid" id="productosGrid">
                 <div class="loading">Cargando productos...</div>
             </div>
         </div>
@@ -175,7 +211,7 @@
                     <div class="trust-badge-icon-compact">🚚</div>
                     <div class="trust-badge-text-compact">
                         <h4>Envío Gratis</h4>
-                        <p>Sobre $50.000</p>
+                        <p>Sobre $100.000</p>
                     </div>
                 </div>
                 
@@ -192,14 +228,6 @@
                     <div class="trust-badge-text-compact">
                         <h4>Garantía 1 Año</h4>
                         <p>Todos los productos</p>
-                    </div>
-                </div>
-                
-                <div class="trust-badge-compact">
-                    <div class="trust-badge-icon-compact">↩️</div>
-                    <div class="trust-badge-text-compact">
-                        <h4>Devolución 30 Días</h4>
-                        <p>Sin preguntas</p>
                     </div>
                 </div>
             </div>
@@ -273,6 +301,29 @@
     
     <!-- FUNCIONES DEL MENÚ MÓVIL -->
     <script>
+    // Ocultar hamburguesa cuando se abre modal
+    function observarModales() {
+        const hamburguesa = document.querySelector('.mobile-menu-btn-modern');
+        const modales = document.querySelectorAll('.modal');
+        
+        modales.forEach(modal => {
+            const observer = new MutationObserver(() => {
+                if (modal.classList.contains('active') || modal.style.display !== 'none') {
+                    if (hamburguesa) hamburguesa.style.display = 'none';
+                } else {
+                    if (hamburguesa) hamburguesa.style.display = '';
+                }
+            });
+            
+            observer.observe(modal, { 
+                attributes: true, 
+                attributeFilter: ['class', 'style'] 
+            });
+        });
+    }
+    
+    document.addEventListener('DOMContentLoaded', observarModales);
+    
     function toggleMobileMenu() {
         const mobileNav = document.getElementById('mobileNav');
         const overlay = document.querySelector('.mobile-overlay');
@@ -285,12 +336,18 @@
         btn.classList.toggle('active');
         
         if (mobileNav.classList.contains('active')) {
+            // Quitar transform inline al abrir
+            mobileNav.style.transform = '';
+            mobileNav.style.pointerEvents = '';
             document.body.style.overflow = 'hidden';
             // Sincronizar contador del carrito
             if (cartBadge && cartCount) {
                 cartBadge.textContent = cartCount.textContent;
             }
         } else {
+            // Restaurar transform al cerrar
+            mobileNav.style.transform = 'translateX(-100%)';
+            mobileNav.style.pointerEvents = 'none';
             document.body.style.overflow = '';
         }
     }
@@ -303,6 +360,10 @@
         mobileNav.classList.remove('active');
         overlay.classList.remove('active');
         btn.classList.remove('active');
+        
+        // Restaurar transform
+        mobileNav.style.transform = 'translateX(-100%)';
+        mobileNav.style.pointerEvents = 'none';
         document.body.style.overflow = '';
     }
 
@@ -313,12 +374,6 @@
         }
     });
     </script>
-
-    <!-- Botón flotante de Carrito -->
-    <button class="cart-floating-mobile" onclick="abrirCarrito()">
-        🛒
-        <span class="cart-count">0</span>
-    </button>
 
     <!-- Botón flotante de WhatsApp -->
     <a 
@@ -332,6 +387,20 @@
         </svg>
         <span class="whatsapp-text">WhatsApp</span>
     </a>
+
+    <!-- Botón flotante de Carrito -->
+    <button 
+        class="cart-float" 
+        onclick="abrirCarrito()"
+        aria-label="Abrir carrito"
+    >
+        <svg viewBox="0 0 24 24" class="cart-icon" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-badge-float">0</span>
+    </button>
 
     <style>
     .whatsapp-float {
@@ -376,43 +445,32 @@
     /* ===== MENÚ HAMBURGUESA MODERNO ===== */
     .mobile-menu-btn-modern {
         display: none;
-        position: relative;
+        position: fixed;
+        top: 15px;
+        left: 15px;
         z-index: 1001;
-        width: 45px;
-        height: 45px;
+        width: 50px;
+        height: 50px;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
-        border-radius: 10px;
+        border-radius: 12px;
         cursor: pointer;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 5px;
-        padding: 0;
         box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         transition: all 0.3s ease;
-        flex-shrink: 0;
+        opacity: 1;
+        visibility: visible;
     }
-    
+
     .mobile-menu-btn-modern span {
-        display: block;
         width: 24px;
         height: 3px;
         background: white;
         border-radius: 2px;
         transition: all 0.3s ease;
-    }
-    
-    .mobile-menu-btn-modern.active span:nth-child(1) {
-        transform: rotate(45deg) translate(7px, 7px);
-    }
-    
-    .mobile-menu-btn-modern.active span:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .mobile-menu-btn-modern.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -7px);
     }
 
     .mobile-menu-btn-modern:hover {
@@ -422,6 +480,13 @@
 
     .mobile-menu-btn-modern:active {
         transform: scale(0.95);
+    }
+
+    /* Ocultar botón cuando el menú está abierto */
+    .mobile-menu-btn-modern.active {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
     }
 
     .mobile-nav-modern {
@@ -492,52 +557,7 @@
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-    
-    .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-    
-    .logo-icon {
-        font-size: 2rem;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-    }
-    
-    .logo-text {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: white;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-    
-    .close-mobile-nav {
-        background: rgba(255, 255, 255, 0.2);
-        border: none;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        color: white;
-        font-size: 1.5rem;
-        font-weight: 300;
-        padding: 0;
-    }
-    
-    .close-mobile-nav:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: rotate(90deg);
-    }
-    
-    .close-mobile-nav:active {
-        transform: rotate(90deg) scale(0.95);
+        align-items: flex-start;
     }
 
     .logo-mobile h2 {
@@ -720,23 +740,6 @@
         .mobile-menu-btn-modern {
             display: flex;
         }
-        
-        /* Alinear navbar en móvil */
-        .navbar-sticky .container {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-        }
-        
-        .navbar-sticky .search-bar {
-            flex: 1;
-            margin: 0;
-        }
-        
-        .navbar-sticky .nav-links {
-            display: none;
-        }
     }
 
     .whatsapp-icon {
@@ -808,129 +811,26 @@
             display: flex;
         }
     }
-
-    /* CARRITO FLOTANTE - SOLO MÓVIL */
-    .cart-floating-mobile {
-        display: none; /* Oculto en desktop */
-        position: fixed;
-        bottom: 120px; /* Arriba del WhatsApp */
-        right: 30px;
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 50%;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        color: white;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        cursor: pointer;
-        z-index: 998; /* Debajo del WhatsApp */
-        border: none;
-        transition: transform 0.2s;
-    }
-
-    .cart-floating-mobile:hover {
-        transform: scale(1.1);
-    }
-
-    .cart-floating-mobile:active {
-        transform: scale(0.95);
-    }
-
-    .cart-floating-mobile .cart-count {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background: #ef4444;
-        color: white;
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
-        font-weight: 700;
-        border: 2px solid white;
-    }
-    
-    /* SECCIONES DE CATÁLOGO */
-    .categoria-section {
-        margin-bottom: 4rem;
-    }
-    
-    .categoria-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
-        border-bottom: 3px solid;
-        border-image: linear-gradient(90deg, #667eea 0%, #764ba2 100%) 1;
-    }
-    
-    .categoria-titulo {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 1.75rem;
-        font-weight: 700;
-        color: #f8f9fa;
-        margin: 0;
-    }
-    
-    .categoria-emoji {
-        font-size: 2rem;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-    }
-    
-    .categoria-count {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.875rem;
-        font-weight: 600;
-    }
-    
-    .categoria-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 2rem;
-    }
-
-    @media (max-width: 768px) {
-        /* Mostrar carrito flotante SOLO en móvil */
-        .cart-floating-mobile {
-            display: flex !important;
-            width: 56px;
-            height: 56px;
-            bottom: 100px;
-            right: 20px;
-        }
-        
-        /* Ocultar carrito del navbar en móvil */
-        .navbar-sticky .cart-link {
-            display: none !important;
-        }
-        
-        /* Secciones responsive */
-        .categoria-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-        
-        .categoria-titulo {
-            font-size: 1.5rem;
-        }
-        
-        .categoria-grid {
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 1rem;
-        }
-    }
     </style>
 </body>
 </html>
+
+<script>
+// Sincronizar contador del carrito flotante
+function actualizarContadorCarrito() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+    
+    // Actualizar todos los badges
+    const badges = document.querySelectorAll('.cart-count, .cart-badge, .cart-badge-float');
+    badges.forEach(badge => {
+        if (badge) badge.textContent = totalItems;
+    });
+}
+
+// Ejecutar al cargar
+document.addEventListener('DOMContentLoaded', actualizarContadorCarrito);
+
+// Ejecutar cada vez que cambie el carrito
+window.addEventListener('storage', actualizarContadorCarrito);
+</script>
