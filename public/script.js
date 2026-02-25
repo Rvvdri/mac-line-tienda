@@ -735,20 +735,41 @@ async function procesarPago(event) {
     console.log('📦 Datos de compra:', datosCompra);
     
     console.log('💳 Procesando pago con Mercado Pago...');
+    console.log('📦 Carrito:', carrito);
+    
+    // Validar que todos los items tengan los campos necesarios
+    const itemsValidos = carrito.every(item => 
+        item.id && item.nombre && item.precio && (item.cantidad || 1)
+    );
+    
+    if (!itemsValidos) {
+        console.error('❌ Items inválidos en el carrito:', carrito);
+        alert('Error: Algunos productos del carrito no tienen la información completa. Por favor recarga la página.');
+        return;
+    }
+    
+    const datosParaMercadoPago = {
+        nombre: datosCliente.nombre,
+        email: datosCliente.email,
+        telefono: datosCliente.telefono,
+        direccion: datosCliente.direccionCompleta,
+        items: carrito.map(item => ({
+            id: item.id,
+            nombre: item.nombre,
+            cantidad: item.cantidad || 1,
+            precio: item.precio
+        })),
+        total: total
+    };
+    
+    console.log('📤 Enviando a Mercado Pago:', datosParaMercadoPago);
     
     try {
         // CREAR PREFERENCIA EN MERCADO PAGO
-        const response = await fetch(`${API_URL}/api/crear-preferencia`, {
+        const response = await fetch(`${API_URL}/crear-preferencia`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                nombre: datosCliente.nombre,
-                email: datosCliente.email,
-                telefono: datosCliente.telefono,
-                direccion: datosCliente.direccionCompleta,
-                items: carrito,
-                total: total
-            })
+            body: JSON.stringify(datosParaMercadoPago)
         });
         
         if (!response.ok) {
