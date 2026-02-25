@@ -13,6 +13,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ==================== CREDENCIALES ====================
 const EMAIL_USER = 'linemac910@gmail.com';
 const EMAIL_PASSWORD = 'kqlxbwylmztcipco';
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: EMAIL_USER, // 'linemac910@gmail.com'
+        pass: EMAIL_PASSWORD  // 'kqlxbwylmztcipco'
+    }
+});
+
 const EMAIL_FROM_NAME = 'Mac Line';
 
 const MP_PUBLIC_KEY = process.env.MP_PUBLIC_KEY || 'APP_USR-b1762627-5e4b-4409-88d4-5098974ea645';
@@ -170,14 +179,64 @@ app.delete('/api/productos/:id', async (req, res) => {
 
 // ==================== RUTAS DE VENTAS ====================
 
-// GET - Obtener todas las ventas
-app.get('/api/ventas', async (req, res) => {
+// RUTA MERCADO PAGO
+app.post('/api/crear-preferencia', async (req, res) => {
     try {
-        const ventas = await ventasCollection.find({}).sort({ fecha: -1 }).toArray();
-        res.json(ventas);
+        const { items, nombre, email } = req.body;
+
+        const preferencia = {
+            items: items.map(item => ({
+                title: item.nombre,
+                unit_price: Number(item.precio),
+                quantity: Number(item.cantidad),
+                currency_id: 'CLP'
+            })),
+            payer: { name: nombre, email: email },
+            back_urls: {
+                success: `${req.headers.origin}/success.html`,
+                failure: `${req.headers.origin}/cart.html`,
+            },
+            auto_return: 'approved'
+        };
+
+        const response = await axios.post(
+            'https://api.mercadopago.com/checkout/preferences',
+            preferencia,
+            {
+                headers: {
+                    'Authorization': `Bearer ${MP_ACCESS_TOKEN}`, // Tu token del archivo
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        res.json({ init_point: response.data.init_point });
     } catch (error) {
-        console.error('Error al obtener ventas:', error);
-        res.status(500).json({ error: 'Error al obtener ventas' });
+        console.error('Error MP:', error.response?.data || error.message);
+        res.status(500).json({ error: 'Error al crear pago' });
+    }
+});
+
+// RUTA NODEMAILER
+app.post('/api/enviar-pedido', async (req, res) => {
+    try {
+        const { nombre, email, telefono, direccion, items, total } = req.body;
+
+        const htmlProductos = items.map(p => `<li>${p.nombre} (x${p.cantidad}) - $${p.precio}</li>`).join('');
+
+        await transporter.sendMail({
+            from: `"${EMAIL_FROM_NAME}" <${EMAIL_USER}>`, //
+            to: EMAIL_USER, 
+            subject: `🛒 Nuevo Pedido de ${nombre}`,
+            html: `<h3>Datos del Cliente</h3>
+                   <p>Nombre: ${nombre}<br>Email: ${email}<br>Tel: ${telefono}<br>Dir: ${direccion}</p>
+                   <h3>Productos</h3><ul>${htmlProductos}</ul>
+                   <h4>Total: $${total}</h4>`
+        });
+
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ error: 'Error al enviar mail' });
     }
 });
 
