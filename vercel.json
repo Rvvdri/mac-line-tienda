@@ -1,8 +1,10 @@
 {
+  "version": 2,
+  "builds": [
+    { "src": "server.js", "use": "@vercel/node" }
+  ],
   "rewrites": [
-    {
-      "source": "/api/productos/:id",
-      "destination": "/api/productos?id=:id"
-    }
+    { "source": "/api/(.*)", "destination": "/server.js" },
+    { "source": "/(.*)", "destination": "/public/$1" }
   ]
 }
