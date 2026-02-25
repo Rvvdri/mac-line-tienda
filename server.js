@@ -323,8 +323,15 @@ app.get('/api/pagos', async (req, res) => {
 });
 
 // ==================== INICIAR SERVIDOR ====================
+// Quitamos la necesidad de esperar a MongoDB para que Vercel no de error
 app.listen(PORT, () => {
-    console.log(`🚀 Servidor funcionando en puerto ${PORT}`);
+    console.log(`\n╔════════════════════════════════════════╗`);
+    console.log(`║  🖥️  MAC LINE - SERVIDOR INICIADO     ║`);
+    console.log(`║  ✓ Puerto: ${PORT}                           ║`);
+    console.log(`╚════════════════════════════════════════╝\n`);
 });
+
+// Opcional: Intenta conectar pero no apagues el servidor si falla
+conectarMongoDB().catch(err => console.log("⚠️ Trabajando sin MongoDB Atlas"));
 
 module.exports = app;
