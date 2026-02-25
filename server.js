@@ -223,34 +223,55 @@ app.get('/api/ventas', async (req, res) => {
     }
 });
 
-// POST - Registrar nueva venta
 app.post('/api/ventas', async (req, res) => {
     try {
+        // 1. Capturamos los datos nuevos que me pediste
+        const { 
+            nombre, email, telefono, 
+            ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina, // Datos de envío desglosados
+            items, total 
+        } = req.body;
+
         const nuevaVenta = {
-            id: Date.now().toString(),
             fecha: new Date(),
-            cliente: {
-                nombre: req.body.nombre,
-                email: req.body.email,
-                telefono: req.body.telefono,
-                direccion: req.body.direccion
-            },
-            productos: req.body.items,
-            total: req.body.total,
+            cliente: { nombre, email, telefono, ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina },
+            productos: items,
+            total: total,
             estado: 'completada'
         };
-        
+
+        // Guardamos en la base de datos (esto ya lo hacías)
         await ventasCollection.insertOne(nuevaVenta);
-        
-        res.json({ 
-            success: true,
-            mensaje: 'Venta registrada',
-            venta: nuevaVenta
-        });
-        
+
+        // 2. ACTIVAMOS EL ENVÍO (Usando el transporter de la línea 15)
+        const detalleProductos = items.map(p => 
+            `<li><strong>${p.nombre}</strong> - Color: ${p.color || 'N/A'} - Capacidad: ${p.capacidad || 'N/A'}</li>`
+        ).join('');
+
+        const mailOptions = {
+            from: 'Mac Line Store <tu-correo@gmail.com>',
+            to: 'EL-CORREO-DEL-DUEÑO@gmail.com', // El mail donde quieres que llegue
+            subject: `📦 Nueva Venta: ${nombre} - ${ciudad}`,
+            html: `
+                <h2>Detalles del Pedido</h2>
+                <p><strong>Cliente:</strong> ${nombre}</p>
+                <p><strong>Ubicación:</strong> ${calle} #${numero}, ${tipoPropiedad} (${deptoOficina || 'N/A'})</p>
+                <p><strong>Comuna/Ciudad:</strong> ${comuna}, ${ciudad}</p>
+                <hr>
+                <h3>Productos:</h3>
+                <ul>${detalleProductos}</ul>
+                <p><strong>Total:</strong> $${total}</p>
+            `
+        };
+
+        // Esta es la línea clave que envía el mail
+        await transporter.sendMail(mailOptions);
+
+        res.json({ success: true, mensaje: 'Venta registrada y mail enviado' });
+
     } catch (error) {
-        console.error('Error al registrar venta:', error);
-        res.status(500).json({ error: 'Error al registrar venta' });
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Error al procesar' });
     }
 });
 
