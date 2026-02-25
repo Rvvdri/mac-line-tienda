@@ -21,6 +21,11 @@ const MP_API_URL = 'https://api.mercadopago.com';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rvvdri:9j8rdlLqR4ACotdY@cluster0.vptvpzv.mongodb.net/macline';
 const PORT = process.env.PORT || 3000;
 
+// ==================== MONGODB ====================
+let db;
+let productosCollection;
+let ventasCollection;
+
 // Conectar a MongoDB
 async function conectarMongoDB() {
     try {
@@ -214,8 +219,6 @@ app.get('*', (req, res) => {
 });
 
 // ==================== INICIAR SERVIDOR ====================
-
-const PORT = process.env.PORT || 3000;
 
 conectarMongoDB().then(() => {
     app.listen(PORT, () => {
