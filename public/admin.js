@@ -204,25 +204,6 @@ async function agregarProducto(event) {
     const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
     const imagenesValidas = imagenesAdicionales.filter(img => img !== null);
     
-    // Obtener colores y capacidades (opcionales)
-    const coloresInput = document.getElementById('colores')?.value || '';
-    const capacidadesInput = document.getElementById('capacidades')?.value || '';
-    
-    const colores = coloresInput ? coloresInput.split(',').map(c => c.trim()).filter(c => c) : [];
-    const capacidades = capacidadesInput ? capacidadesInput.split(',').map(cap => {
-        const match = cap.trim().match(/^(.+?)\s*\(([+\-]?\d+)\)$/);
-        if (match) {
-            return {
-                nombre: match[1].trim(),
-                precioIncremental: parseInt(match[2])
-            };
-        }
-        return {
-            nombre: cap.trim(),
-            precioIncremental: 0
-        };
-    }).filter(c => c.nombre) : [];
-    
     const nuevoProducto = {
         nombre: document.getElementById('nombre').value,
         categoria: document.getElementById('categoria').value,
@@ -233,12 +214,8 @@ async function agregarProducto(event) {
         stock: parseInt(document.getElementById('stock').value),
         imagenPortada: imagenPortadaBase64,
         imagenes: imagenesValidas,
-        emoji: '📦',
-        colores: colores,
-        capacidades: capacidades
+        emoji: '📦'
     };
-    
-    console.log('📦 Enviando producto:', nuevoProducto);
     
     try {
         const response = await fetch(`${API_URL}/productos`, {
@@ -247,11 +224,7 @@ async function agregarProducto(event) {
             body: JSON.stringify(nuevoProducto)
         });
         
-        const data = await response.json();
-        
-        if (!response.ok) {
-            throw new Error(data.error || `Error ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Error ${response.status}`);
         
         alert('✅ Producto agregado exitosamente');
         document.getElementById('formularioProducto').reset();
@@ -259,8 +232,8 @@ async function agregarProducto(event) {
         await cargarProductos();
         mostrarSeccion('productos');
     } catch (error) {
-        console.error('❌ Error completo:', error);
-        alert('❌ Error al agregar producto: ' + error.message);
+        console.error('Error:', error);
+        alert('❌ Error al agregar producto');
     }
 }
 
@@ -287,6 +260,25 @@ function abrirModalEditar(productoId) {
     document.getElementById('editStock').value = producto.stock;
     
     calcularPrecioFinalEdit();
+    
+    // Cargar colores si existen
+    const editColoresEl = document.getElementById('editColores');
+    if (editColoresEl && producto.colores && producto.colores.length > 0) {
+        editColoresEl.value = producto.colores.join(', ');
+    } else if (editColoresEl) {
+        editColoresEl.value = '';
+    }
+    
+    // Cargar capacidades si existen
+    const editCapacidadesEl = document.getElementById('editCapacidades');
+    if (editCapacidadesEl && producto.capacidades && producto.capacidades.length > 0) {
+        const capacidadesStr = producto.capacidades.map(cap => 
+            `${cap.nombre}:${cap.precioIncremental || 0}`
+        ).join(', ');
+        editCapacidadesEl.value = capacidadesStr;
+    } else if (editCapacidadesEl) {
+        editCapacidadesEl.value = '';
+    }
     
     // Mostrar imagen portada actual
     const previewPortada = document.getElementById('editPreviewPortada');
@@ -368,6 +360,34 @@ async function guardarEdicion(event) {
         descuento: descuento,
         stock: parseInt(document.getElementById('editStock').value)
     };
+    
+    // Parsear colores (opcional)
+    const coloresInput = document.getElementById('editColores')?.value || '';
+    if (coloresInput.trim()) {
+        const colores = coloresInput.split(',').map(c => c.trim()).filter(c => c);
+        if (colores.length > 0) {
+            datosActualizados.colores = colores;
+        }
+    }
+    
+    // Parsear capacidades (opcional)
+    const capacidadesInput = document.getElementById('editCapacidades')?.value || '';
+    if (capacidadesInput.trim()) {
+        const capacidades = capacidadesInput.split(',').map(cap => {
+            const [nombre, precio] = cap.trim().split(':');
+            if (nombre && nombre.trim()) {
+                return {
+                    nombre: nombre.trim(),
+                    precioIncremental: parseInt(precio?.trim()) || 0
+                };
+            }
+            return null;
+        }).filter(c => c !== null);
+        
+        if (capacidades.length > 0) {
+            datosActualizados.capacidades = capacidades;
+        }
+    }
     
     // PORTADA: Si hay nueva, usarla; si no, mantener la original
     if (imagenPortadaEditBase64) {

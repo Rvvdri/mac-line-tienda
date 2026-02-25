@@ -60,6 +60,260 @@
             overflow-y: auto !important;
         }
     </style>
+    
+    <style>
+        /* ========== RESPONSIVE MÓVIL ========== */
+        
+        @media (max-width: 768px) {
+            /* Header responsive */
+            .admin-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 0.75rem;
+                text-align: center;
+            }
+            
+            .admin-header h1 {
+                font-size: 1.25rem;
+            }
+            
+            .btn-volver {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* Tabs responsive */
+            .admin-tabs {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .tab-btn {
+                width: 100%;
+                justify-content: center;
+                font-size: 0.9rem;
+                padding: 0.75rem;
+            }
+            
+            /* Contenedor principal */
+            .admin-container {
+                padding: 1rem;
+            }
+            
+            /* Formularios responsive */
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 16px; /* Previene zoom en iOS */
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr !important;
+                gap: 1rem;
+            }
+            
+            /* Grid de imágenes responsive */
+            .imagenes-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.75rem;
+            }
+            
+            .imagen-upload-box {
+                min-height: 120px;
+            }
+            
+            .imagen-preview {
+                min-height: 100px;
+            }
+            
+            /* Botones responsive */
+            .form-actions {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .form-actions .btn {
+                width: 100%;
+            }
+            
+            /* Tabla de productos responsive */
+            .productos-tabla {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .productos-tabla table {
+                min-width: 600px;
+            }
+            
+            .productos-tabla th,
+            .productos-tabla td {
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            
+            /* Cards en lugar de tabla para móvil */
+            .producto-card-mobile {
+                display: block;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .producto-card-mobile img {
+                width: 80px;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .producto-card-mobile h3 {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .producto-card-mobile .info-row {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 0.25rem;
+                font-size: 0.85rem;
+            }
+            
+            .producto-card-mobile .acciones {
+                display: flex;
+                gap: 0.5rem;
+                margin-top: 0.75rem;
+            }
+            
+            .producto-card-mobile .btn-accion {
+                flex: 1;
+                padding: 0.5rem;
+                font-size: 0.85rem;
+            }
+            
+            /* Modales responsive */
+            .modal-admin {
+                padding: 0;
+            }
+            
+            .modal-admin-content {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 100vh;
+                max-height: 100vh;
+                margin: 0;
+                border-radius: 0;
+                overflow-y: auto;
+            }
+            
+            .modal-edicion {
+                padding: 1rem;
+            }
+            
+            .modal-admin h2 {
+                font-size: 1.25rem;
+                position: sticky;
+                top: 0;
+                background: #1a1a2e;
+                padding: 1rem;
+                margin: -1rem -1rem 1rem -1rem;
+                z-index: 10;
+                border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            }
+            
+            /* Reporte de stock responsive */
+            .stock-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .stock-card {
+                padding: 1rem;
+            }
+            
+            /* Ventas responsive */
+            .venta-card {
+                padding: 1rem;
+            }
+            
+            .venta-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .venta-productos {
+                font-size: 0.85rem;
+            }
+            
+            /* Inputs de archivo */
+            input[type="file"] {
+                font-size: 14px;
+                padding: 0.5rem;
+            }
+            
+            /* Preview de imágenes */
+            #previewPortada,
+            .imagen-preview {
+                min-height: 100px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Móviles pequeños */
+            .admin-header h1 {
+                font-size: 1.1rem;
+            }
+            
+            .tab-btn {
+                font-size: 0.85rem;
+                padding: 0.625rem;
+            }
+            
+            .imagenes-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .productos-tabla table {
+                font-size: 0.75rem;
+            }
+            
+            .form-group label {
+                font-size: 0.9rem;
+            }
+            
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 16px;
+                padding: 0.625rem;
+            }
+            
+            .btn {
+                font-size: 0.9rem;
+                padding: 0.625rem 1rem;
+            }
+        }
+        
+        /* Mejoras de usabilidad táctil */
+        @media (hover: none) and (pointer: coarse) {
+            .btn,
+            .tab-btn,
+            .btn-accion {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            input,
+            select,
+            textarea {
+                min-height: 44px;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="admin-navbar">
@@ -127,8 +381,8 @@
                             <select id="categoria" required>
                                 <option value="">Seleccionar...</option>
                                 <option value="celulares">📱 Celulares</option>
-                                <option value="consolas">🎮 Consolas</option>
-                                <option value="notebooks">💻 Notebooks</option>
+                                <option value="televisores">📺 Televisores</option>
+                                <option value="computadores">💻 Computadores</option>
                                 <option value="audifonos">🎧 Audífonos</option>
                                 <option value="relojes">⌚ Relojes</option>
                             </select>
@@ -168,6 +422,23 @@
                             <label for="stock">Stock *</label>
                             <input type="number" id="stock" required min="0" placeholder="10">
                             <small>Cantidad disponible</small>
+                        </div>
+                    </div>
+                    
+                    <!-- VARIANTES (COLORES Y CAPACIDADES) -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>🎨 Colores (opcional)</label>
+                            <input type="text" id="colores" placeholder="Negro, Blanco, Azul">
+                            <small>Separados por comas. Ej: Negro, Titanio Azul, Blanco</small>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>💾 Capacidades (opcional)</label>
+                            <input type="text" id="capacidades" placeholder="128GB:0, 256GB:50000, 512GB:100000">
+                            <small>Formato: Nombre:PrecioIncremental. Ej: 128GB:0, 256GB:50000, 512GB:100000, 1TB:200000</small>
                         </div>
                     </div>
 
@@ -215,23 +486,6 @@
                             <label>Imagen 5</label>
                             <input type="file" id="imagen5" accept="image/*" onchange="previsualizarImagen(event, 5)">
                             <div id="preview5" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 5</p></div>
-                        </div>
-                    </div>
-
-                    <!-- VARIANTES (OPCIONALES) -->
-                    <div class="form-row" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid #eee;">
-                        <div class="form-group">
-                            <label for="colores">🎨 Colores (opcional)</label>
-                            <input type="text" id="colores" placeholder="Titanio Natural, Titanio Azul, Titanio Blanco">
-                            <small>Separar por comas. Ejemplo: Titanio Natural, Titanio Azul</small>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="capacidades">💾 Capacidades (opcional)</label>
-                            <input type="text" id="capacidades" placeholder="256GB (+0), 512GB (+100000), 1TB (+200000)">
-                            <small>Formato: NOMBRE (+PRECIO). Ejemplo: 256GB (+0), 512GB (+100000)</small>
                         </div>
                     </div>
 
@@ -406,6 +660,23 @@
                         <label>Imagen 5</label>
                         <input type="file" id="editImagen5" accept="image/*" onchange="previsualizarImagenEdit(event, 5)">
                         <div id="editPreview5" class="imagen-preview"><p style="color: #999; font-size: 0.75rem;">Imagen 5</p></div>
+                    </div>
+                </div>
+
+                <!-- VARIANTES: COLORES Y CAPACIDADES -->
+                <div class="form-row" style="margin-top: 1.5rem;">
+                    <div class="form-group">
+                        <label for="editColores">🎨 Colores (opcional)</label>
+                        <input type="text" id="editColores" placeholder="Negro, Blanco, Azul">
+                        <small style="color: #94a3b8; font-size: 0.8rem;">Separados por comas</small>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editCapacidades">💾 Capacidades (opcional)</label>
+                        <input type="text" id="editCapacidades" placeholder="128GB:0, 256GB:50000, 512GB:100000">
+                        <small style="color: #94a3b8; font-size: 0.8rem;">Formato: Nombre:PrecioIncremental</small>
                     </div>
                 </div>
 

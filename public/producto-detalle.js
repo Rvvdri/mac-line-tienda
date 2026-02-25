@@ -215,3 +215,238 @@ function actualizarContadorCarrito() {
 
 // Cargar contador al iniciar
 actualizarContadorCarrito();
+
+// ========== VARIABLES PARA VARIANTES ==========
+let colorSeleccionado = null;
+let capacidadSeleccionada = null;
+let precioActual = 0;
+
+// ========== RENDERIZAR SELECTORES ==========
+function renderizarSelectoresVariantes() {
+    if (!productoActual) return;
+    
+    const container = document.getElementById('selectoresVariantes');
+    if (!container) return;
+    
+    let html = '';
+    
+    // Inicializar valores por defecto
+    if (productoActual.colores && productoActual.colores.length > 0) {
+        colorSeleccionado = productoActual.colores[0];
+        
+        html += `
+            <div class="selector-seccion" style="margin-bottom: 1.5rem;">
+                <h4 style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 0.75rem;">
+                    Color: <span id="colorNombre" style="color: #00d4ff;">${colorSeleccionado}</span>
+                </h4>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    ${productoActual.colores.map((color, idx) => {
+                        const colorHex = {
+                            'Negro': '#000000', 'Blanco': '#FFFFFF', 'Azul': '#0066CC',
+                            'Rojo': '#CC0000', 'Verde': '#00CC00', 'Gris': '#808080',
+                            'Plateado': '#C0C0C0', 'Dorado': '#FFD700', 'Rosa': '#FFC0CB',
+                            'Titanio Natural': '#E5DCC5', 'Titanio Azul': '#3A5F7D',
+                            'Titanio Blanco': '#F5F5F5', 'Titanio Negro': '#2B2B2B'
+                        }[color] || '#CCCCCC';
+                        
+                        return `
+                            <button 
+                                class="color-btn ${idx === 0 ? 'active' : ''}"
+                                style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid ${idx === 0 ? '#00d4ff' : 'transparent'}; background: ${colorHex}; cursor: pointer; position: relative; transition: all 0.3s;"
+                                onclick="seleccionarColor(${idx})"
+                                title="${color}">
+                                ${idx === 0 ? '<span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold;">✓</span>' : ''}
+                            </button>
+                        `;
+                    }).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
+    if (productoActual.capacidades && productoActual.capacidades.length > 0) {
+        capacidadSeleccionada = productoActual.capacidades[0];
+        precioActual = productoActual.precio + (capacidadSeleccionada.precioIncremental || 0);
+        
+        html += `
+            <div class="selector-seccion" style="margin-bottom: 1.5rem;">
+                <h4 style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 0.75rem;">Almacenamiento</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.5rem;">
+                    ${productoActual.capacidades.map((cap, idx) => `
+                        <button 
+                            class="capacidad-btn ${idx === 0 ? 'active' : ''}"
+                            style="padding: 0.75rem; border: 2px solid ${idx === 0 ? '#00d4ff' : 'rgba(255,255,255,0.2)'}; background: ${idx === 0 ? 'rgba(0,212,255,0.1)' : 'rgba(255,255,255,0.05)'}; border-radius: 8px; cursor: pointer; transition: all 0.3s; text-align: center;"
+                            onclick="seleccionarCapacidad(${idx})">
+                            <div style="font-weight: 600; color: #f8f9fa;">${cap.nombre}</div>
+                            ${cap.precioIncremental > 0 ? `<div style="font-size: 0.75rem; color: #00d4ff; margin-top: 0.25rem;">+$${cap.precioIncremental.toLocaleString('es-CL')}</div>` : ''}
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+        
+        // Actualizar precio inicial con capacidad base
+        const precioEl = document.getElementById('productoPrecio');
+        if (precioEl) {
+            precioEl.textContent = `$${precioActual.toLocaleString('es-CL')}`;
+        }
+    } else {
+        precioActual = productoActual.precio;
+    }
+    
+    container.innerHTML = html;
+}
+
+window.seleccionarColor = function(idx) {
+    if (!productoActual.colores) return;
+    
+    colorSeleccionado = productoActual.colores[idx];
+    
+    // Actualizar UI
+    document.querySelectorAll('.color-btn').forEach((btn, i) => {
+        if (i === idx) {
+            btn.classList.add('active');
+            btn.style.border = '2px solid #00d4ff';
+            btn.innerHTML = '<span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold;">✓</span>';
+        } else {
+            btn.classList.remove('active');
+            btn.style.border = '2px solid transparent';
+            btn.innerHTML = '';
+        }
+    });
+    
+    const nombreEl = document.getElementById('colorNombre');
+    if (nombreEl) nombreEl.textContent = colorSeleccionado;
+};
+
+window.seleccionarCapacidad = function(idx) {
+    if (!productoActual.capacidades) return;
+    
+    capacidadSeleccionada = productoActual.capacidades[idx];
+    precioActual = productoActual.precio + (capacidadSeleccionada.precioIncremental || 0);
+    
+    // Actualizar UI
+    document.querySelectorAll('.capacidad-btn').forEach((btn, i) => {
+        if (i === idx) {
+            btn.classList.add('active');
+            btn.style.border = '2px solid #00d4ff';
+            btn.style.background = 'rgba(0,212,255,0.1)';
+        } else {
+            btn.classList.remove('active');
+            btn.style.border = '2px solid rgba(255,255,255,0.2)';
+            btn.style.background = 'rgba(255,255,255,0.05)';
+        }
+    });
+    
+    // Actualizar precio
+    const precioEl = document.getElementById('productoPrecio');
+    if (precioEl) {
+        precioEl.textContent = `$${precioActual.toLocaleString('es-CL')}`;
+    }
+};
+
+// Hook para renderizar selectores después de mostrar producto
+const originalMostrarProducto = window.mostrarProducto || mostrarProducto;
+window.mostrarProducto = function(producto) {
+    if (originalMostrarProducto) {
+        originalMostrarProducto(producto);
+    }
+    setTimeout(() => {
+        renderizarSelectoresVariantes();
+    }, 100);
+};
+
+// ========== FUNCIONES DE PAGO ==========
+
+function procederPago() {
+    const carritoGuardado = localStorage.getItem('carrito');
+    const carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
+    
+    if (carrito.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+    }
+    
+    const carritoModal = document.getElementById('carritoModal');
+    const pagoModal = document.getElementById('pagoModal');
+    
+    if (carritoModal) carritoModal.style.display = 'none';
+    if (pagoModal) pagoModal.style.display = 'flex';
+    
+    const subtotal = carrito.reduce((sum, item) => {
+        const precio = item.precio || 0;
+        const cantidad = item.cantidad || 1;
+        return sum + (precio * cantidad);
+    }, 0);
+    
+    const seccionMetodoEntrega = document.getElementById('seccionMetodoEntrega');
+    const mensajeEnvioGratis = document.getElementById('mensajeEnvioGratis');
+    const envioPagoWrapper = document.getElementById('envioPagoWrapper');
+    
+    let envio = 0;
+    
+    if (subtotal >= 100000) {
+        if (seccionMetodoEntrega) seccionMetodoEntrega.style.display = 'none';
+        if (mensajeEnvioGratis) mensajeEnvioGratis.style.display = 'block';
+        envio = 0;
+        if (envioPagoWrapper) {
+            envioPagoWrapper.innerHTML = '<span style="color: #00d4ff; font-weight: 700;">GRATIS ✅</span>';
+        }
+    } else {
+        if (seccionMetodoEntrega) seccionMetodoEntrega.style.display = 'block';
+        if (mensajeEnvioGratis) mensajeEnvioGratis.style.display = 'none';
+        const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
+        envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
+        if (envioPagoWrapper) {
+            envioPagoWrapper.innerHTML = '$<span id="envioPago">' + envio.toLocaleString('es-CL') + '</span>';
+        }
+    }
+    
+    const total = subtotal + envio;
+    
+    const subtotalEl = document.getElementById('subtotalPago');
+    const totalEl = document.getElementById('totalPago');
+    
+    if (subtotalEl) subtotalEl.textContent = subtotal.toLocaleString('es-CL');
+    if (totalEl) totalEl.textContent = total.toLocaleString('es-CL');
+}
+
+function actualizarTotalPago() {
+    const subtotalEl = document.getElementById('subtotalPago');
+    const totalEl = document.getElementById('totalPago');
+    const envioPagoWrapper = document.getElementById('envioPagoWrapper');
+    
+    if (!subtotalEl || !totalEl) return;
+    
+    const subtotal = parseInt(subtotalEl.textContent.replace(/\./g, '')) || 0;
+    let envio = 0;
+    
+    if (subtotal >= 100000) {
+        envio = 0;
+        if (envioPagoWrapper) {
+            envioPagoWrapper.innerHTML = '<span style="color: #00d4ff; font-weight: 700;">GRATIS ✅</span>';
+        }
+    } else {
+        const metodoEntregaSeleccionado = document.querySelector('input[name="metodoEntrega"]:checked');
+        envio = metodoEntregaSeleccionado ? parseInt(metodoEntregaSeleccionado.dataset.precio) : 3990;
+        if (envioPagoWrapper) {
+            envioPagoWrapper.innerHTML = '$<span id="envioPago">' + envio.toLocaleString('es-CL') + '</span>';
+        }
+    }
+    
+    const total = subtotal + envio;
+    totalEl.textContent = total.toLocaleString('es-CL');
+}
+
+function cerrarPago() {
+    const modal = document.getElementById('pagoModal');
+    if (!modal) return;
+    modal.style.display = 'none';
+    document.body.classList.remove('modal-open');
+}
+
+async function procesarPago(event) {
+    event.preventDefault();
+    alert('Función de pago en desarrollo');
+}
+
