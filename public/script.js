@@ -738,34 +738,43 @@ async function procesarPago(event) {
     
     try {
         // CREAR PREFERENCIA EN MERCADO PAGO
-        const response = await fetch(`${API_URL}/crear-preferencia`, {
+        const response = await fetch(`${API_URL}/api/crear-preferencia`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datosCompra)
+            body: JSON.stringify({
+                nombre: datosCliente.nombre,
+                email: datosCliente.email,
+                telefono: datosCliente.telefono,
+                direccion: datosCliente.direccionCompleta,
+                items: carrito,
+                total: total
+            })
         });
         
         if (!response.ok) {
-            throw new Error('Error al crear preferencia de pago');
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error al crear preferencia de pago');
         }
         
-        const { init_point } = await response.json();
+        const data = await response.json();
+        
+        if (!data.success || !data.enlacePago) {
+            throw new Error('No se recibió enlace de pago');
+        }
         
         console.log('✅ Preferencia creada');
         console.log('🔗 Redirigiendo a Mercado Pago...');
         
-        // GUARDAR VENTA EN BD
-        await fetch(`${API_URL}/ventas`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datosCompra)
-        });
+        // Limpiar carrito antes de redirigir
+        carrito = [];
+        localStorage.setItem('carrito', JSON.stringify(carrito));
         
-        // REDIRIGIR A MERCADO PAGO
-        window.location.href = init_point;
+        // Redirigir a Mercado Pago
+        window.location.href = data.enlacePago;
         
     } catch (error) {
         console.error('❌ Error:', error);
-        alert('❌ Error al procesar el pago. Por favor intenta nuevamente.');
+        alert('❌ Error al procesar el pago: ' + error.message + '\n\nVerifica tu configuración de Mercado Pago.');
     }
 }
 
