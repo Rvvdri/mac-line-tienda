@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/productos/:id",
+      "destination": "/api/productos?id=:id"
+    }
+  ]
+}

@@ -28,12 +28,21 @@ module.exports = async (req, res) => {
         const db = await connectToDatabase();
 
         if (req.method === 'GET') {
-            // GET /api/productos o GET /api/productos/:id
-            const { id } = req.query;
+            // GET /api/productos o GET /api/productos?id=XXX
+            // Extraer ID de query o de URL path
+            let productId = req.query.id;
             
-            if (id) {
+            // Si no está en query, intentar extraer del path
+            if (!productId && req.url) {
+                const match = req.url.match(/\/productos\/(\d+)/);
+                if (match) {
+                    productId = match[1];
+                }
+            }
+            
+            if (productId) {
                 const producto = await db.collection('productos').findOne(
-                    { id: parseInt(id) },
+                    { id: parseInt(productId) },
                     { projection: { _id: 0 } }
                 );
                 if (!producto) {
