@@ -17,20 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Cargar datos del producto
 async function cargarProducto(id) {
     try {
-        // Asegúrate de que API_URL termine en /api
         const response = await fetch(`${API_URL}/productos/${id}`);
-        
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Producto no encontrado');
-        }
+        if (!response.ok) throw new Error('Producto no encontrado');
         
         productoActual = await response.json();
         mostrarProducto(productoActual);
     } catch (error) {
-        console.error('Error detallado:', error);
+        console.error('Error:', error);
         alert('Producto no encontrado');
         window.location.href = 'index.html';
     }

@@ -735,78 +735,37 @@ async function procesarPago(event) {
     console.log('📦 Datos de compra:', datosCompra);
     
     console.log('💳 Procesando pago con Mercado Pago...');
-    console.log('📦 Carrito:', carrito);
-    
-    // Validar que todos los items tengan los campos necesarios
-    const itemsValidos = carrito.every(item => 
-        item.id && item.nombre && item.precio && (item.cantidad || 1)
-    );
-    
-    if (!itemsValidos) {
-        console.error('❌ Items inválidos en el carrito:', carrito);
-        alert('Error: Algunos productos del carrito no tienen la información completa. Por favor recarga la página.');
-        return;
-    }
-    
-    const datosParaMercadoPago = {
-        nombre: datosCliente.nombre,
-        email: datosCliente.email,
-        telefono: datosCliente.telefono,
-        direccion: datosCliente.direccionCompleta,
-        items: carrito.map(item => ({
-            id: item.id,
-            nombre: item.nombre,
-            cantidad: item.cantidad || 1,
-            precio: item.precio
-        })),
-        total: total
-    };
-    
-    console.log('📤 Enviando a Mercado Pago:', datosParaMercadoPago);
     
     try {
         // CREAR PREFERENCIA EN MERCADO PAGO
         const response = await fetch(`${API_URL}/crear-preferencia`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datosParaMercadoPago)
+            body: JSON.stringify(datosCompra)
         });
         
         if (!response.ok) {
-            // Intentar leer como JSON primero
-            let errorData;
-            const contentType = response.headers.get('content-type');
-            
-            if (contentType && contentType.includes('application/json')) {
-                errorData = await response.json();
-                throw new Error(errorData.error || `Error ${response.status}`);
-            } else {
-                // Si no es JSON, leer como texto
-                const errorText = await response.text();
-                console.error('❌ Respuesta del servidor (no JSON):', errorText);
-                throw new Error(`Error del servidor (${response.status}). Revisa las variables de entorno en Vercel.`);
-            }
+            throw new Error('Error al crear preferencia de pago');
         }
         
-        const data = await response.json();
-        
-        if (!data.success || !data.enlacePago) {
-            throw new Error('No se recibió enlace de pago');
-        }
+        const { init_point } = await response.json();
         
         console.log('✅ Preferencia creada');
         console.log('🔗 Redirigiendo a Mercado Pago...');
         
-        // Limpiar carrito antes de redirigir
-        carrito = [];
-        localStorage.setItem('carrito', JSON.stringify(carrito));
+        // GUARDAR VENTA EN BD
+        await fetch(`${API_URL}/ventas`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosCompra)
+        });
         
-        // Redirigir a Mercado Pago
-        window.location.href = data.enlacePago;
+        // REDIRIGIR A MERCADO PAGO
+        window.location.href = init_point;
         
     } catch (error) {
         console.error('❌ Error:', error);
-        alert('❌ Error al procesar el pago: ' + error.message + '\n\nVerifica tu configuración de Mercado Pago.');
+        alert('❌ Error al procesar el pago. Por favor intenta nuevamente.');
     }
 }
 
