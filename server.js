@@ -84,6 +84,18 @@ app.get('/api/productos', async (req, res) => {
     }
 });
 
+// Nueva ruta para obtener UN solo producto por ID
+app.get('/api/productos/:id', (req, res) => {
+    const { id } = req.params;
+    const producto = productos.find(p => p.id == id);
+    
+    if (producto) {
+        res.json(producto);
+    } else {
+        res.status(404).json({ mensaje: "Producto no encontrado" });
+    }
+});
+
 app.get('/api/productos/:id', async (req, res) => {
     try {
         const producto = await db.collection('productos').findOne({ id: parseInt(req.params.id) }, { projection: { _id: 0 } });
