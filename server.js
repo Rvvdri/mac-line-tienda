@@ -205,10 +205,10 @@ app.post('/api/crear-preferencia', async (req, res) => {
 
         const preferencia = {
             items: items.map(item => ({
-                id: item.id.toString(),
-                title: item.nombre,
-                quantity: item.cantidad,
-                unit_price: item.precio
+                id: String(item.id || Date.now()),
+                title: item.nombre || 'Producto',
+                quantity: parseInt(item.cantidad) || 1,
+                unit_price: parseFloat(item.precio) || 0
             })),
             payer: {
                 name: nombre,
