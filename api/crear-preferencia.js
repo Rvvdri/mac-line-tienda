@@ -58,7 +58,11 @@ module.exports = async (req, res) => {
                 pending: `${BASE_URL}/pending.html`
             },
             auto_return: 'approved',
-            notification_url: `${BASE_URL}/api/webhook`
+            notification_url: `${BASE_URL}/api/webhook`,
+            payment_methods: {
+                installments: 12, // Hasta 12 cuotas
+                default_installments: 1 // Por defecto 1 cuota
+            }
         };
 
         const response = await axios.post(
