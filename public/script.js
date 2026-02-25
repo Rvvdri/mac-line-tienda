@@ -773,8 +773,19 @@ async function procesarPago(event) {
         });
         
         if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Error al crear preferencia de pago');
+            // Intentar leer como JSON primero
+            let errorData;
+            const contentType = response.headers.get('content-type');
+            
+            if (contentType && contentType.includes('application/json')) {
+                errorData = await response.json();
+                throw new Error(errorData.error || `Error ${response.status}`);
+            } else {
+                // Si no es JSON, leer como texto
+                const errorText = await response.text();
+                console.error('❌ Respuesta del servidor (no JSON):', errorText);
+                throw new Error(`Error del servidor (${response.status}). Revisa las variables de entorno en Vercel.`);
+            }
         }
         
         const data = await response.json();
