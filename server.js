@@ -225,33 +225,36 @@ app.get('/api/ventas', async (req, res) => {
 
 app.post('/api/ventas', async (req, res) => {
     try {
-        // 1. Capturamos los datos nuevos que me pediste
+        // Extraemos TODOS los campos que vienen del formulario
         const { 
             nombre, email, telefono, 
-            ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina, // Datos de envío desglosados
+            ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina, 
             items, total 
         } = req.body;
 
         const nuevaVenta = {
+            id: Date.now().toString(),
             fecha: new Date(),
-            cliente: { nombre, email, telefono, ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina },
+            cliente: { 
+                nombre, email, telefono, 
+                ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina 
+            },
             productos: items,
             total: total,
             estado: 'completada'
         };
-
-        // Guardamos en la base de datos (esto ya lo hacías)
+        
         await ventasCollection.insertOne(nuevaVenta);
 
-        // 2. ACTIVAMOS EL ENVÍO (Usando el transporter de la línea 15)
+        // CONFIGURACIÓN DEL MAIL (Para que no salga 'undefined')
         const detalleProductos = items.map(p => 
-            `<li><strong>${p.nombre}</strong> - Color: ${p.color || 'N/A'} - Capacidad: ${p.capacidad || 'N/A'}</li>`
+            `<li>${p.nombre} - Color: ${p.color || 'N/A'} - Capacidad: ${p.capacidad || 'N/A'}</li>`
         ).join('');
 
         const mailOptions = {
-            from: 'Mac Line Store <tu-correo@gmail.com>',
-            to: 'EL-CORREO-DEL-DUEÑO@gmail.com', // El mail donde quieres que llegue
-            subject: `📦 Nueva Venta: ${nombre} - ${ciudad}`,
+            from: 'Mac Line Store <linemac910@gmail.com>',
+            to: 'EL-CORREO-DEL-DUEÑO', 
+            subject: `📦 Nueva Venta: ${nombre || 'Cliente'} - ${comuna || 'Sin Comuna'}`,
             html: `
                 <h2>Detalles del Pedido</h2>
                 <p><strong>Cliente:</strong> ${nombre}</p>
@@ -264,14 +267,14 @@ app.post('/api/ventas', async (req, res) => {
             `
         };
 
-        // Esta es la línea clave que envía el mail
+        // Enviar el mail usando el transporter que ya tienes configurado
         await transporter.sendMail(mailOptions);
-
+        
         res.json({ success: true, mensaje: 'Venta registrada y mail enviado' });
-
+        
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Error al procesar' });
+        console.error('Error al registrar venta:', error);
+        res.status(500).json({ error: 'Error al registrar venta' });
     }
 });
 

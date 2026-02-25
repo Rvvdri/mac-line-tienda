@@ -724,13 +724,25 @@ async function procesarPago(event) {
     const total = subtotal + costoEnvio;
     
     const datosCompra = {
-        cliente: datosCliente,
-        items: carrito,
-        metodoEntrega: metodoEntrega,
-        subtotal: subtotal,
-        costoEnvio: costoEnvio,
-        total: total
-    };
+    nombre: document.getElementById('nombreInput').value,
+    email: document.getElementById('emailInput').value,
+    telefono: document.getElementById('telefonoInput').value,
+    
+    // NUEVOS CAMPOS: Deben coincidir con los IDs de tu HTML
+    ciudad: document.getElementById('regionSelect').value, 
+    comuna: document.getElementById('comunaSelect').value,
+    calle: document.getElementById('direccionInput').value,
+    numero: document.getElementById('numeroInput').value, // Asegúrate de tener este ID en el HTML
+    tipoPropiedad: document.querySelector('input[name="tipoVivienda"]:checked')?.value || 'No especificado',
+    
+    items: carrito.map(item => ({
+        nombre: item.nombre,
+        color: item.colorSeleccionado || 'Estándar', // Captura el color
+        capacidad: item.capacidadSeleccionada || 'Estándar', // Captura los GB
+        precio: item.precio
+    })),
+    total: total
+};
     
     console.log('📦 Datos de compra:', datosCompra);
     
