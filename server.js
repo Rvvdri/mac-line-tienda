@@ -22,21 +22,34 @@ const MP_API_URL = 'https://api.mercadopago.com';
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rvvdri:9j8rdlLqR4ACotdY@cluster0.vptvpzv.mongodb.net/?appName=Cluster0';
 const PORT = process.env.PORT || 3000;
 
-// ==================== MONGODB ====================
-let db;
+// LISTA DE PRODUCTOS (Copia aquí tus productos reales)
+const productos = [
+    {
+        id: 1771387260264,
+        nombre: "MacBook Air M2",
+        precio: 1290000,
+        imagen: "macbook.jpg",
+        categoria: "Notebooks"
+    },
+    // Agrega el resto de tus productos aquí...
+];
 
-async function conectarMongoDB() {
-    try {
-        const client = new MongoClient(MONGODB_URI);
-        await client.connect();
-        db = client.db('macline');
-        console.log('✓ MongoDB conectado correctamente');
-        await inicializarProductos();
-    } catch (error) {
-        console.error('❌ Error conectando MongoDB:', error.message);
-        process.exit(1);
+// Ruta para obtener todos los productos
+app.get('/api/productos', (req, res) => {
+    res.json(productos);
+});
+
+// Ruta para obtener un solo producto por ID
+app.get('/api/productos/:id', (req, res) => {
+    const { id } = req.params;
+    const producto = productos.find(p => p.id == id);
+    
+    if (producto) {
+        res.json(producto);
+    } else {
+        res.status(404).json({ error: "Producto no encontrado" });
     }
-}
+});
 
 const productosDefault = [
     { id: 1, nombre: 'iPhone 15 Pro', categoria: 'celulares', descripcion: 'Último modelo de Apple', precio: 900000, precioOriginal: 1500000, descuento: 40, stock: 15, emoji: '📱' },
@@ -310,15 +323,8 @@ app.get('/api/pagos', async (req, res) => {
 });
 
 // ==================== INICIAR SERVIDOR ====================
-conectarMongoDB().then(() => {
-    app.listen(PORT, () => {
-        console.log(`\n╔════════════════════════════════════════╗`);
-        console.log(`║  🖥️  MAC LINE - SERVIDOR INICIADO     ║`);
-        console.log(`║  ✓ Puerto: ${PORT}                           ║`);
-        console.log(`║  🍃 MongoDB: CONECTADO                ║`);
-        console.log(`║  💳 Mercado Pago: INTEGRACIÓN REAL    ║`);
-        console.log(`╚════════════════════════════════════════╝\n`);
-    });
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor funcionando en puerto ${PORT}`);
 });
 
 module.exports = app;
