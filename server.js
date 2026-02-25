@@ -12,14 +12,14 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ==================== CREDENCIALES ====================
-const EMAIL_USER = 'linemac910@gmail.com';
-const EMAIL_PASSWORD = 'kqlxbwylmztcipco';
+const EMAIL_USER = 'cony.montecinos1111@gmail.com';
+const EMAIL_PASSWORD = 'cudpasbcrvvhqjwo';
 const EMAIL_FROM_NAME = 'Mac Line';
 
-const MP_PUBLIC_KEY = process.env.MP_PUBLIC_KEY || 'APP_USR-b1762627-5e4b-4409-88d4-5098974ea645';
-const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN || 'APP_USR-1539674871672378-021917-5d3634d0ef2f478d31ea2f5db8abeb5d-3208244091';
+const MP_PUBLIC_KEY = process.env.MP_PUBLIC_KEY || 'TU_PUBLIC_KEY_AQUI';
+const MP_ACCESS_TOKEN = process.env.MP_ACCESS_TOKEN || 'TU_ACCESS_TOKEN_AQUI';
 const MP_API_URL = 'https://api.mercadopago.com';
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://rvvdri:9j8rdlLqR4ACotdY@cluster0.vptvpzv.mongodb.net/?appName=Cluster0';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 const PORT = process.env.PORT || 3000;
 
 // ==================== MONGODB ====================
@@ -172,10 +172,33 @@ app.delete('/api/productos/:id', async (req, res) => {
 
 app.post('/api/crear-preferencia', async (req, res) => {
     try {
+        console.log('\n📦 Request body recibido:', JSON.stringify(req.body, null, 2));
+        
         const { nombre, email, telefono, direccion, items, total } = req.body;
 
         if (!nombre || !email || !items || !total) {
-            return res.status(400).json({ success: false, error: 'Datos incompletos' });
+            console.error('❌ Datos incompletos:', { nombre: !!nombre, email: !!email, items: !!items, total: !!total });
+            return res.status(400).json({ 
+                success: false, 
+                error: 'Datos incompletos',
+                faltantes: {
+                    nombre: !nombre,
+                    email: !email,
+                    items: !items,
+                    total: !total
+                }
+            });
+        }
+        
+        // Validar que items tenga los campos necesarios
+        const itemsInvalidos = items.filter(item => !item.id || !item.nombre || !item.precio);
+        if (itemsInvalidos.length > 0) {
+            console.error('❌ Items inválidos:', itemsInvalidos);
+            return res.status(400).json({
+                success: false,
+                error: 'Items inválidos',
+                itemsInvalidos
+            });
         }
 
         console.log('\n💳 CREANDO PREFERENCIA EN MERCADO PAGO...');
@@ -276,4 +299,3 @@ conectarMongoDB().then(() => {
 });
 
 module.exports = app;
-
