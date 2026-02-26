@@ -472,30 +472,32 @@ async function cargarVentas() {
     try {
         const response = await fetch(`${API_URL}/ventas`);
         const ventas = await response.json();
-        const tbody = document.getElementById('ventasTableBody');
+        const tbody = document.getElementById('ventasTableBody'); // Tu ID del HTML
         
+        if (!tbody) return;
+
         if (!ventas || ventas.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay ventas registradas</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No hay ventas registradas aún.</td></tr>';
             return;
         }
 
-        // Mostramos las más recientes primero
+        // Mostramos las más recientes arriba
         tbody.innerHTML = ventas.reverse().map(v => `
             <tr>
-                <td>${new Date(v.fecha).toLocaleDateString('es-CL')}</td>
+                <td>${v.fecha ? new Date(v.fecha).toLocaleDateString('es-CL') : 'S/F'}</td>
                 <td>
-                    <strong>${v.nombre}</strong><br>
-                    <small>${v.email}</small>
+                    <strong>${v.nombre || 'Sin nombre'}</strong><br>
+                    <small>${v.email || ''}</small>
                 </td>
                 <td>${v.ciudad || 'N/A'} / ${v.comuna || 'N/A'}</td>
-                <td>$${Number(v.total).toLocaleString('es-CL')}</td>
-                <td><span class="estado-pendiente">${v.estado || 'Recibida'}</span></td>
+                <td>$${v.total ? Number(v.total).toLocaleString('es-CL') : '0'}</td>
+                <td><span style="background: #e3f2fd; color: #0071e3; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">RECIBIDA</span></td>
                 <td>
-                    <button class="btn-edit" onclick="verDetalleVenta('${v._id}')" title="Ver Formulario">
+                    <button class="btn-edit" onclick="verDetalleVenta('${v._id || v.id}')" style="background: #1d1d1f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
                         👁️ Ver Todo
                     </button>
-                    <a href="https://wa.me/56${v.telefono}" target="_blank" class="btn-whatsapp" style="text-decoration:none; margin-left:5px;">
-                        🟢 WA
+                    <a href="https://wa.me/56${v.telefono}" target="_blank" style="text-decoration: none; margin-left: 5px; font-size: 1.2rem;" title="Contactar por WhatsApp">
+                        🟢
                     </a>
                 </td>
             </tr>
@@ -503,6 +505,55 @@ async function cargarVentas() {
     } catch (error) {
         console.error("Error al cargar ventas:", error);
     }
+}
+
+async function verDetalleVenta(id) {
+    try {
+        const response = await fetch(`${API_URL}/ventas`);
+        const ventas = await response.json();
+        const v = ventas.find(venta => (venta._id || venta.id) === id);
+
+        if (!v) return alert("No se encontró la información de esta venta.");
+
+        // Creamos la lista de productos comprados
+        const productosHtml = (v.items || []).map(p => `
+            <div style="background: #f5f5f7; padding: 10px; border-radius: 8px; margin-bottom: 5px;">
+                <strong>${p.nombre}</strong><br>
+                <small>Color: ${p.color || 'No especificado'} | Capacidad: ${p.capacidad || 'No especificada'}</small>
+            </div>
+        `).join('');
+
+        // Mostramos la alerta con los datos (mientras no pongas el modal en HTML, usamos esto para probar)
+        // Pero lo ideal es inyectarlo en el modal que pusimos antes
+        const cuerpoModal = document.getElementById('modalVentaCuerpo');
+        if (cuerpoModal) {
+            cuerpoModal.innerHTML = `
+                <div style="text-align: left; line-height: 1.6;">
+                    <p><strong>👤 Cliente:</strong> ${v.nombre}</p>
+                    <p><strong>📞 Teléfono:</strong> ${v.telefono}</p>
+                    <p><strong>📍 Ubicación:</strong> ${v.ciudad}, ${v.comuna}</p>
+                    <p><strong>🏠 Dirección:</strong> ${v.calle} ${v.numero || ''} ${v.deptoOficina ? '- Depto: '+v.deptoOficina : ''}</p>
+                    <hr>
+                    <p><strong>📦 Pedido:</strong></p>
+                    ${productosHtml}
+                    <hr>
+                    <p style="font-size: 1.1rem; color: #0071e3;"><strong>Total: $${Number(v.total).toLocaleString('es-CL')}</strong></p>
+                </div>
+            `;
+            document.getElementById('modalVenta').style.display = 'flex';
+        } else {
+            // Si aún no tienes el modal en el HTML, al menos te muestra la info básica
+            alert(`Cliente: ${v.nombre}\nDirección: ${v.calle}\nTotal: $${v.total}`);
+        }
+    } catch (error) {
+        console.error("Error al abrir detalle:", error);
+    }
+}
+
+// Función para cerrar el modal
+function cerrarModalVenta() {
+    const modal = document.getElementById('modalVenta');
+    if (modal) modal.style.display = 'none';
 }
 
 function renderizarTablaVentas(ventas) {
