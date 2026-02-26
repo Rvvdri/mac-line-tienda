@@ -451,10 +451,11 @@ function renderizarCarrito() {
     const carritoItems = document.getElementById('carritoItems');
     const totalPrecio = document.getElementById('totalPrecio');
     
-   if (!carritoItems) {
-        console.warn("⚠️ Advertencia: No se encontró el contenedor 'carritoItems'. Esto es normal si no estás en la vista del carrito.");
-        return; // Detiene la función sin romper el resto del código
+    if (!carritoItems) {
+        console.error('❌ No se encontró carritoItems');
+        return;
     }
+    
     if (!totalPrecio) {
         console.error('❌ No se encontró totalPrecio');
         return;

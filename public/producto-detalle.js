@@ -173,22 +173,33 @@ function agregarAlCarritoDetalle() {
         return;
     }
 
-    // 1. CAPTURAR OPCIONES (Color y GB)
-    const capacidadBtn = document.querySelector('.capacidad-btn.active');
-    const colorDot = document.querySelector('.color-dot.active');
+    // --- NUEVA LÓGICA PARA CAPTURAR OPCIONES ---
+    // Captura el texto del botón de capacidad que tenga la clase 'active'
+    const capacidadSeleccionada = document.querySelector('.capacidad-btn.active')?.textContent || 'No especificada';
     
-    const capacidadSel = capacidadBtn ? capacidadBtn.textContent.trim() : 'No especificada';
-    const colorSel = colorDot ? colorDot.dataset.color : 'No especificado';
+    // Captura el color desde el dataset del círculo que tenga la clase 'active'
+    const colorSeleccionado = document.querySelector('.color-dot.active')?.dataset.color || 'No especificado';
 
-    // 2. OBTENER CARRITO ACTUAL
+    const productoParaCarrito = {
+        ...productoActual,
+        id: productoActual._id || productoActual.id,
+        capacidadSeleccionada: capacidadSeleccionada, // Guardamos GB
+        colorSeleccionado: colorSeleccionado,       // Guardamos Color
+        cantidad: 1
+    };
+
+    // Llamamos a la función global de script.js
+    agregarAlCarrito(productoParaCarrito);
+    
+    // Opcional: abrir el carrito para mostrar que se agregó
+    abrirCarrito();
+}
+    
+    // Obtener carrito actual
     let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     
-    // 3. BUSCAR SI YA EXISTE (Mismo ID, Color y Capacidad)
-    const existe = carrito.find(item => 
-        item.id === (productoActual._id || productoActual.id) && 
-        item.capacidad === capacidadSel && 
-        item.color === colorSel
-    );
+    // Buscar si ya existe
+    const existe = carrito.find(item => item.id === productoActual.id);
     
     if (existe) {
         if (existe.cantidad >= productoActual.stock) {
@@ -197,29 +208,23 @@ function agregarAlCarritoDetalle() {
         }
         existe.cantidad++;
     } else {
-        // 4. AGREGAR NUEVO ITEM CON SUS VARIANTES
         carrito.push({
             ...productoActual,
-            id: productoActual._id || productoActual.id,
-            capacidad: capacidadSel,
-            color: colorSel,
             cantidad: 1
         });
     }
     
-    // 5. GUARDAR Y ACTUALIZAR
+    // Guardar
     localStorage.setItem('carrito', JSON.stringify(carrito));
     
-    // Actualizar visualmente (funciones en script.js)
-    if (typeof actualizarContadorCarrito === 'function') actualizarContadorCarrito();
-    if (typeof actualizarCarrito === 'function') actualizarCarrito();
+    // Actualizar contador
+    actualizarContadorCarrito();
     
-    alert(`✅ ${productoActual.nombre} (${colorSel}, ${capacidadSel}) agregado al carrito`);
-    
-    if (typeof abrirCarrito === 'function') abrirCarrito();
-}
+    // Notificación
+    alert(`✅ ${productoActual.nombre} agregado al carrito`);
 
-// Esta función debe estar FUERA de la anterior
+
+// Actualizar contador del carrito
 function actualizarContadorCarrito() {
     const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
@@ -228,6 +233,9 @@ function actualizarContadorCarrito() {
         el.textContent = total;
     });
 }
+
+// Cargar contador al iniciar
+actualizarContadorCarrito();
 
 // ========== VARIABLES PARA VARIANTES ==========
 let colorSeleccionado = null;
@@ -358,45 +366,16 @@ window.seleccionarCapacidad = function(idx) {
     }
 };
 
-function mostrarProducto(producto) {
-    // 1. Título y Descripción
-    document.getElementById('productoTitulo').textContent = producto.nombre;
-    document.getElementById('productoDescripcion').textContent = producto.descripcion;
-    
-    // 2. Precios
-    document.getElementById('productoPrecio').textContent = producto.precio.toLocaleString('es-CL');
-
-    // 3. Imágenes (Aquí es donde suele fallar)
-    // Usamos el nombre del campo que viene de tu MongoDB: 'imagenPortada'
-    if (producto.imagenPortada) {
-        const imgPrincipal = document.getElementById('imagenPrincipal');
-        imgPrincipal.src = `/images/productos/${producto.imagenPortada}`;
-        imgPrincipal.alt = producto.nombre;
+// Hook para renderizar selectores después de mostrar producto
+const originalMostrarProducto = window.mostrarProducto || mostrarProducto;
+window.mostrarProducto = function(producto) {
+    if (originalMostrarProducto) {
+        originalMostrarProducto(producto);
     }
-
-    // 4. Renderizar Colores
-    const coloresContainer = document.getElementById('coloresContainer');
-    if (coloresContainer && producto.colores) {
-        coloresContainer.innerHTML = producto.colores.map((color, index) => `
-            <div class="color-dot ${index === 0 ? 'active' : ''}" 
-                 style="background-color: ${color.codigo}" 
-                 data-color="${color.nombre}"
-                 onclick="seleccionarColor(this)">
-            </div>
-        `).join('');
-    }
-
-    // 5. Renderizar Capacidades (GB)
-    const capacidadesContainer = document.getElementById('capacidadesContainer');
-    if (capacidadesContainer && producto.capacidades) {
-        capacidadesContainer.innerHTML = producto.capacidades.map((cap, index) => `
-            <button class="capacidad-btn ${index === 0 ? 'active' : ''}" 
-                    onclick="seleccionarCapacidad(this)">
-                ${cap}
-            </button>
-        `).join('');
-    }
-}
+    setTimeout(() => {
+        renderizarSelectoresVariantes();
+    }, 100);
+};
 
 // ========== FUNCIONES DE PAGO ==========
 
