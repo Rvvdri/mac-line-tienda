@@ -511,40 +511,53 @@ async function verDetalleVenta(id) {
     try {
         const response = await fetch(`${API_URL}/ventas`);
         const ventas = await response.json();
+        // Buscamos la venta (probando ambos tipos de ID)
         const v = ventas.find(venta => (venta._id === id || venta.id === id));
 
-        if (!v) return;
+        if (!v) return alert("Venta no encontrada");
 
         const cuerpoModal = document.getElementById('modalVentaCuerpo');
         if (!cuerpoModal) return;
 
-        // Según tu captura, los productos están en 'productos'
+        // 1. EXTRAER PRODUCTOS (Usando 'productos' que es lo que vimos en tu consola)
         const listaProductos = v.productos || v.items || v.carrito || [];
 
-        const productosHtml = listaProductos.map(p => `
-            <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #e5e5e5; color: #1d1d1f;">
-                <strong>${p.nombre || 'Producto'}</strong><br>
-                <small>Color: ${p.color || 'N/A'} | Capacidad: ${p.capacidad || 'N/A'}</small>
-            </div>
-        `).join('');
+        const productosHtml = listaProductos.length > 0 
+            ? listaProductos.map(p => `
+                <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #ddd; color: #1d1d1f !important;">
+                    <strong style="color: #1d1d1f !important;">${p.nombre || 'Producto'}</strong><br>
+                    <small style="color: #666;">
+                        Color: ${p.color || 'N/A'} | Capacidad: ${p.capacidad || 'N/A'}
+                    </small>
+                </div>`).join('')
+            : '<p style="color: #666;">No hay productos registrados en esta orden.</p>';
 
+        // 2. EXTRAER DATOS DEL CLIENTE (Mapeo flexible)
+        const nombre = v.nombre || (v.cliente && v.cliente.nombre) || "No registrado";
+        const ciudad = v.ciudad || (v.cliente && v.cliente.ciudad) || "No registrada";
+        const comuna = v.comuna || (v.cliente && v.cliente.comuna) || "No registrada";
+        const direccion = v.calle ? `${v.calle} ${v.numero || ''}` : (v.cliente && v.cliente.calle ? `${v.cliente.calle} ${v.cliente.numero || ''}` : "Dirección no registrada");
+
+        // 3. INYECTAR EN EL MODAL (Forzando color negro)
         cuerpoModal.innerHTML = `
-            <div style="text-align: left; color: #1d1d1f; font-family: -apple-system, sans-serif;">
-                <p><strong>👤 Cliente:</strong> ${v.nombre || (v.cliente && v.cliente.nombre) || 'No registrado'}</p>
-                <p><strong>📞 Teléfono:</strong> ${v.telefono || (v.cliente && v.cliente.telefono) || 'No registrado'}</p>
-                <p><strong>📍 Ubicación:</strong> ${v.ciudad || ''}, ${v.comuna || ''}</p>
-                <p><strong>🏠 Dirección:</strong> ${v.calle || ''} ${v.numero || ''} ${v.deptoOficina ? '- Depto: '+v.deptoOficina : ''}</p>
+            <div style="text-align: left; color: #1d1d1f !important; font-family: sans-serif; line-height: 1.5;">
+                <p style="margin: 5px 0;"><strong>👤 Cliente:</strong> ${nombre}</p>
+                <p style="margin: 5px 0;"><strong>📞 Teléfono:</strong> ${v.telefono || (v.cliente && v.cliente.telefono) || 'N/A'}</p>
+                <p style="margin: 5px 0;"><strong>📍 Ubicación:</strong> ${ciudad}, ${comuna}</p>
+                <p style="margin: 5px 0;"><strong>🏠 Dirección:</strong> ${direccion}</p>
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                <p style="font-weight: 700; margin-bottom: 10px;">📦 Pedido:</p>
-                ${productosHtml || '<p>No hay productos registrados</p>'}
+                <p style="font-weight: 700; color: #1d1d1f; margin-bottom: 10px;">📦 Pedido:</p>
+                ${productosHtml}
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                <p style="font-size: 1.3rem; color: #0071e3; text-align: right;"><strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong></p>
+                <p style="font-size: 1.3rem; color: #0071e3; text-align: right; margin: 0;">
+                    <strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong>
+                </p>
             </div>
         `;
 
         document.getElementById('modalVenta').style.display = 'flex';
     } catch (error) {
-        console.error("Error en detalle:", error);
+        console.error("Error al abrir detalle:", error);
     }
 }
 
