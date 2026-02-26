@@ -232,30 +232,11 @@ function renderizarPorSecciones() {
 }
 
 function crearCardProducto(producto) {
-    // CORRECCIÓN: Usamos 'imagenPortada' que es como está en tu base de datos
-    // Y añadimos la ruta /images/productos/
-    const imagenUrl = producto.imagenPortada 
-        ? (producto.imagenPortada.startsWith('data:') ? producto.imagenPortada : `/images/productos/${producto.imagenPortada}`)
-        : '/images/placeholder.jpg';
-
-    return `
-        <div class="product-card">
-            <div class="product-image">
-                <img src="${imagenUrl}" alt="${producto.nombre}" loading="lazy">
-                ${producto.descuento > 0 ? `<span class="badge">-${producto.descuento}%</span>` : ''}
-            </div>
-            <div class="product-info">
-                <span class="category">${producto.categoria ? producto.categoria.toUpperCase() : 'ELECTRÓNICA'}</span>
-                <h3>${producto.nombre}</h3>
-                <p class="description">${producto.descripcion ? producto.descripcion.substring(0, 60) : ''}...</p>
-                <div class="price-container">
-                    <span class="price">$${Number(producto.precio).toLocaleString('es-CL')}</span>
-                </div>
-                <button class="btn-ver" onclick="verDetalle('${producto._id || producto.id}')">Ver Detalle</button>
-            </div>
-        </div>
-    `;
-}
+    const descuento = producto.descuento || 0;
+    const precioOriginal = descuento > 0 ? producto.precioOriginal || producto.precio : null;
+    const precioFinal = producto.precio;
+    const tieneVariantes = (producto.colores && producto.colores.length > 0) || 
+                          (producto.capacidades && producto.capacidades.length > 0);
     
     // Stock class
     let stockClass = 'disponible';
@@ -311,6 +292,7 @@ function crearCardProducto(producto) {
             </div>
         </div>
     `;
+}
 
 function filtrarProductos(categoria) {
     filtroActivo = categoria;
@@ -740,28 +722,15 @@ async function procesarPago(event) {
     };
     
     const total = subtotal + costoEnvio;
-
+    
     const datosCompra = {
-    nombre: document.getElementById('nombreInput').value,
-    email: document.getElementById('emailInput').value,
-    telefono: document.getElementById('telefonoInput').value,
-    
-    // Estos nombres DEBEN ser iguales a los de arriba en el server.js
-    ciudad: document.getElementById('regionSelect').value,
-    comuna: document.getElementById('comunaSelect').value,
-    calle: document.getElementById('direccionInput').value,
-    numero: document.getElementById('numeroInput')?.value || 'S/N',
-    tipoPropiedad: document.querySelector('input[name="tipoVivienda"]:checked')?.value || 'Casa',
-    deptoOficina: document.getElementById('deptoInput')?.value || '',
-    
-    items: carrito.map(item => ({
-        nombre: item.nombre,
-        color: item.color || 'Estándar',
-        capacidad: item.capacidad || 'Estándar',
-        precio: item.precio
-    })),
-    total: total
-};
+        cliente: datosCliente,
+        items: carrito,
+        metodoEntrega: metodoEntrega,
+        subtotal: subtotal,
+        costoEnvio: costoEnvio,
+        total: total
+    };
     
     console.log('📦 Datos de compra:', datosCompra);
     
