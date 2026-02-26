@@ -468,11 +468,12 @@ async function eliminarProducto(productoId) {
     }
 }
 
+// 1. FUNCIÓN PARA CARGAR VENTAS (Con orden inverso y botón arreglado)
 async function cargarVentas() {
     try {
         const response = await fetch(`${API_URL}/ventas`);
         const ventas = await response.json();
-        const tbody = document.getElementById('ventasTableBody'); // Tu ID del HTML
+        const tbody = document.getElementById('ventasTableBody');
         
         if (!tbody) return;
 
@@ -481,8 +482,10 @@ async function cargarVentas() {
             return;
         }
 
-        // Mostramos las más recientes arriba
-        tbody.innerHTML = ventas.reverse().map(v => `
+        // .reverse() hace que la última venta sea la primera de la lista
+        tbody.innerHTML = ventas.reverse().map(v => {
+            const idVenta = v._id || v.id;
+            return `
             <tr>
                 <td>${v.fecha ? new Date(v.fecha).toLocaleDateString('es-CL') : 'S/F'}</td>
                 <td>
@@ -491,66 +494,72 @@ async function cargarVentas() {
                 </td>
                 <td>${v.ciudad || 'N/A'} / ${v.comuna || 'N/A'}</td>
                 <td>$${v.total ? Number(v.total).toLocaleString('es-CL') : '0'}</td>
-                <td><span style="background: #e3f2fd; color: #0071e3; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem;">RECIBIDA</span></td>
+                <td><span style="background: #e3f2fd; color: #0071e3; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">RECIBIDA</span></td>
                 <td>
-                    <button class="btn-edit" onclick="verDetalleVenta('${v._id || v.id}')" style="background: #1d1d1f; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">
+                    <button class="btn-edit" onclick="verDetalleVenta('${idVenta}')" style="background: #1d1d1f; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">
                         👁️ Ver Todo
                     </button>
-                    <a href="https://wa.me/56${v.telefono}" target="_blank" style="text-decoration: none; margin-left: 5px; font-size: 1.2rem;" title="Contactar por WhatsApp">
+                    <a href="https://wa.me/56${v.telefono}" target="_blank" style="text-decoration: none; margin-left: 8px; font-size: 1.2rem;" title="Contactar WhatsApp">
                         🟢
                     </a>
                 </td>
             </tr>
-        `).join('');
+            `;
+        }).join('');
     } catch (error) {
         console.error("Error al cargar ventas:", error);
     }
 }
 
+// 2. FUNCIÓN PARA VER EL DETALLE (Asegúrate de que esté debajo de cargarVentas)
 async function verDetalleVenta(id) {
+    console.log("Buscando venta con ID:", id);
     try {
         const response = await fetch(`${API_URL}/ventas`);
         const ventas = await response.json();
-        const v = ventas.find(venta => (venta._id || venta.id) === id);
+        const v = ventas.find(venta => (venta._id === id || venta.id === id));
 
-        if (!v) return alert("No se encontró la información de esta venta.");
+        if (!v) {
+            alert("Venta no encontrada en la base de datos.");
+            return;
+        }
 
-        // Creamos la lista de productos comprados
+        const cuerpoModal = document.getElementById('modalVentaCuerpo');
+        if (!cuerpoModal) {
+            // Si el modal no existe en el HTML, mostramos un alert Pro como respaldo
+            alert(`CLIENTE: ${v.nombre}\nDIRECCIÓN: ${v.calle} ${v.numero}\nCOMUNA: ${v.comuna}\nTOTAL: $${v.total}`);
+            return;
+        }
+
+        // Renderizar productos comprados
         const productosHtml = (v.items || []).map(p => `
-            <div style="background: #f5f5f7; padding: 10px; border-radius: 8px; margin-bottom: 5px;">
-                <strong>${p.nombre}</strong><br>
-                <small>Color: ${p.color || 'No especificado'} | Capacidad: ${p.capacidad || 'No especificada'}</small>
+            <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #e5e5e5;">
+                <div style="font-weight: 600; color: #1d1d1f;">${p.nombre}</div>
+                <div style="font-size: 0.85rem; color: #6e6e73;">Color: ${p.color || 'N/A'} | Capacidad: ${p.capacidad || 'N/A'}</div>
             </div>
         `).join('');
 
-        // Mostramos la alerta con los datos (mientras no pongas el modal en HTML, usamos esto para probar)
-        // Pero lo ideal es inyectarlo en el modal que pusimos antes
-        const cuerpoModal = document.getElementById('modalVentaCuerpo');
-        if (cuerpoModal) {
-            cuerpoModal.innerHTML = `
-                <div style="text-align: left; line-height: 1.6;">
-                    <p><strong>👤 Cliente:</strong> ${v.nombre}</p>
-                    <p><strong>📞 Teléfono:</strong> ${v.telefono}</p>
-                    <p><strong>📍 Ubicación:</strong> ${v.ciudad}, ${v.comuna}</p>
-                    <p><strong>🏠 Dirección:</strong> ${v.calle} ${v.numero || ''} ${v.deptoOficina ? '- Depto: '+v.deptoOficina : ''}</p>
-                    <hr>
-                    <p><strong>📦 Pedido:</strong></p>
-                    ${productosHtml}
-                    <hr>
-                    <p style="font-size: 1.1rem; color: #0071e3;"><strong>Total: $${Number(v.total).toLocaleString('es-CL')}</strong></p>
-                </div>
-            `;
-            document.getElementById('modalVenta').style.display = 'flex';
-        } else {
-            // Si aún no tienes el modal en el HTML, al menos te muestra la info básica
-            alert(`Cliente: ${v.nombre}\nDirección: ${v.calle}\nTotal: $${v.total}`);
-        }
+        cuerpoModal.innerHTML = `
+            <div style="text-align: left; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                <p><strong>👤 Cliente:</strong> ${v.nombre}</p>
+                <p><strong>📞 Teléfono:</strong> ${v.telefono}</p>
+                <p><strong>📍 Ubicación:</strong> ${v.ciudad}, ${v.comuna}</p>
+                <p><strong>🏠 Dirección:</strong> ${v.calle} ${v.numero || ''} ${v.deptoOficina ? '- Depto: '+v.deptoOficina : ''}</p>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                <p style="font-weight: 700; margin-bottom: 10px;">📦 Resumen del Pedido:</p>
+                ${productosHtml}
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                <p style="font-size: 1.25rem; color: #0071e3; text-align: right;"><strong>Total: $${Number(v.total).toLocaleString('es-CL')}</strong></p>
+            </div>
+        `;
+        
+        document.getElementById('modalVenta').style.display = 'flex';
     } catch (error) {
-        console.error("Error al abrir detalle:", error);
+        console.error("Error al mostrar el detalle:", error);
     }
 }
 
-// Función para cerrar el modal
+// 3. FUNCIÓN PARA CERRAR EL MODAL
 function cerrarModalVenta() {
     const modal = document.getElementById('modalVenta');
     if (modal) modal.style.display = 'none';

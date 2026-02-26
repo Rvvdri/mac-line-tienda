@@ -692,15 +692,12 @@
         </div>
     </div>
 
-    <div id="modalVenta" class="modal" style="display: none;">
-    <div class="modal-content" style="max-width: 600px;">
-        <span class="close-modal" onclick="cerrarModalVenta()">&times;</span>
-        <h2 id="modalVentaTitulo">Detalle de la Orden</h2>
-        <div id="modalVentaCuerpo" class="detalle-venta-grid">
-            </div>
-        <div class="modal-footer" style="margin-top: 20px; text-align: right;">
-            <button onclick="cerrarModalVenta()" class="btn btn-secondary">Cerrar</button>
-        </div>
+    <div id="modalVenta" style="display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center;">
+    <div style="background: white; padding: 30px; border-radius: 18px; width: 90%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative;">
+        <span onclick="cerrarModalVenta()" style="position: absolute; right: 20px; top: 15px; cursor: pointer; font-size: 28px; color: #999;">&times;</span>
+        <h2 style="margin-top: 0; margin-bottom: 20px; font-size: 1.5rem;">Detalle de Compra</h2>
+        <div id="modalVentaCuerpo"></div>
+        <button onclick="cerrarModalVenta()" style="margin-top: 25px; width: 100%; padding: 12px; background: #0071e3; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">Cerrar Detalle</button>
     </div>
 </div>
 
