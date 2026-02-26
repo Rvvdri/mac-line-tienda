@@ -471,10 +471,38 @@ async function eliminarProducto(productoId) {
 async function cargarVentas() {
     try {
         const response = await fetch(`${API_URL}/ventas`);
-        if (!response.ok) return;
         const ventas = await response.json();
-        renderizarTablaVentas(ventas);
-    } catch (error) {}
+        const tbody = document.getElementById('ventasTableBody');
+        
+        if (!ventas || ventas.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay ventas registradas</td></tr>';
+            return;
+        }
+
+        // Mostramos las más recientes primero
+        tbody.innerHTML = ventas.reverse().map(v => `
+            <tr>
+                <td>${new Date(v.fecha).toLocaleDateString('es-CL')}</td>
+                <td>
+                    <strong>${v.nombre}</strong><br>
+                    <small>${v.email}</small>
+                </td>
+                <td>${v.ciudad || 'N/A'} / ${v.comuna || 'N/A'}</td>
+                <td>$${Number(v.total).toLocaleString('es-CL')}</td>
+                <td><span class="estado-pendiente">${v.estado || 'Recibida'}</span></td>
+                <td>
+                    <button class="btn-edit" onclick="verDetalleVenta('${v._id}')" title="Ver Formulario">
+                        👁️ Ver Todo
+                    </button>
+                    <a href="https://wa.me/56${v.telefono}" target="_blank" class="btn-whatsapp" style="text-decoration:none; margin-left:5px;">
+                        🟢 WA
+                    </a>
+                </td>
+            </tr>
+        `).join('');
+    } catch (error) {
+        console.error("Error al cargar ventas:", error);
+    }
 }
 
 function renderizarTablaVentas(ventas) {
