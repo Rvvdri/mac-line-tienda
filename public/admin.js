@@ -468,7 +468,6 @@ async function eliminarProducto(productoId) {
     }
 }
 
-// 1. CARGAR VENTAS (Con orden inverso y validación de datos)
 async function cargarVentas() {
     try {
         const response = await fetch(`${API_URL}/ventas`);
@@ -477,24 +476,23 @@ async function cargarVentas() {
         
         if (!tbody) return;
 
-        // .reverse() pone las ventas más nuevas al principio
+        // .reverse() para que la venta más reciente sea la primera
         tbody.innerHTML = ventas.reverse().map(v => {
-            // Intentar capturar los datos aunque cambie el nombre de la variable
-            const nombre = v.nombre || v.cliente || "Sin nombre";
-            const ciudad = v.ciudad || v.region || "N/A";
-            const comuna = v.comuna || "N/A";
+            // Buscamos el nombre en diferentes lugares por si acaso
+            const nombreCliente = v.nombre || (v.datosCliente && v.datosCliente.nombre) || "Cliente General";
+            const ubicacion = v.comuna ? `${v.ciudad}, ${v.comuna}` : (v.ciudad || "Ubicación no registrada");
             const idVenta = v._id || v.id;
 
             return `
             <tr>
                 <td>${v.fecha ? new Date(v.fecha).toLocaleDateString('es-CL') : 'S/F'}</td>
                 <td>
-                    <strong>${nombre}</strong><br>
-                    <small>${v.email || ''}</small>
+                    <strong>${nombreCliente}</strong><br>
+                    <small style="color: #666;">${v.email || ''}</small>
                 </td>
-                <td>${ciudad} / ${comuna}</td>
+                <td>${ubicacion}</td>
                 <td>$${Number(v.total || 0).toLocaleString('es-CL')}</td>
-                <td><span style="background: #e3f2fd; color: #0071e3; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold;">RECIBIDA</span></td>
+                <td><span style="background: #e3f2fd; color: #0071e3; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">RECIBIDA</span></td>
                 <td>
                     <button class="btn-edit" onclick="verDetalleVenta('${idVenta}')" style="background: #1d1d1f; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
                         👁️ Ver Todo
@@ -509,45 +507,48 @@ async function cargarVentas() {
     }
 }
 
-// 2. VER DETALLE (Corregido para que no falle el clic)
 async function verDetalleVenta(id) {
     try {
         const response = await fetch(`${API_URL}/ventas`);
         const ventas = await response.json();
-        // Buscamos la venta por ID (soporta ambos formatos de MongoDB)
         const v = ventas.find(venta => (venta._id === id || venta.id === id));
 
-        if (!v) return alert("Venta no encontrada");
+        if (!v) return alert("No se encontró la información de la venta.");
 
         const cuerpoModal = document.getElementById('modalVentaCuerpo');
         if (!cuerpoModal) return;
 
-        // Lógica para mostrar los productos que compró
-        const productosHtml = (v.items || v.carrito || []).map(p => `
-            <div style="background: #f5f5f7; padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #ddd;">
-                <strong>${p.nombre || 'Producto'}</strong><br>
-                <small>Color: ${p.color || 'N/A'} | Capacidad: ${p.capacidad || 'N/A'}</small>
-            </div>
-        `).join('');
+        // Intentamos obtener la lista de productos de cualquier lugar donde pueda estar guardada
+        const listaProductos = v.items || v.carrito || v.productos || [];
+
+        const productosHtml = listaProductos.length > 0 
+            ? listaProductos.map(p => `
+                <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #e1e1e1;">
+                    <div style="font-weight: 600;">${p.nombre || 'Producto'}</div>
+                    <div style="font-size: 0.85rem; color: #666;">
+                        Color: ${p.color || 'N/A'} | Capacidad: ${p.capacidad || 'N/A'}
+                    </div>
+                </div>
+            `).join('')
+            : '<p style="color: #999; font-style: italic;">No hay productos registrados en esta orden.</p>';
 
         cuerpoModal.innerHTML = `
-            <div style="text-align: left; font-family: sans-serif;">
-                <p><strong>👤 Cliente:</strong> ${v.nombre || v.cliente || 'N/A'}</p>
-                <p><strong>📞 Teléfono:</strong> ${v.telefono || 'N/A'}</p>
-                <p><strong>📍 Ubicación:</strong> ${v.ciudad || 'N/A'}, ${v.comuna || 'N/A'}</p>
-                <p><strong>🏠 Dirección:</strong> ${v.calle || 'N/A'} ${v.numero || ''}</p>
-                <hr>
-                <p><strong>📦 Productos:</strong></p>
+            <div style="text-align: left; font-family: -apple-system, sans-serif;">
+                <p><strong>👤 Cliente:</strong> ${v.nombre || "No registrado"}</p>
+                <p><strong>📞 Teléfono:</strong> ${v.telefono || "No registrado"}</p>
+                <p><strong>📍 Ciudad/Comuna:</strong> ${v.ciudad || ''}, ${v.comuna || ''}</p>
+                <p><strong>🏠 Dirección:</strong> ${v.calle || ''} ${v.numero || ''} ${v.deptoOficina ? '- Depto: '+v.deptoOficina : ''}</p>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                <p style="font-weight: 700;">📦 Lo que lleva el cliente:</p>
                 ${productosHtml}
-                <hr>
-                <p style="font-size: 1.2rem; color: #0071e3;"><strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong></p>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                <p style="font-size: 1.2rem; color: #0071e3; text-align: right;"><strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong></p>
             </div>
         `;
 
         document.getElementById('modalVenta').style.display = 'flex';
     } catch (error) {
         console.error("Error al abrir detalle:", error);
-        alert("Hubo un problema al cargar el detalle.");
     }
 }
 
