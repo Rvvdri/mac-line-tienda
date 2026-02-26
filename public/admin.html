@@ -359,6 +359,9 @@
                                 <th>Precio Final</th>
                                 <th>Descuento</th>
                                 <th>Stock</th>
+                                <th>images</th>
+                                <th>colores</th>
+                                <th>capacidad</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -502,26 +505,23 @@
 
             <!-- SECCIÓN VENTAS -->
             <section id="ventas-seccion" class="seccion">
-                <h2>Historial de Ventas</h2>
-                <div class="tabla-wrapper">
-                    <table class="tabla-ventas">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
-                                <th>Productos</th>
-                                <th>Total</th>
-                                <th>Fecha</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ventasTableBody">
-                            <tr><td colspan="6" style="text-align: center; padding: 2rem;">Cargando...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
+    <h2>Registro de Ventas</h2>
+    <div class="tabla-wrapper">
+        <table class="tabla-productos"> <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Ubicación (Ciudad/Comuna)</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="ventasTableBody"> <tr><td colspan="6" style="text-align: center; padding: 2rem;">Cargando historial...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
             <!-- SECCIÓN STOCK -->
             <section id="stock-seccion" class="seccion">
                 <h2>Reporte de Stock</h2>

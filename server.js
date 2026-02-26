@@ -225,34 +225,19 @@ app.get('/api/ventas', async (req, res) => {
     }
 });
 
-// POST - Registrar nueva venta
+// En server.js, asegúrate de que guardas el cuerpo completo (req.body)
 app.post('/api/ventas', async (req, res) => {
     try {
         const nuevaVenta = {
-            id: Date.now().toString(),
+            ...req.body, // Aquí ya vienen nombre, ciudad, comuna, calle, items, etc.
             fecha: new Date(),
-            cliente: {
-                nombre: req.body.nombre,
-                email: req.body.email,
-                telefono: req.body.telefono,
-                direccion: req.body.direccion
-            },
-            productos: req.body.items,
-            total: req.body.total,
-            estado: 'completada'
+            estado: 'pendiente'
         };
-        
-        await ventasCollection.insertOne(nuevaVenta);
-        
-        res.json({ 
-            success: true,
-            mensaje: 'Venta registrada',
-            venta: nuevaVenta
-        });
-        
+        await db.collection('ventas').insertOne(nuevaVenta);
+        // ... (aquí va tu código de envío de mail que ya funciona)
+        res.json({ success: true });
     } catch (error) {
-        console.error('Error al registrar venta:', error);
-        res.status(500).json({ error: 'Error al registrar venta' });
+        res.status(500).json({ error: error.message });
     }
 });
 
