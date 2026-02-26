@@ -476,36 +476,34 @@ async function cargarVentas() {
         
         if (!tbody) return;
 
-        // .reverse() para que las nuevas salgan arriba
+        // .reverse() para que las ventas de hoy (25 de febrero) salgan arriba
         tbody.innerHTML = ventas.reverse().map(v => {
-            // RASTREADOR DE DATOS: Busca el nombre en cualquier campo posible
-            const nombre = v.nombre || v.cliente || (v.datosCliente && v.datosCliente.nombre) || "Cliente sin nombre";
-            const ciudad = v.ciudad || v.region || (v.datosCliente && v.datosCliente.ciudad) || "N/A";
-            const comuna = v.comuna || (v.datosCliente && v.datosCliente.comuna) || "N/A";
-            const total = v.total || v.monto || 0;
+            // Buscamos los datos tanto en la raíz como dentro del objeto 'cliente'
+            const nombre = v.nombre || (v.cliente && v.cliente.nombre) || "Sin nombre registrado";
+            const ciudad = v.ciudad || (v.cliente && v.cliente.ciudad) || "N/A";
+            const comuna = v.comuna || (v.cliente && v.cliente.comuna) || "N/A";
             const idVenta = v._id || v.id;
 
             return `
             <tr>
                 <td>${v.fecha ? new Date(v.fecha).toLocaleDateString('es-CL') : 'S/F'}</td>
                 <td>
-                    <strong>${nombre}</strong><br>
-                    <small style="color: #666;">${v.email || ''}</small>
+                    <strong style="color: #1d1d1f;">${nombre}</strong><br>
+                    <small style="color: #86868b;">${v.email || (v.cliente && v.cliente.email) || 'No email'}</small>
                 </td>
                 <td>${ciudad} / ${comuna}</td>
-                <td>$${Number(total).toLocaleString('es-CL')}</td>
-                <td><span style="background: #e3f2fd; color: #0071e3; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">RECIBIDA</span></td>
+                <td><strong>$${Number(v.total || 0).toLocaleString('es-CL')}</strong></td>
+                <td><span style="background: #e3f2fd; color: #0071e3; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;">${v.estado ? v.estado.toUpperCase() : 'RECIBIDA'}</span></td>
                 <td>
-                    <button class="btn-edit" onclick="verDetalleVenta('${idVenta}')" style="background: #1d1d1f; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
-                        👁️ Ver Todo
+                    <button class="btn-edit" onclick="verDetalleVenta('${idVenta}')" style="background: #1d1d1f; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                        Ver Todo
                     </button>
-                    <a href="https://wa.me/56${v.telefono || ''}" target="_blank" style="text-decoration: none; margin-left: 8px; font-size: 1.2rem;">🟢</a>
                 </td>
             </tr>
             `;
         }).join('');
     } catch (error) {
-        console.error("Error al cargar ventas:", error);
+        console.error("Error cargando ventas:", error);
     }
 }
 
@@ -515,42 +513,38 @@ async function verDetalleVenta(id) {
         const ventas = await response.json();
         const v = ventas.find(venta => (venta._id === id || venta.id === id));
 
-        if (!v) return alert("No se encontró la información");
+        if (!v) return;
 
         const cuerpoModal = document.getElementById('modalVentaCuerpo');
         if (!cuerpoModal) return;
 
-        // RASTREADOR DE PRODUCTOS: Busca en items, carrito o productos
-        const items = v.items || v.carrito || v.productos || [];
+        // Según tu captura, los productos están en 'productos'
+        const listaProductos = v.productos || v.items || v.carrito || [];
 
-        const productosHtml = items.length > 0 
-            ? items.map(p => `
-                <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #e1e1e1;">
-                    <div style="font-weight: 600;">${p.nombre || 'Producto'}</div>
-                    <div style="font-size: 0.85rem; color: #666;">
-                        Color: ${p.color || 'N/A'} | Capacidad: ${p.capacidad || 'N/A'}
-                    </div>
-                </div>
-            `).join('')
-            : '<p style="color: #999; font-style: italic;">No hay productos detallados en la base de datos.</p>';
+        const productosHtml = listaProductos.map(p => `
+            <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #e5e5e5; color: #1d1d1f;">
+                <strong>${p.nombre || 'Producto'}</strong><br>
+                <small>Color: ${p.color || 'N/A'} | Capacidad: ${p.capacidad || 'N/A'}</small>
+            </div>
+        `).join('');
 
         cuerpoModal.innerHTML = `
-            <div style="text-align: left; font-family: -apple-system, sans-serif; color: #333;">
-                <p><strong>👤 Cliente:</strong> ${v.nombre || v.cliente || 'No registrado'}</p>
-                <p><strong>📞 Teléfono:</strong> ${v.telefono || 'No registrado'}</p>
-                <p><strong>🏠 Dirección:</strong> ${v.calle || ''} ${v.numero || ''} ${v.deptoOficina ? '- Depto: '+v.deptoOficina : ''}</p>
+            <div style="text-align: left; color: #1d1d1f; font-family: -apple-system, sans-serif;">
+                <p><strong>👤 Cliente:</strong> ${v.nombre || (v.cliente && v.cliente.nombre) || 'No registrado'}</p>
+                <p><strong>📞 Teléfono:</strong> ${v.telefono || (v.cliente && v.cliente.telefono) || 'No registrado'}</p>
                 <p><strong>📍 Ubicación:</strong> ${v.ciudad || ''}, ${v.comuna || ''}</p>
+                <p><strong>🏠 Dirección:</strong> ${v.calle || ''} ${v.numero || ''} ${v.deptoOficina ? '- Depto: '+v.deptoOficina : ''}</p>
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                <p style="font-weight: 700;">📦 Pedido del cliente:</p>
-                ${productosHtml}
+                <p style="font-weight: 700; margin-bottom: 10px;">📦 Pedido:</p>
+                ${productosHtml || '<p>No hay productos registrados</p>'}
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                <p style="font-size: 1.2rem; color: #0071e3; text-align: right;"><strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong></p>
+                <p style="font-size: 1.3rem; color: #0071e3; text-align: right;"><strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong></p>
             </div>
         `;
 
         document.getElementById('modalVenta').style.display = 'flex';
     } catch (error) {
-        console.error("Error al abrir detalle:", error);
+        console.error("Error en detalle:", error);
     }
 }
 

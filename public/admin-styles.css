@@ -811,3 +811,11 @@ table tbody tr:hover {
     background: rgba(255, 68, 68, 0.2);
     color: var(--color-danger);
 }
+
+#modalVentaCuerpo {
+    color: #1d1d1f !important; /* Fuerza el color negro para que se vea */
+    display: block !important;
+}
+#modalVentaCuerpo p {
+    margin: 8px 0;
+}
