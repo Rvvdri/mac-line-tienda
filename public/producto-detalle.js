@@ -32,82 +32,13 @@ async function cargarProducto(id) {
     }
 }
 
+// Mostrar producto en la página
 function mostrarProducto(producto) {
-    // 1. TÍTULO Y CATEGORÍA
+    // TÍTULO Y CATEGORÍA
     document.title = `${producto.nombre} - MAC LINE`;
     document.getElementById('pageTitle').textContent = `${producto.nombre} - MAC LINE`;
     document.getElementById('productoTitulo').textContent = producto.nombre;
     document.getElementById('productoCategoria').textContent = producto.categoria.toUpperCase();
-
-    // 2. PRECIOS Y DESCRIPCIÓN
-    document.getElementById('productoPrecio').textContent = producto.precio.toLocaleString('es-CL');
-    document.getElementById('productoDescripcion').textContent = producto.descripcion;
-
-    // 3. LÓGICA DE LAS 6 IMÁGENES (Portada + 5 adicionales)
-    // Filtramos para ignorar campos vacíos o nulos
-    imagenesProducto = [
-        producto.imagenPortada,
-        producto.imagen2,
-        producto.imagen3,
-        producto.imagen4,
-        producto.imagen5,
-        producto.imagen6
-    ].filter(img => img && img !== "" && img !== "null");
-
-    // Imagen Principal
-    const imgPrincipal = document.getElementById('imagenPrincipal');
-    if (imgPrincipal && imagenesProducto.length > 0) {
-        imgPrincipal.src = imagenesProducto[0].startsWith('data:') 
-            ? imagenesProducto[0] 
-            : `/images/productos/${imagenesProducto[0]}`;
-    }
-
-    // Miniaturas (Genera las bolitas o cuadritos para las otras fotos)
-    const galeriaContainer = document.getElementById('galeriaMiniaturas');
-    if (galeriaContainer) {
-        galeriaContainer.innerHTML = imagenesProducto.map((img, index) => `
-            <div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="cambiarImagenPrincipal(${index})">
-                <img src="${img.startsWith('data:') ? img : '/images/productos/' + img}" alt="Vista ${index + 1}">
-            </div>
-        `).join('');
-    }
-
-    // 4. COLORES
-    const coloresContainer = document.getElementById('coloresContainer');
-    if (coloresContainer && producto.colores) {
-        coloresContainer.innerHTML = producto.colores.map((c, i) => `
-            <div class="color-dot ${i === 0 ? 'active' : ''}" 
-                 style="background-color: ${c.codigo}" 
-                 data-color="${c.nombre}"
-                 onclick="seleccionarColor(this)">
-            </div>
-        `).join('');
-    }
-
-    // 5. CAPACIDADES (GB)
-    const capsContainer = document.getElementById('capacidadesContainer');
-    if (capsContainer && producto.capacidades) {
-        capsContainer.innerHTML = producto.capacidades.map((cap, i) => `
-            <button class="capacidad-btn ${i === 0 ? 'active' : ''}" 
-                    onclick="seleccionarCapacidad(this)">
-                ${cap}
-            </button>
-        `).join('');
-    }
-}
-
-// NO OLVIDES AGREGAR ESTA FUNCIÓN ABAJO PARA QUE FUNCIONE EL CLIC EN LAS FOTOS
-function cambiarImagenPrincipal(index) {
-    const imgPrincipal = document.getElementById('imagenPrincipal');
-    if (!imgPrincipal || !imagenesProducto[index]) return;
-
-    const nuevaSrc = imagenesProducto[index];
-    imgPrincipal.src = nuevaSrc.startsWith('data:') ? nuevaSrc : `/images/productos/${nuevaSrc}`;
-    
-    document.querySelectorAll('.thumbnail').forEach((t, i) => {
-        t.classList.toggle('active', i === index);
-    });
-}
     
     // SKU (opcional)
     const skuEl = document.getElementById('productoSku');
