@@ -8,7 +8,9 @@ const nodemailer = require('nodemailer');
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+// Aumentamos el límite a 50MB para que acepte las 6 imágenes WebP sin problemas
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ==================== NODEMAILER ====================
