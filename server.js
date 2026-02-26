@@ -223,34 +223,58 @@ app.get('/api/ventas', async (req, res) => {
     }
 });
 
-// POST - Registrar nueva venta
 app.post('/api/ventas', async (req, res) => {
     try {
+        const { 
+            nombre, email, telefono, 
+            ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina, 
+            items, total 
+        } = req.body;
+
+        // 1. Guardar en Base de Datos
         const nuevaVenta = {
             id: Date.now().toString(),
             fecha: new Date(),
-            cliente: {
-                nombre: req.body.nombre,
-                email: req.body.email,
-                telefono: req.body.telefono,
-                direccion: req.body.direccion
-            },
-            productos: req.body.items,
-            total: req.body.total,
-            estado: 'completada'
+            cliente: { nombre, email, telefono, ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina },
+            productos: items,
+            total,
+            estado: 'pendiente'
         };
-        
         await ventasCollection.insertOne(nuevaVenta);
-        
-        res.json({ 
-            success: true,
-            mensaje: 'Venta registrada',
-            venta: nuevaVenta
-        });
-        
+
+        // 2. Configurar el correo para el dueño
+        const detalleProductos = items.map(p => 
+            `<li><b>${p.nombre}</b> - Color: ${p.color || 'N/A'} - Capacidad: ${p.capacidad || 'N/A'}</li>`
+        ).join('');
+
+        const mailOptions = {
+            from: 'Mac Line Store <linemac910@gmail.com>',
+            to: 'CORREO_DEL_DUEÑO@gmail.com', // <-- CAMBIA ESTO POR EL MAIL REAL
+            subject: `📦 NUEVA VENTA: ${nombre} - ${comuna}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; border: 1px solid #ddd; padding: 20px;">
+                    <h2 style="color: #0071e3;">Nueva orden recibida</h2>
+                    <p><b>Cliente:</b> ${nombre}</p>
+                    <p><b>Teléfono:</b> ${telefono}</p>
+                    <p><b>Email:</b> ${email}</p>
+                    <hr>
+                    <h3 style="color: #333;">Datos de Envío:</h3>
+                    <p><b>Ubicación:</b> ${calle} #${numero}</p>
+                    <p><b>Tipo:</b> ${tipoPropiedad} ${deptoOficina ? `(Depto: ${deptoOficina})` : ''}</p>
+                    <p><b>Comuna/Ciudad:</b> ${comuna}, ${ciudad}</p>
+                    <hr>
+                    <h3 style="color: #333;">Productos:</h3>
+                    <ul>${detalleProductos}</ul>
+                    <p style="font-size: 1.2em;"><b>TOTAL PAGADO: $${total.toLocaleString('es-CL')}</b></p>
+                </div>
+            `
+        };
+
+        await transporter.sendMail(mailOptions);
+        res.json({ success: true });
     } catch (error) {
-        console.error('Error al registrar venta:', error);
-        res.status(500).json({ error: 'Error al registrar venta' });
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Error al procesar venta' });
     }
 });
 
