@@ -165,6 +165,7 @@ function cambiarImagen(direccion) {
     mostrarImagen(imagenActualIndex);
 }
 
+// Agregar al carrito desde detalle
 function agregarAlCarritoDetalle() {
     if (!productoActual) return;
     
@@ -172,28 +173,6 @@ function agregarAlCarritoDetalle() {
         alert('❌ Producto agotado');
         return;
     }
-
-    // --- NUEVA LÓGICA PARA CAPTURAR OPCIONES ---
-    // Captura el texto del botón de capacidad que tenga la clase 'active'
-    const capacidadSeleccionada = document.querySelector('.capacidad-btn.active')?.textContent || 'No especificada';
-    
-    // Captura el color desde el dataset del círculo que tenga la clase 'active'
-    const colorSeleccionado = document.querySelector('.color-dot.active')?.dataset.color || 'No especificado';
-
-    const productoParaCarrito = {
-        ...productoActual,
-        id: productoActual._id || productoActual.id,
-        capacidadSeleccionada: capacidadSeleccionada, // Guardamos GB
-        colorSeleccionado: colorSeleccionado,       // Guardamos Color
-        cantidad: 1
-    };
-
-    // Llamamos a la función global de script.js
-    agregarAlCarrito(productoParaCarrito);
-    
-    // Opcional: abrir el carrito para mostrar que se agregó
-    abrirCarrito();
-}
     
     // Obtener carrito actual
     let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
@@ -222,7 +201,7 @@ function agregarAlCarritoDetalle() {
     
     // Notificación
     alert(`✅ ${productoActual.nombre} agregado al carrito`);
-
+}
 
 // Actualizar contador del carrito
 function actualizarContadorCarrito() {

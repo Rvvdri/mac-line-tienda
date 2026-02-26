@@ -223,54 +223,30 @@ app.get('/api/ventas', async (req, res) => {
     }
 });
 
+// POST - Registrar nueva venta
 app.post('/api/ventas', async (req, res) => {
     try {
-        // Extraemos TODOS los campos que vienen del formulario
-        const { 
-            nombre, email, telefono, 
-            ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina, 
-            items, total 
-        } = req.body;
-
         const nuevaVenta = {
             id: Date.now().toString(),
             fecha: new Date(),
-            cliente: { 
-                nombre, email, telefono, 
-                ciudad, comuna, calle, numero, tipoPropiedad, deptoOficina 
+            cliente: {
+                nombre: req.body.nombre,
+                email: req.body.email,
+                telefono: req.body.telefono,
+                direccion: req.body.direccion
             },
-            productos: items,
-            total: total,
+            productos: req.body.items,
+            total: req.body.total,
             estado: 'completada'
         };
         
         await ventasCollection.insertOne(nuevaVenta);
-
-        // CONFIGURACIÓN DEL MAIL (Para que no salga 'undefined')
-        const detalleProductos = items.map(p => 
-            `<li>${p.nombre} - Color: ${p.color || 'N/A'} - Capacidad: ${p.capacidad || 'N/A'}</li>`
-        ).join('');
-
-        const mailOptions = {
-            from: 'Mac Line Store <linemac910@gmail.com>',
-            to: 'EL-CORREO-DEL-DUEÑO', 
-            subject: `📦 Nueva Venta: ${nombre || 'Cliente'} - ${comuna || 'Sin Comuna'}`,
-            html: `
-                <h2>Detalles del Pedido</h2>
-                <p><strong>Cliente:</strong> ${nombre}</p>
-                <p><strong>Ubicación:</strong> ${calle} #${numero}, ${tipoPropiedad} (${deptoOficina || 'N/A'})</p>
-                <p><strong>Comuna/Ciudad:</strong> ${comuna}, ${ciudad}</p>
-                <hr>
-                <h3>Productos:</h3>
-                <ul>${detalleProductos}</ul>
-                <p><strong>Total:</strong> $${total}</p>
-            `
-        };
-
-        // Enviar el mail usando el transporter que ya tienes configurado
-        await transporter.sendMail(mailOptions);
         
-        res.json({ success: true, mensaje: 'Venta registrada y mail enviado' });
+        res.json({ 
+            success: true,
+            mensaje: 'Venta registrada',
+            venta: nuevaVenta
+        });
         
     } catch (error) {
         console.error('Error al registrar venta:', error);
