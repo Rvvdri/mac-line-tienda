@@ -476,28 +476,30 @@ async function cargarVentas() {
         
         if (!tbody) return;
 
-        // .reverse() para que la venta más reciente sea la primera
+        // .reverse() para que las nuevas salgan arriba
         tbody.innerHTML = ventas.reverse().map(v => {
-            // Buscamos el nombre en diferentes lugares por si acaso
-            const nombreCliente = v.nombre || (v.datosCliente && v.datosCliente.nombre) || "Cliente General";
-            const ubicacion = v.comuna ? `${v.ciudad}, ${v.comuna}` : (v.ciudad || "Ubicación no registrada");
+            // RASTREADOR DE DATOS: Busca el nombre en cualquier campo posible
+            const nombre = v.nombre || v.cliente || (v.datosCliente && v.datosCliente.nombre) || "Cliente sin nombre";
+            const ciudad = v.ciudad || v.region || (v.datosCliente && v.datosCliente.ciudad) || "N/A";
+            const comuna = v.comuna || (v.datosCliente && v.datosCliente.comuna) || "N/A";
+            const total = v.total || v.monto || 0;
             const idVenta = v._id || v.id;
 
             return `
             <tr>
                 <td>${v.fecha ? new Date(v.fecha).toLocaleDateString('es-CL') : 'S/F'}</td>
                 <td>
-                    <strong>${nombreCliente}</strong><br>
+                    <strong>${nombre}</strong><br>
                     <small style="color: #666;">${v.email || ''}</small>
                 </td>
-                <td>${ubicacion}</td>
-                <td>$${Number(v.total || 0).toLocaleString('es-CL')}</td>
+                <td>${ciudad} / ${comuna}</td>
+                <td>$${Number(total).toLocaleString('es-CL')}</td>
                 <td><span style="background: #e3f2fd; color: #0071e3; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold;">RECIBIDA</span></td>
                 <td>
                     <button class="btn-edit" onclick="verDetalleVenta('${idVenta}')" style="background: #1d1d1f; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;">
                         👁️ Ver Todo
                     </button>
-                    <a href="https://wa.me/56${v.telefono}" target="_blank" style="text-decoration: none; margin-left: 8px; font-size: 1.2rem;">🟢</a>
+                    <a href="https://wa.me/56${v.telefono || ''}" target="_blank" style="text-decoration: none; margin-left: 8px; font-size: 1.2rem;">🟢</a>
                 </td>
             </tr>
             `;
@@ -513,16 +515,16 @@ async function verDetalleVenta(id) {
         const ventas = await response.json();
         const v = ventas.find(venta => (venta._id === id || venta.id === id));
 
-        if (!v) return alert("No se encontró la información de la venta.");
+        if (!v) return alert("No se encontró la información");
 
         const cuerpoModal = document.getElementById('modalVentaCuerpo');
         if (!cuerpoModal) return;
 
-        // Intentamos obtener la lista de productos de cualquier lugar donde pueda estar guardada
-        const listaProductos = v.items || v.carrito || v.productos || [];
+        // RASTREADOR DE PRODUCTOS: Busca en items, carrito o productos
+        const items = v.items || v.carrito || v.productos || [];
 
-        const productosHtml = listaProductos.length > 0 
-            ? listaProductos.map(p => `
+        const productosHtml = items.length > 0 
+            ? items.map(p => `
                 <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #e1e1e1;">
                     <div style="font-weight: 600;">${p.nombre || 'Producto'}</div>
                     <div style="font-size: 0.85rem; color: #666;">
@@ -530,16 +532,16 @@ async function verDetalleVenta(id) {
                     </div>
                 </div>
             `).join('')
-            : '<p style="color: #999; font-style: italic;">No hay productos registrados en esta orden.</p>';
+            : '<p style="color: #999; font-style: italic;">No hay productos detallados en la base de datos.</p>';
 
         cuerpoModal.innerHTML = `
-            <div style="text-align: left; font-family: -apple-system, sans-serif;">
-                <p><strong>👤 Cliente:</strong> ${v.nombre || "No registrado"}</p>
-                <p><strong>📞 Teléfono:</strong> ${v.telefono || "No registrado"}</p>
-                <p><strong>📍 Ciudad/Comuna:</strong> ${v.ciudad || ''}, ${v.comuna || ''}</p>
+            <div style="text-align: left; font-family: -apple-system, sans-serif; color: #333;">
+                <p><strong>👤 Cliente:</strong> ${v.nombre || v.cliente || 'No registrado'}</p>
+                <p><strong>📞 Teléfono:</strong> ${v.telefono || 'No registrado'}</p>
                 <p><strong>🏠 Dirección:</strong> ${v.calle || ''} ${v.numero || ''} ${v.deptoOficina ? '- Depto: '+v.deptoOficina : ''}</p>
+                <p><strong>📍 Ubicación:</strong> ${v.ciudad || ''}, ${v.comuna || ''}</p>
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                <p style="font-weight: 700;">📦 Lo que lleva el cliente:</p>
+                <p style="font-weight: 700;">📦 Pedido del cliente:</p>
                 ${productosHtml}
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
                 <p style="font-size: 1.2rem; color: #0071e3; text-align: right;"><strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong></p>
