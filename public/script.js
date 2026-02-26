@@ -232,11 +232,30 @@ function renderizarPorSecciones() {
 }
 
 function crearCardProducto(producto) {
-    const descuento = producto.descuento || 0;
-    const precioOriginal = descuento > 0 ? producto.precioOriginal || producto.precio : null;
-    const precioFinal = producto.precio;
-    const tieneVariantes = (producto.colores && producto.colores.length > 0) || 
-                          (producto.capacidades && producto.capacidades.length > 0);
+    // CORRECCIÓN: Usamos 'imagenPortada' que es como está en tu base de datos
+    // Y añadimos la ruta /images/productos/
+    const imagenUrl = producto.imagenPortada 
+        ? (producto.imagenPortada.startsWith('data:') ? producto.imagenPortada : `/images/productos/${producto.imagenPortada}`)
+        : '/images/placeholder.jpg';
+
+    return `
+        <div class="product-card">
+            <div class="product-image">
+                <img src="${imagenUrl}" alt="${producto.nombre}" loading="lazy">
+                ${producto.descuento > 0 ? `<span class="badge">-${producto.descuento}%</span>` : ''}
+            </div>
+            <div class="product-info">
+                <span class="category">${producto.categoria ? producto.categoria.toUpperCase() : 'ELECTRÓNICA'}</span>
+                <h3>${producto.nombre}</h3>
+                <p class="description">${producto.descripcion ? producto.descripcion.substring(0, 60) : ''}...</p>
+                <div class="price-container">
+                    <span class="price">$${Number(producto.precio).toLocaleString('es-CL')}</span>
+                </div>
+                <button class="btn-ver" onclick="verDetalle('${producto._id || producto.id}')">Ver Detalle</button>
+            </div>
+        </div>
+    `;
+}
     
     // Stock class
     let stockClass = 'disponible';
@@ -292,7 +311,6 @@ function crearCardProducto(producto) {
             </div>
         </div>
     `;
-}
 
 function filtrarProductos(categoria) {
     filtroActivo = categoria;
