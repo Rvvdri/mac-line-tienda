@@ -519,18 +519,28 @@ async function verDetalleVenta(id) {
         const cuerpoModal = document.getElementById('modalVentaCuerpo');
         if (!cuerpoModal) return;
 
-        // 1. EXTRAER PRODUCTOS (Usando 'productos' que es lo que vimos en tu consola)
-        const listaProductos = v.productos || v.items || v.carrito || [];
+        // ... dentro de verDetalleVenta ...
+const listaProductos = v.productos || v.items || [];
 
-        const productosHtml = listaProductos.length > 0 
-            ? listaProductos.map(p => `
-                <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #ddd; color: #1d1d1f !important;">
-                    <strong style="color: #1d1d1f !important;">${p.nombre || 'Producto'}</strong><br>
-                    <small style="color: #666;">
-                        Color: ${p.color || 'N/A'} | Capacidad: ${p.capacidad || 'N/A'}
-                    </small>
-                </div>`).join('')
-            : '<p style="color: #666;">No hay productos registrados en esta orden.</p>';
+const productosHtml = listaProductos.map(p => {
+    // Intentamos todas las combinaciones posibles que podrías haber usado
+    const colorFinal = p.color || p.colorSeleccionado || p.opcionColor || "No especificado";
+    const capacidadFinal = p.capacidad || p.capacidadSeleccionada || p.storage || "No especificada";
+
+    return `
+    <div style="background: #f5f5f7; padding: 15px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #d2d2d7; color: #1d1d1f !important;">
+        <div style="font-weight: 700; margin-bottom: 8px;">${p.nombre || 'Producto'}</div>
+        <div style="display: flex; gap: 8px;">
+            <span style="background: #fff; border: 1px solid #d2d2d7; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">
+                <strong>Color:</strong> ${colorFinal}
+            </span>
+            <span style="background: #fff; border: 1px solid #d2d2d7; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">
+                <strong>Capacidad:</strong> ${capacidadFinal}
+            </span>
+        </div>
+    </div>
+    `;
+}).join('');
 
         // 2. EXTRAER DATOS DEL CLIENTE (Mapeo flexible)
         const nombre = v.nombre || (v.cliente && v.cliente.nombre) || "No registrado";
