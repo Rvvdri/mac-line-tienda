@@ -173,33 +173,22 @@ function agregarAlCarritoDetalle() {
         return;
     }
 
-    // --- NUEVA LÓGICA PARA CAPTURAR OPCIONES ---
-    // Captura el texto del botón de capacidad que tenga la clase 'active'
-    const capacidadSeleccionada = document.querySelector('.capacidad-btn.active')?.textContent || 'No especificada';
+    // 1. CAPTURAR OPCIONES (Color y GB)
+    const capacidadBtn = document.querySelector('.capacidad-btn.active');
+    const colorDot = document.querySelector('.color-dot.active');
     
-    // Captura el color desde el dataset del círculo que tenga la clase 'active'
-    const colorSeleccionado = document.querySelector('.color-dot.active')?.dataset.color || 'No especificado';
+    const capacidadSel = capacidadBtn ? capacidadBtn.textContent.trim() : 'No especificada';
+    const colorSel = colorDot ? colorDot.dataset.color : 'No especificado';
 
-    const productoParaCarrito = {
-        ...productoActual,
-        id: productoActual._id || productoActual.id,
-        capacidadSeleccionada: capacidadSeleccionada, // Guardamos GB
-        colorSeleccionado: colorSeleccionado,       // Guardamos Color
-        cantidad: 1
-    };
-
-    // Llamamos a la función global de script.js
-    agregarAlCarrito(productoParaCarrito);
-    
-    // Opcional: abrir el carrito para mostrar que se agregó
-    abrirCarrito();
-}
-    
-    // Obtener carrito actual
+    // 2. OBTENER CARRITO ACTUAL
     let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     
-    // Buscar si ya existe
-    const existe = carrito.find(item => item.id === productoActual.id);
+    // 3. BUSCAR SI YA EXISTE (Mismo ID, Color y Capacidad)
+    const existe = carrito.find(item => 
+        item.id === (productoActual._id || productoActual.id) && 
+        item.capacidad === capacidadSel && 
+        item.color === colorSel
+    );
     
     if (existe) {
         if (existe.cantidad >= productoActual.stock) {
@@ -208,23 +197,29 @@ function agregarAlCarritoDetalle() {
         }
         existe.cantidad++;
     } else {
+        // 4. AGREGAR NUEVO ITEM CON SUS VARIANTES
         carrito.push({
             ...productoActual,
+            id: productoActual._id || productoActual.id,
+            capacidad: capacidadSel,
+            color: colorSel,
             cantidad: 1
         });
     }
     
-    // Guardar
+    // 5. GUARDAR Y ACTUALIZAR
     localStorage.setItem('carrito', JSON.stringify(carrito));
     
-    // Actualizar contador
-    actualizarContadorCarrito();
+    // Actualizar visualmente (funciones en script.js)
+    if (typeof actualizarContadorCarrito === 'function') actualizarContadorCarrito();
+    if (typeof actualizarCarrito === 'function') actualizarCarrito();
     
-    // Notificación
-    alert(`✅ ${productoActual.nombre} agregado al carrito`);
+    alert(`✅ ${productoActual.nombre} (${colorSel}, ${capacidadSel}) agregado al carrito`);
+    
+    if (typeof abrirCarrito === 'function') abrirCarrito();
+}
 
-
-// Actualizar contador del carrito
+// Esta función debe estar FUERA de la anterior
 function actualizarContadorCarrito() {
     const carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
     const total = carrito.reduce((sum, item) => sum + item.cantidad, 0);
@@ -233,9 +228,6 @@ function actualizarContadorCarrito() {
         el.textContent = total;
     });
 }
-
-// Cargar contador al iniciar
-actualizarContadorCarrito();
 
 // ========== VARIABLES PARA VARIANTES ==========
 let colorSeleccionado = null;
