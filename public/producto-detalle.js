@@ -366,45 +366,16 @@ window.seleccionarCapacidad = function(idx) {
     }
 };
 
-function mostrarProducto(producto) {
-    // 1. Título y Descripción
-    document.getElementById('productoTitulo').textContent = producto.nombre;
-    document.getElementById('productoDescripcion').textContent = producto.descripcion;
-    
-    // 2. Precios
-    document.getElementById('productoPrecio').textContent = producto.precio.toLocaleString('es-CL');
-
-    // 3. Imágenes (Aquí es donde suele fallar)
-    // Usamos el nombre del campo que viene de tu MongoDB: 'imagenPortada'
-    if (producto.imagenPortada) {
-        const imgPrincipal = document.getElementById('imagenPrincipal');
-        imgPrincipal.src = `/images/productos/${producto.imagenPortada}`;
-        imgPrincipal.alt = producto.nombre;
+// Hook para renderizar selectores después de mostrar producto
+const originalMostrarProducto = window.mostrarProducto || mostrarProducto;
+window.mostrarProducto = function(producto) {
+    if (originalMostrarProducto) {
+        originalMostrarProducto(producto);
     }
-
-    // 4. Renderizar Colores
-    const coloresContainer = document.getElementById('coloresContainer');
-    if (coloresContainer && producto.colores) {
-        coloresContainer.innerHTML = producto.colores.map((color, index) => `
-            <div class="color-dot ${index === 0 ? 'active' : ''}" 
-                 style="background-color: ${color.codigo}" 
-                 data-color="${color.nombre}"
-                 onclick="seleccionarColor(this)">
-            </div>
-        `).join('');
-    }
-
-    // 5. Renderizar Capacidades (GB)
-    const capacidadesContainer = document.getElementById('capacidadesContainer');
-    if (capacidadesContainer && producto.capacidades) {
-        capacidadesContainer.innerHTML = producto.capacidades.map((cap, index) => `
-            <button class="capacidad-btn ${index === 0 ? 'active' : ''}" 
-                    onclick="seleccionarCapacidad(this)">
-                ${cap}
-            </button>
-        `).join('');
-    }
-}
+    setTimeout(() => {
+        renderizarSelectoresVariantes();
+    }, 100);
+};
 
 // ========== FUNCIONES DE PAGO ==========
 
