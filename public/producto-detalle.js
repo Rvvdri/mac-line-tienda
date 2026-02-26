@@ -190,7 +190,7 @@ function cambiarImagenPrincipal(index) {
         mostrarImagen(0);
         crearThumbnails();
     }
-
+}
 
 // Mostrar imagen en el carrusel
 function mostrarImagen(index) {
