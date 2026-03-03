@@ -511,63 +511,51 @@ async function verDetalleVenta(id) {
     try {
         const response = await fetch(`${API_URL}/ventas`);
         const ventas = await response.json();
-        // Buscamos la venta (probando ambos tipos de ID)
         const v = ventas.find(venta => (venta._id === id || venta.id === id));
 
-        if (!v) return alert("Venta no encontrada");
+        if (!v) return;
 
         const cuerpoModal = document.getElementById('modalVentaCuerpo');
-        if (!cuerpoModal) return;
+        
+        // RECOLECCIÓN DE DATOS (Buscando en todas las rutas posibles)
+        const cliente = v.cliente || v; 
+        const items = v.productos || v.items || [];
 
-        // ... dentro de verDetalleVenta ...
-const listaProductos = v.productos || v.items || [];
+        const productosHtml = items.map(p => `
+            <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #d2d2d7; color: #1d1d1f;">
+                <strong style="display:block; margin-bottom:5px;">${p.nombre || 'Producto'}</strong>
+                <div style="display: flex; gap: 10px;">
+                    <span style="background:#fff; padding:2px 8px; border-radius:4px; font-size:0.8rem; border:1px solid #ddd;">
+                        <b>Color:</b> ${p.color || 'No elegido'}
+                    </span>
+                    <span style="background:#fff; padding:2px 8px; border-radius:4px; font-size:0.8rem; border:1px solid #ddd;">
+                        <b>Capacidad:</b> ${p.capacidad || 'No elegida'}
+                    </span>
+                </div>
+            </div>
+        `).join('');
 
-const productosHtml = listaProductos.map(p => {
-    // Intentamos todas las combinaciones posibles que podrías haber usado
-    const colorFinal = p.color || p.colorSeleccionado || p.opcionColor || "No especificado";
-    const capacidadFinal = p.capacidad || p.capacidadSeleccionada || p.storage || "No especificada";
-
-    return `
-    <div style="background: #f5f5f7; padding: 15px; border-radius: 12px; margin-bottom: 10px; border: 1px solid #d2d2d7; color: #1d1d1f !important;">
-        <div style="font-weight: 700; margin-bottom: 8px;">${p.nombre || 'Producto'}</div>
-        <div style="display: flex; gap: 8px;">
-            <span style="background: #fff; border: 1px solid #d2d2d7; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">
-                <strong>Color:</strong> ${colorFinal}
-            </span>
-            <span style="background: #fff; border: 1px solid #d2d2d7; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem;">
-                <strong>Capacidad:</strong> ${capacidadFinal}
-            </span>
-        </div>
-    </div>
-    `;
-}).join('');
-
-        // 2. EXTRAER DATOS DEL CLIENTE (Mapeo flexible)
-        const nombre = v.nombre || (v.cliente && v.cliente.nombre) || "No registrado";
-        const ciudad = v.ciudad || (v.cliente && v.cliente.ciudad) || "No registrada";
-        const comuna = v.comuna || (v.cliente && v.cliente.comuna) || "No registrada";
-        const direccion = v.calle ? `${v.calle} ${v.numero || ''}` : (v.cliente && v.cliente.calle ? `${v.cliente.calle} ${v.cliente.numero || ''}` : "Dirección no registrada");
-
-        // 3. INYECTAR EN EL MODAL (Forzando color negro)
         cuerpoModal.innerHTML = `
-            <div style="text-align: left; color: #1d1d1f !important; font-family: sans-serif; line-height: 1.5;">
-                <p style="margin: 5px 0;"><strong>👤 Cliente:</strong> ${nombre}</p>
-                <p style="margin: 5px 0;"><strong>📞 Teléfono:</strong> ${v.telefono || (v.cliente && v.cliente.telefono) || 'N/A'}</p>
-                <p style="margin: 5px 0;"><strong>📍 Ubicación:</strong> ${ciudad}, ${comuna}</p>
-                <p style="margin: 5px 0;"><strong>🏠 Dirección:</strong> ${direccion}</p>
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                <p style="font-weight: 700; color: #1d1d1f; margin-bottom: 10px;">📦 Pedido:</p>
+            <div style="text-align: left; color: #1d1d1f; font-family: sans-serif;">
+                <p><strong>👤 Cliente:</strong> ${cliente.nombre || 'No capturado'}</p>
+                <p><strong>📞 Teléfono:</strong> ${cliente.telefono || 'No capturado'}</p>
+                <p><strong>📍 Ciudad/Comuna:</strong> ${cliente.ciudad || ''}, ${cliente.comuna || ''}</p>
+                <p><strong>🏠 Dirección:</strong> ${cliente.calle || ''} ${cliente.numero || ''} 
+                   ${cliente.deptoOficina ? '<br>Apto/Casa: ' + cliente.deptoOficina : ''}</p>
+                <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+                <p style="font-weight:700; margin-bottom:10px;">📦 Detalle del Pedido:</p>
                 ${productosHtml}
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
-                <p style="font-size: 1.3rem; color: #0071e3; text-align: right; margin: 0;">
-                    <strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong>
+                <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
+                <p style="font-size:1.2rem; color:#0071e3; text-align:right;">
+                   <strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong>
                 </p>
+                <p style="font-size:0.8rem; color:orange;">Estado: ${v.estado || 'Pendiente'}</p>
             </div>
         `;
 
         document.getElementById('modalVenta').style.display = 'flex';
     } catch (error) {
-        console.error("Error al abrir detalle:", error);
+        console.error("Error visualizando detalle:", error);
     }
 }
 
