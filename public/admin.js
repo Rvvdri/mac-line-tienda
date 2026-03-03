@@ -473,30 +473,53 @@ async function cargarVentas() {
         const response = await fetch(`${API_URL}/ventas`);
         const ventas = await response.json();
         const tbody = document.getElementById('ventasTableBody');
-        
+
         if (!tbody) return;
 
-        // .reverse() para que las ventas de hoy (25 de febrero) salgan arriba
+        if (ventas.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:2rem; color:#999;">No hay ventas registradas aún.</td></tr>';
+            return;
+        }
+
         tbody.innerHTML = ventas.reverse().map(v => {
-            // Buscamos los datos tanto en la raíz como dentro del objeto 'cliente'
-            const nombre = v.nombre || (v.cliente && v.cliente.nombre) || "Sin nombre registrado";
-            const ciudad = v.ciudad || (v.cliente && v.cliente.ciudad) || "N/A";
-            const comuna = v.comuna || (v.cliente && v.cliente.comuna) || "N/A";
+            const c = v.cliente || v;
+            const nombre = c.nombre || 'Sin nombre';
+            const email = c.email || '—';
+            const comuna = c.comuna || '—';
+            const region = c.region || '—';
             const idVenta = v._id || v.id;
+            const items = v.items || v.productos || [];
+            const totalItems = items.length;
+
+            // Color badge según estado
+            const estadoColors = {
+                'pagado': { bg: '#dcfce7', color: '#16a34a' },
+                'pendiente': { bg: '#fef9c3', color: '#92400e' },
+                'cancelado': { bg: '#fee2e2', color: '#dc2626' }
+            };
+            const estadoKey = (v.estado || 'pendiente').toLowerCase();
+            const estadoStyle = estadoColors[estadoKey] || { bg: '#e3f2fd', color: '#0071e3' };
 
             return `
             <tr>
-                <td>${v.fecha ? new Date(v.fecha).toLocaleDateString('es-CL') : 'S/F'}</td>
-                <td>
-                    <strong style="color: #1d1d1f;">${nombre}</strong><br>
-                    <small style="color: #86868b;">${v.email || (v.cliente && v.cliente.email) || 'No email'}</small>
+                <td style="font-size:0.85rem;">
+                    ${v.fecha ? new Date(v.fecha).toLocaleDateString('es-CL') : 'S/F'}<br>
+                    <small style="color:#999;">${v.fecha ? new Date(v.fecha).toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'}) : ''}</small>
                 </td>
-                <td>${ciudad} / ${comuna}</td>
-                <td><strong>$${Number(v.total || 0).toLocaleString('es-CL')}</strong></td>
-                <td><span style="background: #e3f2fd; color: #0071e3; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;">${v.estado ? v.estado.toUpperCase() : 'RECIBIDA'}</span></td>
                 <td>
-                    <button class="btn-edit" onclick="verDetalleVenta('${idVenta}')" style="background: #1d1d1f; color: white; border: none; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                        Ver Todo
+                    <strong>${nombre}</strong><br>
+                    <small style="color:#86868b;">${email}</small>
+                </td>
+                <td style="font-size:0.85rem;">${comuna}<br><small style="color:#999;">${region}</small></td>
+                <td><strong style="color:#16a34a;">$${Number(v.total || 0).toLocaleString('es-CL')}</strong></td>
+                <td>
+                    <span style="background:${estadoStyle.bg}; color:${estadoStyle.color}; padding:4px 10px; border-radius:20px; font-size:0.7rem; font-weight:700;">
+                        ${(v.estado || 'PENDIENTE').toUpperCase()}
+                    </span>
+                </td>
+                <td>
+                    <button onclick="verDetalleVenta('${idVenta}')" style="background:linear-gradient(135deg,#667eea,#764ba2); color:white; border:none; padding:6px 14px; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.85rem;">
+                        Ver detalle
                     </button>
                 </td>
             </tr>
@@ -516,40 +539,92 @@ async function verDetalleVenta(id) {
         if (!v) return;
 
         const cuerpoModal = document.getElementById('modalVentaCuerpo');
-        
-        // RECOLECCIÓN DE DATOS (Buscando en todas las rutas posibles)
-        const cliente = v.cliente || v; 
-        const items = v.productos || v.items || [];
+        const c = v.cliente || v;
+        const items = v.items || v.productos || [];
 
-        const productosHtml = items.map(p => `
-            <div style="background: #f5f5f7; padding: 12px; border-radius: 10px; margin-bottom: 8px; border: 1px solid #d2d2d7; color: #1d1d1f;">
-                <strong style="display:block; margin-bottom:5px;">${p.nombre || 'Producto'}</strong>
-                <div style="display: flex; gap: 10px;">
-                    <span style="background:#fff; padding:2px 8px; border-radius:4px; font-size:0.8rem; border:1px solid #ddd;">
-                        <b>Color:</b> ${p.color || 'No elegido'}
-                    </span>
-                    <span style="background:#fff; padding:2px 8px; border-radius:4px; font-size:0.8rem; border:1px solid #ddd;">
-                        <b>Capacidad:</b> ${p.capacidad || 'No elegida'}
-                    </span>
+        // Badge estado
+        const estadoColors = {
+            'pagado':    { bg: '#dcfce7', color: '#16a34a' },
+            'pendiente': { bg: '#fef9c3', color: '#92400e' },
+            'cancelado': { bg: '#fee2e2', color: '#dc2626' }
+        };
+        const estadoKey = (v.estado || 'pendiente').toLowerCase();
+        const estadoStyle = estadoColors[estadoKey] || { bg: '#e3f2fd', color: '#0071e3' };
+
+        // Productos
+        const productosHtml = items.length > 0 ? items.map(p => {
+            const variantes = [p.color, p.capacidad].filter(Boolean).join(' · ');
+            return `
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin-bottom:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+                    <div>
+                        <strong style="color:#1e293b;">${p.nombre || 'Producto'}</strong>
+                        ${variantes ? `<br><span style="background:#ede9fe; color:#6d28d9; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; margin-top:4px; display:inline-block;">${variantes}</span>` : ''}
+                    </div>
+                    <div style="text-align:right; white-space:nowrap;">
+                        <span style="font-size:0.8rem; color:#666;">x${p.cantidad || 1}</span><br>
+                        <strong style="color:#16a34a;">$${(Number(p.precio || 0) * Number(p.cantidad || 1)).toLocaleString('es-CL')}</strong>
+                    </div>
                 </div>
-            </div>
-        `).join('');
+            </div>`;
+        }).join('') : '<p style="color:#999; font-size:0.9rem;">Sin productos registrados</p>';
+
+        // Dirección completa
+        const direccion = [
+            c.direccion,
+            c.numero ? 'N° ' + c.numero : '',
+            c.complemento || ''
+        ].filter(Boolean).join(', ');
 
         cuerpoModal.innerHTML = `
-            <div style="text-align: left; color: #1d1d1f; font-family: sans-serif;">
-                <p><strong>👤 Cliente:</strong> ${cliente.nombre || 'No capturado'}</p>
-                <p><strong>📞 Teléfono:</strong> ${cliente.telefono || 'No capturado'}</p>
-                <p><strong>📍 Ciudad/Comuna:</strong> ${cliente.ciudad || ''}, ${cliente.comuna || ''}</p>
-                <p><strong>🏠 Dirección:</strong> ${cliente.calle || ''} ${cliente.numero || ''} 
-                   ${cliente.deptoOficina ? '<br>Apto/Casa: ' + cliente.deptoOficina : ''}</p>
-                <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
-                <p style="font-weight:700; margin-bottom:10px;">📦 Detalle del Pedido:</p>
+            <div style="font-family:-apple-system,sans-serif; color:#1e293b;">
+
+                <!-- Estado y fecha -->
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                    <span style="background:${estadoStyle.bg}; color:${estadoStyle.color}; padding:5px 14px; border-radius:20px; font-size:0.8rem; font-weight:700;">
+                        ${(v.estado || 'PENDIENTE').toUpperCase()}
+                    </span>
+                    <small style="color:#999;">${v.fecha ? new Date(v.fecha).toLocaleString('es-CL') : ''}</small>
+                </div>
+
+                <!-- Datos del cliente -->
+                <div style="background:#fef9ec; border-left:4px solid #f59e0b; padding:15px 18px; border-radius:0 10px 10px 0; margin-bottom:15px;">
+                    <p style="margin:0 0 10px; font-weight:700; color:#92400e; font-size:12px; text-transform:uppercase; letter-spacing:0.5px;">👤 Datos del Cliente</p>
+                    <p style="margin:4px 0;"><strong>Nombre:</strong> ${c.nombre || '—'}</p>
+                    <p style="margin:4px 0;"><strong>Email:</strong> ${c.email || '—'}</p>
+                    <p style="margin:4px 0;"><strong>Teléfono:</strong> ${c.telefono || '—'}</p>
+                </div>
+
+                <!-- Dirección de envío -->
+                <div style="background:#f0f9ff; border-left:4px solid #3b82f6; padding:15px 18px; border-radius:0 10px 10px 0; margin-bottom:15px;">
+                    <p style="margin:0 0 10px; font-weight:700; color:#1e40af; font-size:12px; text-transform:uppercase; letter-spacing:0.5px;">📦 Dirección de Envío</p>
+                    <p style="margin:4px 0;"><strong>Región:</strong> ${c.region || '—'}</p>
+                    <p style="margin:4px 0;"><strong>Comuna:</strong> ${c.comuna || '—'}</p>
+                    <p style="margin:4px 0;"><strong>Dirección:</strong> ${direccion || '—'}</p>
+                    ${c.complemento ? `<p style="margin:4px 0;"><strong>Depto/Casa/Of.:</strong> ${c.complemento}</p>` : ''}
+                    <p style="margin:8px 0 0;"><strong>Método de entrega:</strong>
+                        <span style="background:#ede9fe; color:#6d28d9; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; margin-left:5px;">
+                            ${c.metodoEntrega === 'flash' ? '⚡ Envío Flash' : c.metodoEntrega === 'normal' ? '🚚 Envío Normal' : c.metodoEntrega || '—'}
+                        </span>
+                    </p>
+                </div>
+
+                <!-- Productos -->
+                <p style="font-weight:700; margin:0 0 10px; color:#374151;">🛒 Productos</p>
                 ${productosHtml}
-                <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
-                <p style="font-size:1.2rem; color:#0071e3; text-align:right;">
-                   <strong>Total: $${Number(v.total || 0).toLocaleString('es-CL')}</strong>
+
+                <!-- Total -->
+                <div style="background:#f0fdf4; border:2px solid #22c55e; border-radius:10px; padding:14px 18px; text-align:right; margin-top:15px;">
+                    <span style="font-size:1.2rem; font-weight:700; color:#16a34a;">
+                        Total: $${Number(v.total || 0).toLocaleString('es-CL')}
+                    </span>
+                </div>
+
+                <!-- ID orden -->
+                <p style="text-align:center; color:#ccc; font-size:11px; margin-top:15px; margin-bottom:0;">
+                    ID Orden: ${v._id || v.id || '—'}
                 </p>
-                <p style="font-size:0.8rem; color:orange;">Estado: ${v.estado || 'Pendiente'}</p>
+
             </div>
         `;
 
