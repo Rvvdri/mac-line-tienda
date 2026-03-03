@@ -11,8 +11,31 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarProductos();
     cargarCarritoLocal();
     actualizarCarrito();
-    actualizarContadorCarrito(); // Actualizar contador al cargar
+    actualizarContadorCarrito();
     iniciarCarrusel();
+
+    // Abrir carrito si viene desde producto.html
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('carrito') === 'abierto') {
+        // Limpiar URL sin recargar
+        history.replaceState({}, '', 'index.html');
+
+        // Esperar que los productos carguen antes de abrir
+        setTimeout(() => {
+            abrirCarrito();
+
+            // Mostrar mensaje del producto agregado
+            const msg = params.get('msg');
+            if (msg) {
+                const nombre = decodeURIComponent(msg);
+                const notif = document.createElement('div');
+                notif.textContent = '✅ ' + nombre + ' agregado al carrito';
+                notif.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);background:#0a0e27;color:#00d4ff;padding:14px 28px;border-radius:12px;font-weight:700;font-size:14px;z-index:99999;border:1px solid rgba(0,212,255,0.5);box-shadow:0 8px 24px rgba(0,0,0,0.5);white-space:nowrap;';
+                document.body.appendChild(notif);
+                setTimeout(() => notif.remove(), 3000);
+            }
+        }, 300);
+    }
 });
 
 // ========== FUNCIONES DEL CARRUSEL ==========

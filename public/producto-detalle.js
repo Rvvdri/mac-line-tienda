@@ -218,22 +218,14 @@ function agregarAlCarritoDetalle() {
     // Actualizar contador
     actualizarContadorCarrito();
 
-    // Notificación con variantes
-    const variantes = [color, capacidad].filter(Boolean).join(' · ');
-    const msg = `✅ ${productoActual.nombre}${variantes ? ' (' + variantes + ')' : ''} agregado al carrito`;
 
-    // Abrir carrito directamente
-    if (typeof abrirCarrito === 'function') {
-        abrirCarrito();
-    } else {
-        const modal = document.getElementById('carritoModal');
-        if (modal) {
-            modal.style.display = 'flex';
-            document.body.classList.add('modal-open');
-            if (typeof renderizarCarrito === 'function') renderizarCarrito();
-        }
-    }
+    // Redirigir al index abriendo el carrito con mensaje
+    const variantes = [color, capacidad].filter(Boolean).join(' · ');
+    const nombreProducto = productoActual.nombre + (variantes ? ' (' + variantes + ')' : '');
+    const msg = encodeURIComponent(nombreProducto);
+    window.location.href = 'index.html?carrito=abierto&msg=' + msg;
 }
+
 
 // Actualizar contador del carrito
 function actualizarContadorCarrito() {

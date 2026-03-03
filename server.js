@@ -158,35 +158,43 @@ app.post('/api/productos', async (req, res) => {
 app.put('/api/productos/:id', async (req, res) => {
     try {
         const { id } = req.params;
+        const b = req.body;
+
         const datosActualizados = {
-            nombre: req.body.nombre,
-            categoria: req.body.categoria,
-            precio: req.body.precio,
-            stock: req.body.stock,
-            descuento: req.body.descuento || 0,
+            nombre: b.nombre,
+            categoria: b.categoria,
+            descripcion: b.descripcion,
+            precio: b.precio,
+            precioOriginal: b.precioOriginal,
+            stock: b.stock,
+            descuento: b.descuento || 0,
+            colores: Array.isArray(b.colores) ? b.colores : [],
+            capacidades: Array.isArray(b.capacidades) ? b.capacidades : [],
             updatedAt: new Date()
         };
-        
-        // Eliminar campos undefined
-        Object.keys(datosActualizados).forEach(key => 
+
+        if (b.imagenPortada) datosActualizados.imagenPortada = b.imagenPortada;
+        if (Array.isArray(b.imagenes)) datosActualizados.imagenes = b.imagenes;
+
+        Object.keys(datosActualizados).forEach(key =>
             datosActualizados[key] === undefined && delete datosActualizados[key]
         );
-        
+
         const result = await productosCollection.updateOne(
             { id: id },
             { $set: datosActualizados }
         );
-        
+
         if (result.matchedCount === 0) {
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
-        
-        res.json({ 
+
+        res.json({
             success: true,
             mensaje: 'Producto actualizado exitosamente',
             modificados: result.modifiedCount
         });
-        
+
     } catch (error) {
         console.error('Error al actualizar producto:', error);
         res.status(500).json({ error: 'Error al actualizar producto' });
