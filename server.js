@@ -22,6 +22,15 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// Verificar conexión con Gmail al arrancar
+transporter.verify((error, success) => {
+    if (error) {
+        console.error('❌ Error con Gmail:', error.message);
+    } else {
+        console.log('✅ Gmail listo para enviar emails');
+    }
+});
+
 // Email del dueño (donde llegarán las notificaciones de venta)
 const EMAIL_DUENO = 'linemac910@gmail.com';
 
@@ -347,36 +356,47 @@ app.post('/api/crear-preferencia', async (req, res) => {
 
 app.post('/api/webhook-mercadopago', async (req, res) => {
     try {
+        console.log('📬 ====== WEBHOOK RECIBIDO ======');
+        console.log('📬 Body completo:', JSON.stringify(req.body, null, 2));
+
         const { type, data } = req.body;
-        
-        console.log('📬 Webhook recibido:', type, data);
-        
+
+        if (!type || !data) {
+            console.log('⚠️ Webhook sin type o data, ignorando...');
+            return res.status(200).send('OK');
+        }
+
+        console.log('📬 Tipo:', type, '| Data:', data);
+
         if (type === 'payment') {
             const paymentId = data.id;
             console.log('💳 Procesando pago ID:', paymentId);
-            
+
             // Obtener información del pago desde Mercado Pago
             const payment = new Payment(client);
             const paymentInfo = await payment.get({ id: paymentId });
-            
+
             console.log('💳 Estado del pago:', paymentInfo.status);
             console.log('💳 External reference:', paymentInfo.external_reference);
-            
+            console.log('💳 Payer email:', paymentInfo.payer?.email);
+
             if (paymentInfo.status === 'approved') {
                 // Buscar la venta por external_reference
                 const venta = await ventasCollection.findOne({ 
                     'mercadopago.external_reference': paymentInfo.external_reference 
                 });
-                
+
                 if (venta) {
-                    console.log('✅ Pago APROBADO - Enviando emails...');
-                    
+                    console.log('✅ Venta encontrada:', venta._id);
+                    console.log('✅ Cliente:', venta.cliente?.nombre, venta.cliente?.email);
+                    console.log('✅ Enviando emails...');
+
                     // ENVIAR EMAIL AL DUEÑO
                     await enviarEmailDueno(venta);
-                    
+
                     // ENVIAR EMAIL AL CLIENTE
                     await enviarEmailCliente(venta);
-                    
+
                     // Actualizar estado en MongoDB
                     await ventasCollection.updateOne(
                         { _id: venta._id },
@@ -389,17 +409,27 @@ app.post('/api/webhook-mercadopago', async (req, res) => {
                             } 
                         }
                     );
-                    
-                    console.log('✅ Venta actualizada y emails enviados');
+
+                    console.log('✅ Venta actualizada y emails enviados correctamente');
                 } else {
-                    console.log('⚠️ No se encontró la venta con referencia:', paymentInfo.external_reference);
+                    console.log('⚠️ No se encontró venta con referencia:', paymentInfo.external_reference);
+                    console.log('⚠️ Buscando todas las ventas recientes para debug...');
+                    const ventasRecientes = await ventasCollection.find({}).sort({ fecha: -1 }).limit(3).toArray();
+                    ventasRecientes.forEach(v => {
+                        console.log('   - Venta:', v._id, '| ref:', v.mercadopago?.external_reference, '| estado:', v.estado);
+                    });
                 }
+            } else {
+                console.log('ℹ️ Pago no aprobado, estado:', paymentInfo.status, '- no se envían emails');
             }
+        } else {
+            console.log('ℹ️ Evento ignorado (no es payment):', type);
         }
-        
+
         res.status(200).send('OK');
     } catch (error) {
-        console.error('❌ Error en webhook:', error);
+        console.error('❌ Error en webhook:', error.message);
+        console.error('❌ Stack:', error.stack);
         res.status(500).send('Error');
     }
 });
