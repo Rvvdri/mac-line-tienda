@@ -338,43 +338,25 @@ function guardarCarritoLocal() {
     actualizarContadorCarrito(); // Actualizar contador inmediatamente
 }
 
-function agregarAlCarrito(productoId, colorSeleccionado, capacidadSeleccionada, precioFinal) {
+function agregarAlCarrito(productoId) {
     const producto = productosActuales.find(p => String(p.id) === String(productoId));
     if (!producto) return;
-
-    const color = colorSeleccionado || null;
-    const capacidad = capacidadSeleccionada || null;
-    const precio = precioFinal || producto.precio;
-
-    // Buscar si ya existe el mismo producto CON las mismas variantes
-    const existe = carrito.find(item =>
-        String(item.id) === String(productoId) &&
-        (item.color || null) === color &&
-        (item.capacidad || null) === capacidad
-    );
-
+    
+    const existe = carrito.find(item => item.id === productoId);
+    
     if (existe) {
         existe.cantidad++;
     } else {
         carrito.push({
-            _id: producto._id,
-            id: producto.id,
-            nombre: producto.nombre,
-            categoria: producto.categoria,
-            precio: precio,
-            cantidad: 1,
-            color: color,
-            capacidad: capacidad,
-            imagenPortada: producto.imagenPortada || null,
-            emoji: producto.emoji || '📦'
+            ...producto,
+            cantidad: 1
         });
     }
-
+    
     guardarCarritoLocal();
     actualizarCarrito();
-
-    const variantes = [color, capacidad].filter(Boolean).join(' · ');
-    mostrarNotificacion(`✅ ${producto.nombre}${variantes ? ' (' + variantes + ')' : ''} agregado al carrito`);
+    
+    mostrarNotificacion(`✅ ${producto.nombre} agregado al carrito`);
 }
 
 function mostrarNotificacion(mensaje) {
@@ -771,14 +753,8 @@ async function procesarPago(event) {
         console.log('✅ Preferencia creada');
         console.log('🔗 Redirigiendo a Mercado Pago...');
         
-        // GUARDAR VENTA EN BD
-        await fetch(`${API_URL}/ventas`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(datosCompra)
-        });
-        
         // REDIRIGIR A MERCADO PAGO
+        // (La venta ya se guarda en el servidor al crear la preferencia)
         window.location.href = init_point;
         
     } catch (error) {
