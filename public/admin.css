@@ -478,3 +478,27 @@ table tbody tr:hover {
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 212, 255, 0.8);
 }
+
+/* ==================== MODAL VENTA ==================== */
+#modalVenta * {
+    box-sizing: border-box;
+}
+
+#modalVentaCuerpo,
+#modalVentaCuerpo div,
+#modalVentaCuerpo p,
+#modalVentaCuerpo span:not([style*="background"]),
+#modalVentaCuerpo td,
+#modalVentaCuerpo tr,
+#modalVentaCuerpo table,
+#modalVentaCuerpo strong,
+#modalVentaCuerpo small,
+#modalVentaCuerpo h2,
+#modalVentaCuerpo h3 {
+    color: #111827 !important;
+    background-color: transparent;
+}
+
+#modalVentaCuerpo {
+    background: #ffffff !important;
+}

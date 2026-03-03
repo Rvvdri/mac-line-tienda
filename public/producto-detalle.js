@@ -168,18 +168,29 @@ function cambiarImagen(direccion) {
 // Agregar al carrito desde detalle
 function agregarAlCarritoDetalle() {
     if (!productoActual) return;
-    
+
     if (productoActual.stock === 0) {
         alert('❌ Producto agotado');
         return;
     }
-    
+
+    // Leer variantes seleccionadas
+    const color = colorSeleccionado || null;
+    const capacidad = capacidadSeleccionada
+        ? (typeof capacidadSeleccionada === 'object' ? capacidadSeleccionada.nombre : capacidadSeleccionada)
+        : null;
+    const precio = precioActual || productoActual.precio;
+
     // Obtener carrito actual
     let carrito = JSON.parse(localStorage.getItem('carrito') || '[]');
-    
-    // Buscar si ya existe
-    const existe = carrito.find(item => item.id === productoActual.id);
-    
+
+    // Buscar mismo producto CON mismas variantes
+    const existe = carrito.find(item =>
+        String(item.id) === String(productoActual.id) &&
+        (item.color || null) === color &&
+        (item.capacidad || null) === capacidad
+    );
+
     if (existe) {
         if (existe.cantidad >= productoActual.stock) {
             alert(`⚠️ Solo hay ${productoActual.stock} unidades disponibles`);
@@ -188,19 +199,45 @@ function agregarAlCarritoDetalle() {
         existe.cantidad++;
     } else {
         carrito.push({
-            ...productoActual,
-            cantidad: 1
+            _id: productoActual._id,
+            id: productoActual.id,
+            nombre: productoActual.nombre,
+            categoria: productoActual.categoria,
+            precio: precio,
+            cantidad: 1,
+            color: color,
+            capacidad: capacidad,
+            imagenPortada: productoActual.imagenPortada || null,
+            emoji: productoActual.emoji || '📦'
         });
     }
-    
+
     // Guardar
     localStorage.setItem('carrito', JSON.stringify(carrito));
-    
+
     // Actualizar contador
     actualizarContadorCarrito();
-    
-    // Notificación
-    alert(`✅ ${productoActual.nombre} agregado al carrito`);
+
+    // Notificación con variantes
+    const variantes = [color, capacidad].filter(Boolean).join(' · ');
+    const msg = `✅ ${productoActual.nombre}${variantes ? ' (' + variantes + ')' : ''} agregado al carrito`;
+
+    // Notificación flotante
+    const notif = document.getElementById('notificacion') || (() => {
+        const d = document.createElement('div');
+        d.id = 'notificacion-temp';
+        d.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#00d4ff;padding:14px 28px;border-radius:12px;font-weight:700;font-size:14px;z-index:99999;border:1px solid rgba(0,212,255,0.4);box-shadow:0 8px 24px rgba(0,0,0,0.5);';
+        document.body.appendChild(d);
+        return d;
+    })();
+    notif.textContent = msg;
+    notif.style.display = 'block';
+    notif.classList.add('mostrar');
+    setTimeout(() => {
+        notif.classList.remove('mostrar');
+        const temp = document.getElementById('notificacion-temp');
+        if (temp) temp.remove();
+    }, 2500);
 }
 
 // Actualizar contador del carrito

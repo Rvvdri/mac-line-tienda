@@ -338,25 +338,43 @@ function guardarCarritoLocal() {
     actualizarContadorCarrito(); // Actualizar contador inmediatamente
 }
 
-function agregarAlCarrito(productoId) {
+function agregarAlCarrito(productoId, colorSeleccionado, capacidadSeleccionada, precioFinal) {
     const producto = productosActuales.find(p => String(p.id) === String(productoId));
     if (!producto) return;
-    
-    const existe = carrito.find(item => item.id === productoId);
-    
+
+    const color = colorSeleccionado || null;
+    const capacidad = capacidadSeleccionada || null;
+    const precio = precioFinal || producto.precio;
+
+    // Buscar si ya existe el mismo producto CON las mismas variantes
+    const existe = carrito.find(item =>
+        String(item.id) === String(productoId) &&
+        (item.color || null) === color &&
+        (item.capacidad || null) === capacidad
+    );
+
     if (existe) {
         existe.cantidad++;
     } else {
         carrito.push({
-            ...producto,
-            cantidad: 1
+            _id: producto._id,
+            id: producto.id,
+            nombre: producto.nombre,
+            categoria: producto.categoria,
+            precio: precio,
+            cantidad: 1,
+            color: color,
+            capacidad: capacidad,
+            imagenPortada: producto.imagenPortada || null,
+            emoji: producto.emoji || '📦'
         });
     }
-    
+
     guardarCarritoLocal();
     actualizarCarrito();
-    
-    mostrarNotificacion(`✅ ${producto.nombre} agregado al carrito`);
+
+    const variantes = [color, capacidad].filter(Boolean).join(' · ');
+    mostrarNotificacion(`✅ ${producto.nombre}${variantes ? ' (' + variantes + ')' : ''} agregado al carrito`);
 }
 
 function mostrarNotificacion(mensaje) {

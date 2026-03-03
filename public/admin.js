@@ -602,8 +602,11 @@ async function verDetalleVenta(id) {
         const numero    = c.numero     || '—';
         const complemento = c.complemento || '';
 
+        cuerpoModal.style.background = '#ffffff';
+        cuerpoModal.style.color = '#111827';
+
         cuerpoModal.innerHTML = `
-        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:#111827; font-size:14px;">
+        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:#111827 !important; font-size:14px; background:#ffffff;">
 
             <!-- Estado -->
             <div style="background:${estadoStyle.bg}; border-radius:10px; padding:12px 16px; margin-bottom:16px;">
@@ -664,6 +667,25 @@ async function verDetalleVenta(id) {
                 </div>
             </div>
 
+            <!-- Cambiar Estado -->
+            <div style="margin-top:16px;">
+                <p style="font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#374151; margin:0 0 8px;">🔄 Cambiar Estado</p>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button onclick="cambiarEstadoVenta('${v._id || v.id}', 'pendiente')"
+                        style="flex:1; padding:9px 12px; border:2px solid #f59e0b; background:${estadoKey==='pendiente'?'#fef3c7':'white'}; color:#92400e; border-radius:8px; cursor:pointer; font-weight:700; font-size:12px; min-width:90px;">
+                        ⏳ Pendiente
+                    </button>
+                    <button onclick="cambiarEstadoVenta('${v._id || v.id}', 'pagado')"
+                        style="flex:1; padding:9px 12px; border:2px solid #22c55e; background:${estadoKey==='pagado'?'#dcfce7':'white'}; color:#15803d; border-radius:8px; cursor:pointer; font-weight:700; font-size:12px; min-width:90px;">
+                        ✅ Pagado
+                    </button>
+                    <button onclick="cambiarEstadoVenta('${v._id || v.id}', 'cancelado')"
+                        style="flex:1; padding:9px 12px; border:2px solid #ef4444; background:${estadoKey==='cancelado'?'#fee2e2':'white'}; color:#dc2626; border-radius:8px; cursor:pointer; font-weight:700; font-size:12px; min-width:90px;">
+                        ❌ Cancelado
+                    </button>
+                </div>
+            </div>
+
             <p style="text-align:center; color:#d1d5db; font-size:11px; margin:14px 0 0;">ID: ${v._id || v.id || '—'}</p>
         </div>`;
 
@@ -676,6 +698,29 @@ async function verDetalleVenta(id) {
 // 3. CERRAR MODAL
 function cerrarModalVenta() {
     document.getElementById('modalVenta').style.display = 'none';
+}
+
+// 4. CAMBIAR ESTADO DE VENTA
+async function cambiarEstadoVenta(id, nuevoEstado) {
+    try {
+        const response = await fetch(`${API_URL}/ventas/${id}/estado`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ estado: nuevoEstado })
+        });
+
+        if (!response.ok) throw new Error('Error al actualizar estado');
+
+        // Actualizar el badge de estado en el modal sin cerrarlo
+        await verDetalleVenta(id);
+
+        // Recargar tabla de ventas en el fondo
+        cargarVentas();
+
+    } catch (error) {
+        console.error('Error cambiando estado:', error);
+        alert('Error al cambiar el estado. Intenta de nuevo.');
+    }
 }
 
 function renderizarTablaVentas(ventas) {

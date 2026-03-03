@@ -250,6 +250,36 @@ app.post('/api/ventas', async (req, res) => {
     }
 });
 
+// PUT - Cambiar estado de una venta
+app.put('/api/ventas/:id/estado', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { estado } = req.body;
+
+        const estadosValidos = ['pendiente', 'pagado', 'cancelado'];
+        if (!estadosValidos.includes(estado)) {
+            return res.status(400).json({ error: 'Estado no válido' });
+        }
+
+        const { ObjectId } = require('mongodb');
+        const result = await ventasCollection.updateOne(
+            { _id: new ObjectId(id) },
+            { $set: { estado: estado, updatedAt: new Date() } }
+        );
+
+        if (result.matchedCount === 0) {
+            return res.status(404).json({ error: 'Venta no encontrada' });
+        }
+
+        console.log(`✅ Estado de venta ${id} cambiado a: ${estado}`);
+        res.json({ success: true, estado });
+
+    } catch (error) {
+        console.error('❌ Error cambiando estado:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // ==================== MERCADO PAGO - CREAR PREFERENCIA ====================
 
 app.post('/api/crear-preferencia', async (req, res) => {
