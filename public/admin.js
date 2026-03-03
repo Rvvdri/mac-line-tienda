@@ -542,6 +542,19 @@ async function verDetalleVenta(id) {
         const c = v.cliente || v;
         const items = v.items || v.productos || [];
 
+        // metodoEntrega puede ser objeto { tipo, nombre, precio } o string
+        const metodo = v.metodoEntrega || c.metodoEntrega;
+        let metodoNombre = '—';
+        if (metodo) {
+            if (typeof metodo === 'object') {
+                metodoNombre = metodo.nombre || metodo.tipo || '—';
+            } else {
+                metodoNombre = metodo === 'flash' ? '⚡ Envío Flash (24-48h)' :
+                               metodo === 'normal' ? '🚚 Envío Normal (3-5 días)' :
+                               metodo === 'gratis' ? '🎉 Envío Gratis' : metodo;
+            }
+        }
+
         // Badge estado
         const estadoColors = {
             'pagado':    { bg: '#dcfce7', color: '#16a34a' },
@@ -559,7 +572,7 @@ async function verDetalleVenta(id) {
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
                     <div>
                         <strong style="color:#1e293b;">${p.nombre || 'Producto'}</strong>
-                        ${variantes ? `<br><span style="background:#ede9fe; color:#6d28d9; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; margin-top:4px; display:inline-block;">${variantes}</span>` : ''}
+                        ${variantes ? `<br><span style="background:#ede9fe; color:#6d28d9; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; margin-top:4px; display:inline-block;">${variantes}</span>` : '<br><span style="color:#999; font-size:11px;">Sin variantes seleccionadas</span>'}
                     </div>
                     <div style="text-align:right; white-space:nowrap;">
                         <span style="font-size:0.8rem; color:#666;">x${p.cantidad || 1}</span><br>
@@ -569,18 +582,19 @@ async function verDetalleVenta(id) {
             </div>`;
         }).join('') : '<p style="color:#999; font-size:0.9rem;">Sin productos registrados</p>';
 
-        // Dirección completa
-        const direccion = [
-            c.direccion,
-            c.numero ? 'N° ' + c.numero : '',
-            c.complemento || ''
-        ].filter(Boolean).join(', ');
+        // Dirección — puede venir separada o en direccionCompleta
+        const region = c.region || '—';
+        const comuna = c.comuna || '—';
+        const calle = c.direccion || '—';
+        const numero = c.numero ? 'N° ' + c.numero : '';
+        const complemento = c.complemento || '';
+        const direccionLinea = [calle, numero, complemento].filter(Boolean).join(', ');
 
         cuerpoModal.innerHTML = `
             <div style="font-family:-apple-system,sans-serif; color:#1e293b;">
 
                 <!-- Estado y fecha -->
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:8px;">
                     <span style="background:${estadoStyle.bg}; color:${estadoStyle.color}; padding:5px 14px; border-radius:20px; font-size:0.8rem; font-weight:700;">
                         ${(v.estado || 'PENDIENTE').toUpperCase()}
                     </span>
@@ -598,13 +612,14 @@ async function verDetalleVenta(id) {
                 <!-- Dirección de envío -->
                 <div style="background:#f0f9ff; border-left:4px solid #3b82f6; padding:15px 18px; border-radius:0 10px 10px 0; margin-bottom:15px;">
                     <p style="margin:0 0 10px; font-weight:700; color:#1e40af; font-size:12px; text-transform:uppercase; letter-spacing:0.5px;">📦 Dirección de Envío</p>
-                    <p style="margin:4px 0;"><strong>Región:</strong> ${c.region || '—'}</p>
-                    <p style="margin:4px 0;"><strong>Comuna:</strong> ${c.comuna || '—'}</p>
-                    <p style="margin:4px 0;"><strong>Dirección:</strong> ${direccion || '—'}</p>
-                    ${c.complemento ? `<p style="margin:4px 0;"><strong>Depto/Casa/Of.:</strong> ${c.complemento}</p>` : ''}
-                    <p style="margin:8px 0 0;"><strong>Método de entrega:</strong>
+                    <p style="margin:4px 0;"><strong>Región:</strong> ${region}</p>
+                    <p style="margin:4px 0;"><strong>Comuna:</strong> ${comuna}</p>
+                    <p style="margin:4px 0;"><strong>Calle / Av.:</strong> ${calle}</p>
+                    ${numero ? `<p style="margin:4px 0;"><strong>Número:</strong> ${c.numero}</p>` : ''}
+                    ${complemento ? `<p style="margin:4px 0;"><strong>Depto/Casa/Of.:</strong> ${complemento}</p>` : ''}
+                    <p style="margin:10px 0 0;"><strong>Método de entrega:</strong>
                         <span style="background:#ede9fe; color:#6d28d9; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; margin-left:5px;">
-                            ${c.metodoEntrega === 'flash' ? '⚡ Envío Flash' : c.metodoEntrega === 'normal' ? '🚚 Envío Normal' : c.metodoEntrega || '—'}
+                            ${metodoNombre}
                         </span>
                     </p>
                 </div>
@@ -613,11 +628,14 @@ async function verDetalleVenta(id) {
                 <p style="font-weight:700; margin:0 0 10px; color:#374151;">🛒 Productos</p>
                 ${productosHtml}
 
-                <!-- Total -->
-                <div style="background:#f0fdf4; border:2px solid #22c55e; border-radius:10px; padding:14px 18px; text-align:right; margin-top:15px;">
-                    <span style="font-size:1.2rem; font-weight:700; color:#16a34a;">
-                        Total: $${Number(v.total || 0).toLocaleString('es-CL')}
-                    </span>
+                <!-- Subtotal / Envío / Total -->
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px 18px; margin-top:15px;">
+                    ${v.subtotal ? `<div style="display:flex; justify-content:space-between; margin-bottom:6px; color:#555; font-size:14px;"><span>Subtotal:</span><span>$${Number(v.subtotal).toLocaleString('es-CL')}</span></div>` : ''}
+                    ${v.costoEnvio !== undefined ? `<div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#555; font-size:14px;"><span>Envío:</span><span>${v.costoEnvio === 0 ? '<span style="color:#16a34a;">Gratis</span>' : '$' + Number(v.costoEnvio).toLocaleString('es-CL')}</span></div>` : ''}
+                    <div style="display:flex; justify-content:space-between; border-top:1px solid #e2e8f0; padding-top:10px;">
+                        <span style="font-weight:700; font-size:15px;">Total:</span>
+                        <span style="font-weight:700; font-size:18px; color:#16a34a;">$${Number(v.total || 0).toLocaleString('es-CL')}</span>
+                    </div>
                 </div>
 
                 <!-- ID orden -->
