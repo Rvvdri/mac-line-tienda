@@ -535,116 +535,137 @@ async function verDetalleVenta(id) {
         const response = await fetch(`${API_URL}/ventas`);
         const ventas = await response.json();
         const v = ventas.find(venta => (venta._id === id || venta.id === id));
-
         if (!v) return;
 
         const cuerpoModal = document.getElementById('modalVentaCuerpo');
         const c = v.cliente || v;
         const items = v.items || v.productos || [];
 
-        // metodoEntrega puede ser objeto { tipo, nombre, precio } o string
+        // Método de entrega — es objeto { tipo, nombre, precio }
         const metodo = v.metodoEntrega || c.metodoEntrega;
         let metodoNombre = '—';
+        let metodoIcono = '🚚';
         if (metodo) {
             if (typeof metodo === 'object') {
-                metodoNombre = metodo.nombre || metodo.tipo || '—';
+                const tipo = metodo.tipo || '';
+                metodoIcono = tipo === 'flash' ? '⚡' : tipo === 'gratis' ? '🎉' : '🚚';
+                metodoNombre = metodo.nombre || tipo || '—';
             } else {
-                metodoNombre = metodo === 'flash' ? '⚡ Envío Flash (24-48h)' :
-                               metodo === 'normal' ? '🚚 Envío Normal (3-5 días)' :
-                               metodo === 'gratis' ? '🎉 Envío Gratis' : metodo;
+                metodoIcono = metodo === 'flash' ? '⚡' : metodo === 'gratis' ? '🎉' : '🚚';
+                metodoNombre = metodo === 'flash' ? 'Envío Flash (24-48h)' :
+                               metodo === 'normal' ? 'Envío Normal (3-5 días)' :
+                               metodo === 'gratis' ? 'Envío Gratis' : metodo;
             }
         }
 
-        // Badge estado
-        const estadoColors = {
-            'pagado':    { bg: '#dcfce7', color: '#16a34a' },
-            'pendiente': { bg: '#fef9c3', color: '#92400e' },
-            'cancelado': { bg: '#fee2e2', color: '#dc2626' }
+        // Estado
+        const estadoMap = {
+            'pagado':    { bg: '#dcfce7', color: '#14532d', label: '✅ PAGADO' },
+            'pendiente': { bg: '#fef3c7', color: '#78350f', label: '⏳ PENDIENTE' },
+            'cancelado': { bg: '#fee2e2', color: '#7f1d1d', label: '❌ CANCELADO' }
         };
         const estadoKey = (v.estado || 'pendiente').toLowerCase();
-        const estadoStyle = estadoColors[estadoKey] || { bg: '#e3f2fd', color: '#0071e3' };
+        const estadoStyle = estadoMap[estadoKey] || estadoMap['pendiente'];
+
+        // Nota sobre estado
+        const notaEstado = estadoKey === 'pagado'
+            ? '<p style="margin:8px 0 0; font-size:12px; color:#15803d;">✔ Pago confirmado por Mercado Pago</p>'
+            : estadoKey === 'pendiente'
+            ? '<p style="margin:8px 0 0; font-size:12px; color:#92400e;">⚠ El cliente inició el pago pero aún no se confirmó</p>'
+            : '<p style="margin:8px 0 0; font-size:12px; color:#991b1b;">✘ Pago cancelado o rechazado</p>';
 
         // Productos
         const productosHtml = items.length > 0 ? items.map(p => {
-            const variantes = [p.color, p.capacidad].filter(Boolean).join(' · ');
+            // color y capacidad pueden venir directo o dentro de variantes seleccionadas
+            const colorTexto = p.color || p.colorSeleccionado || '';
+            const capacidadTexto = p.capacidad || p.capacidadSeleccionada || '';
+            const variantes = [colorTexto, capacidadTexto].filter(Boolean).join(' · ');
             return `
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin-bottom:8px;">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
-                    <div>
-                        <strong style="color:#1e293b;">${p.nombre || 'Producto'}</strong>
-                        ${variantes ? `<br><span style="background:#ede9fe; color:#6d28d9; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; margin-top:4px; display:inline-block;">${variantes}</span>` : '<br><span style="color:#999; font-size:11px;">Sin variantes seleccionadas</span>'}
-                    </div>
-                    <div style="text-align:right; white-space:nowrap;">
-                        <span style="font-size:0.8rem; color:#666;">x${p.cantidad || 1}</span><br>
-                        <strong style="color:#16a34a;">$${(Number(p.precio || 0) * Number(p.cantidad || 1)).toLocaleString('es-CL')}</strong>
-                    </div>
+            <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:12px 14px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:flex-start; gap:10px;">
+                <div>
+                    <strong style="color:#111827; font-size:14px;">${p.nombre || 'Producto'}</strong>
+                    ${variantes
+                        ? `<br><span style="background:#ede9fe; color:#5b21b6; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; margin-top:5px; display:inline-block;">${variantes}</span>`
+                        : `<br><span style="color:#9ca3af; font-size:11px;">Sin color/capacidad registrado</span>`}
+                </div>
+                <div style="text-align:right; white-space:nowrap; flex-shrink:0;">
+                    <span style="font-size:12px; color:#6b7280; display:block;">x${p.cantidad || 1}</span>
+                    <strong style="color:#15803d; font-size:14px;">$${(Number(p.precio || 0) * Number(p.cantidad || 1)).toLocaleString('es-CL')}</strong>
                 </div>
             </div>`;
-        }).join('') : '<p style="color:#999; font-size:0.9rem;">Sin productos registrados</p>';
+        }).join('') : '<p style="color:#9ca3af; font-size:13px;">Sin productos registrados</p>';
 
-        // Dirección — puede venir separada o en direccionCompleta
-        const region = c.region || '—';
-        const comuna = c.comuna || '—';
-        const calle = c.direccion || '—';
-        const numero = c.numero ? 'N° ' + c.numero : '';
+        // Campos de dirección
+        const region    = c.region     || '—';
+        const comuna    = c.comuna     || '—';
+        const calle     = c.direccion  || '—';
+        const numero    = c.numero     || '—';
         const complemento = c.complemento || '';
-        const direccionLinea = [calle, numero, complemento].filter(Boolean).join(', ');
 
         cuerpoModal.innerHTML = `
-            <div style="font-family:-apple-system,sans-serif; color:#1e293b;">
+        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; color:#111827; font-size:14px;">
 
-                <!-- Estado y fecha -->
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:8px;">
-                    <span style="background:${estadoStyle.bg}; color:${estadoStyle.color}; padding:5px 14px; border-radius:20px; font-size:0.8rem; font-weight:700;">
-                        ${(v.estado || 'PENDIENTE').toUpperCase()}
-                    </span>
-                    <small style="color:#999;">${v.fecha ? new Date(v.fecha).toLocaleString('es-CL') : ''}</small>
+            <!-- Estado -->
+            <div style="background:${estadoStyle.bg}; border-radius:10px; padding:12px 16px; margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <span style="color:${estadoStyle.color}; font-weight:800; font-size:14px;">${estadoStyle.label}</span>
+                    <small style="color:#6b7280;">${v.fecha ? new Date(v.fecha).toLocaleString('es-CL') : ''}</small>
                 </div>
-
-                <!-- Datos del cliente -->
-                <div style="background:#fef9ec; border-left:4px solid #f59e0b; padding:15px 18px; border-radius:0 10px 10px 0; margin-bottom:15px;">
-                    <p style="margin:0 0 10px; font-weight:700; color:#92400e; font-size:12px; text-transform:uppercase; letter-spacing:0.5px;">👤 Datos del Cliente</p>
-                    <p style="margin:4px 0;"><strong>Nombre:</strong> ${c.nombre || '—'}</p>
-                    <p style="margin:4px 0;"><strong>Email:</strong> ${c.email || '—'}</p>
-                    <p style="margin:4px 0;"><strong>Teléfono:</strong> ${c.telefono || '—'}</p>
-                </div>
-
-                <!-- Dirección de envío -->
-                <div style="background:#f0f9ff; border-left:4px solid #3b82f6; padding:15px 18px; border-radius:0 10px 10px 0; margin-bottom:15px;">
-                    <p style="margin:0 0 10px; font-weight:700; color:#1e40af; font-size:12px; text-transform:uppercase; letter-spacing:0.5px;">📦 Dirección de Envío</p>
-                    <p style="margin:4px 0;"><strong>Región:</strong> ${region}</p>
-                    <p style="margin:4px 0;"><strong>Comuna:</strong> ${comuna}</p>
-                    <p style="margin:4px 0;"><strong>Calle / Av.:</strong> ${calle}</p>
-                    ${numero ? `<p style="margin:4px 0;"><strong>Número:</strong> ${c.numero}</p>` : ''}
-                    ${complemento ? `<p style="margin:4px 0;"><strong>Depto/Casa/Of.:</strong> ${complemento}</p>` : ''}
-                    <p style="margin:10px 0 0;"><strong>Método de entrega:</strong>
-                        <span style="background:#ede9fe; color:#6d28d9; padding:3px 10px; border-radius:20px; font-size:12px; font-weight:600; margin-left:5px;">
-                            ${metodoNombre}
-                        </span>
-                    </p>
-                </div>
-
-                <!-- Productos -->
-                <p style="font-weight:700; margin:0 0 10px; color:#374151;">🛒 Productos</p>
-                ${productosHtml}
-
-                <!-- Subtotal / Envío / Total -->
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:14px 18px; margin-top:15px;">
-                    ${v.subtotal ? `<div style="display:flex; justify-content:space-between; margin-bottom:6px; color:#555; font-size:14px;"><span>Subtotal:</span><span>$${Number(v.subtotal).toLocaleString('es-CL')}</span></div>` : ''}
-                    ${v.costoEnvio !== undefined ? `<div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#555; font-size:14px;"><span>Envío:</span><span>${v.costoEnvio === 0 ? '<span style="color:#16a34a;">Gratis</span>' : '$' + Number(v.costoEnvio).toLocaleString('es-CL')}</span></div>` : ''}
-                    <div style="display:flex; justify-content:space-between; border-top:1px solid #e2e8f0; padding-top:10px;">
-                        <span style="font-weight:700; font-size:15px;">Total:</span>
-                        <span style="font-weight:700; font-size:18px; color:#16a34a;">$${Number(v.total || 0).toLocaleString('es-CL')}</span>
-                    </div>
-                </div>
-
-                <!-- ID orden -->
-                <p style="text-align:center; color:#ccc; font-size:11px; margin-top:15px; margin-bottom:0;">
-                    ID Orden: ${v._id || v.id || '—'}
-                </p>
-
+                ${notaEstado}
             </div>
-        `;
+
+            <!-- Cliente -->
+            <div style="background:#fffbeb; border:1px solid #fcd34d; border-radius:10px; padding:14px 16px; margin-bottom:12px;">
+                <p style="margin:0 0 10px; font-weight:800; color:#92400e; font-size:11px; text-transform:uppercase; letter-spacing:1px;">👤 Datos del Cliente</p>
+                <table style="width:100%; border-collapse:collapse; font-size:13px; color:#1f2937;">
+                    <tr><td style="padding:3px 0; color:#6b7280; width:110px;">Nombre</td><td style="padding:3px 0; font-weight:600;">${c.nombre || '—'}</td></tr>
+                    <tr><td style="padding:3px 0; color:#6b7280;">Email</td><td style="padding:3px 0; font-weight:600;">${c.email || '—'}</td></tr>
+                    <tr><td style="padding:3px 0; color:#6b7280;">Teléfono</td><td style="padding:3px 0; font-weight:600;">${c.telefono || '—'}</td></tr>
+                </table>
+            </div>
+
+            <!-- Dirección -->
+            <div style="background:#eff6ff; border:1px solid #93c5fd; border-radius:10px; padding:14px 16px; margin-bottom:12px;">
+                <p style="margin:0 0 10px; font-weight:800; color:#1e40af; font-size:11px; text-transform:uppercase; letter-spacing:1px;">📦 Dirección de Envío</p>
+                <table style="width:100%; border-collapse:collapse; font-size:13px; color:#1f2937;">
+                    <tr><td style="padding:3px 0; color:#6b7280; width:110px;">Región</td><td style="padding:3px 0; font-weight:600;">${region}</td></tr>
+                    <tr><td style="padding:3px 0; color:#6b7280;">Comuna</td><td style="padding:3px 0; font-weight:600;">${comuna}</td></tr>
+                    <tr><td style="padding:3px 0; color:#6b7280;">Calle / Av.</td><td style="padding:3px 0; font-weight:600;">${calle}</td></tr>
+                    <tr><td style="padding:3px 0; color:#6b7280;">Número</td><td style="padding:3px 0; font-weight:600;">${numero}</td></tr>
+                    ${complemento ? `<tr><td style="padding:3px 0; color:#6b7280;">Depto/Casa/Of.</td><td style="padding:3px 0; font-weight:600;">${complemento}</td></tr>` : ''}
+                    <tr><td style="padding:3px 0; color:#6b7280; vertical-align:top;">Entrega</td>
+                        <td style="padding:3px 0;">
+                            <span style="background:#ede9fe; color:#5b21b6; font-weight:700; font-size:12px; padding:3px 10px; border-radius:20px;">
+                                ${metodoIcono} ${metodoNombre}
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Productos -->
+            <p style="font-weight:800; font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#374151; margin:0 0 8px;">🛒 Productos</p>
+            ${productosHtml}
+
+            <!-- Totales -->
+            <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:10px; padding:14px 16px; margin-top:12px;">
+                ${v.subtotal !== undefined ? `
+                <div style="display:flex; justify-content:space-between; color:#6b7280; font-size:13px; margin-bottom:5px;">
+                    <span>Subtotal</span><span>$${Number(v.subtotal).toLocaleString('es-CL')}</span>
+                </div>` : ''}
+                ${v.costoEnvio !== undefined ? `
+                <div style="display:flex; justify-content:space-between; color:#6b7280; font-size:13px; margin-bottom:8px;">
+                    <span>Envío</span>
+                    <span>${v.costoEnvio === 0 ? '<span style="color:#15803d; font-weight:600;">Gratis 🎉</span>' : '$' + Number(v.costoEnvio).toLocaleString('es-CL')}</span>
+                </div>` : ''}
+                <div style="display:flex; justify-content:space-between; border-top:2px solid #e5e7eb; padding-top:10px;">
+                    <span style="font-weight:800; font-size:15px; color:#111827;">Total</span>
+                    <span style="font-weight:800; font-size:18px; color:#15803d;">$${Number(v.total || 0).toLocaleString('es-CL')}</span>
+                </div>
+            </div>
+
+            <p style="text-align:center; color:#d1d5db; font-size:11px; margin:14px 0 0;">ID: ${v._id || v.id || '—'}</p>
+        </div>`;
 
         document.getElementById('modalVenta').style.display = 'flex';
     } catch (error) {
