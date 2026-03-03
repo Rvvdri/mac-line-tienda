@@ -222,22 +222,17 @@ function agregarAlCarritoDetalle() {
     const variantes = [color, capacidad].filter(Boolean).join(' · ');
     const msg = `✅ ${productoActual.nombre}${variantes ? ' (' + variantes + ')' : ''} agregado al carrito`;
 
-    // Notificación flotante
-    const notif = document.getElementById('notificacion') || (() => {
-        const d = document.createElement('div');
-        d.id = 'notificacion-temp';
-        d.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#00d4ff;padding:14px 28px;border-radius:12px;font-weight:700;font-size:14px;z-index:99999;border:1px solid rgba(0,212,255,0.4);box-shadow:0 8px 24px rgba(0,0,0,0.5);';
-        document.body.appendChild(d);
-        return d;
-    })();
-    notif.textContent = msg;
-    notif.style.display = 'block';
-    notif.classList.add('mostrar');
-    setTimeout(() => {
-        notif.classList.remove('mostrar');
-        const temp = document.getElementById('notificacion-temp');
-        if (temp) temp.remove();
-    }, 2500);
+    // Abrir carrito directamente
+    if (typeof abrirCarrito === 'function') {
+        abrirCarrito();
+    } else {
+        const modal = document.getElementById('carritoModal');
+        if (modal) {
+            modal.style.display = 'flex';
+            document.body.classList.add('modal-open');
+            if (typeof renderizarCarrito === 'function') renderizarCarrito();
+        }
+    }
 }
 
 // Actualizar contador del carrito
