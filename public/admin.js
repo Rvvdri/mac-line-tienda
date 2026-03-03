@@ -204,6 +204,24 @@ async function agregarProducto(event) {
     const precioFinal = Math.round(precioOriginal * (1 - descuento / 100));
     const imagenesValidas = imagenesAdicionales.filter(img => img !== null);
     
+    // Parsear colores
+    const coloresRaw = document.getElementById('colores')?.value || '';
+    const colores = coloresRaw.trim()
+        ? coloresRaw.split(',').map(c => c.trim()).filter(Boolean)
+        : [];
+
+    // Parsear capacidades formato "128GB:0, 256GB:50000"
+    const capacidadesRaw = document.getElementById('capacidades')?.value || '';
+    const capacidades = capacidadesRaw.trim()
+        ? capacidadesRaw.split(',').map(cap => {
+            const partes = cap.trim().split(':');
+            return {
+                nombre: partes[0]?.trim() || '',
+                precioIncremental: parseInt(partes[1]) || 0
+            };
+          }).filter(c => c.nombre)
+        : [];
+
     const nuevoProducto = {
         nombre: document.getElementById('nombre').value,
         categoria: document.getElementById('categoria').value,
@@ -214,7 +232,9 @@ async function agregarProducto(event) {
         stock: parseInt(document.getElementById('stock').value),
         imagenPortada: imagenPortadaBase64,
         imagenes: imagenesValidas,
-        emoji: '📦'
+        emoji: '📦',
+        ...(colores.length > 0 && { colores }),
+        ...(capacidades.length > 0 && { capacidades })
     };
     
     try {
@@ -361,33 +381,23 @@ async function guardarEdicion(event) {
         stock: parseInt(document.getElementById('editStock').value)
     };
     
-    // Parsear colores (opcional)
+    // Parsear colores — si está vacío guarda array vacío (borra los anteriores)
     const coloresInput = document.getElementById('editColores')?.value || '';
-    if (coloresInput.trim()) {
-        const colores = coloresInput.split(',').map(c => c.trim()).filter(c => c);
-        if (colores.length > 0) {
-            datosActualizados.colores = colores;
-        }
-    }
-    
-    // Parsear capacidades (opcional)
+    datosActualizados.colores = coloresInput.trim()
+        ? coloresInput.split(',').map(c => c.trim()).filter(Boolean)
+        : [];
+
+    // Parsear capacidades — si está vacío guarda array vacío (borra las anteriores)
     const capacidadesInput = document.getElementById('editCapacidades')?.value || '';
-    if (capacidadesInput.trim()) {
-        const capacidades = capacidadesInput.split(',').map(cap => {
-            const [nombre, precio] = cap.trim().split(':');
-            if (nombre && nombre.trim()) {
-                return {
-                    nombre: nombre.trim(),
-                    precioIncremental: parseInt(precio?.trim()) || 0
-                };
-            }
-            return null;
-        }).filter(c => c !== null);
-        
-        if (capacidades.length > 0) {
-            datosActualizados.capacidades = capacidades;
-        }
-    }
+    datosActualizados.capacidades = capacidadesInput.trim()
+        ? capacidadesInput.split(',').map(cap => {
+            const partes = cap.trim().split(':');
+            return {
+                nombre: partes[0]?.trim() || '',
+                precioIncremental: parseInt(partes[1]) || 0
+            };
+          }).filter(c => c.nombre)
+        : [];
     
     // PORTADA: Si hay nueva, usarla; si no, mantener la original
     if (imagenPortadaEditBase64) {
