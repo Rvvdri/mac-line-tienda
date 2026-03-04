@@ -22,22 +22,13 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-// Verificar conexión con Gmail al arrancar
-transporter.verify((error, success) => {
-    if (error) {
-        console.error('❌ Error con Gmail:', error.message);
-    } else {
-        console.log('✅ Gmail listo para enviar emails');
-    }
-});
-
 // Email del dueño (donde llegarán las notificaciones de venta)
 const EMAIL_DUENO = 'linemac910@gmail.com';
 
 // ==================== MERCADO PAGO ====================
 // CONFIGURACIÓN CON CREDENCIALES REALES
 const client = new MercadoPagoConfig({ 
-    accessToken: 'APP_USR-1539674871672378-021917-5d3634d0ef2f478d31ea2f5db8abeb5d-3208244091'
+    accessToken: 'APP_USR-7342409390164998-030415-afe845fea2e2626a14fcf368b760b39d-459565046'
 });
 console.log('✅ Mercado Pago configurado correctamente');
 
@@ -158,43 +149,35 @@ app.post('/api/productos', async (req, res) => {
 app.put('/api/productos/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const b = req.body;
-
         const datosActualizados = {
-            nombre: b.nombre,
-            categoria: b.categoria,
-            descripcion: b.descripcion,
-            precio: b.precio,
-            precioOriginal: b.precioOriginal,
-            stock: b.stock,
-            descuento: b.descuento || 0,
-            colores: Array.isArray(b.colores) ? b.colores : [],
-            capacidades: Array.isArray(b.capacidades) ? b.capacidades : [],
+            nombre: req.body.nombre,
+            categoria: req.body.categoria,
+            precio: req.body.precio,
+            stock: req.body.stock,
+            descuento: req.body.descuento || 0,
             updatedAt: new Date()
         };
-
-        if (b.imagenPortada) datosActualizados.imagenPortada = b.imagenPortada;
-        if (Array.isArray(b.imagenes)) datosActualizados.imagenes = b.imagenes;
-
-        Object.keys(datosActualizados).forEach(key =>
+        
+        // Eliminar campos undefined
+        Object.keys(datosActualizados).forEach(key => 
             datosActualizados[key] === undefined && delete datosActualizados[key]
         );
-
+        
         const result = await productosCollection.updateOne(
             { id: id },
             { $set: datosActualizados }
         );
-
+        
         if (result.matchedCount === 0) {
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
-
-        res.json({
+        
+        res.json({ 
             success: true,
             mensaje: 'Producto actualizado exitosamente',
             modificados: result.modifiedCount
         });
-
+        
     } catch (error) {
         console.error('Error al actualizar producto:', error);
         res.status(500).json({ error: 'Error al actualizar producto' });
@@ -254,36 +237,6 @@ app.post('/api/ventas', async (req, res) => {
         // ... (aquí va tu código de envío de mail que ya funciona)
         res.json({ success: true });
     } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-// PUT - Cambiar estado de una venta
-app.put('/api/ventas/:id/estado', async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { estado } = req.body;
-
-        const estadosValidos = ['pendiente', 'pagado', 'cancelado'];
-        if (!estadosValidos.includes(estado)) {
-            return res.status(400).json({ error: 'Estado no válido' });
-        }
-
-        const { ObjectId } = require('mongodb');
-        const result = await ventasCollection.updateOne(
-            { _id: new ObjectId(id) },
-            { $set: { estado: estado, updatedAt: new Date() } }
-        );
-
-        if (result.matchedCount === 0) {
-            return res.status(404).json({ error: 'Venta no encontrada' });
-        }
-
-        console.log(`✅ Estado de venta ${id} cambiado a: ${estado}`);
-        res.json({ success: true, estado });
-
-    } catch (error) {
-        console.error('❌ Error cambiando estado:', error);
         res.status(500).json({ error: error.message });
     }
 });
@@ -394,47 +347,36 @@ app.post('/api/crear-preferencia', async (req, res) => {
 
 app.post('/api/webhook-mercadopago', async (req, res) => {
     try {
-        console.log('📬 ====== WEBHOOK RECIBIDO ======');
-        console.log('📬 Body completo:', JSON.stringify(req.body, null, 2));
-
         const { type, data } = req.body;
-
-        if (!type || !data) {
-            console.log('⚠️ Webhook sin type o data, ignorando...');
-            return res.status(200).send('OK');
-        }
-
-        console.log('📬 Tipo:', type, '| Data:', data);
-
+        
+        console.log('📬 Webhook recibido:', type, data);
+        
         if (type === 'payment') {
             const paymentId = data.id;
             console.log('💳 Procesando pago ID:', paymentId);
-
+            
             // Obtener información del pago desde Mercado Pago
             const payment = new Payment(client);
             const paymentInfo = await payment.get({ id: paymentId });
-
+            
             console.log('💳 Estado del pago:', paymentInfo.status);
             console.log('💳 External reference:', paymentInfo.external_reference);
-            console.log('💳 Payer email:', paymentInfo.payer?.email);
-
+            
             if (paymentInfo.status === 'approved') {
                 // Buscar la venta por external_reference
                 const venta = await ventasCollection.findOne({ 
                     'mercadopago.external_reference': paymentInfo.external_reference 
                 });
-
+                
                 if (venta) {
-                    console.log('✅ Venta encontrada:', venta._id);
-                    console.log('✅ Cliente:', venta.cliente?.nombre, venta.cliente?.email);
-                    console.log('✅ Enviando emails...');
-
+                    console.log('✅ Pago APROBADO - Enviando emails...');
+                    
                     // ENVIAR EMAIL AL DUEÑO
                     await enviarEmailDueno(venta);
-
+                    
                     // ENVIAR EMAIL AL CLIENTE
                     await enviarEmailCliente(venta);
-
+                    
                     // Actualizar estado en MongoDB
                     await ventasCollection.updateOne(
                         { _id: venta._id },
@@ -447,27 +389,17 @@ app.post('/api/webhook-mercadopago', async (req, res) => {
                             } 
                         }
                     );
-
-                    console.log('✅ Venta actualizada y emails enviados correctamente');
+                    
+                    console.log('✅ Venta actualizada y emails enviados');
                 } else {
-                    console.log('⚠️ No se encontró venta con referencia:', paymentInfo.external_reference);
-                    console.log('⚠️ Buscando todas las ventas recientes para debug...');
-                    const ventasRecientes = await ventasCollection.find({}).sort({ fecha: -1 }).limit(3).toArray();
-                    ventasRecientes.forEach(v => {
-                        console.log('   - Venta:', v._id, '| ref:', v.mercadopago?.external_reference, '| estado:', v.estado);
-                    });
+                    console.log('⚠️ No se encontró la venta con referencia:', paymentInfo.external_reference);
                 }
-            } else {
-                console.log('ℹ️ Pago no aprobado, estado:', paymentInfo.status, '- no se envían emails');
             }
-        } else {
-            console.log('ℹ️ Evento ignorado (no es payment):', type);
         }
-
+        
         res.status(200).send('OK');
     } catch (error) {
-        console.error('❌ Error en webhook:', error.message);
-        console.error('❌ Stack:', error.stack);
+        console.error('❌ Error en webhook:', error);
         res.status(500).send('Error');
     }
 });
