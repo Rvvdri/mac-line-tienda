@@ -28,7 +28,7 @@ const EMAIL_DUENO = 'linemac910@gmail.com';
 // ==================== MERCADO PAGO ====================
 // CONFIGURACIÓN CON CREDENCIALES REALES
 const client = new MercadoPagoConfig({ 
-    accessToken: 'APP_USR-7342409390164998-030415-afe845fea2e2626a14fcf368b760b39d-459565046'
+    accessToken: 'APP_USR-1539674871672378-021917-5d3634d0ef2f478d31ea2f5db8abeb5d-3208244091'
 });
 console.log('✅ Mercado Pago configurado correctamente');
 
@@ -225,21 +225,7 @@ app.get('/api/ventas', async (req, res) => {
     }
 });
 
-// En server.js, asegúrate de que guardas el cuerpo completo (req.body)
-app.post('/api/ventas', async (req, res) => {
-    try {
-        const nuevaVenta = {
-            ...req.body, // Aquí ya vienen nombre, ciudad, comuna, calle, items, etc.
-            fecha: new Date(),
-            estado: 'pendiente'
-        };
-        await db.collection('ventas').insertOne(nuevaVenta);
-        // ... (aquí va tu código de envío de mail que ya funciona)
-        res.json({ success: true });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+
 
 // ==================== MERCADO PAGO - CREAR PREFERENCIA ====================
 
@@ -408,57 +394,31 @@ app.post('/api/webhook-mercadopago', async (req, res) => {
 
 async function enviarEmailDueno(venta) {
     try {
-        const c = venta.cliente;
-
-        const itemsHTML = venta.items.map(item => {
-            const variantes = [item.color, item.capacidad].filter(Boolean).join(' · ');
-            return `
+        const itemsHTML = venta.items.map(item => `
             <tr>
-                <td style="padding: 12px 10px; border-bottom: 1px solid #eee;">
-                    <strong>${item.nombre}</strong>
-                    ${variantes ? `<br><span style="background:#ede9fe; color:#6d28d9; font-size:12px; font-weight:600; padding:2px 8px; border-radius:10px;">${variantes}</span>` : ''}
-                </td>
-                <td style="padding: 12px 10px; border-bottom: 1px solid #eee; text-align: center;">${item.cantidad}</td>
-                <td style="padding: 12px 10px; border-bottom: 1px solid #eee; text-align: right;">$${Number(item.precio).toLocaleString('es-CL')}</td>
-                <td style="padding: 12px 10px; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">$${(Number(item.precio) * Number(item.cantidad)).toLocaleString('es-CL')}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.nombre}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.cantidad}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">$${item.precio.toLocaleString('es-CL')}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">$${(item.precio * item.cantidad).toLocaleString('es-CL')}</td>
             </tr>
-        `}).join('');
-
-        // Armar dirección completa (campos exactos del formulario index.html)
-        const direccionCompleta = [
-            c.direccion,
-            c.numero ? `N° ${c.numero}` : '',
-            c.complemento || '',
-            c.comuna,
-            c.region
-        ].filter(Boolean).join(', ');
-
+        `).join('');
+        
         const mailOptions = {
-            from: '"MAC LINE" <linemac910@gmail.com>',
+            from: '"MAC LINE" <' + (process.env.EMAIL_USER || 'noreply@macline.cl') + '>',
             to: EMAIL_DUENO,
-            subject: `🎉 Nueva Venta - $${Number(venta.total).toLocaleString('es-CL')} - ${c.nombre}`,
+            subject: `🎉 Nueva Venta - $${venta.total.toLocaleString('es-CL')} - ${venta.cliente.nombre}`,
             html: `
                 <!DOCTYPE html>
                 <html>
                 <head>
                     <style>
-                        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
-                        .container { max-width: 620px; margin: 0 auto; }
-                        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 12px 12px 0 0; }
-                        .header h1 { margin: 0 0 5px; font-size: 26px; }
-                        .header h2 { margin: 0; font-size: 18px; font-weight: 400; opacity: 0.9; }
-                        .content { background: white; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 12px 12px; }
-                        .badge-total { background: #dcfce7; border: 2px solid #22c55e; padding: 18px; border-radius: 10px; text-align: center; margin-bottom: 25px; }
-                        .badge-total h2 { margin: 0; color: #16a34a; font-size: 26px; }
-                        .section { background: #fef9ec; border-left: 4px solid #f59e0b; padding: 18px 20px; border-radius: 0 8px 8px 0; margin: 20px 0; }
-                        .section h3 { margin: 0 0 12px; color: #92400e; font-size: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
-                        .section p { margin: 5px 0; color: #333; font-size: 14px; }
-                        .section p strong { color: #111; min-width: 140px; display: inline-block; }
-                        .entrega-badge { display: inline-block; background: #ede9fe; color: #6d28d9; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-top: 4px; }
-                        table { width: 100%; border-collapse: collapse; margin: 5px 0 10px; }
-                        th { background: #f1f5f9; padding: 10px; text-align: left; font-size: 13px; color: #555; }
-                        td { font-size: 14px; color: #333; }
-                        .footer { text-align: center; margin-top: 25px; color: #999; font-size: 12px; }
+                        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                        .content { background: white; padding: 30px; border: 1px solid #eee; }
+                        .total { background: #f0f9ff; padding: 20px; margin: 20px 0; border-radius: 8px; text-align: center; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        .cliente-info { background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0; }
                     </style>
                 </head>
                 <body>
@@ -468,33 +428,22 @@ async function enviarEmailDueno(venta) {
                             <h2>¡Nueva Venta Recibida!</h2>
                         </div>
                         <div class="content">
-
-                            <div class="badge-total">
-                                <h2>💰 Total: $${Number(venta.total).toLocaleString('es-CL')}</h2>
+                            <div class="total">
+                                <h2 style="margin: 0; color: #22c55e;">Total: $${venta.total.toLocaleString('es-CL')}</h2>
                             </div>
-
-                            <div class="section">
-                                <h3>👤 Datos del Cliente</h3>
-                                <p><strong>Nombre completo:</strong> ${c.nombre}</p>
-                                <p><strong>Email:</strong> ${c.email}</p>
-                                <p><strong>Teléfono:</strong> ${c.telefono || '—'}</p>
+                            
+                            <div class="cliente-info">
+                                <h3>📋 Datos del Cliente:</h3>
+                                <p><strong>Nombre:</strong> ${venta.cliente.nombre}</p>
+                                <p><strong>Email:</strong> ${venta.cliente.email}</p>
+                                <p><strong>Teléfono:</strong> ${venta.cliente.telefono}</p>
+                                <p><strong>Dirección:</strong> ${venta.cliente.direccion}</p>
                             </div>
-
-                            <div class="section">
-                                <h3>📦 Dirección de Envío</h3>
-                                <p><strong>Región:</strong> ${c.region || '—'}</p>
-                                <p><strong>Comuna:</strong> ${c.comuna || '—'}</p>
-                                <p><strong>Calle / Avenida:</strong> ${c.direccion || '—'}</p>
-                                <p><strong>Número:</strong> ${c.numero || '—'}</p>
-                                ${c.complemento ? `<p><strong>Depto / Casa / Of.:</strong> ${c.complemento}</p>` : ''}
-                                <p><strong>Dirección completa:</strong> ${direccionCompleta}</p>
-                                <p><strong>Método de entrega:</strong> <span class="entrega-badge">${c.metodoEntrega || '—'}</span></p>
-                            </div>
-
-                            <h3 style="color: #374151; margin-bottom: 5px;">🛒 Productos Comprados</h3>
+                            
+                            <h3>🛒 Productos Comprados:</h3>
                             <table>
                                 <thead>
-                                    <tr>
+                                    <tr style="background: #f9fafb;">
                                         <th style="padding: 10px; text-align: left;">Producto</th>
                                         <th style="padding: 10px; text-align: center;">Cant.</th>
                                         <th style="padding: 10px; text-align: right;">Precio Unit.</th>
@@ -504,28 +453,22 @@ async function enviarEmailDueno(venta) {
                                 <tbody>
                                     ${itemsHTML}
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="3" style="padding: 12px 10px; text-align: right; font-weight: bold; color: #555;">TOTAL:</td>
-                                        <td style="padding: 12px 10px; text-align: right; font-weight: bold; font-size: 16px; color: #16a34a;">$${Number(venta.total).toLocaleString('es-CL')}</td>
-                                    </tr>
-                                </tfoot>
                             </table>
-
-                            <div class="footer">
-                                <p>Fecha: ${new Date().toLocaleString('es-CL')} &nbsp;|&nbsp; ID Orden: ${venta._id}</p>
-                                <p>MAC LINE — mac-line.cl</p>
-                            </div>
+                            
+                            <p style="color: #666; margin-top: 30px;">
+                                <small>Fecha: ${new Date().toLocaleString('es-CL')}</small><br>
+                                <small>ID Venta: ${venta._id}</small>
+                            </p>
                         </div>
                     </div>
                 </body>
                 </html>
             `
         };
-
+        
         await transporter.sendMail(mailOptions);
         console.log('✅ Email enviado al dueño:', EMAIL_DUENO);
-
+        
     } catch (error) {
         console.error('❌ Error enviando email al dueño:', error);
     }
@@ -533,125 +476,80 @@ async function enviarEmailDueno(venta) {
 
 async function enviarEmailCliente(venta) {
     try {
-        const c = venta.cliente;
-
-        const itemsHTML = venta.items.map(item => {
-            const variantes = [item.color, item.capacidad].filter(Boolean).join(' · ');
-            return `
+        const itemsHTML = venta.items.map(item => `
             <tr>
-                <td style="padding: 12px 10px; border-bottom: 1px solid #f0f0f0;">
-                    <strong>${item.nombre}</strong>
-                    ${variantes ? `<br><span style="background:#ede9fe; color:#6d28d9; font-size:12px; font-weight:600; padding:2px 8px; border-radius:10px;">${variantes}</span>` : ''}
-                </td>
-                <td style="padding: 12px 10px; border-bottom: 1px solid #f0f0f0; text-align: center;">${item.cantidad}</td>
-                <td style="padding: 12px 10px; border-bottom: 1px solid #f0f0f0; text-align: right; font-weight: bold; color: #16a34a;">$${(Number(item.precio) * Number(item.cantidad)).toLocaleString('es-CL')}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.nombre}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.cantidad}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right; font-weight: bold;">$${(item.precio * item.cantidad).toLocaleString('es-CL')}</td>
             </tr>
-        `}).join('');
-
-        // Armar dirección completa (campos exactos del formulario index.html)
-        const partesDireccion = [
-            c.direccion,
-            c.numero ? `N° ${c.numero}` : '',
-            c.complemento || '',
-            c.comuna,
-            c.region
-        ].filter(Boolean);
-
+        `).join('');
+        
         const mailOptions = {
-            from: '"MAC LINE" <linemac910@gmail.com>',
-            to: c.email,
-            subject: `✅ Tu compra en MAC LINE fue confirmada`,
+            from: '"MAC LINE" <' + (process.env.EMAIL_USER || 'noreply@macline.cl') + '>',
+            to: venta.cliente.email,
+            subject: `✅ Confirmación de Compra - MAC LINE`,
             html: `
                 <!DOCTYPE html>
                 <html>
                 <head>
                     <style>
-                        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
-                        .container { max-width: 620px; margin: 0 auto; }
-                        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 35px 30px; text-align: center; border-radius: 12px 12px 0 0; }
-                        .header h1 { margin: 0 0 5px; font-size: 26px; }
-                        .header p { margin: 0; opacity: 0.9; font-size: 15px; }
-                        .content { background: white; padding: 30px; border: 1px solid #ddd; border-top: none; border-radius: 0 0 12px 12px; }
-                        .saludo { font-size: 16px; color: #333; margin-bottom: 20px; }
-                        .badge-ok { background: #dcfce7; border: 2px solid #22c55e; border-radius: 10px; padding: 15px 20px; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
-                        .badge-ok span { font-size: 22px; }
-                        .badge-ok p { margin: 0; color: #15803d; font-weight: 600; font-size: 15px; }
-                        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-                        th { background: #f8fafc; padding: 10px; text-align: left; font-size: 13px; color: #64748b; border-bottom: 2px solid #e2e8f0; }
-                        .total-row td { padding: 14px 10px; background: #f0fdf4; font-weight: bold; font-size: 16px; }
-                        .envio-box { background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 20px 0; }
-                        .envio-box h3 { margin: 0 0 10px; color: #1e40af; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
-                        .envio-box p { margin: 4px 0; font-size: 14px; color: #374151; }
-                        .metodo-badge { display: inline-block; background: #ede9fe; color: #6d28d9; padding: 3px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
-                        .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
-                        .btn { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 13px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 15px; }
-                        .nota { font-size: 13px; color: #888; margin-top: 20px; line-height: 1.6; }
+                        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+                        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+                        .content { background: white; padding: 30px; border: 1px solid #eee; }
+                        .total { background: #dcfce7; padding: 20px; margin: 20px 0; border-radius: 8px; text-align: center; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
                     </style>
                 </head>
                 <body>
                     <div class="container">
                         <div class="header">
                             <h1>🖥️ MAC LINE</h1>
-                            <p>Confirmación de Compra</p>
+                            <h2>¡Gracias por tu compra!</h2>
                         </div>
                         <div class="content">
-
-                            <p class="saludo">Hola <strong>${c.nombre}</strong>, ¡gracias por tu compra!</p>
-
-                            <div class="badge-ok">
-                                <span>✅</span>
-                                <p>Tu pago fue aprobado y tu pedido está en proceso.</p>
-                            </div>
-
-                            <h3 style="color: #374151; margin-bottom: 8px;">🛒 Resumen de tu pedido</h3>
+                            <p>Hola <strong>${venta.cliente.nombre}</strong>,</p>
+                            <p>Tu pago ha sido procesado correctamente. Aquí están los detalles de tu pedido:</p>
+                            
                             <table>
                                 <thead>
-                                    <tr>
-                                        <th style="padding:10px; text-align:left;">Producto</th>
-                                        <th style="padding:10px; text-align:center;">Cant.</th>
-                                        <th style="padding:10px; text-align:right;">Subtotal</th>
+                                    <tr style="background: #f9fafb;">
+                                        <th style="padding: 10px; text-align: left;">Producto</th>
+                                        <th style="padding: 10px; text-align: center;">Cantidad</th>
+                                        <th style="padding: 10px; text-align: right;">Subtotal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     ${itemsHTML}
                                 </tbody>
-                                <tfoot>
-                                    <tr class="total-row">
-                                        <td colspan="2" style="padding:14px 10px; text-align:right; color:#555;">TOTAL PAGADO:</td>
-                                        <td style="padding:14px 10px; text-align:right; color:#16a34a;">$${Number(venta.total).toLocaleString('es-CL')}</td>
-                                    </tr>
-                                </tfoot>
                             </table>
-
-                            <div class="envio-box">
-                                <h3>📦 Información de Envío</h3>
-                                ${partesDireccion.length > 0 ? partesDireccion.map(p => `<p>${p}</p>`).join('') : '<p>—</p>'}
-                                <p style="margin-top:10px;"><strong>Método de entrega:</strong> <span class="metodo-badge">${c.metodoEntrega || '—'}</span></p>
+                            
+                            <div class="total">
+                                <h2 style="margin: 0; color: #16a34a;">Total Pagado: $${venta.total.toLocaleString('es-CL')}</h2>
                             </div>
-
-                            <p class="nota">
-                                Nos pondremos en contacto contigo pronto para coordinar la entrega.<br>
-                                Si tienes alguna consulta, escríbenos a <a href="mailto:${EMAIL_DUENO}" style="color:#667eea;">${EMAIL_DUENO}</a>.
+                            
+                            <p><strong>📦 Envío a:</strong><br>${venta.cliente.direccion}</p>
+                            
+                            <p style="margin-top: 30px;">Nos pondremos en contacto contigo pronto para coordinar la entrega.</p>
+                            
+                            <p style="color: #666; margin-top: 30px;">
+                                <small>Número de orden: ${venta._id}</small><br>
+                                <small>Fecha: ${new Date().toLocaleString('es-CL')}</small>
                             </p>
-
-                            <div class="footer">
-                                <a href="https://mac-line.cl" class="btn">Volver a la tienda</a>
-                                <p style="color:#aaa; font-size:12px; margin-top:20px;">
-                                    N° de Orden: ${venta._id}<br>
-                                    Fecha: ${new Date().toLocaleString('es-CL')}
-                                </p>
-                            </div>
-
+                            
+                            <p style="text-align: center; margin-top: 40px;">
+                                <a href="https://mac-line.cl" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block;">Volver a la tienda</a>
+                            </p>
                         </div>
                     </div>
                 </body>
                 </html>
             `
         };
-
+        
         await transporter.sendMail(mailOptions);
-        console.log('✅ Email enviado al cliente:', c.email);
-
+        console.log('✅ Email enviado al cliente:', venta.cliente.email);
+        
     } catch (error) {
         console.error('❌ Error enviando email al cliente:', error);
     }
